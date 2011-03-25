@@ -1,0 +1,161 @@
+ # Copyright (C) 2010 Oscar Perpiñán Lamigueiro
+ #
+ # This program is free software; you can redistribute it and/or
+ # modify it under the terms of the GNU General Public License
+ # as published by the Free Software Foundation; either version 2
+ # of the License, or (at your option) any later version.
+ #
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with this program; if not, write to the Free Software
+ # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ #/
+prodPVPS<-function(lat, 
+                   modeTrk='fixed', 
+                   modeRad='prom', 
+                   prev,
+                   prom=list(),
+                   mapa=list(), 
+                   bd=list(),
+                   bdI=list(),
+                   sample='hour',
+                   keep.night=TRUE,
+                   corr, f,
+                   betaLim=90, beta=abs(lat)-10, alfa=0,
+                   iS=2, alb=0.2, horizBright=FALSE,
+                   pump , H, 
+                   Pg, converter= list(), #Pnom=Pg, Ki=c(0.01,0.025,0.05)),
+                   effSys=list()
+                   ){
+  stopifnot(is.list(converter),
+            is.list(effSys))
+
+  if (modeRad!='prev'){                 #No utilizamos un cálculo prev
+
+    radEf<-calcGef(lat=lat, modeTrk=modeTrk, modeRad=modeRad,
+                   prom=prom, mapa=mapa, bd=bd, bdI=bdI,
+                   sample=sample, keep.night=keep.night,
+                   corr=corr, f=f,
+                   betaLim=betaLim, beta=beta, alfa=alfa,
+                   iS=iS, alb=alb, horizBright=FALSE,
+                   modeShd='')
+		
+  } else { #Utilizamos un cálculo previo de calcG0, calcGef o prodSFCR
+    stopifnot(class(prev) %in% c('G0', 'Gef', 'ProdPVPS'))
+    radEf <- switch(class(prev),
+                    G0=calcGef(lat=lat, 
+                      modeTrk=modeTrk, modeRad='prev',
+                      prev=prev,
+                      betaLim=betaLim, beta=beta, alfa=alfa,
+                      iS=iS, alb=alb, horizBright=FALSE,
+                      modeShd=''),
+                    Gef=prev,
+                    ProdPVPS=as(prev, 'Gef')
+                    )
+  }
+
+
+###Producción eléctrica
+  converter.default=list(Ki = c(0.01,0.025,0.05), Pnom=Pg)
+  converter=modifyList(converter.default, converter)
+
+  effSys.default=list(ModQual=3,ModDisp=2,OhmDC=1.5,OhmAC=1.5,MPP=1,TrafoMT=1,Disp=0.5)
+  effSys=modifyList(effSys.default, effSys)
+
+  TONC=47
+  Ct=(TONC-20)/800
+  lambda=0.0045
+  Gef=coredata(radEf@GefI$Gef)
+  aman=coredata(radEf@solI$aman)
+  Ta=coredata(radEf@Ta)
+  
+  Tc=Ta+Ct*Gef
+  Pdc=Pg*Gef/1000*(1-lambda*(Tc-25))
+  Pdc[is.na(Pdc)]=0    #Necesario para las funciones que entrega fPump
+  PdcN=with(effSys,
+    Pdc/converter$Pnom*(1-ModQual/100)*(1-ModDisp/100)*(1-OhmDC/100)
+    )
+  PacN=with(converter,{
+    A=Ki[3]
+    B=Ki[2]+1
+    C=Ki[1]-(PdcN)
+    ##Potencia AC normalizada al inversor
+    result=(-B+sqrt(B^2-4*A*C))/(2*A)
+  })
+  PacN[PacN<0]<-0
+	
+  Pac=with(converter,
+    PacN*Pnom*(1-effSys$OhmAC/100))
+  Pdc=PdcN*converter$Pnom*(Pac>0)
+	
+		
+###Bomba
+  fun<-fPump(pump=pump, H=H)
+  ##Limito la potencia al rango de funcionamiento de la bomba
+  rango=with(fun,Pac>=lim[1] & Pac<=lim[2]) 
+  Pac[!rango]<-0
+  Pdc[!rango]<-0
+  prodI=data.frame(Pac=Pac,Pdc=Pdc,Q=0,Pb=0,Ph=0,f=0)	
+  prodI=within(prodI,{
+    Q[rango]<-fun$fQ(Pac[rango])
+    Pb[rango]<-fun$fPb(Pac[rango])
+    Ph[rango]<-fun$fPh(Pac[rango])
+    f[rango]<-fun$fFreq(Pac[rango])
+    etam=Pb/Pac
+    etab=Ph/Pb
+  })
+  ##Pdc[!aman]<-NA
+  ##Pac[!aman]<-NA
+  prodI[!aman,]<-NA
+  prodI<-zoo(prodI, indexI(radEf))
+
+###Cálculo de valores diarios, mensuales y anuales
+  ##Cálculo de valores diarios, mensuales y anuales
+  ##=======================================
+  DayOfMonth=c(31,28,31,30,31,30,31,31,30,31,30,31) ###OJO
+    
+  if (radEf@type=='prom') {
+    prodDm=aggregate(prodI[,c('Pac', 'Q')],
+      by=as.yearmon, FUN=P2E, radEf@sample) 
+    names(prodDm)=c('Eac', 'Qd')
+    prodDm$Eac=prodDm$Eac/1000          #kWh
+    prodDm$Yf=prodDm$Eac/(Pg/1000)      #kWh/kWp
+    
+    prodD=prodDm
+    prodD$Eac=prodD$Eac*1000         #Wh
+    index(prodD) <- indexD(radEf)    ##para que sea compatible con G0D
+
+    prody=zoo(t(colSums(prodDm*DayOfMonth)),
+      unique(year(index(prodDm))))
+  } else {
+    prodD=aggregate(prodI[,c('Pac', 'Q')],
+      by=truncDay, FUN=P2E, radEf@sample) #Wh
+    names(prodD)=c('Eac', 'Qd')
+    prodD$Yf=prodD$Eac/Pg
+    
+    prodDm=aggregate(prodD, by=as.yearmon, mean, na.rm=1)
+    prody=aggregate(prodD, by=year, sum, na.rm=1)
+
+    prodDm$Eac=prodDm$Eac/1000
+    prody$Eac=prody$Eac/1000
+
+  }
+  
+  result <- new('ProdPVPS',
+                radEf,                  #contains 'Gef'
+                prodD=prodD,
+                prodDm=prodDm,
+                prody=prody,
+                prodI=prodI,
+                pump=pump,
+                H=H,
+                Pg=Pg,
+                converter=converter,
+                effSys=effSys
+                )
+}
+	

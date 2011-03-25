@@ -1,0 +1,49 @@
+solaR 0.22
+==========
+* The calculation of the sunset time has been improved.
+* The voltage dependency of the efficiency curve of the inverter
+  is now included in fProd and calcGCPV.
+* The default values of the module, generator
+  and inverter of both fProd, calcGCPV and
+  optimShd are now documented.
+* The help page of optimShd now explains correctly the concept of GRR.
+* The plot method for Shade has been renamed to shadeplot.
+* The as.data.frame method of the Shade class is
+  now exported.
+* The example included in the Target diagram help page
+  now includes a graphic using the function horizonplot of latticeExtra.
+* Several bugs have been corrected.
+
+solaR 0.21
+==========
+
+solaR is now able to calculate from both daily and sub-daily irradiation values. These are the
+most important changes:
+
+* calcSol and fSolI gain a "BTi" argument for intradaily time bases.
+* fCompI gains a "G0I" argument for intradaily irradiation series.
+* fCompI gains both "corr" and "f" arguments.
+* calcG0, calcGef, prodGCPV and prodPVPS gain a new "bdI" argument for intradaily irradiation, 
+and the "corr", "f" arguments.
+* The "bd" (and the new "bdI") argument of "calcG0" can be now a "Meteo" object. 
+The "file" component of this argument can be now a "zoo" object.
+* New methods ("losses", "compareLosses" and "compare") are available for "Gef" and "ProdGCPV" classes.
+* The "corr" argument of "fCompD" (and "fCompI") can be now "corr=none".
+* The correlations between the diffuse fraction and the clearness index are now 
+coded outside "fCompD" as separate functions. 
+Several new correlations have been included, both for monthly/daily values and for intradaily values.
+* New small functions for difftime objects have been included.
+* Small bugs have been fixed.
+------------
+
+solaR 0.20
+==========
+
+* The package is now almost entirely designed with S4 classes and methods.
+* The time series object are constructed with the 'zoo' package.
+* Most of the functions and arguments have been renamed in order to 
+ease the understanding by international users.
+* Two new functions have been included for the statistical analysis of a PV plant composed of several systems.
+* The package dependencies have been optimized.
+* Several new small functions for date-time calculations are now available.
+* Several bugs have been corrected.
