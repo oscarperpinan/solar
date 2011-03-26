@@ -43,7 +43,17 @@ echo $contents; } ?>
 
 <!-- end of project description -->
 
-<p> No content added. </p>
+<p> The  <tt>solaR</tt> package includes a set of functions which calculate
+the solar radiation incident on a photovoltaic generator and simulate the 
+performance of several applications of the <a href="http://procomun.wordpress.com/documentos/libroesf/"><strong>photovoltaic energy</strong></a>.
+This package performs the whole calculation from both daily and 
+intra-daily global horizontal irradiation to the final productivity of 
+grid connected PV systems and water pumping PV systems. 
+Besides, the package includes several visualization methods based on
+the <tt>lattice</tt> and <tt>latticeExtra</tt> packages, and tools for the statistical analysis of
+the performance of a large PV plant composed of several systems.
+
+The package is constructed with <tt>S4</tt> classes and methods. The time series are constructed with the <tt>zoo</tt> package.</p>
 
 <p> The <strong>project summary page</strong> you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
 
