@@ -9,7 +9,7 @@ library(maptools)
 #library(mapproj)
 #gpclibPermit()
 library(gstat)
-#library(animation)
+library(hexbin)
 
 load('nasa_solaR.RData')
 
@@ -30,12 +30,15 @@ mapa <- list('sp.lines', world_sp, lwd=0.5)
 
 paleta=colorRampPalette(rev(brewer.pal('YlOrRd', n=9)))
 paleta2=colorRampPalette((brewer.pal('RdBu', n=11)))
-library(hexbin)
 paleta3=heat.ob
 
 #spplot(nasaSP[,1:12], col.regions=paleta, layout=c(3,4), as.table=TRUE, sp.layout=mapa)
 trellis.device(file='NasaG0y.pdf', pdf)
-spplot(nasaSP["Ann"], col.regions=paleta3, sp.layout=mapa)
+spplot(nasaSP['Ann'], sp.layout=mapa,
+       col.regions=paleta3, colorkey=list(space='bottom'),
+       contour=TRUE, cuts=ncuts, col=colContour, lwd=0.5,
+       scales=list(draw=TRUE)
+       )
 dev.off()
 
 ###
@@ -56,27 +59,52 @@ gefNasaDF <- as.data.frame(gefNasa)
 names(gefNasaDF) <- c('Fixed', 'Two', 'Horiz')
 gefNasaSP <- SpatialPixelsDataFrame(points=coords, data=gefNasaDF, proj4string=proj)
 
-spplot(gefNasaSP, col.regions=paleta3, as.table=TRUE, layout=c(1,3), sp.layout=mapa)
+spplot(gefNasaSP, col.regions=paleta3, as.table=TRUE, layout=c(1,3))##, sp.layout=mapa)
 
-trellis.device(file='NasaGefFixed.pdf', pdf)
-spplot(gefNasaSP['Fixed'], col.regions=paleta3, sp.layout=mapa)
-dev.off()
+## trellis.device(file='NasaGefFixed.pdf', pdf)
+## spplot(gefNasaSP['Fixed'], col.regions=paleta3)##, sp.layout=mapa)
+## dev.off()
+
+ncuts <- 7
+colContour <- paleta3(ncuts)[2]
 
 trellis.device(file='NasaGefTwo.pdf', pdf)
-spplot(gefNasaSP['Two'], col.regions=paleta3, sp.layout=mapa)
+spplot(gefNasaSP['Two'], sp.layout=mapa,
+       col.regions=paleta3, colorkey=list(space='bottom'),
+       contour=TRUE, cuts=ncuts, col=colContour, lwd=0.5,
+       scales=list(draw=TRUE)
+       )   
 dev.off()
 
 trellis.device(file='NasaGefHoriz.pdf', pdf)
-spplot(gefNasaSP['Horiz'], col.regions=paleta3, sp.layout=mapa)
+spplot(gefNasaSP['Horiz'], sp.layout=mapa,
+       col.regions=paleta3, colorkey=list(space='bottom'),
+       contour=TRUE, cuts=ncuts, col=colContour, lwd=0.5,
+       scales=list(draw=TRUE)
+       )
 dev.off()
+
+trellis.device(file='NasaGefFixed.pdf', pdf)
+spplot(gefNasaSP['Fixed'], sp.layout=mapa,
+       col.regions=paleta3, colorkey=list(space='bottom'),
+       contour=TRUE, cuts=ncuts, col=colContour, lwd=0.5,
+       scales=list(draw=TRUE)
+       )
+dev.off()
+
 
 gefNasaSP$HorizFixed <- gefNasaSP$Horiz/gefNasaSP$Fixed
 gefNasaSP$TwoHoriz <- gefNasaSP$Two/gefNasaSP$Horiz
 gefNasaSP$TwoFixed <- gefNasaSP$Two/gefNasaSP$Fixed
 
-spplot(gefNasaSP[c('TwoHoriz', 'TwoFixed', 'HorizFixed')],
-       strip=FALSE, strip.left=TRUE, layout=c(1, 3),
-       col.regions=paleta, contour=TRUE)# sp.layout=mapa)
+trellis.device(file='NasaHorizFixed.pdf', pdf)
+bwplot(HorizFixed~as.factor(Lat), xlab='Latitude',
+       data=as.data.frame(gefNasaSP),
+       horizontal=FALSE, cex=0.6, pch='-', 
+       par.settings = list(plot.symbol = list(pch = '·', col = "black", cex = 0.6)),
+       scales=list(x=list(rot=90, cex=0.3)),
+       subset=(abs(Lat)<60))
+dev.off()
 
 
 
