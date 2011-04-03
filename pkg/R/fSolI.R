@@ -17,6 +17,7 @@
 fSolI<-function(solD, sample='hour', BTi, EoT=FALSE, keep.night=TRUE){
 
   lat=d2r(attr(solD, 'lat'))
+  signLat=ifelse(sign(lat)==0, 1, sign(lat))##Cuando lat=0, sign(lat)=0. Lo cambio a sign(lat)=1
 
   if (missing(BTi)){
     ## ##Copiado de seq.POSIXt
@@ -75,7 +76,7 @@ fSolI<-function(solD, sample='hour', BTi, EoT=FALSE, keep.night=TRUE){
 
   AlS=asin(cosThzS) ##Altura del sol
 
-  cosAzS=sign(lat)*(cos(decl)*cos(w)*sin(lat)-cos(lat)*sin(decl))/cos(AlS)
+  cosAzS=signLat*(cos(decl)*cos(w)*sin(lat)-cos(lat)*sin(decl))/cos(AlS)
   is.na(cosAzS) <- (!aman)
   cosAzS[cosAzS > 1] <- 1
   cosAzS[cosAzS < -1] <- -1

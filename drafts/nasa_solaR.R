@@ -98,13 +98,52 @@ gefNasaSP$TwoHoriz <- gefNasaSP$Two/gefNasaSP$Horiz
 gefNasaSP$TwoFixed <- gefNasaSP$Two/gefNasaSP$Fixed
 
 trellis.device(file='NasaHorizFixed.pdf', pdf)
-bwplot(HorizFixed~as.factor(Lat), xlab='Latitude',
+
+bwplot(HorizFixed~cut(Lat, pretty(Lat, 40)),
+       xlab='Latitude', ylab=expression(G[ef]^{horiz}/G[ef]^{fixed}),
        data=as.data.frame(gefNasaSP),
-       horizontal=FALSE, cex=0.6, pch='-', 
-       par.settings = list(plot.symbol = list(pch = '·', col = "black", cex = 0.6)),
-       scales=list(x=list(rot=90, cex=0.3)),
+       horizontal=FALSE,
+       panel = function(..., box.ratio) {
+         panel.violin(..., col = "lightblue",
+                      varwidth = FALSE, box.ratio = box.ratio)
+         panel.bwplot(..., col='black',
+                      cex=0.8, pch='|', fill='gray', box.ratio = .1)
+       },
+       par.settings = list(box.rectangle=list(col='black'),
+         plot.symbol = list(pch='.', cex = 0.1)),
+       scales=list(x=list(rot=45, cex=0.6)),
        subset=(abs(Lat)<60))
+
 dev.off()
 
+trellis.device(file='NasaG0Year.pdf', pdf)
+bwplot(Ann~cut(Lat, pretty(Lat, 40)),
+       data=nasa, subset=(abs(Lat)<60),
+       xlab='Latitude', ylab='G(0) (kWh/m²)',
+       horizontal=FALSE,
+       panel = function(..., box.ratio) {
+         panel.violin(..., col = "lightblue",
+                      varwidth = FALSE, box.ratio = box.ratio)
+         panel.bwplot(..., col='black',
+                      cex=0.8, pch='|', fill='gray', box.ratio = .1)
+       },
+       par.settings = list(box.rectangle=list(col='black'),
+         plot.symbol = list(pch='.', cex = 0.1)),
+       scales=list(x=list(rot=45, cex=0.5))
+       )
+dev.off()
+
+x <- paste(names(nasa)[3:14], collapse='+')
+formula <- as.formula(paste(x, '~cut(Lat, pretty(Lat, 20))', sep=''))
+
+trellis.device(file='NasaG0Month.pdf', pdf)
+bwplot(formula, data=nasa, subset=(abs(Lat)<60),
+       xlab='Latitude', ylab='G(0) (kWh/m²)',
+       outer=TRUE, as.table=TRUE, horizontal=FALSE,
+       col='lightblue',
+       panel=panel.violin,
+       scales=list(x=list(rot=70, cex=0.5))
+       )
+dev.off()
 
 

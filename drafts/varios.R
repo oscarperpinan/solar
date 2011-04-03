@@ -343,10 +343,17 @@ library(maps)
 library(mapdata)
 data(RedEstaciones)
 
+deleteLine <- function(x)
+             sapply(strsplit(as.character(x), '_'), paste, collapse=" ")
+
+capital <- function(x)paste(toupper(substring(x, 1, 1)), tolower(substring(x, 2)), sep='')
+
+RedEstaciones$NomProv <- factor(deleteLine(RedEstaciones$NomProv))
+RedEstaciones$NomEst <- capital(RedEstaciones$NomEst)
+  
 foo <- function(x){
-  x <- unlist(x)
-  cadena <- paste(x[4], x[3], sep=', ')
-  res <- GNsearch(q=cadena, maxRows=1)
+  cadena <- paste(unlist(x[4:3]), collapse=', ')
+  res <- GNsearch(q=cadena, country='ES', maxRows=1)
   if (length(res)==0){
     res <- data.frame(lat=NA, lng=NA)
   } else {
@@ -357,33 +364,46 @@ foo <- function(x){
 
 redGN <- apply(RedEstaciones, 1, foo)
 redGN <- do.call('rbind', redGN)
-redGN$ID <- RedEstaciones$Estacion
+redGN$NomProv <- RedEstaciones$NomProv
+redGN$NomEst <- RedEstaciones$NomEst
 
 red <- redGN[!is.na(redGN$lat),]
-red <- red[-72,]
+
 proj <- CRS('+proj=latlon +ellps=WGS84')
 
-sppoints <- SpatialPointsDataFrame(coords=red[c('lng', 'lat')], data=red["ID"], proj4string=proj)
+sppoints <- SpatialPointsDataFrame(coords=red[c('lng', 'lat')],
+                                   data=red[c('NomProv', 'NomEst')],
+                                   proj4string=proj)
 
 spain <- map('worldHires',"spain", plot=FALSE)
 
 spain_sp <- map2SpatialLines(spain, proj4string=proj)
 spain_spl <- list('sp.lines', spain_sp, lwd=0.5)
 
-spplot(sppoints, sp.layout=spain_spl, scales=list(draw=TRUE))
+spplot(sppoints['NomProv'], sp.layout=spain_spl, scales=list(draw=TRUE), key.space='right')
 
-## foo2 <- function(x){
-##   cadena <- as.character(unlist(x[4]))
-##   res <- NGBE[NGBE$Texto==cadena,]
-##   if (length(res)==0){
-##     res <- data.frame(Latitud=NA, Longitud=NA)
-##   } else {
-##     res <- res[c('Latitud', 'Longitud')]
-##   }
-##   res
-## }
+x <- readShapeLines('~/temp/DescargasMozilla/ESP_adm/ESP_adm2.shp', proj4string=proj)
+spain2 <- list('sp.lines', x, lwd=0.5)
+spplot(sppoints['NomProv'], sp.layout=spain2, scales=list(draw=TRUE), key.space='right')
 
 
-## NGBE <- read.delim('~/temp/DescargasMozilla/NGBE/NGBE.txt', dec=',')
-## redNGBE <- apply(RedEstaciones[1:10,], 1, foo2)
-## redNGBE <- do.call('rbind', redNGBE)
+
+## x <- readShapeLines('~/temp/DescargasMozilla/lineas_limite/ED50/Lineas_Peninsula_IB_CE_ML_ED50_LL.shp', proj4string=proj)
+## spain2 <- list('sp.lines', x, lwd=0.5)
+## spplot(sppoints['NomProv'], sp.layout=spain2, scales=list(draw=TRUE), key.space='right')
+
+##http://biogeo.ucdavis.edu/data/diva/adm/ESP_adm.zip
+
+
+
+NGBE <- read.delim('~/temp/DescargasMozilla/NGBE/NGBE.txt', dec=',')
+redNGBE <- merge(RedEstaciones, NGBE, by.x='NomEst', by.y='Texto')
+
+spNGBE <- SpatialPointsDataFrame(coords=redNGBE[c('Longitud', 'Latitud')],
+                                   data=redNGBE[c('NomProv', 'NomEst')],
+                                   proj4string=proj)
+
+
+spplot(spNGBE['NomProv'], sp.layout=spain2, scales=list(draw=TRUE), key.space='right')
+
+
