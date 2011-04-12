@@ -22,7 +22,11 @@ readMAPA(prov, est, start, end, lat=0, format='\%d/\%m/\%Y')
   \item{format}{character string with the format of the \code{start}
     and \code{end} dates. (Default: '\%d/\%m/\%Y')}
 }
-\value{\code{Meteo} object,  with the information available at \url{www.mapa.es/siar}}
+\value{\code{Meteo} object,  with the information available at
+  \url{www.mapa.es/siar}.
+
+  It should be noted that SIAR uses MJ/m² units
+  for the irradiation data and \code{readMAPA} converts the values to Wh/m².}
 
 \references{\url{www.mapa.es/siar}}
 
