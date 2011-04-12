@@ -45,6 +45,11 @@ time <- timedim$vals
 ##cambiar
 date.time <- as.Date(utcal.nc(time.unit,time,type="s"))
 
-###EXPAND.GRID con lat, lon y date.time
+library(spacetime)
 proj <- CRS('+proj=latlon +ellps=WGS84')
-spData <- SpatialPixelsDataFrame(points=cbind(lat, lon), data=field, proj4string=proj)
+coords <- expand.grid(lon=signif(lon, 4), lat=signif(lat, 5))
+sp <- SpatialPixels(SpatialPoints(coords, proj4string=proj))
+data <- data.frame(G0=c(field))
+stData <- STFDF(sp, time=xts(seq_along(time), as.Date(time)), data=data)
+
+stplot(stData, scales=list(draw=TRUE))
