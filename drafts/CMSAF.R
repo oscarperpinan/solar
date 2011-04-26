@@ -79,15 +79,23 @@ spRedGN <- SpatialPointsDataFrame(coords=redGN[c('lng', 'lat')],
 redGNraster <- rasterize(spRedGN, nccrop)
 
 #####
-l8 <- raster('/home/oscar/Datos/CMSAF/SISdm199806080000001170031001MH.nc')
-l9 <- raster('/home/oscar/Datos/CMSAF/SISdm199806090000001170031001MH.nc')
-l10 <- raster('/home/oscar/Datos/CMSAF/SISdm199806100000001170031001MH.nc')
-b <- stack(l8, l9, l10)
+zvalue <- function(...){
+  dots <- list(...)
+  zzz <- lapply(dots, function(x)paste(unlist(strsplit(x@zvalue, '-')), collapse=''))
+  res <- do.call(c, zzz)
+  res
+  }
 
-bcrop <- crop(b, extent(-10, 5, 35, 45), filename='~/Datos/CMSAF/SIScrop', overwrite=TRUE)
+l8 <- raster('~/Datos/CMSAF/SISmm198805010000001170030501MH.nc')
+l9 <- raster('~/Datos/CMSAF/SISmm198806010000001170030501MH.nc')
+l10 <- raster('~/Datos/CMSAF/SISmm198807010000001170030501MH.nc')
+b <- stack(l8, l9, l10)
+b@zvalue <- zvalue(l8, l9, l10)
+
+bcrop <- crop(b, extent(-10, 5, 35, 45), filename='~/Datos/CMSAF/SIScrop.nc')
 
 bsp <- as(bcrop*24/1000, 'SpatialGridDataFrame')
-
+names(bsp) <- paste('T', zvalue(l8, l9, l10), sep='')
 proj <- CRS('+proj=latlon +ellps=WGS84')
 ##Descargo y descomprimo un zip de http://biogeo.ucdavis.edu/data/diva/adm/ESP_adm.zip
 ##Contiene un Shapefile con información de las fronteras entre provincias de españa.
