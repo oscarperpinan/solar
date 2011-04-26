@@ -53,3 +53,50 @@ data <- data.frame(G0=c(field))
 stData <- STFDF(sp, time=xts(seq_along(time), as.Date(time)), data=data)
 
 stplot(stData, scales=list(draw=TRUE))
+
+####Ahora con la libreria RASTER
+library(raster)
+# Open the netcdf-file
+nc <- raster('~/Datos/CMSAF/SISmm199401010000001170030701MH.nc')
+nc@zvalue##time
+
+nccrop <- crop(nc, extent(-10, 5, 35, 45),
+               filename='~/Datos/CMSAF/crop.nc')
+nccrop
+plot(nccrop)
+
+ncsample <- sampleRegular(nccrop, 1e5, asRaster=TRUE)
+ncsp <- as(ncsample, 'SpatialGridDataFrame')
+spplot(ncsp, contour=TRUE, scales=list(draw=TRUE))
+
+load('/home/oscar/Investigacion/solar/drafts/redGN.RData')
+proj <- CRS('+proj=latlon +ellps=WGS84')
+redGN$datos <- 10
+spRedGN <- SpatialPointsDataFrame(coords=redGN[c('lng', 'lat')],
+                                   data=redGN['datos'],
+                                   proj4string=proj)
+
+redGNraster <- rasterize(spRedGN, nccrop)
+
+#####
+l8 <- raster('/home/oscar/Datos/CMSAF/SISdm199806080000001170031001MH.nc')
+l9 <- raster('/home/oscar/Datos/CMSAF/SISdm199806090000001170031001MH.nc')
+l10 <- raster('/home/oscar/Datos/CMSAF/SISdm199806100000001170031001MH.nc')
+b <- stack(l8, l9, l10)
+
+bcrop <- crop(b, extent(-10, 5, 35, 45), filename='~/Datos/CMSAF/SIScrop', overwrite=TRUE)
+
+bsp <- as(bcrop*24/1000, 'SpatialGridDataFrame')
+
+proj <- CRS('+proj=latlon +ellps=WGS84')
+##Descargo y descomprimo un zip de http://biogeo.ucdavis.edu/data/diva/adm/ESP_adm.zip
+##Contiene un Shapefile con información de las fronteras entre provincias de españa.
+old <- getwd()
+setwd('/home/oscar/Datos')##Cambiar!!!
+##Leo el contenido:
+mapaSHP <- readShapeLines('ESP_adm/ESP_adm2.shp', proj4string=proj)
+setwd(old)
+##y lo transformo en un objeto SpatialLines, con grosr de linea definido por lwd
+mapaES <- list('sp.lines', mapaSHP, lwd=0.5)
+
+spplot(bsp, sp.layout=mapaES)

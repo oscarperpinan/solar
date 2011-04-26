@@ -10,6 +10,7 @@ deleteLine <- function(x)
              sapply(strsplit(as.character(x), '_'), paste, collapse=" ")
 
 RedEstaciones$NomProv <- factor(deleteLine(RedEstaciones$NomProv))
+RedEstaciones$NomEst <- deleteLine(RedEstaciones$NomEst)
 
 ##pone en mayúsculas la inicial y el resto en minúsculas
 capital <- function(x)paste(toupper(substring(x, 1, 1)), tolower(substring(x, 2)), sep='')
@@ -50,7 +51,7 @@ spRedGN <- SpatialPointsDataFrame(coords=redGN[c('lng', 'lat')],
 ##Descargo y descomprimo un zip de http://biogeo.ucdavis.edu/data/diva/adm/ESP_adm.zip
 ##Contiene un Shapefile con información de las fronteras entre provincias de españa.
 old <- getwd()
-setwd('/home/oscar/temp')##Cambiar!!!
+setwd('/home/oscar/Datos')##Cambiar!!!
 ##Leo el contenido:
 mapaSHP <- readShapeLines('ESP_adm/ESP_adm2.shp', proj4string=proj)
 setwd(old)
