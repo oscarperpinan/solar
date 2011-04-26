@@ -102,9 +102,76 @@ proj <- CRS('+proj=latlon +ellps=WGS84')
 old <- getwd()
 setwd('/home/oscar/Datos')##Cambiar!!!
 ##Leo el contenido:
+library(maptools)
 mapaSHP <- readShapeLines('ESP_adm/ESP_adm2.shp', proj4string=proj)
 setwd(old)
 ##y lo transformo en un objeto SpatialLines, con grosr de linea definido por lwd
 mapaES <- list('sp.lines', mapaSHP, lwd=0.5)
 
 spplot(bsp, sp.layout=mapaES)
+
+##más experimentos con raster
+library(raster)
+G0dm=c(2.766,3.491,4.494,5.912,6.989,7.742,7.919,7.027,5.369,3.562,2.814,2.179)*1000;
+
+nr=10
+nc=10
+num2raster <- function(x, nrows=nr, ncols=nc, ...){
+  r <- raster(nrows=nrows, ncols=ncols)
+  r[] <- x
+  r
+  }
+
+G0dm2 <- lapply(G0dm, function(x)x+100*rnorm(nc*nr))
+s <- stack(lapply(G0dm2, num2raster))
+layerNames(s) <- month.abb
+spplot(as(s, 'SpatialGridDataFrame'))
+
+foo <- function(x, ...){
+  gef <- calcGef(lat=x[1], prom=list(G0dm=x[2:13]))
+  result <- as.data.frameY(gef)[c('Gefd', 'Befd', 'Defd')]
+  as.numeric(result)
+}
+
+latLayer <- raster(s, layer=1)
+layerNames(latLayer) <- 'Latitude'
+latLayer[] <- yFromCell(s, 1:ncell(s))
+
+gefS <- calc(stack(latLayer, s), foo)
+layerNames(gefS)=c('Gefd', 'Befd', 'Defd')
+gefSP <- (as(gefS, 'SpatialGridDataFrame'))
+spplot(gefSP['values.Gefd'])
+
+x <- 1:12
+monSeq <- paste(ifelse(x>=10, '', '0'), x, sep='')
+listaFich <- paste('/home/oscar/Datos/CMSAF/SISmm1996',monSeq, '010000001170030801MH.nc', sep='')
+listaRasters <- lapply(listaFich, raster)
+S <- stack(listaRasters)
+
+
+Scrop <- crop(S, extent(-10, 5, 35, 45), filename='~/Datos/CMSAF/1996mm', overwrite=TRUE)
+Scrop <- Scrop*24/1000##a kWh/m2
+Ssample <- sampleRegular(Scrop, size=1e+4, asRaster=TRUE)
+layerNames(Ssample) <- month.abb
+Ssp <- as(Ssample, 'SpatialGridDataFrame')
+spplot(Ssp, contour=TRUE)##, sp.layout=mapaES)
+
+latLayer <- raster(Ssample, layer=1)
+layerNames(latLayer) <- 'Latitude'
+latLayer[] <- yFromCell(Ssample, 1:ncell(Ssample))
+
+zLat <- zonal(Ssample, latLayer, mean, digits=1)
+nms <- paste(names(zLat)[2:13], collapse='+')
+formula <- as.formula(paste(nms, '~zone', sep=''))
+p <- xyplot(formula, data=zLat, type='l')
+p+glayer(panel.text(x[10], y[10], group.number))
+
+lonLayer <- raster(Ssample, layer=1)
+layerNames(lonLayer) <- 'Longitude'
+lonLayer[] <- xFromCell(Ssample, 1:ncell(Ssample))
+
+zLon <- zonal(Ssample, lonLayer, mean, digits=1)
+nms <- paste(names(zLon)[2:13], collapse='+')
+formula <- as.formula(paste(nms, '~zone', sep=''))
+p <- xyplot(formula, data=zLon, type='l')
+p+glayer(panel.text(x[10], y[10], group.number))
