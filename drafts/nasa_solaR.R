@@ -32,6 +32,9 @@ paleta=colorRampPalette(rev(brewer.pal('YlOrRd', n=9)))
 paleta2=colorRampPalette((brewer.pal('RdBu', n=11)))
 paleta3=heat.ob
 
+ncuts <- 7
+colContour <- paleta3(ncuts)[2]
+
 #spplot(nasaSP[,1:12], col.regions=paleta, layout=c(3,4), as.table=TRUE, sp.layout=mapa)
 trellis.device(file='NasaG0y.pdf', pdf)
 spplot(nasaSP['Ann'], sp.layout=mapa,

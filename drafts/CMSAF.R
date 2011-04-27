@@ -1,61 +1,68 @@
-##extraido de plot.TimeSeries.R de CMSAF_examples
-library(ncdf)
-library(RNetCDF)
+## ##extraido de plot.TimeSeries.R de CMSAF_examples
+## library(ncdf)
+## library(RNetCDF)
 
-# Open the netcdf-file
-nc <- open.ncdf('~/temp/SIS_METCH_hrv_cor_moe_110_regular_200401.nc')
+## # Open the netcdf-file
+## nc <- open.ncdf('~/temp/SIS_METCH_hrv_cor_moe_110_regular_200401.nc')
 
-# Retrieve the data from the first variable in the netcdf-file 
-varname <- nc$var[[1]]$name
-field <- get.var.ncdf(nc, varname)
-unit <- att.get.ncdf(nc, varname,"units")$value
-missval <- att.get.ncdf(nc,varname,"_FillValue")$value
-# Close the file
-close.ncdf(nc)
+## # Retrieve the data from the first variable in the netcdf-file 
+## varname <- nc$var[[1]]$name
+## field <- get.var.ncdf(nc, varname)
+## unit <- att.get.ncdf(nc, varname,"units")$value
+## missval <- att.get.ncdf(nc,varname,"_FillValue")$value
+## # Close the file
+## close.ncdf(nc)
 
-# Set the missing data to NA, considering scale.factor and add.offset
-scale.factor <- 1.
-add.offset <- 0.
-#Derive the scale factor and the offset
-has.scale <- nc$var[[1]]$hasScaleFact
-if (has.scale) scale.factor <- nc$var[[1]]$scaleFact
-has.offset <- nc$var[[1]]$hasAddOffset
-if (has.offset) add.offset <- nc$var[[1]]$addOffset
-# Set the missing values to NA
-na.ind <- which(field == missval*scale.factor + add.offset)
-field[na.ind] <- NA
+## # Set the missing data to NA, considering scale.factor and add.offset
+## scale.factor <- 1.
+## add.offset <- 0.
+## #Derive the scale factor and the offset
+## has.scale <- nc$var[[1]]$hasScaleFact
+## if (has.scale) scale.factor <- nc$var[[1]]$scaleFact
+## has.offset <- nc$var[[1]]$hasAddOffset
+## if (has.offset) add.offset <- nc$var[[1]]$addOffset
+## # Set the missing values to NA
+## na.ind <- which(field == missval*scale.factor + add.offset)
+## field[na.ind] <- NA
 
-#--------------------------------------------------#
+## #--------------------------------------------------#
 
-# determine the location 
-londim <- nc$dim[["lon"]]
-lon <- londim$vals
-latdim <- nc$dim[["lat"]]
-lat <- latdim$vals
+## # determine the location 
+## londim <- nc$dim[["lon"]]
+## lon <- londim$vals
+## latdim <- nc$dim[["lat"]]
+## lat <- latdim$vals
 
-#--------------------------------------------------#
+## #--------------------------------------------------#
 
-# retrieve the time variable
-timedim <- nc$dim[["time"]]
-nt <- timedim$len
-time.unit <- timedim$units
-time <- timedim$vals
+## # retrieve the time variable
+## timedim <- nc$dim[["time"]]
+## nt <- timedim$len
+## time.unit <- timedim$units
+## time <- timedim$vals
 
-# Create a R-date-object 
-##cambiar
-date.time <- as.Date(utcal.nc(time.unit,time,type="s"))
+## # Create a R-date-object 
+## ##cambiar
+## date.time <- as.Date(utcal.nc(time.unit,time,type="s"))
 
-library(spacetime)
-proj <- CRS('+proj=latlon +ellps=WGS84')
-coords <- expand.grid(lon=signif(lon, 4), lat=signif(lat, 5))
-sp <- SpatialPixels(SpatialPoints(coords, proj4string=proj))
-data <- data.frame(G0=c(field))
-stData <- STFDF(sp, time=xts(seq_along(time), as.Date(time)), data=data)
+## library(spacetime)
+## proj <- CRS('+proj=latlon +ellps=WGS84')
+## coords <- expand.grid(lon=signif(lon, 4), lat=signif(lat, 5))
+## sp <- SpatialPixels(SpatialPoints(coords, proj4string=proj))
+## data <- data.frame(G0=c(field))
+## stData <- STFDF(sp, time=xts(seq_along(time), as.Date(time)), data=data)
 
-stplot(stData, scales=list(draw=TRUE))
+## stplot(stData, scales=list(draw=TRUE))
 
 ####Ahora con la libreria RASTER
 library(raster)
+
+library(hexbin)
+paleta=colorRampPalette(rev(brewer.pal('YlOrRd', n=9)))
+paleta2=colorRampPalette((brewer.pal('RdBu', n=11)))
+paleta3=heat.ob
+paletaTierra=terrain.colors
+
 # Open the netcdf-file
 nc <- raster('~/Datos/CMSAF/SISmm199401010000001170030701MH.nc')
 nc@zvalue##time
@@ -96,9 +103,11 @@ bcrop <- crop(b, extent(-10, 5, 35, 45), filename='~/Datos/CMSAF/SIScrop.nc')
 
 bsp <- as(bcrop*24/1000, 'SpatialGridDataFrame')
 names(bsp) <- paste('T', zvalue(l8, l9, l10), sep='')
-proj <- CRS('+proj=latlon +ellps=WGS84')
+
+
 ##Descargo y descomprimo un zip de http://biogeo.ucdavis.edu/data/diva/adm/ESP_adm.zip
 ##Contiene un Shapefile con información de las fronteras entre provincias de españa.
+proj <- CRS('+proj=latlon +ellps=WGS84')
 old <- getwd()
 setwd('/home/oscar/Datos')##Cambiar!!!
 ##Leo el contenido:
@@ -107,6 +116,7 @@ mapaSHP <- readShapeLines('ESP_adm/ESP_adm2.shp', proj4string=proj)
 setwd(old)
 ##y lo transformo en un objeto SpatialLines, con grosr de linea definido por lwd
 mapaES <- list('sp.lines', mapaSHP, lwd=0.5)
+####
 
 spplot(bsp, sp.layout=mapaES)
 
@@ -133,10 +143,6 @@ foo <- function(x, ...){
   as.numeric(result)
 }
 
-latLayer <- raster(s, layer=1)
-layerNames(latLayer) <- 'Latitude'
-latLayer[] <- yFromCell(s, 1:ncell(s))
-
 gefS <- calc(stack(latLayer, s), foo)
 layerNames(gefS)=c('Gefd', 'Befd', 'Defd')
 gefSP <- (as(gefS, 'SpatialGridDataFrame'))
@@ -150,12 +156,23 @@ S <- stack(listaRasters)
 
 
 Scrop <- crop(S, extent(-10, 5, 35, 45), filename='~/Datos/CMSAF/1996mm', overwrite=TRUE)
+##Scrop <- brick('~/Datos/CMSAF/1987mm')
 Scrop <- Scrop*24/1000##a kWh/m2
 Ssample <- sampleRegular(Scrop, size=1e+4, asRaster=TRUE)
 layerNames(Ssample) <- month.abb
 Ssp <- as(Ssample, 'SpatialGridDataFrame')
-spplot(Ssp, contour=TRUE)##, sp.layout=mapaES)
 
+ncuts <- 7
+colContour <- 'brown'
+
+spplot(Ssp, sp.layout=mapaES,
+       col.regions=paleta3, colorkey=list(space='bottom'),
+       contour=TRUE, cuts=ncuts, col=colContour, lwd=0.5,
+       scales=list(draw=TRUE)
+       )
+
+
+###capas de latitud y longitud
 latLayer <- raster(Ssample, layer=1)
 layerNames(latLayer) <- 'Latitude'
 latLayer[] <- yFromCell(Ssample, 1:ncell(Ssample))
@@ -175,3 +192,36 @@ nms <- paste(names(zLon)[2:13], collapse='+')
 formula <- as.formula(paste(nms, '~zone', sep=''))
 p <- xyplot(formula, data=zLon, type='l')
 p+glayer(panel.text(x[10], y[10], group.number))
+
+
+###Datos de elevación disponibles en http://diva-gis.org/data/
+##por alguna razón getData no es capaz de descargar adecuadamente la información
+elevES <- getData(country='ES', 'alt', mask=FALSE, path='~/Datos/ESP_alt/')
+elevESsp <- as(sampleRegular(elevES, 5e5, asRaster=TRUE), 'SpatialGridDataFrame')
+
+ncuts <- 7
+colContour <- 'brown'
+
+ spplot(elevESsp, sp.layout=mapaES,
+       col.regions=paletaTierra, colorkey=list(space='bottom'),
+       contour=TRUE, cuts=ncuts, col=colContour, lwd=0.5,
+       scales=list(draw=TRUE)
+       )
+
+ScropElevES <- crop(S, elevES)
+elevESrs <- resample(elevES, ScropElevES, 'bilinear')
+ScropElevES <- mask(ScropElevES, elevESrs)
+ScropElevES <- ScropElevES*24/1000##a kWh/m2
+
+SsmpElevES <- sampleRegular(ScropElevES, size=ncell(ScropElevES), asRaster=TRUE)
+layerNames(SsmpElevES) <- month.abb
+Ssp <- as(SsmpElevES, 'SpatialGridDataFrame')
+
+ncuts <- 7
+colContour <- 'brown'
+
+spplot(Ssp, ##sp.layout=mapaES,
+       col.regions=paleta3, colorkey=list(space='bottom'),
+       ##contour=TRUE, cuts=ncuts, col=colContour, lwd=0.5,
+       scales=list(draw=TRUE)
+       )
