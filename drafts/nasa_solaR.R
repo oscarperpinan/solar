@@ -44,6 +44,10 @@ spplot(nasaSP['Ann'], sp.layout=mapa,
        )
 dev.off()
 
+##Otra forma con latticeExtra y layer()
+p <- spplot(nasaSP['Ann'])
+p+layer(sp.lines(world_sp, lwd=0.5))
+
 ###
 N=nrow(nasa)
 gefNasa <- matrix(nrow=N, ncol=3)
@@ -148,5 +152,4 @@ bwplot(formula, data=nasa, subset=(abs(Lat)<60),
        scales=list(x=list(rot=70, cex=0.5))
        )
 dev.off()
-
 

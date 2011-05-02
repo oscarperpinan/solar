@@ -196,7 +196,8 @@ p+glayer(panel.text(x[10], y[10], group.number))
 
 ###Datos de elevación disponibles en http://diva-gis.org/data/
 ##por alguna razón getData no es capaz de descargar adecuadamente la información
-elevES <- getData(country='ES', 'alt', mask=FALSE, path='~/Datos/ESP_alt/')
+elevES <- raster('/home/oscar/Datos/ESP_alt/ESP1_alt.grd')##ESP1 es España peninsular
+projection(elevES) <- "+proj=longlat +datum=WGS84"
 elevESsp <- as(sampleRegular(elevES, 5e5, asRaster=TRUE), 'SpatialGridDataFrame')
 
 ncuts <- 7
@@ -225,3 +226,59 @@ spplot(Ssp, ##sp.layout=mapaES,
        ##contour=TRUE, cuts=ncuts, col=colContour, lwd=0.5,
        scales=list(draw=TRUE)
        )
+###slopeAspect
+norteSpain <- crop(elevES, extent(-5, 5, 40, 45))
+slas <- slopeAspect(norteSpain)
+south <- sign(slas[[2]]*180/pi-180)
+slopeSign <- slas[[1]]*south
+slopeSign.sp <- as(slopeSign, 'SpatialGridDataFrame')
+spplot(slopeSign.sp)
+
+hora <- as.POSIXct('2010-06-01 11:00:00', tz='CET')
+
+longNorteSpain <- xFromCol(norteSpain, 1:ncol(norteSpain))
+horaLong <- local2Solar(hora, longNorteSpain)
+
+foo <- function(lat, hora=horaLong){
+  sol <- calcSol(lat=lat, BTi=hora)
+  angles <- as.data.frameI(sol)[c('AzS', 'AlS')]
+  rownames(angles) <- NULL
+  r2d(angles)
+  }
+
+solRaster <- brick(stack(norteSpain, norteSpain), values=FALSE)
+solRaster <- writeStart(solRaster, filename='norteSpain', overwrite=TRUE)
+for (i in seq_len(nrow(norteSpain))){
+  tmp <- foo(lat=yFromRow(norteSpain, i), hora=horaLong)
+  solRaster <- writeValues(solRaster, as.matrix(tmp), i)
+  }
+layerNames(solRaster) <- c('AzS', 'AlS')
+solRaster <- writeStop(solRaster)
+plot(mask(solRaster, norteSpain), col=heat.colors(255))
+## latNorteSpain <- yFromRow(norteSpain, 1:nrow(norteSpain))
+## angLatLong <- lapply(latNorteSpain, foo, horaLong)
+## angLatLong <- do.call('rbind', angLatLong)
+
+## azsRaster <- raster(norteSpain)
+## azsRaster[] <- angLatLong$AzS
+
+## alsRaster <- raster(norteSpain)
+## alsRaster[] <- angLatLong$AlS
+
+## solRaster <- stack(azsRaster, alsRaster)
+## layerNames(solRaster) <- c('AzS', 'AlS')
+solSP <- as(solRaster, 'SpatialGridDataFrame')
+spplot(solSP['values.AlS'], contour=TRUE)
+spplot(solSP['values.AzS'])
+
+shd <- hillShade(slas[[1]], slas[[2]], solRaster[[2]], solRaster[[1]])
+plot(shd, col=grey(0:100/100))
+plot(norteSpain, add=TRUE)
+
+
+
+x <- mask(solRaster, norteSpain)
+plot3D(x[[2]])
+xsp <- as(sampleRegular(x, 1e5, asRaster=TRUE), 'SpatialGridDataFrame')
+spplot(xsp['values.AlS'], contour=TRUE, col.regions=heat.colors)
+

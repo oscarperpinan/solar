@@ -125,7 +125,7 @@ splom(~iris[1:4], par.settings=custom.theme.2(pch=19, cex=0.8, alpha=0.5),
      z <- r*sin(lat)
      
 ##
-
+library(rgl)
 open3d()
 bg3d('black')
 earth <- persp3d(x, y, z, col="white", 
