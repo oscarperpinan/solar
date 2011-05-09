@@ -24,17 +24,20 @@ fSolD<-function(lat, BTd){
 
   if (missing(BTd)) BTd=fBTd(mode='prom')
 
-  dn <- doy(BTd)                     #día del año
-  decl=23.45*sin(2*pi*(dn+284)/365) #declinación
+  dn <- doy(BTd)                        #día del año
+  decl=23.45*sin(2*pi*(dn+284)/365) #declinación, según Cooper, P.I., Solar Energy, 12, 3 (1969). "The Absorption of Solar Radiation in Solar Stills."
   decl=d2r(decl)                    #Paso a radianes
-  ro=1.496E8                        #distancia media Tierra-Sol (km)
-  eo=1+0.033*cos(2*pi*dn/365)       # factor de corrección excentrica
+  ## X = 2*pi*(dn-1)/365
+  ## decl2 = 0.006918 - 0.399912*cos(X) + 0.070257*sin(X) - 0.006758*cos(2*X) + 0.000907*sin(2*X) - 0.002697*cos(3*X) + 0.001480*sin(3*X) #Spencer, Search 2 (5), 172
+  
+  ro=1.496E8                         #distancia media Tierra-Sol (km)
+  eo=1+0.033*cos(2*pi*dn/365)        # factor de corrección excentrica
 
   ##Duración del día
   cosWs=-tan(lat)*tan(decl)
-ws=suppressWarnings(-acos(cosWs)) #Amanecer, definido como ángulo negativo (antes del mediodia)
-polar <- which(is.nan(ws)) ##¿Día o noche polar?
-ws[polar] <- -pi*(cosWs[polar] < -1) + 0*(cosWs[polar] >1)
+  ws=suppressWarnings(-acos(cosWs)) #Amanecer, definido como ángulo negativo (antes del mediodia)
+  polar <- which(is.nan(ws))        ##¿Día o noche polar?
+  ws[polar] <- -pi*(cosWs[polar] < -1) + 0*(cosWs[polar] >1)
   
   ##Ecuación del tiempo, minutos
   ##según Alan M.Whitman "A simple expression for the equation of time"
@@ -44,7 +47,7 @@ ws[polar] <- -pi*(cosWs[polar] < -1) + 0*(cosWs[polar] >1)
   EoT.min=229.18*(-0.0334*sin(M)+0.04184*sin(2*M+3.5884))
   EoT=h2r(EoT.min/60)                   #radianes
 
-  Bo=1367                              #constante solar
+  Bo=1367                               #constante solar
   Bo0d=-24/pi*Bo*eo*(ws*sin(lat)*sin(decl)+cos(lat)*cos(decl)*sin(ws)) #el signo negativo se debe a la definición de ws
 
   result<-zoo(data.frame(decl=decl,eo=eo,ws=ws,Bo0d=Bo0d, EoT=EoT), truncDay(BTd))
