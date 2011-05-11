@@ -36,7 +36,8 @@ setClass(
            solD='zoo',                #angulos diarios
            solI='zoo',                #angulos intradiarios
            match='numeric', #indices de solD que coinciden con días de solI
-           sample='difftime'
+           sample='difftime',
+           method='character' ##method used for geometry calculations
            ),
          validity=function(object) {return(TRUE)}
          )

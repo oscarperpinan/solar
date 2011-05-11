@@ -14,10 +14,12 @@
  # along with this program; if not, write to the Free Software
  # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  #/
-fSolI<-function(solD, sample='hour', BTi, EoT=FALSE, keep.night=TRUE){
+fSolI<-function(solD, sample='hour', BTi, EoT=TRUE, keep.night=TRUE, method='michalsky'){
+
+  Bo=1367 ##Constante Solar
 
   lat=d2r(attr(solD, 'lat'))
-  signLat=ifelse(sign(lat)==0, 1, sign(lat))##Cuando lat=0, sign(lat)=0. Lo cambio a sign(lat)=1
+  signLat=ifelse(sign(lat)==0, 1, sign(lat)) ##Cuando lat=0, sign(lat)=0. Lo cambio a sign(lat)=1
 
   if (missing(BTi)){
     ## ##Copiado de seq.POSIXt
@@ -40,7 +42,7 @@ fSolI<-function(solD, sample='hour', BTi, EoT=FALSE, keep.night=TRUE){
   ##Para escoger sólo aquellos días que están en solD, 
   ##por ejempo para días promedio
   ##o para días que no están en la base de datos
-  seqby.day<-truncDay(seqby) #format(seqby, '%Y-%m-%d')
+  seqby.day<-truncDay(seqby)          #format(seqby, '%Y-%m-%d')
   solD.day<-index(solD)               #format(index(solD), '%Y-%m-%d')
   mtch<-match(seqby.day, solD.day, nomatch = 0) ##Obtengo los índices de solD.day para los que hay correspondencia con seqby.day
   mtch.in=which(mtch>0)                #which(seqby.day %in% solD.day)
@@ -61,12 +63,57 @@ fSolI<-function(solD, sample='hour', BTi, EoT=FALSE, keep.night=TRUE){
   Bo0d<-sol.rep$Bo0d
   eo<-sol.rep$eo
   if (EoT) {EoT=sol.rep$EoT} else {EoT=0}
-    
-  Bo=1367 ##Constante Solar
-     
+       
+  jd <- as.numeric(julian(seqby.match, origin='2000-01-01 12:00:00 UTC'))
   TO=hms(seqby.match)
-  w<-h2r(TO-12)+EoT
-  	
+
+  methods=c('spencer', 'michalsky', 'strous')
+  method=match.arg(method, methods)
+
+  w=switch(method,
+    'spencer' = h2r(TO-12)+EoT,
+    'michalsky' = {
+      meanLong=(280.460+0.9856474*jd)%%360
+      meanAnomaly=(357.528+0.9856003*jd)%%360
+      eclipLong=(meanLong +1.915*sin(d2r(meanAnomaly))+0.02*sin(d2r(2*meanAnomaly)))%%360
+      excen=23.439-0.0000004*jd
+
+      sinEclip=sin(d2r(eclipLong))
+      cosEclip=cos(d2r(eclipLong))
+      cosExcen=cos(d2r(excen))
+
+      ascension=r2d(atan2(sinEclip*cosExcen, cosEclip))%%360
+
+      ##local mean sidereal time, LMST
+      ##TO has been previously corrected with local2Solar in order
+      ##to include the longitude, daylight savings, etc.
+      lmst=(h2d(6.697375 + 0.0657098242*jd + TO))%%360
+      w=(lmst-ascension)
+      w <- d2r(w + 360*(w < -180) - 360*(w > 180))
+    },
+    'strous' = {
+      meanAnomaly = (357.5291 + 0.98560028*jd)%%360
+      coefC=c(1.9148, 0.02, 0.0003)
+      sinC=sin(outer(1:3, d2r(meanAnomaly), '*'))
+      C = colSums(coefC*sinC)
+      trueAnomaly=(meanAnomaly + C)%%360
+      eclipLong=(trueAnomaly + 282.9372)%%360
+      excen=23.435
+
+      sinEclip=sin(d2r(eclipLong))
+      cosEclip=cos(d2r(eclipLong))
+      cosExcen=cos(d2r(excen))
+
+      ascension=r2d(atan2(sinEclip*cosExcen, cosEclip))%%360
+
+      ##local mean sidereal time, LMST
+      ##TO has been previously corrected with local2Solar in order
+      ##to include the longitude, daylight savings, etc.
+      lmst=(280.1600+360.9856235*jd)%%360
+      w=(lmst-ascension)
+      w <- d2r(w + 360*(w< -180) - 360*(w>180))
+    }
+    )
   aman<-abs(w)<=abs(ws)
 
   ##Angulos solares

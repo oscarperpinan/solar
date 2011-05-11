@@ -3,7 +3,7 @@ lon=5
 lat=52
 ##hh <- as.POSIXct('2004-04-01 12:00:00 UTC')
 hh1 <- as.POSIXct('1985-01-01 00:00:00 UTC')
-hh2 <- as.POSIXct('2050-12-31 00:00:00 UTC')
+hh2 <- as.POSIXct('1985-01-02 00:00:00 UTC')
 hh <- seq(hh1, hh2, 'hour')
 jd <- as.numeric(julian(hh, origin='2000-01-01 12:00:00 UTC'))
 
@@ -30,13 +30,16 @@ ascension=r2d(atan2(sinEclip*cosExcen, cosEclip))%%360
 lmst=(280.1600+360.9856235*jd+lon)%%360
 hourAngle=(lmst-ascension)
 hourAngle <- hourAngle + 360*(hourAngle< -180) - 360*(hourAngle>180)
+cosSunset=-tan(d2r(lat))*tan(d2r(declination))
+sunset=suppressWarnings(-acos(cosSunset)) #Amanecer, definido como ángulo negativo (antes del mediodia)
+
 
 ##Michalsky
 meanLongM=(280.460+0.9856474*jd)%%360
 meanAnomalyM=(357.528+0.9856003*jd)%%360
 eclipLongM=(meanLongM +1.915*sin(d2r(meanAnomalyM))+0.02*sin(d2r(2*meanAnomalyM)))%%360
 excenM=23.439-0.0000004*jd
-
+R=1.00014-0.01671*cos(meanAnomalyM)-0.00014*cos(2*meanAnomalyM)
 sinEclipM=sin(d2r(eclipLongM))
 cosEclipM=cos(d2r(eclipLongM))
 
@@ -56,9 +59,15 @@ hourAngleM <- hourAngleM + 360*(hourAngleM < -180) - 360*(hourAngleM>180)
 dn <- doy(hh)                        #día del año
 
 decl=23.45*sin(2*pi*(dn+284)/365)
+eo=1+0.033*cos(2*pi*dn/365)        # factor de corrección excentrica
+cosWs=-tan(d2r(lat))*tan(d2r(decl))
+ws=suppressWarnings(-acos(cosWs)) #Amanecer, definido como ángulo negativo (antes del mediodia)
 
 X = 2*pi*(dn-1)/365
 decl2 = 0.006918 - 0.399912*cos(X) + 0.070257*sin(X) - 0.006758*cos(2*X) + 0.000907*sin(2*X) - 0.002697*cos(3*X) + 0.001480*sin(3*X) #Spencer, Search 2 (5), 172
+
+cosWs2=-tan(d2r(lat))*tan(decl2)
+ws2=suppressWarnings(-acos(cosWs2)) #Amanecer, definido como ángulo negativo (antes del mediodia)
 
 cooper <- declination-decl
 spencer <- declination-r2d(decl2)

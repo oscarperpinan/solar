@@ -70,8 +70,10 @@ d2r<-function(x){x*pi/180}
 r2d<-function(x){x*180/pi}
 
 h2r<-function(x){x*pi/12}
+h2d<-function(x){x*180/12}
 
 r2h<-function(x){x*12/pi}
+d2h<-function(x){x*12/180}
 
 r2sec<-function(x){x*12/pi*3600}
 

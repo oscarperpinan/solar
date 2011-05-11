@@ -15,7 +15,9 @@
 d2r(x)
 r2d(x)
 h2r(x)
+h2d(x)
 r2h(x)
+d2h(x)
 r2sec(x)
 }
 \arguments{
@@ -29,6 +31,8 @@ r2sec(x)
     \item{r2d: }{Radians to degrees.}
     \item{h2r: }{Hours to radians.}
     \item{r2h: }{Radians to hours.}
+    \item{h2d: }{Hours to degrees.}
+    \item{d2h: }{Degrees to hours.}
     \item{r2sec: }{Radians to seconds.}
   }
 }
