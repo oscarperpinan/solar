@@ -11,7 +11,7 @@
   functions \code{\link{fSolD}} and \code{\link{fSolI}}.
 }
 \usage{
-calcSol(lat, BTd, sample='hour', BTi, EoT=FALSE, keep.night=TRUE)
+calcSol(lat, BTd, sample='hour', BTi, EoT=TRUE, keep.night=TRUE)
 }
 
 \arguments{
@@ -32,7 +32,8 @@ calcSol(lat, BTd, sample='hour', BTi, EoT=FALSE, keep.night=TRUE)
     \code{\link{fSolI}}. It could be the index of the \code{G0I} argument
     to \code{\link{calcG0}}.}
 
-  \item{EoT}{logical, if \code{TRUE} the Equation of Time is used.}
+  \item{EoT}{logical, if \code{TRUE} the Equation of Time is
+  used. Default is TRUE.}
 
   \item{keep.night}{logical, if \code{TRUE} (default) the night is
     included in the time series.}

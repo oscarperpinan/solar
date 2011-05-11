@@ -25,10 +25,10 @@ fSolD<-function(lat, BTd){
   if (missing(BTd)) BTd=fBTd(mode='prom')
 
   dn <- doy(BTd)                        #día del año
-  decl=23.45*sin(2*pi*(dn+284)/365) #declinación, según Cooper, P.I., Solar Energy, 12, 3 (1969). "The Absorption of Solar Radiation in Solar Stills."
-  decl=d2r(decl)                    #Paso a radianes
-  ## X = 2*pi*(dn-1)/365
-  ## decl2 = 0.006918 - 0.399912*cos(X) + 0.070257*sin(X) - 0.006758*cos(2*X) + 0.000907*sin(2*X) - 0.002697*cos(3*X) + 0.001480*sin(3*X) #Spencer, Search 2 (5), 172
+##  decl=23.45*sin(2*pi*(dn+284)/365) #declinación, según Cooper, P.I., Solar Energy, 12, 3 (1969). "The Absorption of Solar Radiation in Solar Stills."
+##  decl=d2r(decl)                    #Paso a radianes
+  X = 2*pi*(dn-1)/365
+  decl = 0.006918 - 0.399912*cos(X) + 0.070257*sin(X) - 0.006758*cos(2*X) + 0.000907*sin(2*X) - 0.002697*cos(3*X) + 0.001480*sin(3*X) #Spencer, Search 2 (5), 172
   
   ro=1.496E8                         #distancia media Tierra-Sol (km)
   eo=1+0.033*cos(2*pi*dn/365)        # factor de corrección excentrica
