@@ -6,7 +6,7 @@
 \title{Methods for Function as.data.frameY}
 \description{Convert a \code{G0} object (or a extended class) into a \code{data.frame} with
   yearly values.}
-\usage{as.data.frameY(object, complete=FALSE)}
+\usage{\S4method{as.data.frameY}{G0}(object, complete=FALSE)}
 \arguments{
   \item{object}{A \code{G0} object (or extended.)}
   \item{complete}{A logical.}

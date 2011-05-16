@@ -6,7 +6,7 @@
 \title{Methods for Function as.data.frameI}
 \description{Convert a \code{Sol} object (or a extended class) into a data.frame with
   intradaily values.}
-\usage{as.data.frameI(object, complete=FALSE, day=FALSE)}
+\usage{\S4method{as.data.frameI}{Sol}(object, complete=FALSE, day=FALSE)}
 \arguments{
   \item{object}{A \code{Sol} object (or extended.)}
   \item{complete}{A logical.}

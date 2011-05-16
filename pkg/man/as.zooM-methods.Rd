@@ -13,7 +13,7 @@
   \code{zoo} object with monthly average of daily values.}
 
 \usage{
-as.zooM(object, complete=FALSE)
+\S4method{as.zooM}{G0}(object, complete=FALSE)
 }
 
 \arguments{

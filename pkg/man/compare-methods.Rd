@@ -8,7 +8,8 @@
 
 \title{Compare G0, Gef and ProdGCPV objects}
 \description{Compare and plot the yearly values of several objects.}
-\usage{compare(...)}
+\usage{
+\S4method{compare}{G0}(...)}
 \arguments{
   \item{...}{A list of objects to be compared.}
   }

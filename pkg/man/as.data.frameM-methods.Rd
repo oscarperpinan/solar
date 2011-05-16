@@ -6,7 +6,7 @@
 \title{Methods for Function as.data.frameM}
 \description{Convert a \code{G0} object (or a extended class) into a \code{data.frame} with
   monthly values.}
-\usage{as.data.frameM(object, complete=FALSE)}
+\usage{\S4method{as.data.frameM}{G0}(object, complete=FALSE)}
 \arguments{
   \item{object}{A \code{G0} object (or extended.)}
   \item{complete}{A logical.}

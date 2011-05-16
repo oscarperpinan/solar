@@ -13,7 +13,7 @@
   \code{zoo} object with yearly values.}
 
 \usage{
-as.zooY(object, complete=FALSE)
+\S4method{as.zooY}{G0}(object, complete=FALSE)
 }
 
 \arguments{

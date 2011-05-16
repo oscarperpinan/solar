@@ -6,7 +6,8 @@
 \title{Methods for Function as.data.frameD}
 \description{Convert a \code{Sol} object (or a extended class) into a \code{data.frame} with
   daily values.}
-\usage{as.data.frameD(object, complete=FALSE)}
+\usage{
+\S4method{as.data.frameD}{Sol}(object, complete=FALSE)}
 \arguments{
   \item{object}{A \code{Sol} object (or extended.)}
   \item{complete}{A logical.}

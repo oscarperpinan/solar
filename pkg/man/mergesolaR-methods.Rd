@@ -9,7 +9,8 @@
 \alias{mergesolaR,ProdPVPS-method}
 \title{Merge solaR objects}
 \description{Merge the daily time series of solaR objects}
-\usage{mergesolaR(...)}
+\usage{
+\S4method{mergesolaR}{G0}(...)}
 \arguments{
   \item{...}{A list of objects to be merged.}
   }

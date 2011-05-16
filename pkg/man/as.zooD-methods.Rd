@@ -14,7 +14,7 @@
   \code{zoo} object with daily values.}
 
 \usage{
-as.zooD(object, complete=FALSE)
+\S4method{as.zooD}{Sol}(object, complete=FALSE)
 }
 
 \arguments{
