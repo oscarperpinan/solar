@@ -33,7 +33,7 @@ fCompI<-function(sol, compD, G0I, corr='none', f){
   rg=coredata(solI$rg)
   aman=coredata(solI$aman)
   Bo0=coredata(solI$Bo0)
-  cosThzS=coredata(solI$cosThzS)
+  ##cosThzS=coredata(solI$cosThzS)
 
   if (missing(G0I)) { ##Utilizo compD
 
