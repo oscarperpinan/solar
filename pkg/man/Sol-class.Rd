@@ -21,6 +21,7 @@
       \code{\link{fSolI}}.}
     \item{\code{match}:}{numeric, index of \code{solD} related
       with the index of \code{solI}.}
+    \item{\code{method}:}{character, method for the sun geometry calculations.}
     \item{\code{sample}:}{\code{difftime}, increment of the intradaily sequence.}
   }
 }

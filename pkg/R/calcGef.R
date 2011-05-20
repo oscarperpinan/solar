@@ -24,6 +24,7 @@ calcGef<-function(lat,
                   bdI=list(),
                   sample='hour',
                   keep.night=TRUE,
+                  sunGeometry='michalsky',
                   corr, f,
                   betaLim=90, beta=abs(lat)-10, alfa=0,
                   iS=2, alb=0.2, horizBright=FALSE,
@@ -42,8 +43,9 @@ calcGef<-function(lat,
     radHoriz<-calcG0(lat=lat, modeRad=modeRad,
                      prom=prom, mapa=mapa, bd=bd, bdI=bdI,
                      sample=sample, keep.night=keep.night,
+                     sunGeometry=sunGeometry,
                      corr=corr, f=f)
-  } else {           #Utilizamos un cálculo prev de calcG0
+  } else {                     #Utilizamos un cálculo prev de calcG0
     radHoriz <- as(prev, 'G0') ##OJO: ¿hace falta comprobar que coinciden lat y otras?
   } 
 
@@ -57,7 +59,7 @@ calcGef<-function(lat,
   
   if (radHoriz@type=='prom') {
     Gefdm=aggregate(inclin[,c('Bo', 'Bn', 'G', 'D', 'B', 'Gef', 'Def', 'Bef')]/1000,
-      by=as.yearmon, FUN=P2E, radHoriz@sample)       #kWh
+      by=as.yearmon, FUN=P2E, radHoriz@sample) #kWh
     names(Gefdm)=paste(names(Gefdm), 'd', sep='')
 
     GefD=Gefdm*1000                  #Wh
@@ -67,7 +69,7 @@ calcGef<-function(lat,
       unique(year(index(Gefdm))))
   } else {
     GefD=aggregate(inclin[,c('Bo','Bn', 'G', 'D', 'B', 'Gef', 'Def', 'Bef')],
-      by=truncDay, FUN=P2E, radHoriz@sample)         #Wh
+      by=truncDay, FUN=P2E, radHoriz@sample) #Wh
     names(GefD)=paste(names(GefD), 'd', sep='')
 
     Gefdm=aggregate(GefD/1000, by=as.yearmon, mean, na.rm=1)

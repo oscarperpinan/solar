@@ -67,12 +67,13 @@ fSolI<-function(solD, sample='hour', BTi, EoT=TRUE, keep.night=TRUE, method='mic
   jd <- as.numeric(julian(seqby.match, origin='2000-01-01 12:00:00 UTC'))
   TO=hms(seqby.match)
 
-  methods=c('spencer', 'michalsky', 'strous')
+  methods=c('cooper', 'spencer', 'michalsky', 'strous')
   method=match.arg(method, methods)
 
   w=switch(method,
-    'spencer' = h2r(TO-12)+EoT,
-    'michalsky' = {
+    cooper = h2r(TO-12)+EoT,
+    spencer = h2r(TO-12)+EoT,
+    michalsky = {
       meanLong=(280.460+0.9856474*jd)%%360
       meanAnomaly=(357.528+0.9856003*jd)%%360
       eclipLong=(meanLong +1.915*sin(d2r(meanAnomaly))+0.02*sin(d2r(2*meanAnomaly)))%%360
@@ -91,7 +92,7 @@ fSolI<-function(solD, sample='hour', BTi, EoT=TRUE, keep.night=TRUE, method='mic
       w=(lmst-ascension)
       w <- d2r(w + 360*(w < -180) - 360*(w > 180))
     },
-    'strous' = {
+    strous = {
       meanAnomaly = (357.5291 + 0.98560028*jd)%%360
       coefC=c(1.9148, 0.02, 0.0003)
       sinC=sin(outer(1:3, d2r(meanAnomaly), '*'))
@@ -114,17 +115,17 @@ fSolI<-function(solD, sample='hour', BTi, EoT=TRUE, keep.night=TRUE, method='mic
       w <- d2r(w + 360*(w< -180) - 360*(w>180))
     }
     )
-  aman<-abs(w)<=abs(ws)
+  aman<-abs(w)<=abs(ws) ##TRUE if between sunrise and sunset
 
   ##Angulos solares
   cosThzS<-sin(decl)*sin(lat)+cos(decl)*cos(w)*cos(lat)
-  is.na(cosThzS) <- (!aman)
+  ## is.na(cosThzS) <- (!aman)
   cosThzS[cosThzS>1]<-1
 
   AlS=asin(cosThzS) ##Altura del sol
 
   cosAzS=signLat*(cos(decl)*cos(w)*sin(lat)-cos(lat)*sin(decl))/cos(AlS)
-  is.na(cosAzS) <- (!aman)
+  ## is.na(cosAzS) <- (!aman)
   cosAzS[cosAzS > 1] <- 1
   cosAzS[cosAzS < -1] <- -1
 
@@ -132,7 +133,8 @@ fSolI<-function(solD, sample='hour', BTi, EoT=TRUE, keep.night=TRUE, method='mic
 
   ##Irradiancia extra-atmosférica
   Bo0<-Bo*eo*cosThzS
-    
+  is.na(Bo0) <- !aman ##Bo0 is NA outside the sunrise-sunset period
+  
   ##Generador empirico de Collares-Pereira y Rabl 
   a=0.409-0.5016*sin(ws+pi/3)
   b=0.6609+0.4767*sin(ws+pi/3)

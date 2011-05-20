@@ -23,7 +23,7 @@ fTheta<-function(sol, beta, alfa=0, modeTrk='fixed', betaLim=90,
 
   betaLim=d2r(betaLim)
   lat=getLat(sol, 'rad')
-  signLat=ifelse(sign(lat)==0, 1, sign(lat))##Cuando lat=0, sign(lat)=0. Lo cambio a sign(lat)=1
+  signLat=ifelse(sign(lat)==0, 1, sign(lat)) ##Cuando lat=0, sign(lat)=0. Lo cambio a sign(lat)=1
 
   solI<-as.data.frameI(sol, complete=TRUE, day=TRUE)
   AlS=solI$AlS
@@ -32,12 +32,12 @@ fTheta<-function(sol, beta, alfa=0, modeTrk='fixed', betaLim=90,
   w<-solI$w
 
   aman<-solI$aman
-    
+
   Beta<-switch(modeTrk,
                two = {Beta2x=pi/2-AlS
                                         #if (BT==TRUE) {Beta=	
                       Beta=Beta2x+(betaLim-Beta2x)*(Beta2x>betaLim)},
-               fixed = beta*pi/180, 
+               fixed = rep(d2r(beta), length(w)), 
                horiz={BetaHoriz0=atan(abs(sin(AzS)/tan(AlS)))
                       if (BT){lew=dist$Lew/struct$L
                               Longitud=lew*cos(BetaHoriz0)
@@ -55,10 +55,14 @@ fTheta<-function(sol, beta, alfa=0, modeTrk='fixed', betaLim=90,
                               rm(BetaHoriz0)}
                       Beta=ifelse(BetaHoriz>betaLim,betaLim,BetaHoriz)}
                )
+  is.na(Beta) <- (!aman)
+
   Alfa<-switch(modeTrk,
                two = AzS,
-               fixed = d2r(alfa),
+               fixed = rep(d2r(alfa), length(w)),
                horiz=pi/2*sign(AzS))
+  is.na(Alfa) <- (!aman)
+
   cosTheta<-switch(modeTrk,
                    two=cos(Beta-(pi/2-AlS)),
                    horiz={

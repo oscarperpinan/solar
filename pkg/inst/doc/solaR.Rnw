@@ -129,7 +129,12 @@ p<-xyplot(r2d(AlS)~r2d(AzS),
     groups=month,
     data=SolI, type='l', col='black',
     xlab=expression(psi[s]),ylab=expression(gamma[s]))
-plab=p+glayer(panel.text(0, y[x==0], mon[group.value], pos=4, cex=0.8))
+
+plab <- p + glayer({
+  idx <- round(length(x)/2+1)
+  panel.text(x[idx], y[idx], mon[group.value], pos=3, offset=0.2, cex=0.8)
+})
+
 print(plab)
 
 @

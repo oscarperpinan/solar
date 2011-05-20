@@ -29,26 +29,28 @@ fSolD<-function(lat, BTd, method='michalsky'){
     BTd=unique(truncDay(BTd))
   }
   
-  dn <- doy(BTd)                        #día del año
-  jd <- as.numeric(julian(BTd + 12*3600,##12:00:00 UTC
+  dn <- doy(BTd)                         #día del año
+  jd <- as.numeric(julian(BTd + 12*3600, ##12:00:00 UTC
                           origin='2000-01-01 12:00:00 UTC'))
   X = 2*pi*(dn-1)/365
-  ##Distancia sol-tierra, 1/r2
-  ##ro=1.496E8                        #distancia media Tierra-Sol (km)
-  ##eo=1+0.033*cos(2*pi*dn/365) #Cooper
-  eo =   1.000110 + 0.034221*cos(X) + 0.001280*sin(X) + 0.000719*cos(2*X) + 0.000077*sin(2*X) #Spencer
 
-  methods=c('spencer', 'michalsky', 'strous')
+  methods=c('cooper', 'spencer', 'michalsky', 'strous')
   method=match.arg(method, methods)
+
+  ##Declination
   decl=switch(method,
+    cooper={
+      ##Cooper, P.I., Solar Energy, 12, 3 (1969). "The Absorption of Solar Radiation in Solar Stills"
+      decl=23.45*sin(2*pi*(dn+284)/365) 
+      decl=d2r(decl)
+    },
     spencer={
-      ##Cooper, P.I., Solar Energy, 12, 3 (1969). "The Absorption of Solar Radiation in Solar Stills."
-      ##  decl=23.45*sin(2*pi*(dn+284)/365) 
-      ##  decl=d2r(decl)                    #Paso a radianes
       ##Spencer, Search 2 (5), 172
       ##http://www.mail-archive.com/sundial@uni-koeln.de/msg01050.html
-      decl = 0.006918 - 0.399912*cos(X) + 0.070257*sin(X) - 0.006758*cos(2*X) + 0.000907*sin(2*X) - 0.002697*cos(3*X) + 0.001480*sin(3*X) 
-    }, ##
+      decl = 0.006918 - 0.399912*cos(X) + 0.070257*sin(X) -
+        0.006758*cos(2*X) + 0.000907*sin(2*X) -
+          0.002697*cos(3*X) + 0.001480*sin(3*X) 
+    }, 
     strous={
       meanAnomaly = (357.5291 + 0.98560028*jd)%%360
       coefC=c(1.9148, 0.02, 0.0003)
@@ -60,7 +62,7 @@ fSolD<-function(lat, BTd, method='michalsky'){
       sinEclip=sin(d2r(eclipLong))
       sinExcen=sin(d2r(excen))
       decl=asin(sinEclip*sinExcen)
-    }, ##
+    }, 
     michalsky={
       meanLong=(280.460+0.9856474*jd)%%360
       meanAnomaly=(357.528+0.9856003*jd)%%360
@@ -71,6 +73,16 @@ fSolD<-function(lat, BTd, method='michalsky'){
       decl=(asin(sinEclip*sinExcen))
     }
     )
+
+  ##Distancia sol-tierra, 1/r2
+  ##ro=1.496E8                        #distancia media Tierra-Sol (km)
+  eo = switch(method,
+    cooper = 1 + 0.033*cos(2*pi*dn/365),
+    spencer = 1.000110 + 0.034221*cos(X) + 0.001280*sin(X) + 0.000719*cos(2*X) + 0.000077*sin(2*X),
+    michalsky = 1.000110 + 0.034221*cos(X) + 0.001280*sin(X) + 0.000719*cos(2*X) + 0.000077*sin(2*X),
+    strous = 1.000110 + 0.034221*cos(X) + 0.001280*sin(X) + 0.000719*cos(2*X) + 0.000077*sin(2*X)
+    )
+
 
   ##Equation of Time, minutes
   ##según Alan M.Whitman "A simple expression for the equation of time"

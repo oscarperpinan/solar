@@ -20,6 +20,7 @@ prodPVPS(lat,
          bdI=list(),
          sample='hour',
          keep.night=TRUE,
+         sunGeometry='michalsky',
          corr, f,
          betaLim=90, beta=abs(lat)-10, alfa=0,
          iS=2, alb=0.2, horizBright=FALSE,
@@ -53,6 +54,10 @@ prodPVPS(lat,
 
   \item{sample, keep.night}{See \code{\link{calcSol}} for
     details.}
+
+  \item{sunGeometry}{\code{character}, method for the sun geometry
+    calculations. See \code{\link{calcSol}}, \code{\link{fSolD}} and \code{\link{fSolI}}.}
+
     \item{corr, f}{See \code{\link{calcG0}} for details.}
   % \item{sample}{\code{character}, containing one of ‘"sec"’, ‘"min"’,
   %       ‘"hour"’.  This can optionally be preceded by a (positive or

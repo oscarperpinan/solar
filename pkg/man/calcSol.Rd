@@ -1,5 +1,5 @@
 \name{A1_calcSol}
-\Rdversion{1.1}
+\Rdversion{1.2}
 \encoding{UTF-8}
 \alias{calcSol}
 
@@ -11,11 +11,14 @@
   functions \code{\link{fSolD}} and \code{\link{fSolI}}.
 }
 \usage{
-calcSol(lat, BTd, sample='hour', BTi, EoT=TRUE, keep.night=TRUE)
+calcSol(lat, BTd, sample='hour', BTi, EoT=TRUE, keep.night=TRUE, method='michalsky')
 }
 
 \arguments{
-  \item{lat}{Latitude (degrees) of the point of the Earth where calculations are needed. It is positive for locations above the Equator.}
+  \item{lat}{Latitude (degrees) of the point of the Earth where
+    calculations are needed. 
+    It is positive for locations above the Equator.}
+
   \item{BTd}{Daily time base, a \code{POSIXct} object which  may be
     the result of \code{\link{fBTd}}. It is not considered if \code{BTi}
     is provided.}
@@ -37,12 +40,25 @@ calcSol(lat, BTd, sample='hour', BTi, EoT=TRUE, keep.night=TRUE)
 
   \item{keep.night}{logical, if \code{TRUE} (default) the night is
     included in the time series.}
+  \item{method}{\code{character}, method for the sun geometry
+    calculations to be chosen from 'cooper', 'spencer', 'michalsky' and
+    'strous'. See references for details.}
 }
 
 \value{A \code{\link{Sol-class}} object.}
 
-\references{
-  Perpiñán, O, Energía Solar Fotovoltaica, 2011.  (\url{http://procomun.wordpress.com/documentos/libroesf/})
+\references{\itemize{ \item{Cooper, P.I., Solar Energy, 12, 3
+    (1969). "The Absorption of Solar Radiation in Solar Stills"}
+    \item{Spencer, Search 2 (5), 172,
+    \url{http://www.mail-archive.com/sundial@uni-koeln.de/msg01050.html}}
+    \item{Strous:
+    \url{http://www.astro.uu.nl/~strous/AA/en/reken/zonpositie.html}}
+    \item{Michalsky, J., 1988: The Astronomical Almanac's algorithm for
+    approximate solar position (1950-2050), Solar Energy 40, 227-235,
+    \url{ftp://climate1.gsfc.nasa.gov/wiscombe/Solar_Rad/SunAngles/sunae.f}}
+    \item{Perpiñán, O, Energía Solar Fotovoltaica, 2011.
+      \url{http://procomun.wordpress.com/documentos/libroesf/}
+    }}
 }
 \author{Oscar Perpiñán Lamigueiro.}
 
@@ -55,6 +71,15 @@ print(as.zooD(sol))
 
 library(lattice)
 xyplot(as.zooI(sol))
+
+solStrous=calcSol(lat, BTd[100], method='strous')
+print(as.zooD(solStrous))
+
+solSpencer=calcSol(lat, BTd[100], method='spencer')
+print(as.zooD(solSpencer))
+
+solCooper=calcSol(lat, BTd[100], method='cooper')
+print(as.zooD(solCooper))
 }
 
 \keyword{utilities}

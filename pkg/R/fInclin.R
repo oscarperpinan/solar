@@ -26,11 +26,13 @@ fInclin<-function(compI, angGen, iS=2, alb=0.2, horizBright=FALSE){
   cosTheta=ang$cosTheta
   
   comp<-as.data.frameI(compI, complete=TRUE)
+  aman <- comp$aman
   B0=comp$B0
   Bo0=comp$Bo0
   D0=comp$D0
   G0=comp$G0
   cosThzS=comp$cosThzS
+  is.na(cosThzS) <- !aman
     
 ###Método N.Martin para suciedad e incidencia no perpendicular
   Suc=rbind(c(1, 0.17, -0.069),c(0.98,.2,-0.054),c(0.97,0.21,-0.049),c(0.92,0.27,-0.023))
@@ -61,6 +63,9 @@ fInclin<-function(compI, angGen, iS=2, alb=0.2, horizBright=FALSE){
   Gef=Bef+Def+Ref
 
 ###Resultado
-  result<-zoo(data.frame(Bo, Bn, G, D, Di, Dc, B, R, FTb, FTd, FTr, Dief, Dcef, Gef, Def, Bef, Ref), 
+  result<-zoo(data.frame(Bo, Bn,
+                         G, D, Di, Dc, B, R,
+                         FTb, FTd, FTr,
+                         Dief, Dcef, Gef, Def, Bef, Ref), 
               order.by=indexI(compI))
 }

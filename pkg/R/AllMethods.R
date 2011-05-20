@@ -14,6 +14,10 @@
  # along with this program; if not, write to the Free Software
  # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  #/
+setGeneric('xyplot')
+setGeneric('levelplot')
+setGeneric('as.data.frame')
+
 setGeneric('getData', function(object){standardGeneric('getData')})
 setMethod('getData',##Solo definido para Meteo, de forma que siempre devuelve valores de partida
           signature=(object='Meteo'),
@@ -717,6 +721,8 @@ setMethod('show', 'Shade',
             print(summary(as.data.frame(object)))
           }
           )
+
+
 setMethod('xyplot',
           signature=c(x='formula', data='Shade'),
           definition=function(x, data, ...){

@@ -1,5 +1,5 @@
 \name{C_fSolD}
-\Rdversion{1.2}
+\Rdversion{1.3}
 \encoding{UTF-8}
 \alias{fSolD}
 
@@ -10,14 +10,18 @@
   Compute the daily apparent movement of the Sun from the Earth. This movement is mainly described (for the simulation of photovoltaic systems) by the declination angle, the sunset angle and the daily extra-atmospheric irradiation.
 }
 \usage{
-fSolD(lat, BTd)
+fSolD(lat, BTd, method='michalsky')
 }
 
 \arguments{
   \item{lat}{Latitude (degrees) of the point of the Earth where calculations are needed. It is positive for locations above the Equator.}
-  \item{BTd}{Daily temporal base, a \code{POSIXct} object which  may be the result of \code{\link{fBTd}}.}
-
+  \item{BTd}{Daily temporal base, a \code{POSIXct} object which  may be
+    the result of \code{\link{fBTd}}.}
+  \item{method}{\code{character}, method for the sun geometry
+    calculations to be chosen from 'cooper', 'spencer', 'michalsky' and
+    'strous'. See references for details.}
 }
+
 \value{A \code{zoo} object with these components:
   \item{decl}{Declination angle (radians) for each day of year in \code{dn} or \code{BTd}}
   \item{eo}{Factor of correction due the eccentricity of orbit of the Earth around the Sun.}
@@ -25,15 +29,26 @@ fSolD(lat, BTd)
   \item{Bo0d}{Extra-atmospheric daily irradiation (watt-hour per
     squared meter) incident on a horizontal surface}
   \item{EoT}{Equation of Time.}
-
-
+}
+\note{
   The latitude is stored as the attribute \code{lat} of the result,
   and thus it is accessible with \code{attr(object, 'lat')}.
+}
 
+\references{\itemize{ \item{Cooper, P.I., Solar Energy, 12, 3
+    (1969). "The Absorption of Solar Radiation in Solar Stills"}
+    \item{Spencer, Search 2 (5), 172,
+    \url{http://www.mail-archive.com/sundial@uni-koeln.de/msg01050.html}}
+    \item{Strous:
+    \url{http://www.astro.uu.nl/~strous/AA/en/reken/zonpositie.html}}
+    \item{Michalsky, J., 1988: The Astronomical Almanac's algorithm for
+    approximate solar position (1950-2050), Solar Energy 40, 227-235,
+    \url{ftp://climate1.gsfc.nasa.gov/wiscombe/Solar_Rad/SunAngles/sunae.f}}
+    \item{Perpiñán, O, Energía Solar Fotovoltaica, 2011.
+      \url{http://procomun.wordpress.com/documentos/libroesf/}
+    }}
 }
-\references{
-  Perpiñán, O, Energía Solar Fotovoltaica, 2011.  (\url{http://procomun.wordpress.com/documentos/libroesf/})
-}
+
 \author{
   Oscar Perpiñán Lamigueiro.
 }
@@ -42,6 +57,9 @@ BTd=fBTd(mode='serie')
 
 lat=37.2
 fSolD(lat,BTd[100])
+fSolD(lat,BTd[100], method='strous')
+fSolD(lat,BTd[100], method='spencer')
+fSolD(lat,BTd[100], method='cooper')
 
 lat=-37.2
 fSolD(lat,BTd[283])

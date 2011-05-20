@@ -22,6 +22,7 @@ calcG0<-function(lat,
                  bdI=list(),
                  sample='hour',
                  keep.night=TRUE,
+                 sunGeometry='michalsky',
                  corr, f){
 
   stopifnot(modeRad %in% c('prom', 'aguiar','mapa','bd', 'bdI'))
@@ -121,7 +122,7 @@ calcG0<-function(lat,
 
 ### Angulos solares y componentes de irradiancia
   if (modeRad=='bdI') {
-    sol <- calcSol(lat=lat, BTi=index(getData(BD)), keep.night=keep.night)
+    sol <- calcSol(lat=lat, BTi=index(getData(BD)), keep.night=keep.night, method=sunGeometry)
     compI <- fCompI(sol=sol, G0I=BD, corr=corr, f=f)
     compD=aggregate(compI[,c('G0', 'D0', 'B0')],
       by=truncDay, FUN=P2E, sol@sample) #Wh
@@ -129,7 +130,7 @@ calcG0<-function(lat,
     compD$Fd=compD$D0d/compD$G0d
     compD$Ktd=compD$G0d/as.zooD(sol)$Bo0d
   } else { ##modeRad!='bdI'
-    sol <- calcSol(lat=lat, BTd=indexD(BD), sample=sample, keep.night=keep.night)
+    sol <- calcSol(lat=lat, BTd=indexD(BD), sample=sample, keep.night=keep.night, method=sunGeometry)
     compD<-fCompD(sol=sol, G0d=BD, corr=corr, f)
     compI<-fCompI(sol=sol, compD=compD)
   }

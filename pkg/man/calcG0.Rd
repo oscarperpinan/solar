@@ -15,12 +15,12 @@
 
   Besides, if information about maximum and minimum temperatures values are available it obtains a series of temperature values with \code{\link{fTemp}}.
 }
+
 \usage{
-calcG0(lat, modeRad='prom',
-      prom=list(), mapa=list(), bd=list(), bdI=list(),
-      sample='hour', keep.night=TRUE,
-      corr, f)
-}
+
+calcG0(lat, modeRad='prom', prom=list(), mapa=list(), bd=list(),
+bdI=list(), sample='hour', keep.night=TRUE, sunGeometry='michalsky',
+corr, f) }
 
 \arguments{
   \item{lat}{numeric, latitude (degrees) of the point of the Earth where calculations are needed. It is positive for locations above the Equator.}
@@ -75,6 +75,9 @@ calcG0(lat, modeRad='prom',
 
   \item{keep.night}{\code{logical}. When it is TRUE (default) the
     time series includes the night.}
+
+  \item{sunGeometry}{\code{character}, method for the sun geometry
+    calculations. See \code{\link{calcSol}}, \code{\link{fSolD}} and \code{\link{fSolI}}.}
 
   \item{corr}{A character, the correlation between the the fraction of diffuse irradiation and the
     clearness index to be used.

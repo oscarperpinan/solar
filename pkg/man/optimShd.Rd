@@ -31,6 +31,7 @@ optimShd(lat,
          bd=list(),
          sample='hour',
          keep.night=TRUE,
+         sunGeometry='michalsky',
          betaLim=90, beta=abs(lat)-10, alfa=0,
          iS=2, alb=0.2,
          module=list(),
@@ -77,6 +78,9 @@ optimShd(lat,
 
   \item{keep.night}{\code{logical} When it is TRUE (default) the
     time series includes the night.}
+
+  \item{sunGeometry}{\code{character}, method for the sun geometry
+    calculations. See \code{\link{calcSol}}, \code{\link{fSolD}} and \code{\link{fSolI}}.}
 
   \item{betaLim}{numeric, maximum value of the inclination angle
     for a tracking surface. Its default value is 90 (no

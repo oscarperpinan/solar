@@ -6,6 +6,8 @@
 \alias{h2r}
 \alias{r2h}
 \alias{r2sec}
+\alias{h2d}
+\alias{d2h}
 
 \title{Conversion between angle units.}
 

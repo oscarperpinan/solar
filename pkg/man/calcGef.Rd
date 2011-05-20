@@ -24,6 +24,7 @@ calcGef(lat,
         bdI=list(),
         sample='hour',
         keep.night=TRUE,
+        sunGeometry='michalsky',
         corr, f,
         betaLim=90, beta=abs(lat)-10, alfa=0,
         iS=2, alb=0.2, horizBright=FALSE,
@@ -59,6 +60,10 @@ calcGef(lat,
   %    \item{bd}{\code{list} as defined by \code{\link{readBD}}. This list
   %    is only required when \code{modoRad='bd'}.}
   \item{sample, keep.night}{See \code{\link{calcSol}} for details.}
+
+  \item{sunGeometry}{\code{character}, method for the sun geometry
+    calculations. See \code{\link{calcSol}}, \code{\link{fSolD}} and \code{\link{fSolI}}.}
+
   % \item{sample}{\code{character}, containing one of ‘"sec"’, ‘"min"’,
   %       ‘"hour"’.  This can optionally be preceded by a (positive or
   %       negative) integer and a space, or followed by ‘"s"’ (used by
