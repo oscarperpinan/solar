@@ -1097,3 +1097,67 @@ setMethod('mergesolaR',
 ##             splomsolaR(df)
 ##           }
 ##           )
+
+###WINDOW
+## setGeneric('window')
+
+## start <- as.POSIXct('2011-11-01 12:00:00')
+## end <- as.POSIXct('2011-12-13 16:00:00')
+
+## setMethod('window',
+##           signature='Meteo',
+##           definition=function(x, start, end,...){
+##             x@data <- window(x@data, start=truncDay(start), end=truncDay(end), ...)
+##             x
+##             }
+##           )
+
+## setMethod('window',
+##           signature='Sol',
+##           definition=function(x, start, end, ...){
+##             solI <- x@solI
+##             solD <- x@solD
+##             idxI <- index(solI)
+##             match <- x@match
+##             ## idxD <- index(solD)
+##             if (is.null(start)){
+##               if (is.null(end)){
+##                 wIdx <- seq_along(idxI)
+##               } else {
+##                 wIdx <- which(idxI <= end)
+##               }
+##             } else {
+##               if (is.null(end)){
+##                 wIdx <- which(idxI >= start)
+##               } else {
+##                 wIdx <- which(idxI >= start & idxI <= end)
+##               }}
+##             x@solI <- solI[wIdx,]
+##             x@match <- match[wIdx]
+##             x@solD <- window(solD, start=truncDay(start), end=truncDay(end))
+##             x
+##             }
+##           )
+
+## setMethod('window',
+##           signature='G0',
+##           definition=function(x, start, end, ...){
+##             sol <- window(as(x, 'Sol'), start=start, end=end, ...) ##Sol method
+##             meteo <- window(as(x, 'Meteo'), start=start, end=end, ...) ##Meteo method
+##             g0Iw <- window(x@G0I, start=start, end=end,...) ##zoo method
+##             Taw <- window(x@Ta, start=start, end=end,...) ##zoo method
+##             ##GENERAR G0d, G0dm, G0dy
+##             g0dw <- window(x@G0D, start=truncDay(start), end=truncDay(end))
+##             g0dmw <- window(x@G0dm, start=as.yearmon(start), end=as.yearmon(end))
+##             g0yw <- window(x@G0y, start=year(start), end=year(end))
+##             result <- new('G0',
+##                           meteo,
+##                           sol,
+##                           G0D=g0dw,
+##                           G0dm=g0dmw,
+##                           G0y=g0yw,
+##                           G0I=g0Iw,
+##                           Ta=Taw)
+##             result
+##           }
+##           )
