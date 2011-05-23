@@ -1107,19 +1107,21 @@ setMethod('mergesolaR',
 ## setMethod('window',
 ##           signature='Meteo',
 ##           definition=function(x, start, end,...){
-##             x@data <- window(x@data, start=truncDay(start), end=truncDay(end), ...)
+##             if (!is.null(start)) start <- truncDay(start)
+##             if (!is.null(end)) end <- truncDay(end)+86400-1
+##             x@data <- window(x@data, start=start, end=end, ...)
 ##             x
-##             }
+##           }
 ##           )
 
 ## setMethod('window',
 ##           signature='Sol',
 ##           definition=function(x, start, end, ...){
+##             if (!is.null(start)) start <- truncDay(start)
+##             if (!is.null(end)) end <- truncDay(end)+86400-1
 ##             solI <- x@solI
-##             solD <- x@solD
 ##             idxI <- index(solI)
 ##             match <- x@match
-##             ## idxD <- index(solD)
 ##             if (is.null(start)){
 ##               if (is.null(end)){
 ##                 wIdx <- seq_along(idxI)
@@ -1134,7 +1136,7 @@ setMethod('mergesolaR',
 ##               }}
 ##             x@solI <- solI[wIdx,]
 ##             x@match <- match[wIdx]
-##             x@solD <- window(solD, start=truncDay(start), end=truncDay(end))
+##             x@solD <- window(x@solD, start=start, end=end)
 ##             x
 ##             }
 ##           )
@@ -1142,14 +1144,16 @@ setMethod('mergesolaR',
 ## setMethod('window',
 ##           signature='G0',
 ##           definition=function(x, start, end, ...){
+##             if (!is.null(start)) start <- truncDay(start)
+##             if (!is.null(end)) end <- truncDay(end)+86400-1
 ##             sol <- window(as(x, 'Sol'), start=start, end=end, ...) ##Sol method
 ##             meteo <- window(as(x, 'Meteo'), start=start, end=end, ...) ##Meteo method
 ##             g0Iw <- window(x@G0I, start=start, end=end,...) ##zoo method
 ##             Taw <- window(x@Ta, start=start, end=end,...) ##zoo method
 ##             ##GENERAR G0d, G0dm, G0dy
-##             g0dw <- window(x@G0D, start=truncDay(start), end=truncDay(end))
-##             g0dmw <- window(x@G0dm, start=as.yearmon(start), end=as.yearmon(end))
-##             g0yw <- window(x@G0y, start=year(start), end=year(end))
+##             g0dw <- window(x@G0D, start=start, end=end)
+## ##            g0dmw <- window(x@G0dm, start=as.yearmon(start), end=as.yearmon(end))
+## ##            g0yw <- window(x@G0y, start=year(start), end=year(end))
 ##             result <- new('G0',
 ##                           meteo,
 ##                           sol,
