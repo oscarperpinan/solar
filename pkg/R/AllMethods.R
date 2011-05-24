@@ -657,7 +657,8 @@ setMethod('levelplot',
           signature=c(x='formula', data='zoo'),
           definition=function(x, data,
             par.settings=custom.theme(region=rev(brewer.pal(9, 'YlOrRd'))),
-            panel=panel.levelplot.raster, interpolate=TRUE,...){
+##            panel=panel.levelplot.raster, interpolate=TRUE,...){
+            ...){
             data0=as.data.frame(data)
             ind=index(data)
             data0$day=doy(ind) ##Incorporo dia, mes y año para facilitar la formula.
@@ -667,7 +668,7 @@ setMethod('levelplot',
               data0$w=h2r(hms(ind)-12) ##hora solar en radianes
             }
             levelplot(x, data0, par.settings=par.settings,
-                      panel=panel, interpolate=interpolate,
+ ##                     panel=panel, interpolate=interpolate,
                       ...)
           }
           )

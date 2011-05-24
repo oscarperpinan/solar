@@ -673,36 +673,35 @@ For example, the shadows factor of a tracker surrounded by five
 trackers is calculated in the next code box. The dimensions of the
 tracker structure and the configuration (rows and columns) of the
 plant are defined by \texttt{struct}, while the distances between the
-trackers are defined by \texttt{distances}. The figure
-\ref{fig:Sombreado2x} shows the evolution of the shadows factor during
-the day (X axis) and year (Y axis).
+trackers are defined by \texttt{distances}. 
+% The figure
+% \ref{fig:Sombreado2x} shows the evolution of the shadows factor during
+% the day (X axis) and year (Y axis).
 
 
-<<echo=FALSE>>=
+<<echo=TRUE>>=
 sol<-calcSol(lat=37.2, fBTd(mode='serie'), sample='10 min', keep.night=FALSE)
 angGen<-fTheta(sol, beta=35);
 Angles=CBIND(as.zooI(sol), angGen)
 
 distances=data.frame(Lew=40,Lns=30,H=0)
 struct=list(W=23.11, L=9.8, Nrow=2, Ncol=8)
-
 ShdFactor<-fSombra6(Angles, distances, struct, prom=FALSE)
+##Angles$FS=ShdFactor
+@                               
 
-Angles$FS=ShdFactor
-@
 
-%
-\begin{figure}
-\begin{centering}
-<<echo=TRUE, fig=TRUE>>=
-p <- levelplot(FS~w*day, data=Angles, par.settings=custom.theme(region=brewer.pal('YlOrBr', n=9)))
-print(p)
-@
-\par\end{centering}
+% \begin{figure}
+% \begin{centering}
+## <<echo=TRUE, fig=TRUE>>=
+## p <- levelplot(FS~w*day, data=Angles, par.settings=custom.theme(region=brewer.pal('YlOrBr', n=9)))
+## print(p)
+% @                               
+% \end{centering}
 
-\caption{Shadows in a PV plant with two-axis trackers.\label{fig:Sombreado2x}}
+% \caption{Shadows in a PV plant with two-axis trackers.\label{fig:Sombreado2x}}
 
-\end{figure}
+% \end{figure}
 
 
 Since the  \texttt{data.frame} \texttt{distances} does only have one row, 
