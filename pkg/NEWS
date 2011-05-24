@@ -1,6 +1,6 @@
 solaR 0.23
 ==========
-*IMPORTANT: A bug in fInclin when horizBright=FALSE has been corrected. See help(calcGef).
+*A bug in fInclin when horizBright=FALSE has been corrected. See help(calcGef).
 *Four sun-geometry methods are now available in fSolD, fSolI, calcSol.
 *ThzS, AlS and AzS are not set to NA outside sunrise-sunset period (suggested by Joerg Trentmann)
 *fInclin and calcGef gain a new argument, HCPV (suggested by Álvaro Segovia)

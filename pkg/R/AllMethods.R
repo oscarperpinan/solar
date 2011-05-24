@@ -557,7 +557,8 @@ setMethod('show', 'ProdPVPS',
 ## myTheme$strip.background$col='transparent'
 ## lattice.options(default.theme=myTheme)
 
-solaR.theme=custom.theme.2(pch=19, cex=0.7)
+solaR.theme=custom.theme.2(pch=19, cex=0.7,
+  region=rev(brewer.pal(9, 'YlOrRd')))
 solaR.theme$strip.background$col='lightgray'
 solaR.theme$strip.shingle$col='transparent'
 
@@ -656,7 +657,7 @@ setMethod('xyplot',
 setMethod('levelplot',
           signature=c(x='formula', data='zoo'),
           definition=function(x, data,
-            par.settings=custom.theme(region=rev(brewer.pal(9, 'YlOrRd'))),
+            par.settings=solaR.theme,
 ##            panel=panel.levelplot.raster, interpolate=TRUE,...){
             ...){
             data0=as.data.frame(data)
@@ -872,7 +873,7 @@ setMethod('compareLosses', 'ProdGCPV',
             z <- do.call(rbind, cdata)
             z$id <- ordered(z$id, levels=c('Shadows', 'AoI', 'Generator', 'DC', 'Inverter', 'AC'))
             p <- dotplot(id~values*100, groups=name, data=z,
-                         par.settings=custom.theme.2(pch=19), type='b',
+                         par.settings=solaR.theme, type='b',
                          auto.key=list(corner=c(0.95,0.2), cex=0.7), xlab='Losses (%)')
             print(p)
             return(z)
@@ -900,7 +901,7 @@ compareFunction <- function(..., vars){
   z <- do.call(rbind, cdata)
   z$ind <- ordered(z$ind, levels=vars)
   p <- dotplot(ind~values, groups=name, data=z, type='b',
-               par.settings=custom.theme.2(pch=19))
+               par.settings=solaR.theme)
   print(p+glayer(panel.text(x[length(x)], y[length(x)],
                             label=group.value, cex=0.7, pos=3, srt=45)))
   return(z)
@@ -1099,11 +1100,11 @@ setMethod('mergesolaR',
 ##           }
 ##           )
 
-###WINDOW
+##WINDOW
 ## setGeneric('window')
 
-## start <- as.POSIXct('2011-11-01 12:00:00')
-## end <- as.POSIXct('2011-12-13 16:00:00')
+## ## start <- as.POSIXct('2011-11-01 12:00:00')
+## ## end <- as.POSIXct('2011-12-13 16:00:00')
 
 ## setMethod('window',
 ##           signature='Meteo',

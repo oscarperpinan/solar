@@ -77,7 +77,9 @@ export(
        readBDi,
        df2Meteo,
        dfI2Meteo,
-       zoo2Meteo
+       zoo2Meteo,
+       ##themes for lattice
+       solaR.theme
        )
 
 exportMethods(
