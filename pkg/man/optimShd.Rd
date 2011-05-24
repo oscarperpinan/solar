@@ -33,7 +33,7 @@ optimShd(lat,
          keep.night=TRUE,
          sunGeometry='michalsky',
          betaLim=90, beta=abs(lat)-10, alfa=0,
-         iS=2, alb=0.2,
+         iS=2, alb=0.2, HCPV=FALSE,
          module=list(),
          generator=list(),
          inverter=list(),
@@ -100,7 +100,11 @@ optimShd(lat,
 
   \item{alb}{numeric, albedo reflection coefficient. Its default value
     is 0.2}
-  
+
+  \item{HCPV}{logical, if TRUE the diffuse and albedo components of the
+  \emph{effective} irradiance are set to zero. HCPV is the acronym of
+  High Concentration PV system.}
+
   \item{module}{list of numeric values with information about the PV module, \describe{
       \item{\code{Vocn}}{open-circuit voltage of the module at Standard
       Test Conditions (default value 57.6 volts.)}

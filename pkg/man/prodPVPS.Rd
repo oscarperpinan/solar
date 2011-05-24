@@ -23,7 +23,7 @@ prodPVPS(lat,
          sunGeometry='michalsky',
          corr, f,
          betaLim=90, beta=abs(lat)-10, alfa=0,
-         iS=2, alb=0.2, horizBright=FALSE,
+         iS=2, alb=0.2, horizBright=TRUE, HCPV=FALSE,
          pump , H,
          Pg, converter= list(),
          effSys=list()
@@ -66,7 +66,7 @@ prodPVPS(lat,
 
   %     \item{keep.night}{\code{logical} When it is TRUE (default) the
   %       time series includes the night.}
-  \item{betaLim, beta, alfa, iS, alb, horizBright}{See \code{\link{calcGef}} for details.}
+  \item{betaLim, beta, alfa, iS, alb, horizBright, HCPV}{See \code{\link{calcGef}} for details.}
 
   %     \item{betaLim}{numeric, maximum value of the inclination angle
   %     for a tracking surface. Its default value is 90 (no

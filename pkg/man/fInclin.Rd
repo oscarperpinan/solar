@@ -16,7 +16,7 @@
   This function is used by the \code{\link{calcGef}} function.
 }
 \usage{
-fInclin(compI, angGen, iS = 2, alb = 0.2, horizBright=FALSE)
+fInclin(compI, angGen, iS = 2, alb = 0.2, horizBright=TRUE, HCPV=FALSE)
 }
 
 \arguments{
@@ -26,8 +26,10 @@ fInclin(compI, angGen, iS = 2, alb = 0.2, horizBright=FALSE)
   \item{iS}{integer, degree of dirtiness. Its value must be included in the set (1,2,3,4). \code{iS=1} corresponds to a clean surface while \code{iS=4} is the choice for a dirty surface. Its default value is 2}
   \item{alb}{numeric, albedo reflection coefficient. Its default value
     is 0.2}
-  \item{horizBright}{logical, with default value FALSE. If TRUE, the
-    horizon brightness correction proposed by Reind et al. is used.}
+  \item{horizBright}{logical, if TRUE, the horizon brightness correction proposed by Reind et al. is used.}
+  \item{HCPV}{logical, if TRUE the diffuse and albedo components of the
+  \emph{effective} irradiance are set to zero. HCPV is the acronym of
+  High Concentration PV system.}
 }
 
 \details{
@@ -52,6 +54,11 @@ fInclin(compI, angGen, iS = 2, alb = 0.2, horizBright=FALSE)
 \author{
   Oscar Perpiñán Lamigueiro.
 }
+
+\note{The version 0.22 included a bug such that when horizBright=FALSE (default)
+  the isotropic diffuse component was set to zero. With this version
+  0.23 the bug has been corrected and the default value of horizBright
+  is TRUE.}
 
 \seealso{
   \code{\link{fTheta}},

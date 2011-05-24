@@ -27,7 +27,7 @@ calcGef<-function(lat,
                   sunGeometry='michalsky',
                   corr, f,
                   betaLim=90, beta=abs(lat)-10, alfa=0,
-                  iS=2, alb=0.2, horizBright=FALSE,
+                  iS=2, alb=0.2, horizBright=TRUE, HCPV=FALSE,
                   modeShd='',    #modeShd=c('area','bt','prom')
                   struct=list(), #list(W=23.11, L=9.8, Nrow=2, Ncol=8), 
                   distances=data.frame() #data.frame(Lew=40, Lns=30, H=0)){
@@ -52,7 +52,7 @@ calcGef<-function(lat,
 ###Paso a inclinada y radiación efectiva
   BT=("bt" %in% modeShd) 
   angGen<-fTheta(radHoriz, beta, alfa, modeTrk, betaLim, BT, struct, distances)
-  inclin<-fInclin(radHoriz, angGen, iS, alb, horizBright)
+  inclin<-fInclin(radHoriz, angGen, iS, alb, horizBright, HCPV)
 
 ###Valores diarios, mensuales y anuales
   DayOfMonth=c(31,28,31,30,31,30,31,31,30,31,30,31) ###OJO

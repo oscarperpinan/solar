@@ -27,7 +27,7 @@ prodPVPS<-function(lat,
                    sunGeometry='michalsky',
                    corr, f,
                    betaLim=90, beta=abs(lat)-10, alfa=0,
-                   iS=2, alb=0.2, horizBright=FALSE,
+                   iS=2, alb=0.2, horizBright=TRUE, HCPV=FALSE,
                    pump , H, 
                    Pg, converter= list(), #Pnom=Pg, Ki=c(0.01,0.025,0.05)),
                    effSys=list()
@@ -43,7 +43,7 @@ prodPVPS<-function(lat,
                    sunGeometry=sunGeometry,
                    corr=corr, f=f,
                    betaLim=betaLim, beta=beta, alfa=alfa,
-                   iS=iS, alb=alb, horizBright=FALSE,
+                   iS=iS, alb=alb, horizBright=horizBright, HCPV=HCPV,
                    modeShd='')
 		
   } else { #Utilizamos un cálculo previo de calcG0, calcGef o prodSFCR
@@ -53,7 +53,7 @@ prodPVPS<-function(lat,
                       modeTrk=modeTrk, modeRad='prev',
                       prev=prev,
                       betaLim=betaLim, beta=beta, alfa=alfa,
-                      iS=iS, alb=alb, horizBright=FALSE,
+                      iS=iS, alb=alb, horizBright=horizBright, HCPV=HCPV,
                       modeShd=''),
                     Gef=prev,
                     ProdPVPS=as(prev, 'Gef')

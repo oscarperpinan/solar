@@ -27,7 +27,7 @@ calcGef(lat,
         sunGeometry='michalsky',
         corr, f,
         betaLim=90, beta=abs(lat)-10, alfa=0,
-        iS=2, alb=0.2, horizBright=FALSE,
+        iS=2, alb=0.2, horizBright=TRUE, HCPV=FALSE,
         modeShd='',
         struct=list(),
         distances=data.frame())
@@ -94,9 +94,10 @@ calcGef(lat,
 
   \item{modeShd, struct, distances}{See \code{\link{calcShd}} for
     details.}
-
-  \item{horizBright}{logical, with default value FALSE. If TRUE, the
-    horizon brightness correction proposed by Reind et al. is used.}
+  \item{horizBright}{logical, if TRUE, the horizon brightness correction proposed by Reind et al. is used.}
+  \item{HCPV}{logical, if TRUE the diffuse and albedo components of the
+  \emph{effective} irradiance are set to zero. HCPV is the acronym of
+  High Concentration PV system.}
 
 
   %   \item{modeShd}{character, defines the type of shadow calculation. In
@@ -129,6 +130,11 @@ calcGef(lat,
 \value{A \code{Gef} object.}
 
 \references{Perpiñán, O, Energía Solar Fotovoltaica, 2011.  (\url{http://procomun.wordpress.com/documentos/libroesf/})}
+
+\note{The version 0.22 included a bug such that when horizBright=FALSE (default)
+  the isotropic diffuse component was set to zero. With this version
+  0.23 the bug has been corrected and the default value of horizBright
+  is TRUE.}
 
 \author{Oscar Perpiñán Lamigueiro.}
 

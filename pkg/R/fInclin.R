@@ -14,7 +14,7 @@
  # along with this program; if not, write to the Free Software
  # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  #/
-fInclin<-function(compI, angGen, iS=2, alb=0.2, horizBright=FALSE){
+fInclin<-function(compI, angGen, iS=2, alb=0.2, horizBright=TRUE, HCPV=FALSE){
   ##compI es class='G0'
   ##angGen es 'zoo', resultado de fTheta
 
@@ -43,8 +43,8 @@ fInclin<-function(compI, angGen, iS=2, alb=0.2, horizBright=FALSE){
 ###Metodo Hay and Davies para tratamiento difusa
   B=B0*cosTheta/cosThzS*(cosThzS>0.007) #El factor cosThzS>0.007 hace falta para eliminar resultados erroneos cerca del amanecer
   k1=B0/(Bo0)
-  factor=1+sqrt(B0/G0)*sin(Beta/2)^3
-  Di=D0*(1-k1)*(1+cos(Beta))/2*(horizBright*factor)  
+  Di=D0*(1-k1)*(1+cos(Beta))/2
+  if (horizBright) Di=Di*(1+sqrt(B0/G0)*sin(Beta/2)^3)
   Dc=D0*k1*cosTheta/cosThzS*(cosThzS>0.007)
   R=alb*G0*(1-cos(Beta))/2
   D=(Di+Dc)
@@ -54,10 +54,10 @@ fInclin<-function(compI, angGen, iS=2, alb=0.2, horizBright=FALSE){
   Bn=B0/cosThzS
 ###Suma de componentes
   G=B+D+R
-  Ref=R*Suc[iS,1]*(1-FTr)
+  Ref=R*Suc[iS,1]*(1-FTr)*(!HCPV)
   Ref[is.nan(FTr)]<-0         #Cuando cos(Beta)=1, FTr=NaN. Anulo Ref.
-  Dief=Di*Suc[iS,1]*(1-FTd)
-  Dcef=Dc*Suc[iS,1]*(1-FTb)
+  Dief=Di*Suc[iS,1]*(1-FTd)*(!HCPV)
+  Dcef=Dc*Suc[iS,1]*(1-FTb)*(!HCPV)
   Def=Dief+Dcef
   Bef=B*Suc[iS,1]*(1-FTb)
   Gef=Bef+Def+Ref
