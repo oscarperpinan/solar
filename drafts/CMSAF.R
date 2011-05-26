@@ -282,3 +282,71 @@ plot3D(x[[2]])
 xsp <- as(sampleRegular(x, 1e5, asRaster=TRUE), 'SpatialGridDataFrame')
 spplot(xsp['values.AlS'], contour=TRUE, col.regions=heat.colors)
 
+####2011-05-26
+load('/home/oscar/Investigacion/solar/drafts/redGN.RData')
+proj <- CRS('+proj=latlon +ellps=WGS84')
+spRedGN <- SpatialPoints(coords=redGN[c('lng', 'lat')],
+                        ##           data=redGN['datos'],
+                                   proj4string=proj)
+
+proj <- CRS('+proj=latlon +ellps=WGS84')
+old <- getwd()
+setwd('/home/oscar/Datos')##Cambiar!!!
+##Leo el contenido:
+library(maptools)
+mapaSHP <- readShapeLines('ESP_adm/ESP_adm2.shp', proj4string=proj)
+setwd(old)
+
+layerBound <- layer(sp.lines(mapaSHP, lwd=0.6))
+layerPoints <- layer(sp.points(spRedGN, col='black', pch=19, cex=0.3))
+
+listFich <- dir('/home/oscar/Datos/CMSAF/', pattern='2008')
+
+old <- getwd()
+setwd('/home/oscar/Datos/CMSAF')##Cambiar!!!
+
+listNC <- lapply(listFich, raster)
+stackSIS <- do.call(stack, listNC)
+
+smp<- sampleRegular(stackSIS, 1e5, asRaster=TRUE)
+SP <- as(smp, 'SpatialGridDataFrame')
+names(SP) <- month.abb
+
+solaR.theme=custom.theme.2(pch=19, cex=0.7,
+  region=rev(brewer.pal(9, 'YlOrRd')))
+solaR.theme$strip.background$col='transparent'##'lightgray'
+solaR.theme$strip.shingle$col='transparent'
+solaR.theme$strip.border$col='transparent'
+
+xscale <- function(...){ans <- xscale.components.default(...); ans$top=FALSE; ans}
+yscale <- function(...){ans <- yscale.components.default(...); ans$right=FALSE; ans}
+
+myplot <- function(x, par.settings=solaR.theme,
+                   between=list(x=0.5, y=0.2),
+                   as.table=TRUE,
+                   xscale.components=xscale,
+                   yscale.components=yscale,
+                   ...){
+  p <-spplot(x, par.settings=par.settings,
+             scales=list(draw=TRUE),
+             between=between,
+             as.table=as.table,
+             xscale.components=xscale.components,
+             yscale.components=yscale.components)
+  p
+}
+
+myplot(SP)+layerBound+layerPoints
+
+getwd(old)
+
+Jan <- subset(stackSIS, 1)
+spJan <- as(sampleRegular(Jan, 1e4, asRaster=TRUE), 'SpatialGridDataFrame')
+x <- sampleRandom(Jan, size=500, sp=TRUE)
+projection(x) <- projection(spJan)
+
+library(gstat)
+
+vg <- variogram(Data1~1, x)
+plot(vg)
+kr <- idw(Data1~1, x, spJan)
