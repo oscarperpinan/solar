@@ -1,59 +1,4 @@
 ## ##extraido de plot.TimeSeries.R de CMSAF_examples
-## library(ncdf)
-## library(RNetCDF)
-
-## # Open the netcdf-file
-## nc <- open.ncdf('~/temp/SIS_METCH_hrv_cor_moe_110_regular_200401.nc')
-
-## # Retrieve the data from the first variable in the netcdf-file 
-## varname <- nc$var[[1]]$name
-## field <- get.var.ncdf(nc, varname)
-## unit <- att.get.ncdf(nc, varname,"units")$value
-## missval <- att.get.ncdf(nc,varname,"_FillValue")$value
-## # Close the file
-## close.ncdf(nc)
-
-## # Set the missing data to NA, considering scale.factor and add.offset
-## scale.factor <- 1.
-## add.offset <- 0.
-## #Derive the scale factor and the offset
-## has.scale <- nc$var[[1]]$hasScaleFact
-## if (has.scale) scale.factor <- nc$var[[1]]$scaleFact
-## has.offset <- nc$var[[1]]$hasAddOffset
-## if (has.offset) add.offset <- nc$var[[1]]$addOffset
-## # Set the missing values to NA
-## na.ind <- which(field == missval*scale.factor + add.offset)
-## field[na.ind] <- NA
-
-## #--------------------------------------------------#
-
-## # determine the location 
-## londim <- nc$dim[["lon"]]
-## lon <- londim$vals
-## latdim <- nc$dim[["lat"]]
-## lat <- latdim$vals
-
-## #--------------------------------------------------#
-
-## # retrieve the time variable
-## timedim <- nc$dim[["time"]]
-## nt <- timedim$len
-## time.unit <- timedim$units
-## time <- timedim$vals
-
-## # Create a R-date-object 
-## ##cambiar
-## date.time <- as.Date(utcal.nc(time.unit,time,type="s"))
-
-## library(spacetime)
-## proj <- CRS('+proj=latlon +ellps=WGS84')
-## coords <- expand.grid(lon=signif(lon, 4), lat=signif(lat, 5))
-## sp <- SpatialPixels(SpatialPoints(coords, proj4string=proj))
-## data <- data.frame(G0=c(field))
-## stData <- STFDF(sp, time=xts(seq_along(time), as.Date(time)), data=data)
-
-## stplot(stData, scales=list(draw=TRUE))
-
 ####Ahora con la libreria RASTER
 library(raster)
 
@@ -85,7 +30,7 @@ spRedGN <- SpatialPointsDataFrame(coords=redGN[c('lng', 'lat')],
 
 redGNraster <- rasterize(spRedGN, nccrop)
 
-#####
+#¿Sirve z-value para almacenar el index temporal?
 zvalue <- function(...){
   dots <- list(...)
   zzz <- lapply(dots, function(x)paste(unlist(strsplit(x@zvalue, '-')), collapse=''))
@@ -142,6 +87,11 @@ foo <- function(x, ...){
   result <- as.data.frameY(gef)[c('Gefd', 'Befd', 'Defd')]
   as.numeric(result)
 }
+
+latLayer <- raster(s, layer=1)
+layerNames(latLayer) <- 'Latitude'
+latLayer[] <- yFromCell(s, 1:ncell(s))
+
 
 gefS <- calc(stack(latLayer, s), foo)
 layerNames(gefS)=c('Gefd', 'Befd', 'Defd')
@@ -350,3 +300,50 @@ library(gstat)
 vg <- variogram(Data1~1, x)
 plot(vg)
 kr <- idw(Data1~1, x, spJan)
+
+####Calculo GEF a partir de datos de CMSAF
+listFich <- dir('/home/oscar/Datos/CMSAF/', pattern='2008')
+
+old <- getwd()
+setwd('/home/oscar/Datos/CMSAF')##Cambiar!!!
+
+listNC <- lapply(listFich, raster)
+brickSIS <- do.call(brick, listNC)
+brickSIS <- brickSIS*24##mean daily irradiance to irradiation (Wh/m2)
+
+index <- fBTd(year=2008)
+SIS <- new('RasterTime', brickSIS, index=index)
+
+gefRaster <- writeStart(raster(SIS), filename='gefCMSAF', overwrite=TRUE)
+bs <- blockSize(SIS)
+for (i in seq_len(bs$n)){
+  vals <- getValues(SIS, row=bs$row[i], nrows=bs$nrow[i])
+  rows <- seq(bs$row[i], length=bs$nrow[i])
+  cells <- cellFromRow(SIS, rows)
+  ## lats <- yFromRow(SIS, rows)
+  ## soles <- lapply(lats, function(x)calcSol(x, BTd=index(SIS)))
+  gefVector <- vector(mode='numeric', length=length(cells))
+  for (j in seq_along(cells)){
+    lat <- yFromCell(SIS, cells[j])
+    gef <- calcGef(lat, prom=list(G0dm=vals[j,], Ta=25))
+    gefVector[j] <- as.data.frameY(gef)$Gef
+    }
+    gefRaster <- writeValues(gefRaster, gefVector, bs$row[i])
+  }
+gefRaster <- writeStop(gefRaster)
+
+##otra forma
+latLayer <- raster(SIS)
+layerNames(latLayer) <- 'Latitude'
+latLayer[] <- yFromCell(SIS, 1:ncell(SIS))
+
+foo <- function(x, ...){
+  gef <- calcGef(lat=x[1], prom=list(G0dm=x[2:13]))
+  result <- as.data.frameY(gef)[c('Gefd', 'Befd', 'Defd')]
+  print(x[1])
+  as.numeric(result)
+}
+
+
+gefS <- calc(stack(latLayer, SIS), foo)
+layerNames(gefS)=c('Gefd', 'Befd', 'Defd')
