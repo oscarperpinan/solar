@@ -311,8 +311,8 @@ listNC <- lapply(listFich, raster)
 brickSIS <- do.call(brick, listNC)
 brickSIS <- brickSIS*24##mean daily irradiance to irradiation (Wh/m2)
 
-index <- fBTd(year=2008)
-SIS <- new('RasterTime', brickSIS, index=index)
+idx <- fBTd(year=2008)
+SIS <- new('RasterTime', brickSIS, index=idx)
 
 gefRaster <- writeStart(raster(SIS), filename='gefCMSAF', overwrite=TRUE)
 bs <- blockSize(SIS)
@@ -340,10 +340,11 @@ latLayer[] <- yFromCell(SIS, 1:ncell(SIS))
 foo <- function(x, ...){
   gef <- calcGef(lat=x[1], prom=list(G0dm=x[2:13]))
   result <- as.data.frameY(gef)[c('Gefd', 'Befd', 'Defd')]
-  print(x[1])
   as.numeric(result)
 }
 
 
-gefS <- calc(stack(latLayer, SIS), foo)
+gefS <- calc(stack(latLayer, SIS), foo,
+             filename='/home/oscar/Datos/CMSAF/gefCMSAF2',
+             overwrite=TRUE)
 layerNames(gefS)=c('Gefd', 'Befd', 'Defd')
