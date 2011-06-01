@@ -233,13 +233,14 @@ xsp <- as(sampleRegular(x, 1e5, asRaster=TRUE), 'SpatialGridDataFrame')
 spplot(xsp['values.AlS'], contour=TRUE, col.regions=heat.colors)
 
 ####2011-05-26
+library(sp)
 load('/home/oscar/Investigacion/solar/drafts/redGN.RData')
 proj <- CRS('+proj=latlon +ellps=WGS84')
 spRedGN <- SpatialPoints(coords=redGN[c('lng', 'lat')],
                         ##           data=redGN['datos'],
                                    proj4string=proj)
 
-proj <- CRS('+proj=latlon +ellps=WGS84')
+
 old <- getwd()
 setwd('/home/oscar/Datos')##Cambiar!!!
 ##Leo el contenido:
@@ -247,6 +248,7 @@ library(maptools)
 mapaSHP <- readShapeLines('ESP_adm/ESP_adm2.shp', proj4string=proj)
 setwd(old)
 
+library(latticeExtra)
 layerBound <- layer(sp.lines(mapaSHP, lwd=0.6))
 layerPoints <- layer(sp.points(spRedGN, col='black', pch=19, cex=0.3))
 
@@ -255,6 +257,7 @@ listFich <- dir('/home/oscar/Datos/CMSAF/', pattern='2008')
 old <- getwd()
 setwd('/home/oscar/Datos/CMSAF')##Cambiar!!!
 
+library(raster)
 listNC <- lapply(listFich, raster)
 stackSIS <- do.call(stack, listNC)
 
