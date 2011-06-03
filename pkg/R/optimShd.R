@@ -17,10 +17,9 @@
 optimShd<-function(lat,
                    modeTrk='fixed', 
                    modeRad='prom', 
+                   dataRad,
                    prev,
-                   prom=list(),
-                   mapa=list(), 
-                   bd=list(),
+                   prom, mapa, bd, 
                    sample='hour',
                    keep.night=TRUE,
                    sunGeometry='michalsky',
@@ -41,9 +40,25 @@ optimShd<-function(lat,
     warning('backtracking is only implemented for modeTrk=horiz')}
 
   ##Guardo argumentos de la función para utilizar después
-  if (missing(prev)) {prev=NULL}
+  if (!missing(mapa)){
+    dataRad=mapa
+    warning('Use of "mapa" argument is deprecated. You should use dataRad instead.')
+  }
+  if (!missing(prom)) {
+    dataRad=prom
+    warning('Use of "prom" argument is deprecated. You should use dataRad instead.')
+  }
+  if (!missing(bd)) {
+    dataRad=bd
+    warning('Use of "bd" argument is deprecated. You should use dataRad instead.')
+  }
+  if (!missing(prev)) {
+    dataRad=prev
+    warning('Use of "prev" argument is deprecated. You should use dataRad instead.')
+  }
+  ##if (missing(prev)) {prev=NULL}
   listArgs<-list(lat=lat, modeTrk=modeTrk, modeRad=modeRad,
-                 prev=prev, prom=prom, mapa=mapa, bd=bd,
+                 dataRad=dataRad,
                  sample=sample, keep.night=keep.night,
                  sunGeometry=sunGeometry,
                  betaLim=betaLim, beta=beta, alfa=alfa,
@@ -91,7 +106,7 @@ optimShd<-function(lat,
     RadBT <- as(Prod0, 'G0')
     for (i in seq_len(casos)){
       listArgsBT <- modifyList(listArgs,
-                               list(modeRad='prev', prev=RadBT,
+                               list(modeRad='prev', dataRad=RadBT,
                                     distances=Red[i,]))
       prod.i <- do.call(prodGCPV, listArgsBT)
       YfAnual[i]=mean(prod.i@prody$Yf)
@@ -104,7 +119,7 @@ optimShd<-function(lat,
       GefShd=calcShd(Gef0, modeTrk=modeTrk, modeShd=modeShd,
         struct=struct, distances=Red[i,])
       listArgsShd <- modifyList(listArgs,
-                                list(modeRad='prev', prev=GefShd)
+                                list(modeRad='prev', dataRad=GefShd)
                                 )
       prod.i <- do.call(prodGCPV, listArgsShd)
       YfAnual[i]=mean(prod.i@prody$Yf)

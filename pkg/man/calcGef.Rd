@@ -17,11 +17,8 @@
 calcGef(lat,
         modeTrk='fixed',
         modeRad='prom',
-        prev,
-        prom=list(),
-        mapa=list(),
-        bd=list(),
-        bdI=list(),
+        dataRad,
+        prev, prom, mapa, bd,bdI,
         sample='hour',
         keep.night=TRUE,
         sunGeometry='michalsky',
@@ -37,7 +34,7 @@ calcGef(lat,
 
   \item{modeTrk}{character, to be chosen from \code{'fixed'}, \code{'two'} or \code{'horiz'}. When \code{modeTrk='fixed'} the surface is fixed (inclination and azimuth angles are constant). The performance of a two-axis tracker is calculated with \code{modeTrk='two'}, and \code{modeTrk='horiz'} is the option for an horizontal N-S tracker. Its default value is \code{modeTrk='fixed'}}
 
-  \item{modeRad, prom, mapa, bd, bdI}{Information about the source data of the
+  \item{modeRad, dataRad, prom, mapa, bd, bdI}{Information about the source data of the
     global irradiation. See \code{\link{calcG0}} for details.}
 
   %    \item{modeRad}{A character string, describes the kind of source data of the
@@ -49,7 +46,8 @@ calcGef(lat,
   % file defined by \code{bd}.}
 
   \item{prev}{A \code{G0} object (or something that can be coerced to a
-    \code{G0} object). It is used when \code{modeRad='prev'}.}
+    \code{G0} object). It is used when \code{modeRad='prev'}. It is
+    deprecated and \code{dataRad} should be used instead.}
 
   % \item{prom}{A list as defined by \code{\link{readG0dm}}. This list
   %   is only required when \code{modoRad='prom'}.}
@@ -152,13 +150,13 @@ Ta=c(10, 14.1, 15.6, 17.2, 19.3, 21.2, 28.4, 29.9, 24.3, 18.2, 17.2, 15.2)
 
 ##Fixed surface, default values of inclination and azimuth.
 
-gef<-calcGef(lat=37.2, modeRad='prom', prom=list(G0dm=G0dm, Ta=Ta))
+gef<-calcGef(lat=37.2, modeRad='prom', dataRad=list(G0dm=G0dm, Ta=Ta))
 print(gef)
 xyplot(gef)
 
 ##Two-axis surface, no limitation angle.
 
-gef2<-calcGef(lat=37.2, modeRad='prom', prom=list(G0dm=G0dm, Ta=Ta), modeTrk='two')
+gef2<-calcGef(lat=37.2, modeRad='prom', dataRad=list(G0dm=G0dm, Ta=Ta), modeTrk='two')
 print(gef2)
 xyplot(gef2)
 
@@ -167,32 +165,32 @@ xyplot(gef2)
 
 ##Fixed surface
 
-gefMapa<-calcGef(lat=41,
-             modeRad='mapa',
-             mapa=list(prov=28,est=3,
+gefSIAR<-calcGef(lat=41,
+             modeRad='siar',
+             dataRad=list(prov=28,est=3,
                start='01/01/2009', end='31/12/2009'),
              keep.night=FALSE)
-print(gefMapa)
-xyplot(gefMapa)
+print(gefSIAR)
+xyplot(gefSIAR)
 ##Two-axis tracker, using the previous result.
-##'gefMapa' is internally coerced to a 'G0' object.
+##'gefSIAR' is internally coerced to a 'G0' object.
 
-gefMapa2<-calcGef(lat=41, modeRad='prev', prev=gefMapa, modeTrk='two')
-print(gefMapa2)
-xyplot(gefMapa2)
+gefSIAR2<-calcGef(lat=41, modeRad='prev', dataRad=gefSIAR, modeTrk='two')
+print(gefSIAR2)
+xyplot(gefSIAR2)
 
-###Shadows between two-axis trackers, again using the gefMapa result.
+###Shadows between two-axis trackers, again using the gefSIAR result.
 
 struct=list(W=23.11, L=9.8, Nrow=2, Ncol=8)
 distances=data.frame(Lew=40, Lns=30, H=0)
 
 gefShd<-calcGef(lat=41, modeRad='prev',
-                prev=gefMapa, modeTrk='two',
+                dataRad=gefSIAR, modeTrk='two',
                 modeShd=c('area', 'prom'),
                 struct=struct, distances=distances)
 print(gefShd)
 ##The Gef0, Bef0 and Def0 values are the same as those contained in the
-##                gefMapa2 object
+##                gefSIAR2 object
 }
 }
 

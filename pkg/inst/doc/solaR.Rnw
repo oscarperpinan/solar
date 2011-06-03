@@ -1,17 +1,121 @@
-\documentclass{article}
+\documentclass[oldfontcommands,a4paper]{memoir}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[a4paper]{geometry}
 \geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=1.5cm,rmargin=1.5cm}
-\usepackage{color}
+
+%\usepackage{color}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{mathpazo}%Letra palatino con fuentes para matemáticas
+
+\pagestyle{Ruled}
+\usepackage{memhfixc}
+\usepackage{mempatch}
+
+\raggedbottom
+\sloppybottom
+\clubpenalty=10000
+\widowpenalty=10000
+
+%\raggedbottomsection
+\feetbelowfloat
+
+\captiontitlefont{\itshape}
+\captionnamefont{\scshape}
+%\captionstyle{\centering}
+\hangcaption
+
 
 \usepackage{url}
-\usepackage[unicode=true, 
- bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
- breaklinks=true,pdfborder={0 0 0},backref=false,colorlinks=true]
- {hyperref}
-\hypersetup{pdftitle={Introduction to solaR},
- pdfauthor={Oscar Perpiñán Lamigueiro}}
+\usepackage{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=true,          % non-Latin characters in Acrobat’s bookmarks
+    bookmarksnumbered=false,
+    bookmarksopen=false,
+    breaklinks=true,
+    backref=true,
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={Introduction to solaR},    % title
+    pdfauthor={Oscar Perpiñán Lamigueiro},     % author
+    pdfsubject={Photovoltaic Solar Energy},   % subject of the document
+    pdfcreator={AucTeX/Emacs},   % creator of the document
+    pdfproducer={LaTeX}, % producer of the document
+    pdfkeywords={solar radiation, photovoltaics, R}, % list of keywords
+    pdfnewwindow=true,      % links in new window
+    pdfborder={0 0 0},
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=Brown,          % color of internal links
+    citecolor=BrickRed,        % color of links to bibliography
+    filecolor=black,      % color of file links
+    urlcolor=Blue           % color of external links 
+}
+
+\pretitle{\vfill \begin{flushright} \bfseries \scshape \HUGE \color{BrickRed}}
+\posttitle{\par\end{flushright}}
+
+\preauthor{\begin{flushright} \large \scshape}
+\postauthor{\par\end{flushright}}
+
+%\date{}
+\predate{\vfill \begin{flushright}\large\scshape}
+\postdate{\par\end{flushright}\vfill}
+
+\setsecnumdepth{subsection}
+
+
+% \definecolor{ared}{rgb}{.647,.129,.149}
+% \renewcommand{\colorchapnum}{\color{ared}}
+% \renewcommand{\colorchaptitle}{\color{ared}}
+% \chapterstyle{pedersen}
+\chapterstyle{ger}
+
+\setlength{\afterchapskip}{35pt}
+\maxtocdepth{section}
+
+%\setcounter{topnumber}{3}
+%\setcounter{bottomnumber}{2}
+%\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.5}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\floatpagefraction}{0.7}
+
+
+%Centra las figuras en los flotantes y los enmarca
+\makeatletter
+\renewenvironment{figure}[1][]{%
+     	\@float{figure}%
+		%\begin{framed}    
+		\precaption{\rule{\linewidth}{0.4pt}\par}%En las figuras el caption va debajo
+		%\hrule\vspace{\onelineskip}
+		\centering
+		  }{%
+		%\end{framed}
+		%\postcaption{\rule{\linewidth}{0.4pt}}
+		%\vspace{\onelineskip}\hrule
+    	\end@float	
+}
+\makeatother
+
+\makeatletter
+\renewenvironment{table}[1][]{%
+      	\@float{table}%
+		%\begin{framed}    
+		\postcaption{\rule{\linewidth}{0.4pt}\par}%En las tablas el caption va encima
+		\centering
+		  }{%
+		%\end{framed}
+    	\end@float	
+}
+\makeatother
+
+
+\renewcommand{\textfloatsep}{10pt}%Espacio entre el flotante y el texto
+
  
 \makeatletter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
@@ -37,7 +141,7 @@
 \usepackage{siunitx}
 \sisetup{per=fraction,fraction=nice, decimalsymbol=comma}
 %\usepackage{lscape}
-\usepackage{mathpazo}%Letra palatino con fuentes para matemáticas
+
 
 
 \newunit{\wattpeak}{Wp}
@@ -51,17 +155,17 @@
 
 \setkeys{Gin}{width=0.5\textwidth}
 
-\title{Introduction to \texttt{solaR}} 
+\title{Introduction to \emph{solaR}} 
 
 
 \author{Oscar Perpiñán Lamigueiro}
 
 
-\date{24 May 2011}
+\date{03 June 2011}
 
 \maketitle
 
-\section{Introduction}
+\chapter{Introduction}
 
 The  \texttt{solaR} package includes a set of functions which calculate
 the solar radiation incident on a photovoltaic generator and simulate the 
@@ -84,7 +188,7 @@ options("digits"=4)
 options("width"=80)
 @
 
-\section{Solar Geometry}
+\chapter{Solar Geometry}
 
 The apparent movement of the Sun is defined with some equations included in 
 the functions  \texttt{fSolD} and \texttt{fSolI}. \texttt{fSolD} computes the daily apparent movement of the Sun from the Earth. This movement is mainly described (for the simulation of photovoltaic systems) by the declination angle, the sunset angle and the daily extra-atmospheric irradiation.
@@ -194,7 +298,7 @@ print(as.zooD(solCooper))
 
 
 
-\section{Solar Radiation}
+\chapter{Solar Radiation}
 
 Values of global horizontal irradiation are commonly available either
 as monthly averages of daily values or as a time series of daily
@@ -205,7 +309,7 @@ irradiation, and then irradiance and irradiation on the generator
 surface.
 
 
-\subsection{Irradiation and irradiance on the horizontal plane}
+\section{Irradiation and irradiance on the horizontal plane}
 
 The function \texttt{fCompD} extracts the diffuse and direct
 components from the daily global irradiation on a horizontal surface
@@ -272,7 +376,7 @@ print(p)
 \caption{Global, diffuse, and direct irradiance during the ``average days''.\label{fig:ComponentesIrradiancia}}
 \end{figure}
 
-\subsubsection{Meteorological data}
+\subsection{Meteorological data}
 
 There are several functions to construct a \texttt{Meteo} object with radiation and temperature data.
 For daily data, if it is stored in a local file or a  \texttt{data.frame}, the functions  \texttt{readBD} and \texttt{df2Meteo} are recommended, while \texttt{readG0dm} is indicated when only 12 monthly means are available. For intradaily data the correspondent functions are \texttt{readBDi} and \texttt{dfI2Meteo}. Besides, \texttt{zoo2Meteo} can construct a \texttt{Meteo} object from a \texttt{zoo} object both for daily and intradaily data.
@@ -287,8 +391,8 @@ bd=df2Meteo(helios, dates.col='date', lat=41, source='helios-IES', format='%Y/%m
 summary(getData(bd))
 @ 
 
-On the other hand, the function  \texttt{readMAPA} is able to download the meteorological data 
-available at \url{www.mapa.es/siar}.
+On the other hand, the function  \texttt{readSIAR} is able to download the meteorological data 
+available at \url{www.marm.es/siar}.
 This webpage provides daily measurements from a set of agroclimatic stations 
 located in Spain. This function needs the code of the station and its province, 
 and the start and end date. The codes of stations and provinces are stored at the
@@ -300,16 +404,16 @@ Madrid<-subset(RedEstaciones,NomProv=='Madrid')
 print(Madrid)
 @
 
-\texttt{readMAPA} constructs an object of class \texttt{Meteo}. The data is obtained with 
+\texttt{readSIAR} constructs an object of class \texttt{Meteo}. The data is obtained with 
 the method \texttt{getData}.  If only the irradiation series is needed, the method  \texttt{getG0} 
 is recommended.
 
 For example, let's obtain the 2009 data from the station at Aranjuez (fig. \ref{fig:Aranjuez}). 
 It is important to note that the radiation measurements available at the webpage are
-in  $\si{\mega\joule\per\meter\squared}$, but \texttt{readMAPA} converts the values to $\si{\watthour\per\meter\squared}$:
+in  $\si{\mega\joule\per\meter\squared}$, but \texttt{readSIAR} converts the values to $\si{\watthour\per\meter\squared}$:
 
 <<echo=TRUE>>=
-Aranjuez<-readMAPA(28,3,'01/01/2009','31/12/2009')
+Aranjuez<-readSIAR(28,3,'01/01/2009','31/12/2009')
 @
 
 \begin{figure}
@@ -347,7 +451,7 @@ print(p)
 
 
 
-\subsubsection{The function \texttt{calcG0}}
+\subsection{The function \texttt{calcG0}}
 
 The previous steps are included in the function  \texttt{calcG0}. For example, with the next code, 
 the components of horizontal irradiation and irradiance are obtained from the measurements of the
@@ -355,8 +459,8 @@ meteorological station of Aranjuez (figure \ref{fig:calcG0}).
 
 <<>>=
 g0<-calcG0(lat=37.2,
-	modeRad='mapa',
-	mapa=list(prov=28,est=3,
+	modeRad='siar',
+	dataRad=list(prov=28,est=3,
 	start='01/01/2009', end='31/12/2009'))
 print(g0)
 @
@@ -413,13 +517,13 @@ print(p)
 With this data, a \texttt{G0} object can be calculated. First, the direct and diffuse components of the data are used (\texttt{corr='none'}):
 
 <<>>=
-g0NREL <- calcG0(lat=lat, modeRad='bdI', bdI=NRELMeteo, corr='none')
+g0NREL <- calcG0(lat=lat, modeRad='bdI', dataRad=NRELMeteo, corr='none')
 @ 
 
 If these components were not available, a fd-kt hourly correlation is needed (figure \ref{fig:FdKtBRL}). For example:
 
 <<>>=
-g0BRL <- calcG0(lat=lat, modeRad='bdI', bdI=NRELMeteo, corr='BRL')
+g0BRL <- calcG0(lat=lat, modeRad='bdI', dataRad=NRELMeteo, corr='BRL')
 @ 
 
 \begin{figure}
@@ -434,7 +538,7 @@ print(p)
 
 
 
-\subsection{Irradiation and irradiance on the generator plane}
+\section{Irradiation and irradiance on the generator plane}
 
 The solar irradiance incident on an inclined surface can be calculated
 from the direct and diffuse irradiance on a horizontal surface, and
@@ -474,7 +578,7 @@ incident irradiance versus the cosine of the angle of incidence for
 this system.
 
 <<echo=TRUE>>=
-gef<-calcGef(lat=37.2, modeRad='prev', prev=g0, beta=30)
+gef<-calcGef(lat=37.2, modeRad='prev', dataRad=g0, beta=30)
 print(gef)
 @ 
 
@@ -506,7 +610,7 @@ prom=list(G0dm=G0dm, Ta=Ta)
 structHoriz=list(L=4.83);
 distHoriz=data.frame(Lew=structHoriz$L*4,H=0);
 
-gefBT=calcGef(lat=37.2, prom=prom, sample='10 min',
+gefBT=calcGef(lat=37.2, dataRad=prom, sample='10 min',
   modeTrk='horiz',
   modeShd='bt', betaLim=60,
   distances=distHoriz,
@@ -530,7 +634,7 @@ print(p)
 \end{figure}
 
 
-\section{Productivity of a Grid Connected PV System}
+\chapter{Productivity of a Grid Connected PV System}
 
 From the previous irradiance calculations, the function \texttt{fProd}
 simulates the performance of a Grid Connected PV (GCPV) system paying attention
@@ -591,9 +695,9 @@ Ta=c(10, 14.1, 15.6, 17.2, 19.3, 21.2, 28.4, 29.9, 24.3, 18.2, 17.2, 15.2)
 prom=list(G0dm=G0dm, Ta=Ta)
 @ 
 <<echo=TRUE>>=
-ProdFixed<-prodGCPV(lat=lat, prom=prom, keep.night=FALSE)
-Prod2x<-prodGCPV(lat=lat, prom=prom, modeTrk='two', keep.night=FALSE)
-ProdHoriz<-prodGCPV(lat=lat,prom=prom, modeTrk='horiz', keep.night=FALSE)
+ProdFixed<-prodGCPV(lat=lat, dataRad=prom, keep.night=FALSE)
+Prod2x<-prodGCPV(lat=lat, dataRad=prom, modeTrk='two', keep.night=FALSE)
+ProdHoriz<-prodGCPV(lat=lat, dataRad=prom, modeTrk='horiz', keep.night=FALSE)
 @
 
 \begin{figure}
@@ -615,7 +719,7 @@ print(p)
 \caption{Comparative of intradaily power between tracker strategies.\label{fig:ComparativaSeguimiento}}
 \end{figure}
 
-\subsection{Using \texttt{mergesolaR}}
+\section{Using \texttt{mergesolaR}}
 \label{sec:mergesolar}
 
 The \texttt{mergesolaR} method is designed to merge \emph{daily} time series
@@ -632,8 +736,8 @@ nEstMadrid <- nrow(EstMadrid)
 namesMadrid <- EstMadrid$NomEst
 
 prodMadrid <- lapply(1:nEstMadrid,
-                     function(x){try(prodGCPV(lat=41, modeRad='mapa',
-                                                  mapa=list(prov=28, est=x,
+                     function(x){try(prodGCPV(lat=41, modeRad='siar',
+                                                  dataRad=list(prov=28, est=x,
                                                     start='01/01/2009', end='31/12/2010'))
                                      )})
 names(prodMadrid) <- namesMadrid
@@ -680,7 +784,7 @@ print(
 
 
 
-\subsection{Shadows}
+\section{Shadows}
 \label{sec:shadows}
 
 The shadows on PV generators alter the performance of the PV generators and
@@ -750,7 +854,7 @@ First, a two-axis tracking system.
 struct2x=list(W=23.11, L=9.8, Nrow=2, Ncol=8)
 dist2x=data.frame(Lew=40, Lns=30, H=0)
 
-prod2xShd<-prodGCPV(lat=lat, prom=prom, modeTrk='two', 
+prod2xShd<-prodGCPV(lat=lat, dataRad=prom, modeTrk='two', 
     modeShd='area', struct=struct2x, distances=dist2x)
 @ 
 
@@ -761,7 +865,7 @@ structHoriz=list(L=4.83);
 distHoriz=data.frame(Lew=structHoriz$L*4,H=0);
 
 #Without Backtracking
-prodHorizShd<-prodGCPV(lat=lat, prom=prom, sample='10 min', 
+prodHorizShd<-prodGCPV(lat=lat, dataRad=prom, sample='10 min', 
     modeTrk='horiz',
     modeShd='area', betaLim=60,
     distances=distHoriz,
@@ -771,7 +875,7 @@ prodHorizShd<-prodGCPV(lat=lat, prom=prom, sample='10 min',
 and a N-S horizontal axis tracking system with backtracking, 
 <<echo=TRUE>>=
 #With Backtracking
-prodHorizBT<-prodGCPV(lat=lat, prom=prom, sample='10 min', 
+prodHorizBT<-prodGCPV(lat=lat, dataRad=prom, sample='10 min', 
     modeTrk='horiz',
     modeShd='bt', betaLim=60,
     distances=distHoriz,
@@ -805,7 +909,7 @@ head(compL)
 \end{figure}
 
 
-\subsection{Position of trackers in a PV plant}
+\section{Position of trackers in a PV plant}
 
 The optimum distance between trackers or static structures of 
 a PV grid connected plant depends on two main factors: 
@@ -839,7 +943,7 @@ Besides, the analysis will be carried out with a limitation in the angle of incl
 structHoriz=list(L=4.83);
 distHoriz=list(Lew=structHoriz$L*c(2,5));
 
-Shd12Horiz<-optimShd(lat=lat, prom=prom,
+Shd12Horiz<-optimShd(lat=lat, dataRad=prom,
                      modeTrk='horiz',
                      betaLim=60,
                      distances=distHoriz, res=2,
@@ -869,7 +973,7 @@ Now, for a fixed system (figure \ref{fig:optimEst}):
 <<echo=TRUE>>=
 structFixed=list(L=5);
 distFixed=list(D=structFixed$L*c(1,3));
-Shd12Fixed<-optimShd(lat=lat, prom=prom,
+Shd12Fixed<-optimShd(lat=lat, dataRad=prom,
                      modeTrk='fixed',
                      distances=distFixed, res=1,
                      struct=structFixed,
@@ -908,7 +1012,7 @@ dist2x=list(Lew=c(30,50),Lns=c(20,50))
 maximum value of \texttt{distances}, with \texttt{res} as the increment,
 in meters, of the sequence. In this example, \texttt{res=5}. 
 <<echo=TRUE>>=
-ShdM2x<-optimShd(lat=lat, prom=prom, modeTrk='two', 
+ShdM2x<-optimShd(lat=lat, dataRad=prom, modeTrk='two', 
                  modeShd=c('area','prom'), distances=dist2x, struct=struct2x, 
                  res=5, prog=FALSE)
 @
@@ -932,10 +1036,10 @@ shadeplot(ShdM2x)
 
 
 
-\section{PV pumping systems}
+\chapter{PV pumping systems}
 
 
-\subsection{Simulation of centrifugal pumps}
+\section{Simulation of centrifugal pumps}
 
 The first step for the simulation of the performance of a PV pumping
 system (PVPS) is the characterization of the pump under the
@@ -1005,7 +1109,7 @@ print(p+glayer(panel.text(x[length(x)], y[length(x)], lab[group.number], pos=3))
 
 
 
-\subsection{Nomograms of PVPS}
+\section{Nomograms of PVPS}
 
 The international standard IEC 61725 is of common usage in public licitations of PVPS. 
 This standard proposes a equation of the irradiance profile with several parameters 
@@ -1040,7 +1144,7 @@ with different PV generators.\label{fig:Nomograma} }
 \end{figure}
 
 
-\subsection{Productivity of PVPS}
+\section{Productivity of PVPS}
 
 A different approach is to simulate the performance of the PVPS
 following the same procedure as the one described for the GCPV systems.
@@ -1055,8 +1159,8 @@ The relation between flow and effective irradiance is displayed in the figure \r
 
 <<echo=TRUE>>=
 prodSP8A44<-prodPVPS(lat=41,
-             modeRad='mapa',
-             mapa=list(prov=28,est=3,
+             modeRad='siar',
+             dataRad=list(prov=28,est=3,
                start='01/01/2009', end='31/12/2009'),
              pump=CoefSP8A44, Pg=5500, H=50)
 as.zooY(prodSP8A44)
@@ -1089,7 +1193,7 @@ converter stops the system. Finally, the figure
 of these two configurations.
 
 <<echo=TRUE>>=
-prodSP8A44Lim<-prodPVPS(lat, modeRad='prev', prev=prodSP8A44,
+prodSP8A44Lim<-prodPVPS(lat, modeRad='prev', dataRad=prodSP8A44,
                         pump=CoefSP8A44, H=50, Pg=7000)  
 as.zooY(prodSP8A44Lim)
 @
@@ -1118,7 +1222,7 @@ print(xyplot(compPVPS, superpose=TRUE, ylab='Yf'))
   \caption{Comparison of the daily productivity of two pumping PV systems.\label{fig:ComparisonPVPS}}
 \end{figure}
 
-\section{Statistical analysis of PV plants}
+\chapter{Statistical analysis of PV plants}
 \label{sec:AnalisisEstadistico}
 In a PV plant, the individual systems are theoretically
 identical and their performance along the time should be the same. Due to their
@@ -1207,9 +1311,9 @@ print(TDMadrid$plot)
   \label{fig:TargetMerge}
 \end{figure}
 
-\section{Changes}
+\chapter{Changes}
 
-\subsection*{solaR 0.23}
+\section*{solaR 0.23}
 \begin{itemize}
 \item A bug in \texttt{fInclin} when \texttt{horizBright=FALSE} has been corrected. See help(calcGef).
 \item Four sun-geometry methods are now available in \texttt{fSolD, fSolI, calcSol}.
@@ -1219,7 +1323,7 @@ print(TDMadrid$plot)
 \item \texttt{h2d} and \texttt{d2h} small functions added.
 \end{itemize}
 
-\subsection*{solaR 0.22}
+\section*{solaR 0.22}
 \begin{itemize}
 \item A new \texttt{mergesolaR} method has been defined for merging
   \texttt{solaR} objects.
@@ -1235,7 +1339,7 @@ print(TDMadrid$plot)
   now exported.
 \end{itemize}
 
-\subsection*{solaR 0.21}
+\section*{solaR 0.21}
 
 solaR is now able to calculate from both daily and sub-daily irradiation values. Besides,
 
@@ -1268,7 +1372,7 @@ solaR is now able to calculate from both daily and sub-daily irradiation values.
 \end{itemize}
 
 
-\subsection*{solaR 0.20}
+\section*{solaR 0.20}
 
 \begin{itemize}
 \item The package is now almost entirely designed with S4 classes and methods.

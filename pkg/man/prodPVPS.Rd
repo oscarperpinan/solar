@@ -13,11 +13,8 @@
 prodPVPS(lat,
          modeTrk='fixed',
          modeRad='prom',
-         prev,
-         prom=list(),
-         mapa=list(),
-         bd=list(),
-         bdI=list(),
+         dataRad,
+         prev, prom, mapa, bd,bdI,
          sample='hour',
          keep.night=TRUE,
          sunGeometry='michalsky',
@@ -37,11 +34,12 @@ prodPVPS(lat,
   \item{modeTrk}{A character string, describing the tracking method
     of the generator. See \code{\link{calcGef}} for details.}
 
-  \item{modeRad, prom, mapa, bd, bdI}{Information about the source data of the
+  \item{modeRad, dataRad, prom, mapa, bd, bdI}{Information about the source data of the
     global irradiation. See \code{\link{calcG0}} for details.}
 
-  \item{prev}{A \code{G0} object (or something that can be coerced to a
-    \code{G0} object). It is used when \code{modeRad='prev'}.}
+  \item{prev}{Deprecated, \code{dataRad} should be used instead. A
+    \code{G0} object (or something that can be coerced to a \code{G0}
+    object). It is used when \code{modeRad='prev'}.}
 
   % \item{prom}{A list as defined by \code{\link{readG0dm}}. This list
   %   is only required when \code{modeRad='prom'}.}
@@ -131,8 +129,8 @@ CoefSP8A44<-subset(pumpCoef, Qn==8&stages==44)
 
 \dontrun{
 prodSP8A44<-prodPVPS(lat=41,
-             modeRad='mapa',
-             mapa=list(prov=28,est=3,
+             modeRad='siar',
+             dataRad=list(prov=28,est=3,
                start='01/01/2009', end='31/12/2009'),
              pump=CoefSP8A44, Pg=6000, H=140)
 print(prodSP8A44)

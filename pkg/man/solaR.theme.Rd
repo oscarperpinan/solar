@@ -1,4 +1,4 @@
-\name{solaR.theme}
+\name{E_solaR.theme}
 \alias{solaR.theme}
 \docType{data}
 \title{solaR theme}
@@ -14,8 +14,5 @@ function of the \code{latticeExtra} package with the next values:
   \item{\code{strip.shingle$col='transparent'}}}
 }
 
-\details{
-
-}
 
 \keyword{datasets}

@@ -2,10 +2,10 @@
 \alias{RedEstaciones}
 \docType{data}
 \title{
-  Meteorological stations of mapa.es/siar
+  Meteorological stations of marm.es/siar
 }
 \description{
-  Meteorological stations available at \url{www.mapa.es/siar}
+  Meteorological stations available at \url{www.marm.es/siar}
 }
 \usage{data(RedEstaciones)}
 \format{A data frame with 4 columns.
@@ -19,8 +19,8 @@
   In this version the information about latitude and longitude of the stations is not available. It may be obtained through \url{http://www.geonames.org/} or with the package \code{{geonames}}.
 }
 \source{
-  \url{www.mapa.es/siar}
+  \url{www.marm.es/siar}
 }
-\seealso{\code{\link{readMAPA}}}
+\seealso{\code{\link{readSIAR}}}
 
 \keyword{datasets}

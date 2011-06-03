@@ -20,9 +20,9 @@
   \describe{
     \item{\code{signature(object = "Meteo")}}{Value of the \code{latData}
       slot, which is defined by the argument \code{lat} of the
-      \code{\link{readMAPA}}, \code{\link{readG0dm}} and
+      \code{\link{readSIAR}}, \code{\link{readG0dm}} and
       \code{\link{readBD}} functions, or by the \code{lat} component of the
-      \code{prom}, \code{mapa} and \code{bd} lists passed to \code{calcG0}
+      \code{dataRad} object passed to \code{calcG0}
       (or equivalent) . It is the latitude of the
       meteorological station (or equivalent) which provided the irradiation
       source data. It may be different from the value used for the

@@ -71,6 +71,7 @@ export(
        prodGCPV,
        prodPVPS,
        optimShd,
+       readSIAR,
        readMAPA,
        readG0dm,
        readBD,

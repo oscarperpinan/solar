@@ -15,22 +15,43 @@
  # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  #/
 calcG0<-function(lat, 
-                 modeRad='prom',  #'prom', 'aguiar','mapa','bd', 'bdI'
-                 prom=list(),
-                 mapa=list(),
-                 bd=list(),
-                 bdI=list(),
+                 modeRad='prom',
+                 dataRad,
+                 prom, mapa, bd, bdI,
                  sample='hour',
                  keep.night=TRUE,
                  sunGeometry='michalsky',
                  corr, f){
+ 
+  stopifnot(modeRad %in% c('prom', 'aguiar','siar','mapa','bd', 'bdI'))
 
-  stopifnot(modeRad %in% c('prom', 'aguiar','mapa','bd', 'bdI'))
-  stopifnot(mode(prom)=='list')
-  stopifnot(mode(mapa)=='list')
-  stopifnot(mode(bd)=='list' || class(bd)=='Meteo')
-  stopifnot(mode(bdI)=='list' || class(bdI)=='Meteo')
-		
+  if (!missing(mapa)){
+    dataRad=mapa
+    warning('Use of "mapa" argument is deprecated. You should use dataRad instead.')
+  }
+  if (!missing(prom)) {
+    dataRad=prom
+    warning('Use of "prom" argument is deprecated. You should use dataRad instead.')
+  }
+  if (!missing(bd)) {
+    dataRad=bd
+    warning('Use of "bd" argument is deprecated. You should use dataRad instead.')
+  }
+  if (!missing(bdI)) {
+    dataRad=bdI
+    warning('Use of "bdI" argument is deprecated. You should use dataRad instead.')
+  }
+  stopifnot(mode(dataRad)=='list' || class(dataRad)=='Meteo')
+  ## stopifnot(mode(prom)=='list')
+  ## stopifnot(mode(siar)=='list')
+  ## stopifnot(mode(bd)=='list' || class(bd)=='Meteo')
+  ## stopifnot(mode(bdI)=='list' || class(bdI)=='Meteo')
+
+  if (modeRad=='mapa') {
+    modeRad='siar'
+    warning('Use of "modeRad=mapa" is deprecated. You should use "modeRad=siar" instead.')
+    }
+  
   if (modeRad=='aguiar')	{
     warning('aguiar mode is temporarily disabled. Switching to prom mode.')
     modeRad='prom'}  #Deshabilito por ahora el procedimiento de Aguiar
@@ -38,44 +59,44 @@ calcG0<-function(lat,
 ###Datos de Radiacion
   if (missing(corr)){
     corr=switch(modeRad,
-      mapa='CPR',  #Correlacion entre Fd y Kt para valores diarios
+      siar='CPR',  #Correlacion entre Fd y Kt para valores diarios
       bd='CPR',    #Correlacion entre Fd y Kt para valores diarios
       prom='Page', #Correlacion entre Fd y Kt para promedios mensuales
       bdI='BRL'   #Correlación entre fd y kt para valores intradiarios
       )
   }
- 
+
   BD=switch(modeRad,
-    mapa={
-      mapa.default=list(prov='', est='', lat=lat,
+    siar={
+      siar.default=list(prov='', est='', lat=lat,
         start='01/01/2009', end='31/12/2010',
         format='%d/%m/%Y')
-      mapa=modifyList(mapa.default, mapa)
-      res <- do.call('readMAPA', mapa)
+      siar=modifyList(siar.default, dataRad)
+      res <- do.call('readSIAR', siar)
       res
-    },                                  #Fin de mapa
-    bd={if (class(bd)=='Meteo') {
-      res <- bd
+    },                                  #Fin de siar
+    bd={if (class(dataRad)=='Meteo') {
+      res <- dataRad
     } else {
-      switch(class(bd$file),
+      switch(class(dataRad$file),
              character={
                bd.default=list(file='', lat=lat, format="%d/%m/%Y",
                  header=TRUE, fill=TRUE, sep=';',
                  dec='.', dates.col='dates', source='')
-               bd=modifyList(bd.default, bd)
+               bd=modifyList(bd.default, dataRad)
                res <- do.call('readBD', bd)
                res
              },
              data.frame={
                bd.default=list(file='', lat=lat, format="%d/%m/%Y",
                  dates.col='dates', source='')
-               bd=modifyList(bd.default, bd)
+               bd=modifyList(bd.default, dataRad)
                res <- do.call('df2Meteo', bd)
                res
              },
              zoo={
                bd.default=list(file='', lat=lat, source='')
-               bd=modifyList(bd.default, bd)
+               bd=modifyList(bd.default, dataRad)
                res <- do.call('zoo2Meteo', bd)
                res
              }
@@ -86,39 +107,39 @@ calcG0<-function(lat,
         year=as.POSIXlt(Sys.Date())$year+1900, 
         promDays=c(17,14,15,15,15,10,18,18,18,19,18,13), 
         source='')
-      prom=modifyList(prom.default, prom)
+      prom=modifyList(prom.default, dataRad)
       res <- do.call('readG0dm', prom)
     },                                  #Fin de prom
     bdI={
-      if (class(bdI)=='Meteo') {
-        result=bdI
+      if (class(dataRad)=='Meteo') {
+        result=dataRad
       } else {
-        switch(class(bdI$file),
+        switch(class(dataRad$file),
                character={
                  bdI.default=list(file='', lat=lat, format="%d/%m/%Y %H:%M:%S",
                    header=TRUE, fill=TRUE, sep=';',
                    dec='.', time.col='time', source='')
-                 bdI=modifyList(bdI.default, bdI)
+                 bdI=modifyList(bdI.default, dataRad)
                  res <- do.call('readBDi', bdI)
                  res
                },
                data.frame={
                  bdI.default=list(file='', lat=lat, format="%d/%m/%Y %H:%M:%S",
                    time.col='time', source='')
-                 bdI=modifyList(bdI.default, bdI)
+                 bdI=modifyList(bdI.default, dataRad)
                  res <- do.call('dfI2Meteo', bdI)
                  res
                },
                zoo={
                  bdI.default=list(file='', lat=lat, source='')
-                 bdI=modifyList(bdI.default, bdI)
+                 bdI=modifyList(bdI.default, dataRad)
                  res <- do.call('zoo2Meteo', bdI)
                  res
                },
-               stop('bdI$file should be a character, a data.frame or a zoo.')
+               stop('dataRad$file should be a character, a data.frame or a zoo.')
                )}
     }                                   #Fin de bdI
-    )                                  #Fin del switch general
+    )                                   #Fin del switch general
 
 ### Angulos solares y componentes de irradiancia
   if (modeRad=='bdI') {
@@ -146,7 +167,7 @@ calcG0<-function(lat,
   indSol <- indexI(sol)
   
   Ta=switch(modeRad,
-    mapa={
+    siar={
       fTemp(sol, BD)
     },
     bd={
@@ -164,7 +185,7 @@ calcG0<-function(lat,
       if ("Ta" %in% names(BD@data)) {
         Ta=BD@data$Ta
       } else {
-          warning('No temperature information available!')
+        warning('No temperature information available!')
       }
     },
     prom= zoo(coredata(BD@data$Ta)[ind.rep], indSol) ##zoo(rep(Ta, length(indSol)), indSol) ##idem

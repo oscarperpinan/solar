@@ -17,11 +17,9 @@
 prodPVPS<-function(lat, 
                    modeTrk='fixed', 
                    modeRad='prom', 
+                   dataRad,
                    prev,
-                   prom=list(),
-                   mapa=list(), 
-                   bd=list(),
-                   bdI=list(),
+                   prom, mapa, bd, bdI, 
                    sample='hour',
                    keep.night=TRUE,
                    sunGeometry='michalsky',
@@ -38,6 +36,7 @@ prodPVPS<-function(lat,
   if (modeRad!='prev'){                 #No utilizamos un cálculo prev
 
     radEf<-calcGef(lat=lat, modeTrk=modeTrk, modeRad=modeRad,
+                   dataRad=dataRad,
                    prom=prom, mapa=mapa, bd=bd, bdI=bdI,
                    sample=sample, keep.night=keep.night,
                    sunGeometry=sunGeometry,
@@ -47,16 +46,21 @@ prodPVPS<-function(lat,
                    modeShd='')
 		
   } else { #Utilizamos un cálculo previo de calcG0, calcGef o prodSFCR
-    stopifnot(class(prev) %in% c('G0', 'Gef', 'ProdPVPS'))
-    radEf <- switch(class(prev),
+        if (!missing(prev) & missing(dataRad)){
+      dataRad=prev
+      warning('Use of the "prev" argument is deprecated. You should use dataRad instead.')
+    }
+
+    stopifnot(class(dataRad) %in% c('G0', 'Gef', 'ProdPVPS'))
+    radEf <- switch(class(dataRad),
                     G0=calcGef(lat=lat, 
                       modeTrk=modeTrk, modeRad='prev',
-                      prev=prev,
+                      dataRad=dataRad,
                       betaLim=betaLim, beta=beta, alfa=alfa,
                       iS=iS, alb=alb, horizBright=horizBright, HCPV=HCPV,
                       modeShd=''),
-                    Gef=prev,
-                    ProdPVPS=as(prev, 'Gef')
+                    Gef=dataRad,
+                    ProdPVPS=as(dataRad, 'Gef')
                     )
   }
 

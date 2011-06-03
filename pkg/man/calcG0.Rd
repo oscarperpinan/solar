@@ -18,8 +18,8 @@
 
 \usage{
 
-calcG0(lat, modeRad='prom', prom=list(), mapa=list(), bd=list(),
-bdI=list(), sample='hour', keep.night=TRUE, sunGeometry='michalsky',
+calcG0(lat, modeRad='prom', dataRad, prom, mapa, bd,
+bdI, sample='hour', keep.night=TRUE, sunGeometry='michalsky',
 corr, f) }
 
 \arguments{
@@ -29,44 +29,63 @@ corr, f) }
     global irradiation and ambient temperature.
 
     It can be \code{modeRad='prom'} for monthly mean
-    calculations. With this option, a set of 12 values inside \code{prom} must
-    be provided.
+    calculations. With this option, a set of 12 values inside \code{dataRad} must
+    be provided, as defined in \code{\link{readG0dm}}.
 
-    When \code{modeRad='mapa'} the source data is downloaded
-    from \url{www.mapa.es/siar} with the information provided in
-    \code{mapa}.
+    When \code{modeRad='siar'} the source data is downloaded
+    from \url{www.marm.es/siar} with the information provided in
+    \code{dataRad}. In previous versions, this radiation mode was named
+    as \code{'mapa'} due to the webpage of the database. However, since the
+    database is no longer available at mapa.es, \code{modeRad='mapa'} is
+    deprecated and \code{modeRad='siar'} should be used instead.
 
     If \code{modeRad='bd'} the information of \emph{daily} irradiation is read from a
-    file, a \code{data.frame} defined by \code{bd}, a \code{zoo} or a
+    file, a \code{data.frame} defined by \code{dataRad}, a \code{zoo} or a
     \code{Meteo} object. (See \code{\link{readBD}}, \code{\link{df2Meteo}}
     and \code{\link{zoo2Meteo}} for details).
 
     If \code{modeRad='bdI'} the information of \emph{intradaily} irradiation is read from a
-    file, a \code{data.frame} defined by \code{bdI}, a \code{zoo} or a
+    file, a \code{data.frame} defined by \code{dataRad}, a \code{zoo} or a
     \code{Meteo} object. (See \code{\link{readBDi}},
     \code{\link{dfI2Meteo}} and \code{\link{zoo2Meteo}} for details).
   }
 
-  \item{prom}{A list as defined by \code{\link{readG0dm}}. This list
-    is only required when \code{modeRad='prom'}.}
-
-  \item{mapa}{A list as defined by \code{\link{readMAPA}}. This
-    list is only required  when \code{modeRad='mapa'}.}
-
-  \item{bd}{A \code{list} as defined by \code{\link{readBD}},
+  \item{dataRad}{\itemize{
+      \item{If \code{modeRad='prom'}, a list as defined by
+	\code{\link{readG0dm}}}
+      \item{If \code{modeRad='siar'}, a list as defined by
+	\code{\link{readSIAR}}.}
+      \item{If \code{modeRad='bd'} a \code{list} as defined by \code{\link{readBD}},
     \code{\link{df2Meteo}} or \code{\link{zoo2Meteo}}, or a
-    \code{Meteo} object. It is only required when
-    \code{modeRad='bd'}.
-    
-    The resulting object will include a column named \code{Ta},
+    \code{Meteo} object. The resulting object will include a column named \code{Ta},
     with information about ambient temperature.}
-
-  \item{bdI}{A \code{list} as defined by \code{\link{readBDi}},
+  \item{If \code{modeRad='bdI'} a \code{list} as defined by \code{\link{readBDi}},
     \code{\link{dfI2Meteo}} or \code{\link{zoo2Meteo}}, or a
-    \code{Meteo} object. It is only required when \code{modeRad='bdI'}.
-
-    The resulting object will include a column named \code{Ta},
+    \code{Meteo} object. The resulting object will include a column named \code{Ta},
     with information about ambient temperature.}
+}}
+\item{prom, mapa, bd, bdI}{Deprecated. \code{dataRad} should be used instead.}
+
+  % \item{prom}{A list as defined by \code{\link{readG0dm}}. This list
+  %   is only required when \code{modeRad='prom'}.}
+
+  % \item{mapa}{A list as defined by \code{\link{readMAPA}}. This
+  %   list is only required  when \code{modeRad='mapa'}.}
+
+  % \item{bd}{A \code{list} as defined by \code{\link{readBD}},
+  %   \code{\link{df2Meteo}} or \code{\link{zoo2Meteo}}, or a
+  %   \code{Meteo} object. It is only required when
+  %   \code{modeRad='bd'}.
+    
+  %   The resulting object will include a column named \code{Ta},
+  %   with information about ambient temperature.}
+
+  % \item{bdI}{A \code{list} as defined by \code{\link{readBDi}},
+  %   \code{\link{dfI2Meteo}} or \code{\link{zoo2Meteo}}, or a
+  %   \code{Meteo} object. It is only required when \code{modeRad='bdI'}.
+
+  %   The resulting object will include a column named \code{Ta},
+  %   with information about ambient temperature.}
 
   \item{sample}{\code{character}, containing one of ‘"sec"’, ‘"min"’,
     ‘"hour"’.  This can optionally be preceded by a (positive or
@@ -90,17 +109,16 @@ corr, f) }
     If \code{corr='user'} the use of a correlation
     defined by a function \code{f} is possible.
 
-    If \code{corr='none'} the object defined by \code{bd} should include
+    If \code{corr='none'} the object defined by \code{dataRad} should include
     information about global, diffuse and direct daily irradiation with columns named 
     \code{G0d}, \code{D0d} and \code{B0d}, respectively
     (or \code{G0}, \code{D0} and \code{B0} if \code{modeRad='bdI'}).
     If \code{corr} is missing, then it is internally set to \code{CPR}
-    when \code{modeRad='mapa'} or \code{modeRad='bd'}, to \code{Page}
+    when \code{modeRad='siar'} or \code{modeRad='bd'}, to \code{Page}
     when \code{modeRad='prom'} and to \code{BRL} when \code{modeRad='bdI'}.}
 
   \item{f}{A function defininig a correlation between the fraction of
     diffuse irradiation and the clearness index. It is only neccessary when \code{corr='user'}}
-
 }
 
 \value{A \code{G0} object.}
@@ -116,7 +134,7 @@ corr, f) }
   \code{\link{readG0dm}},
   \code{\link{readBD}},
   \code{\link{readBDi}},
-  \code{\link{readMAPA}},
+  \code{\link{readSIAR}},
   \code{\link{corrFdKt}}.
 }
 \examples{
@@ -124,14 +142,14 @@ G0dm=c(2.766,3.491,4.494,5.912,6.989,7.742,7.919,7.027,5.369,3.562,2.814,2.179)*
 Ta=c(10, 14.1, 15.6, 17.2, 19.3, 21.2, 28.4, 29.9, 24.3, 18.2, 17.2,
   15.2)
 
-g0<-calcG0(lat=37.2, modeRad='prom', prom=list(G0dm=G0dm, Ta=Ta))
+g0<-calcG0(lat=37.2, modeRad='prom', dataRad=list(G0dm=G0dm, Ta=Ta))
 print(g0)
 xyplot(g0)
 
 \dontrun{
 g0<-calcG0(lat=37.2,
-        modeRad='mapa',
-        mapa=list(prov=28,est=3,
+        modeRad='siar',
+        dataRad=list(prov=28,est=3,
         start='01/01/2009', end='31/12/2009'))
 print(g0)
 xyplot(g0)
@@ -145,14 +163,14 @@ BDi$Ta=25 ##Information about temperature must be contained in BDi
 
 g02<-calcG0(lat=37.2,
             modeRad='bdI',
-            bdI=list(lat=37.2, file=BDi),
+            dataRad=list(lat=37.2, file=BDi),
             corr='none')
 
 print(g02)
 
 g03<-calcG0(lat=37.2,
             modeRad='bdI',
-            bdI=list(lat=37.2, file=BDi),
+            dataRad=list(lat=37.2, file=BDi),
             corr='BRL')
 print(g03)
 
@@ -188,16 +206,16 @@ lat=20.77
 NRELMeteo <- zoo2Meteo(z, lat=lat)
 xyplot(NRELMeteo)
 
-g0 <- calcG0(lat=lat, modeRad='bdI', bdI=NRELMeteo, corr='none')
+g0 <- calcG0(lat=lat, modeRad='bdI', dataRad=NRELMeteo, corr='none')
 xyplot(g0)
 xyplot(as.zooI(g0), superpose=TRUE)
 
-g02 <- calcG0(lat=lat, modeRad='bdI', bdI=NRELMeteo, corr='BRL')
+g02 <- calcG0(lat=lat, modeRad='bdI', dataRad=NRELMeteo, corr='BRL')
 xyplot(g02)
 xyplot(as.zooI(g02), superpose=TRUE)
 xyplot(fd~kt, data=g02, pch=19, cex=0.5, alpha=0.5)
 
-g03 <- calcG0(lat=lat, modeRad='bdI', bdI=NRELMeteo, corr='CLIMEDh')
+g03 <- calcG0(lat=lat, modeRad='bdI', dataRad=NRELMeteo, corr='CLIMEDh')
 xyplot(g03)
 xyplot(as.zooI(g03), superpose=TRUE)
 xyplot(fd~kt, data=g03, pch=19, cex=0.5, alpha=0.5)

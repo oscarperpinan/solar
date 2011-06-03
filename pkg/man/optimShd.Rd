@@ -25,10 +25,8 @@
 optimShd(lat,
          modeTrk='fixed',
          modeRad='prom',
-         prev,
-         prom=list(),
-         mapa=list(),
-         bd=list(),
+         dataRad,
+         prev, prom, mapa, bd,
          sample='hour',
          keep.night=TRUE,
          sunGeometry='michalsky',
@@ -51,25 +49,13 @@ optimShd(lat,
 
   \item{modeTrk}{character, to be chosen from \code{'fixed'}, \code{'two'} or \code{'horiz'}. When \code{modeTrk='fixed'} the surface is fixed (inclination and azimuth angles are constant). The performance of a two-axis tracker is calculated with \code{modeTrk='two'}, and \code{modeTrk='horiz'} is the option for an horizontal N-S tracker. Its default value is \code{modeTrk='fixed'}}
 
-  \item{modeRad}{A character string, describes the kind of source data of the
-    global irradiation. It can be \code{modeRad='prom'} for monthly mean
-    calculations. With this option, a set of 12 values inside \code{prom} must
-    be provided. When \code{modeRad='mapa'} the source data is downloaded
-    from \url{www.mapa.es/siar} with the information provided in
-    \code{mapa}. If \code{modeRad='bd'} the information is read from a
-    file defined by \code{bd}.}
+  \item{modeRad, dataRad, prom, mapa, bd}{Information about the source data of the
+    global irradiation. See \code{\link{calcG0}} for details. For this
+    function the option \code{modeRad='bdI'} is not supported.}
 
-  \item{prev}{A \code{G0} object (or something that can be coerced to a
-    \code{G0} object). It is used when \code{modeTrk='prev'}.}
-
-  \item{prom}{A list as defined by \code{\link{readG0dm}}. This list
-    is only required when \code{modeRad='prom'}.}
-
-  \item{mapa}{A list as defined by \code{\link{readMAPA}}. This
-    list is only required  when \code{modeRad='mapa'}.}
-
-  \item{bd}{\code{list} as defined by \code{\link{readBD}}. This list
-    is only required when \code{modeRad='bd'}.}
+  \item{prev}{Deprecated, \code{dataRad} should be used instead. A
+    \code{G0} object (or something that can be coerced to a \code{G0}
+    object). It is used when \code{modeRad='prev'}.}
 
   \item{sample}{\code{character}, containing one of ‘"sec"’, ‘"min"’,
     ‘"hour"’.  This can optionally be preceded by a (positive or
@@ -225,7 +211,7 @@ struct2x=list(W=23.11, L=9.8, Nrow=2, Ncol=8)
 dist2x=list(Lew=c(30,50),Lns=c(20,50))
 
 #Monthly averages
-ShdM2x<-optimShd(lat=lat, prom=prom, modeTrk='two',
+ShdM2x<-optimShd(lat=lat, dataRad=prom, modeTrk='two',
         modeShd=c('area','prom'), distances=dist2x, struct=struct2x, res=5)
 
 shadeplot(ShdM2x)
@@ -243,7 +229,7 @@ structHoriz=list(L=4.83);
 distHoriz=list(Lew=structHoriz$L*c(2,5));
 
 #Without backtracking
-Shd12Horiz<-optimShd(lat=lat, prom=prom,
+Shd12Horiz<-optimShd(lat=lat, dataRad=prom,
         modeTrk='horiz',
         betaLim=60,
         distances=distHoriz, res=2,
@@ -255,7 +241,7 @@ shadeplot(Shd12Horiz)
 xyplot(diff(Yf)~GRR[-1],data=Shd12Horiz,type=c('l','g'))
 
 #with Backtracking
-Shd12HorizBT<-optimShd(lat=lat, prom=prom,
+Shd12HorizBT<-optimShd(lat=lat, dataRad=prom,
         modeTrk='horiz',
         betaLim=60,
         distances=distHoriz, res=1,
@@ -269,7 +255,7 @@ xyplot(diff(Yf)~GRR[-1],data=Shd12HorizBT,type=c('l','g'))
 ###Fixed system
 structFixed=list(L=5);
 distFixed=list(D=structFixed$L*c(1,3));
-Shd12Fixed<-optimShd(lat=lat, prom=prom,
+Shd12Fixed<-optimShd(lat=lat, dataRad=prom,
         modeTrk='fixed',
         distances=distFixed, res=1,
         struct=structFixed,

@@ -30,7 +30,7 @@ readG0dm(G0dm, Ta=25, lat=0,
   Oscar Perpiñán Lamigueiro.
 }
 \seealso{
-  \code{\link{readMAPA}},
+  \code{\link{readSIAR}},
   \code{\link{readBD}}.
 }
 \examples{

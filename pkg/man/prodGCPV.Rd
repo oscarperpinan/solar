@@ -11,11 +11,8 @@
 prodGCPV(lat,
          modeTrk='fixed',
          modeRad='prom',
-         prev,
-         prom=list(),
-         mapa=list(),
-         bd=list(),
-         bdI=list(),
+         dataRad,
+         prev, prom, mapa, bd,bdI,
          sample='hour',
          keep.night=TRUE,
          sunGeometry='michalsky',
@@ -37,11 +34,12 @@ prodGCPV(lat,
   \item{modeTrk}{A character string, describing the tracking method
     of the generator. See \code{\link{calcGef}} for details.}
 
-  \item{modeRad, prom, mapa, bd, bdI}{Information about the source data of the
+  \item{modeRad, dataRad, prom, mapa, bd, bdI}{Information about the source data of the
     global irradiation. See \code{\link{calcG0}} for details.}
 
-  \item{prev}{A \code{Gef} or \code{G0} object (or something that can be coerced to a
-    \code{Gef} object). It is only used when
+  \item{prev}{Deprecated, \code{dataRad} should be used instead. A
+    \code{Gef} or \code{G0} object (or something that can be coerced to
+    a \code{Gef} object). It is only used when
     \code{modeRad='prev'}. \code{prodGCPV} will call
     \code{\link{calcGef}} for the effective irradiance and irradiation
     procedure only when \code{prev} is a \code{G0} object.}
@@ -191,9 +189,9 @@ Ta=c(10, 14.1, 15.6, 17.2, 19.3, 21.2, 28.4, 29.9, 24.3, 18.2, 17.2, 15.2)
 prom=list(G0dm=G0dm, Ta=Ta)
 
 ###Comparison of different tracker methods
-prodFixed<-prodGCPV(lat=lat,prom=prom, keep.night=FALSE)
-prod2x<-prodGCPV(lat=lat, prom=prom, modeTrk='two', keep.night=FALSE)
-prodHoriz<-prodGCPV(lat=lat,prom=prom, modeTrk='horiz', keep.night=FALSE)
+prodFixed<-prodGCPV(lat=lat,dataRad=prom, keep.night=FALSE)
+prod2x<-prodGCPV(lat=lat, dataRad=prom, modeTrk='two', keep.night=FALSE)
+prodHoriz<-prodGCPV(lat=lat,dataRad=prom, modeTrk='horiz', keep.night=FALSE)
 
 ##Comparison of yearly productivities
 compare(prodFixed, prod2x, prodHoriz)
@@ -211,27 +209,27 @@ xyplot(two+horiz+fixed~AzS|mon, data=ComparePac,
      type='l', auto.key=list(space='right', lines=TRUE, points=FALSE),ylab='Pac')
 
 \dontrun{
-###Use of modeRad='mapa' and modeRad='prev'
-prodMapaFixed<-prodGCPV(lat=41,
-             modeRad='mapa',
-             mapa=list(prov=28,est=3,
+###Use of modeRad='siar' and modeRad='prev'
+prodSIARFixed<-prodGCPV(lat=41,
+             modeRad='siar',
+             dataRad=list(prov=28,est=3,
                start='01/01/2009', end='31/12/2009'),
              keep.night=FALSE)
 
 ##We want to compare systems with different effective irradiance
-##so we have to convert prodMapaFixed to a 'G0' object.
-G0Mapa=as(prodMapaFixed, 'G0')
+##so we have to convert prodSIARFixed to a 'G0' object.
+G0SIAR=as(prodSIARFixed, 'G0')
 
-prodMapa2x<-prodGCPV(lat=41,modeTrk='two',modeRad='prev', prev=G0Mapa)
-prodMapaHoriz<-prodGCPV(lat=41, modeTrk='horiz',modeRad='prev',
-prev=G0Mapa)
+prodSIAR2x<-prodGCPV(lat=41,modeTrk='two',modeRad='prev', dataRad=G0SIAR)
+prodSIARHoriz<-prodGCPV(lat=41, modeTrk='horiz',modeRad='prev',
+dataRad=G0SIAR)
 
 ##Comparison of yearly values
-compare(prodMapaFixed, prodMapa2x, prodMapaHoriz)
-compareLosses(prodMapaFixed, prodMapa2x, prodMapaHoriz)
+compare(prodSIARFixed, prodSIAR2x, prodSIARHoriz)
+compareLosses(prodSIARFixed, prodSIAR2x, prodSIARHoriz)
 
 ##Compare of daily productivities of each tracking system
-compareYf <- mergesolaR(prodMapaFixed, prodMapa2x, prodMapaHoriz)
+compareYf <- mergesolaR(prodSIARFixed, prodSIAR2x, prodSIARHoriz)
 xyplot(compareYf, superpose=TRUE,
 ylab='kWh/kWp', main='Daily productivity', auto.key=list(space='right'))
 }
@@ -240,7 +238,7 @@ ylab='kWh/kWp', main='Daily productivity', auto.key=list(space='right'))
 #Two-axis trackers
 struct2x=list(W=23.11, L=9.8, Nrow=2, Ncol=8)
 dist2x=data.frame(Lew=40, Lns=30, H=0)
-prod2xShd<-prodGCPV(lat=lat, prom=prom, modeTrk='two',
+prod2xShd<-prodGCPV(lat=lat, dataRad=prom, modeTrk='two',
     modeShd='area', struct=struct2x, distances=dist2x)
 print(prod2xShd)
 
@@ -249,7 +247,7 @@ structHoriz=list(L=4.83);
 distHoriz=data.frame(Lew=structHoriz$L*4);
 
 #Without Backtracking
-prodHorizShd<-prodGCPV(lat=lat, prom=prom, sample='10 min',
+prodHorizShd<-prodGCPV(lat=lat, dataRad=prom, sample='10 min',
     modeTrk='horiz',
     modeShd='area', betaLim=60,
     distances=distHoriz,
@@ -264,7 +262,7 @@ xyplot(r2d(Beta)~r2d(w),
      ylab=expression(beta (degrees)))
 
 #With Backtracking
-prodHorizBT<-prodGCPV(lat=lat, prom=prom, sample='10 min',
+prodHorizBT<-prodGCPV(lat=lat, dataRad=prom, sample='10 min',
     modeTrk='horiz',
     modeShd='bt', betaLim=60,
     distances=distHoriz,

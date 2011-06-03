@@ -16,12 +16,9 @@
  #/
 calcGef<-function(lat,
                   modeTrk='fixed',      #c('two','horiz','fixed')
-                  modeRad='prom', #'prev','prom', 'aguiar','mapa','bd', 'bdI'
-                  prev,
-                  prom=list(),
-                  mapa=list(),
-                  bd=list(),
-                  bdI=list(),
+                  modeRad='prom', 
+                  dataRad,
+                  prev, prom, mapa, bd, bdI,
                   sample='hour',
                   keep.night=TRUE,
                   sunGeometry='michalsky',
@@ -30,7 +27,7 @@ calcGef<-function(lat,
                   iS=2, alb=0.2, horizBright=TRUE, HCPV=FALSE,
                   modeShd='',    #modeShd=c('area','bt','prom')
                   struct=list(), #list(W=23.11, L=9.8, Nrow=2, Ncol=8), 
-                  distances=data.frame() #data.frame(Lew=40, Lns=30, H=0)){
+                  distances=data.frame()#data.frame(Lew=40, Lns=30, H=0)){
                   ){
 
   stopifnot(is.list(struct), is.data.frame(distances))
@@ -41,12 +38,17 @@ calcGef<-function(lat,
 		
   if (modeRad!='prev'){                 #No utilizamos un cálculo prev
     radHoriz<-calcG0(lat=lat, modeRad=modeRad,
+                     dataRad=dataRad,
                      prom=prom, mapa=mapa, bd=bd, bdI=bdI,
                      sample=sample, keep.night=keep.night,
                      sunGeometry=sunGeometry,
                      corr=corr, f=f)
   } else {                     #Utilizamos un cálculo prev de calcG0
-    radHoriz <- as(prev, 'G0') ##OJO: ¿hace falta comprobar que coinciden lat y otras?
+    if (!missing(prev) & missing(dataRad)){
+      dataRad=prev
+      warning('Use of the "prev" argument is deprecated. You should use dataRad instead.')
+      }
+    radHoriz <- as(dataRad, 'G0') ##OJO: ¿hace falta comprobar que coinciden lat y otras?
   } 
 
 ###Paso a inclinada y radiación efectiva

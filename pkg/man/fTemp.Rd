@@ -14,7 +14,7 @@
   \item{sol}{A \code{\linkS4class{Sol}} object. It may be the result of the
     \code{\link{calcSol}} function.}
   \item{BD}{A \code{\linkS4class{Meteo}} object, as provided by the
-    \code{\link{readMAPA}} or \code{\link{readBD}} functions. It must
+    \code{\link{readSIAR}} or \code{\link{readBD}} functions. It must
     include information about \code{TempMax} and \code{TempMin}.}
 }
 \details{
@@ -40,14 +40,14 @@
 
 \seealso{
   \code{\link{calcSol}},
-  \code{\link{readMAPA}},
+  \code{\link{readSIAR}},
   \code{\link{readBD}}.
 }
 
 \examples{
 \dontrun{
 #Aranjuez, Madrid
-BD<-readMAPA(28,3,'01/01/2008','31/12/2008')
+BD<-readSIAR(28,3,'01/01/2008','31/12/2008')
 lat=41;
 sol=calcSol(lat, BTd=indexD(BD), sample='hour')
 Temp<-fTemp(sol,BD)

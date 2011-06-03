@@ -16,12 +16,10 @@
  #/
 prodGCPV<-function(lat,
                    modeTrk='fixed', 
-                   modeRad='prom', 
+                   modeRad='prom',
+                   dataRad,
                    prev,
-                   prom=list(),
-                   mapa=list(), 
-                   bd=list(),
-                   bdI=list(),
+                   prom, mapa, bd, bdI, 
                    sample='hour',
                    keep.night=TRUE,
                    sunGeometry='michalsky',
@@ -51,6 +49,7 @@ prodGCPV<-function(lat,
   if (modeRad!='prev'){               #No utilizamos un cálculo previo
 
     radEf<-calcGef(lat=lat, modeTrk=modeTrk, modeRad=modeRad,
+                   dataRad=dataRad,
                    prom=prom, mapa=mapa, bd=bd, bdI=bdI,
                    sample=sample, keep.night=keep.night,
                    sunGeometry=sunGeometry,
@@ -60,16 +59,21 @@ prodGCPV<-function(lat,
                    modeShd=modeShd, struct=struct, distances=distances)
 		
   } else { #Utilizamos un cálculo previo de calcG0, calcGef o prodSFCR
-    stopifnot(class(prev) %in% c('G0', 'Gef', 'ProdGCPV'))
-    radEf <- switch(class(prev),
+    if (!missing(prev) & missing(dataRad)){
+      dataRad=prev
+      warning('Use of the "prev" argument is deprecated. You should use dataRad instead.')
+    }
+
+    stopifnot(class(dataRad) %in% c('G0', 'Gef', 'ProdGCPV'))
+    radEf <- switch(class(dataRad),
                     G0=calcGef(lat=lat,
                       modeTrk=modeTrk, modeRad='prev',
-                      prev=prev,
+                      dataRad=dataRad,
                       betaLim=betaLim, beta=beta, alfa=alfa,
                       iS=iS, alb=alb, horizBright=horizBright, HCPV=HCPV,
                       modeShd=modeShd, struct=struct, distances=distances),
-                    Gef=prev,
-                    ProdGCPV=as(prev, 'Gef')
+                    Gef=dataRad,
+                    ProdGCPV=as(dataRad, 'Gef')
                     )
   }
 
