@@ -61,45 +61,6 @@ mapaES <- list('sp.lines', mapaSHP, lwd=0.5)
 spplot(spRedGN['NomProv'], sp.layout=mapaES, scales=list(draw=TRUE), key.space='right', cex=0.5)
 
 
-##En la llamada a APPLYdebo eliminar las dos últimas columnas (caracteres) para que no convierta todo a character
-spainMeteo <- apply(redGN[, 1:4], 1,
-                    function(x)readMAPA(prov=x[3], est=x[4], start='01/01/2004', end='31/12/2010', lat=x[1])
-                    )
-##save(file='spainMeteo', spainMeteo)
-
-meanYearlySums <- function(x)mean(aggregate(getG0(x), year, sum, na.rm=1))
-
-spainG0y <- sapply(spainMeteo, meanYearlySums)/1000
-
-redGN$G0y=spainG0y
-spRedGN$G0y=spainG0y
-
-spRedGN <- spRedGN[coordinates(spRedGN)[,2]>30,]##dejo fuera canarias
-
-ncuts=15
-paleta=colorRampPalette(brewer.pal(9, 'Reds'))(ncuts)
-spplot(spRedGN['G0y'], sp.layout=mapaES, col.regions=paleta,
-       scales=list(draw=TRUE), ylim=c(35, 45), xlim=c(-10, 5),
-       cuts=ncuts, key.space='right', cex=0.8)
-
-vgmG0y <- variogram(G0y~1, data=spRedGN)
-plot(vgmG0y)
-fitvgmG0y <- fit.variogram(vgmG0y, vgm(20000, 'Sph', 10))
-
-box <- t(bbox(spRedGN))
-
-grd <- expand.grid(lng=seq(box[1,1], box[2,1], .03), lat=seq(box[1,2], box[2,2], .03))
-coordinates(grd) <- ~lng+lat
-gridded(grd) <- TRUE
-proj4string(grd) <- proj
-
-
-krigeG0y <- krige(G0y~1, spRedGN, grd)
-spplot(krigeG0y['var1.pred']) +
-  layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
-  layer(sp.lines(mapaSHP))
-
-krigeG0y <- krige(G0y~1, spRedGN, grd, model=fitvgmG0y)
 
 ################################################################################
 ###Otra alternativa. En lugar de buscar en geonames, uso la información del IGN
