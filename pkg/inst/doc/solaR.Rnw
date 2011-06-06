@@ -154,18 +154,24 @@
 \begin{document}
 
 \setkeys{Gin}{width=0.5\textwidth}
+\begin{titlingpage}
 
-\title{Introduction to \emph{solaR}} 
-
+\title{\HUGE Introduction to \emph{solaR}}
 
 \author{Oscar Perpiñán Lamigueiro}
 
 
 \date{03 June 2011}
 
+
 \maketitle
 
-\chapter{Introduction}
+
+\end{titlingpage}
+
+\frontmatter
+
+%%\chapter{Introduction}
 
 The  \texttt{solaR} package includes a set of functions which calculate
 the solar radiation incident on a photovoltaic generator and simulate the 
@@ -1311,7 +1317,22 @@ print(TDMadrid$plot)
   \label{fig:TargetMerge}
 \end{figure}
 
-\chapter{Changes}
+\appendix
+\chapter*{Changes}
+
+\section*{solaR 0.24}
+\begin{itemize}
+\item The url of \url{http://www.mapa.es/siar} has been changed to
+  \url{http://www.marm.es/siar}. The \texttt{readMAPA} function has
+  been fixed. Moreover, this function has been renamed to
+  \texttt{readSIAR}, although it is still available as \texttt{readMAPA}.
+\item The arguments \texttt{prom}, \texttt{mapa}, \texttt{bd} and
+  \texttt{bdI} of \texttt{calcG0}, \texttt{calcGef}, \texttt{prodGCPV}
+  and \texttt{prodPVPS} have been unified in the new
+  \texttt{dataRad}. Those arguments are now deprecated although still available.
+\item The mode \texttt{modeRad='mapa'} is now deprecated and renamed
+  to \texttt{modeRad='siar'}.
+\end{itemize}
 
 \section*{solaR 0.23}
 \begin{itemize}
@@ -1391,7 +1412,9 @@ ease the understanding by international users.
 
 \end{itemize}
 
+\backmatter
+
 \bibliography{solaR}
-\bibliographystyle{plain}
+\bibliographystyle{jss}
 
 \end{document}

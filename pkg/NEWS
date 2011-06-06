@@ -1,3 +1,15 @@
+solaR 0.24
+* The url of http://www.mapa.es/siar has been changed to
+  http://www.marm.es/siar. The readMAPA function has
+  been fixed. Moreover, this function has been renamed to
+  readSIAR, although it is still available as readMAPA.
+* The arguments prom, mapa, bd and
+  bdI of calcG0, calcGef, prodGCPV
+  and prodPVPS have been unified in the new
+  dataRad. Those arguments are now deprecated although still available.
+* The mode modeRad='mapa' is now deprecated and renamed
+  to  modeRad='siar'.
+
 solaR 0.23
 ==========
 *A bug in fInclin when horizBright=FALSE has been corrected. See help(calcGef).
