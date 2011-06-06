@@ -234,6 +234,9 @@ spplot(xsp['values.AlS'], contour=TRUE, col.regions=heat.colors)
 
 ####2011-05-26
 library(sp)
+library(maptools)
+library(raster)
+
 load('/home/oscar/Investigacion/solar/drafts/redGN.RData')
 proj <- CRS('+proj=latlon +ellps=WGS84')
 spRedGN <- SpatialPoints(coords=redGN[c('lng', 'lat')],
@@ -253,13 +256,12 @@ layerBound <- layer(sp.lines(mapaSHP, lwd=0.6))
 layerPoints <- layer(sp.points(spRedGN, col='black', pch=19, cex=0.3))
 
 listFich <- dir('/home/oscar/Datos/CMSAF/', pattern='2008')
-
 old <- getwd()
 setwd('/home/oscar/Datos/CMSAF')##Cambiar!!!
-
 library(raster)
 listNC <- lapply(listFich, raster)
 stackSIS <- do.call(stack, listNC)
+setwd(old)
 
 smp<- sampleRegular(stackSIS, 1e5, asRaster=TRUE)
 SP <- as(smp, 'SpatialGridDataFrame')
@@ -291,7 +293,7 @@ myplot <- function(x, par.settings=solaR.theme,
 
 myplot(SP)+layerBound+layerPoints
 
-getwd(old)
+
 
 Jan <- subset(stackSIS, 1)
 spJan <- as(sampleRegular(Jan, 1e4, asRaster=TRUE), 'SpatialGridDataFrame')
@@ -317,23 +319,23 @@ brickSIS <- brickSIS*24##mean daily irradiance to irradiation (Wh/m2)
 idx <- fBTd(year=2008)
 SIS <- new('RasterTime', brickSIS, index=idx)
 
-gefRaster <- writeStart(raster(SIS), filename='gefCMSAF', overwrite=TRUE)
-bs <- blockSize(SIS)
-for (i in seq_len(bs$n)){
-  vals <- getValues(SIS, row=bs$row[i], nrows=bs$nrow[i])
-  rows <- seq(bs$row[i], length=bs$nrow[i])
-  cells <- cellFromRow(SIS, rows)
-  ## lats <- yFromRow(SIS, rows)
-  ## soles <- lapply(lats, function(x)calcSol(x, BTd=index(SIS)))
-  gefVector <- vector(mode='numeric', length=length(cells))
-  for (j in seq_along(cells)){
-    lat <- yFromCell(SIS, cells[j])
-    gef <- calcGef(lat, prom=list(G0dm=vals[j,], Ta=25))
-    gefVector[j] <- as.data.frameY(gef)$Gef
-    }
-    gefRaster <- writeValues(gefRaster, gefVector, bs$row[i])
-  }
-gefRaster <- writeStop(gefRaster)
+## gefRaster <- writeStart(raster(SIS), filename='gefCMSAF', overwrite=TRUE)
+## bs <- blockSize(SIS)
+## for (i in seq_len(bs$n)){
+##   vals <- getValues(SIS, row=bs$row[i], nrows=bs$nrow[i])
+##   rows <- seq(bs$row[i], length=bs$nrow[i])
+##   cells <- cellFromRow(SIS, rows)
+##   ## lats <- yFromRow(SIS, rows)
+##   ## soles <- lapply(lats, function(x)calcSol(x, BTd=index(SIS)))
+##   gefVector <- vector(mode='numeric', length=length(cells))
+##   for (j in seq_along(cells)){
+##     lat <- yFromCell(SIS, cells[j])
+##     gef <- calcGef(lat, prom=list(G0dm=vals[j,], Ta=25))
+##     gefVector[j] <- as.data.frameY(gef)$Gef
+##     }
+##     gefRaster <- writeValues(gefRaster, gefVector, bs$row[i])
+##   }
+## gefRaster <- writeStop(gefRaster)
 
 ##otra forma
 latLayer <- raster(SIS)

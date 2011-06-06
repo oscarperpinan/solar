@@ -520,21 +520,21 @@ With this data, a \texttt{G0} object can be calculated. First, the direct and di
 g0NREL <- calcG0(lat=lat, modeRad='bdI', dataRad=NRELMeteo, corr='none')
 @ 
 
-If these components were not available, a fd-kt hourly correlation is needed (figure \ref{fig:FdKtBRL}). For example:
+If these components were not available, a fd-kt hourly correlation is needed:
 
 <<>>=
 g0BRL <- calcG0(lat=lat, modeRad='bdI', dataRad=NRELMeteo, corr='BRL')
 @ 
 
-\begin{figure}
-  \centering
-<<echo=TRUE, fig=TRUE>>=
-p <- xyplot(fd~kt, data=g0BRL, pch=19, alpha=0.3, cex=0.5)
-print(p)
-@ 
-  \caption{Diffuse fraction and clearness index correlation following the BRL model, with data from NREL-MIDC}
-  \label{fig:FdKtBRL}
-\end{figure}
+% \begin{figure}
+%   \centering
+% <<echo=TRUE, fig=TRUE>>=
+% p <- xyplot(fd~kt, data=g0BRL, pch=19, alpha=0.3, cex=0.5)
+% print(p)
+% @ 
+%   \caption{Diffuse fraction and clearness index correlation following the BRL model, with data from NREL-MIDC}
+%   \label{fig:FdKtBRL}
+% \end{figure}
 
 
 
