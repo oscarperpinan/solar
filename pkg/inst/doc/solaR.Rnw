@@ -2,7 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[a4paper]{geometry}
-\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=1.5cm,rmargin=1.5cm}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2.5cm,rmargin=2.5cm}
 
 %\usepackage{color}
 \usepackage[usenames,dvipsnames]{xcolor}
@@ -156,12 +156,12 @@
 \setkeys{Gin}{width=0.5\textwidth}
 \begin{titlingpage}
 
-\title{\HUGE Introduction to \emph{solaR}}
+\title{Introduction to \emph{solaR}}
 
 \author{Oscar Perpiñán Lamigueiro}
 
 
-\date{03 June 2011}
+\date{06 June 2011}
 
 
 \maketitle
@@ -172,6 +172,9 @@
 \frontmatter
 
 %%\chapter{Introduction}
+\chapterprecis{\vfill{}}
+
+\rule[.5ex]{\linewidth}{1pt} 
 
 The  \texttt{solaR} package includes a set of functions which calculate
 the solar radiation incident on a photovoltaic generator and simulate the 
@@ -182,9 +185,17 @@ grid connected PV systems and water pumping PV systems.
 Besides, the package includes several visualization methods based on
 the \texttt{lattice} and \texttt{latticeExtra} packages, and tools for the statistical analysis of
 the performance of a large PV plant composed of several systems.
-
 The package is constructed with \texttt{S4} classes and methods. 
 The time series are constructed with the \texttt{zoo} package \cite{Zeileis.Grothendieck2005}.
+
+Examples of its use are frequently published at
+\url{http://procomun.wordpress.com}.
+
+\rule[.5ex]{\linewidth}{1pt} 
+
+\chapterprecis{\vfill{}}
+
+\mainmatter
 
 
 <<echo=false, results=hide>>= 
