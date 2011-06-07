@@ -1,10 +1,11 @@
 library(raster)
+library(zoo)
 
-
+setOldClass('Date')
 setOldClass('POSIXct')
 setOldClass('yearmon')
 setOldClass('yearqtr')
-setClassUnion('timeExtended', c('POSIXct', 'yearmon', 'yearqtr'))
+setClassUnion('timeExtended', c('Date','POSIXct', 'yearmon', 'yearqtr'))
 
 setClass(
          Class='RasterTime',
@@ -27,6 +28,15 @@ setMethod("initialize",
 setGeneric('index')
 setMethod('index', 'RasterTime', function(x,...)x@index)
 
+setMethod('show',
+          'RasterTime',
+          function(object){
+            callNextMethod()
+            cat('Time index of the object:\n')
+            print(summary(index(object)))
+            })
+
+
 setGeneric('aggregate')
 setMethod('aggregate',
           signature=(object='RasterTime'),
@@ -48,63 +58,30 @@ setMethod('aggregate',
           }
           )
 
-xscale <- function(...){ans <- xscale.components.default(...); ans$top=FALSE; ans}
-yscale <- function(...){ans <- yscale.components.default(...); ans$right=FALSE; ans}
 
-solaR.theme=custom.theme.2(pch=19, cex=0.7,
-  region=rev(brewer.pal(9, 'YlOrRd')))
-solaR.theme$strip.background$col='transparent'##'lightgray'
-solaR.theme$strip.shingle$col='transparent'
-solaR.theme$strip.border$col='transparent'
+##a toy example
+##12 values of irradiation, 1 for each month
+G0dm=c(2.766,3.491,4.494,5.912,6.989,7.742,7.919,7.027,5.369,3.562,2.814,2.179)*1000;
 
-mySPplot <- function(x,
-                     names.attr=names(x),
-                     par.settings=solaR.theme,
-                     between=list(x=0.5, y=0.2),
-                     as.table=TRUE,
-                     xscale.components=xscale,
-                     yscale.components=yscale,
-                     ...){
-  p <-spplot(x, names.attr=names.attr,
-             par.settings=par.settings,
-             scales=list(draw=TRUE),
-             between=between,
-             as.table=as.table,
-             xscale.components=xscale.components,
-             yscale.components=yscale.components)
-  p
+nr=10
+nc=10
+num2raster <- function(x, nrows=nr, ncols=nc, ...){
+  r <- raster(nrows=nrows, ncols=ncols)
+  r[] <- x
+  r
 }
 
-setMethod('spplot',
-          'Raster',
-          function(obj, size=1e+05, extent=NULL, ...){
-            smp<- sampleRegular(obj, size=size, extent=extent, asRaster=TRUE)
-            SP <- as(smp, 'SpatialGridDataFrame')
-            nms <- sub('values.', '', names(SP))
-            mySPplot(SP, names.attr=nms,...)
-            }
-            )
+##some noise
+G0dm2 <- lapply(G0dm, function(x)x+100*rnorm(nc*nr))
+##a brick with 12 layers
+s <- brick(lapply(G0dm2, num2raster))
 
+##the time index
+idx <- seq(as.Date('2010-01-15'), as.Date('2010-12-15'), 'month')
 
-## stag <- aggregate(st, by=as.yearqtr, mean)
-## stag2 <- aggregate(st, by=as.yearmon, mean)
+st <- new('RasterTime', s, index=idx)
+st
+##mean for each quarter
+stAgg <- aggregate(st, by=as.yearqtr, FUN=mean)
+stAgg
 
-###
-
-
-  ## G0dm=c(2.766,3.491,4.494,5.912,6.989,7.742,7.919,7.027,5.369,3.562,2.814,2.179)*1000;
-
-  ## nr=10
-  ## nc=10
-  ## num2raster <- function(x, nrows=nr, ncols=nc, ...){
-  ##   r <- raster(nrows=nrows, ncols=ncols)
-  ##   r[] <- x
-  ##   r
-  ##   }
-
-  ## G0dm2 <- lapply(G0dm, function(x)x+100*rnorm(nc*nr))
-  ## s <- brick(lapply(G0dm2, num2raster))
-  ## layerNames(s) <- month.abb
-
-  ## index <- seq(as.POSIXct('2010-01-15'), as.POSIXct('2010-12-15'), 'month')
-  ## by <- as.yearqtr
