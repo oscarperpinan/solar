@@ -3,7 +3,7 @@ library(maptools)
 library(raster)
 library(gstat)
 
-source('mySPplot.R')
+source('/home/oscar/Investigacion/solar/drafts/mySPplot.R')
 
 ##proyección de todos los datos
 proj <- CRS('+proj=latlon +ellps=WGS84')
@@ -34,7 +34,7 @@ spRedGN <- SpatialPointsDataFrame(coords=redGN[c('lng', 'lat')],
 ##No ejecutar (los resultados están en spainMeteo.RData, ver a continuación)
 spainMeteo <- apply(redGN[, 1:4], 1,
                     function(x){
-                      readMAPA(prov=x[3], est=x[4],
+                      readSIAR(prov=x[3], est=x[4],
                                start='01/01/2004', end='31/12/2010',
                                lat=x[1])
                     }
@@ -77,12 +77,26 @@ DiasMes <- c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 ##y sumar todas las capas, nuevamente dividiendo entre mil
 G0yCMSAF <- calc(stackSIS*DiasMes, sum)/1000
 
+##Ahora incorporo información sobre elevación
+elevES <- raster('/home/oscar/Datos/ESP_alt/ESP_alt.grd')
+projection(elevES) <- "+proj=longlat +datum=WGS84"
+
+G0yCMSAF <- crop(G0yCMSAF, elevES)##igualo la extensión de ambos rasters
+elevES <- resample(elevES, G0yCMSAF, 'bilinear')##remuestro el raster de elevación para igualarlo a CMSAF
+##G0yCMSAF <- mask(G0yCMSAF, elevES)##finalmente pongo a "NA" todo lo que está a nivel del mar
+
+spplot(elevES)
+spplot(G0yCMSAF)
+
 ##Ahora incorporo al SpatialPointsDataFrame una capa más
 ##con los valores de CMSAF en las posiciones de las estaciones
 ##con la función extract de raster
 spRedGN$CMSAF <- extract(G0yCMSAF, spRedGN)
 ##y también calculo la diferencia entre ambas
 spRedGN$dif <-spRedGN$G0y-spRedGN$CMSAF
+##Lo mismo con datos de elevación
+spRedGN$elev <- extract(elevES, spRedGN)
+
 
 ####Empieza el análisis estadístico
 
@@ -103,8 +117,8 @@ latLayer[] <- yFromCell(G0yCMSAF, 1:ncell(G0yCMSAF))
 lonLayer <- raster(G0yCMSAF)
 lonLayer[] <- xFromCell(G0yCMSAF, 1:ncell(G0yCMSAF))
 
-grd <- as(stack(lonLayer, latLayer, G0yCMSAF), 'SpatialGridDataFrame')
-names(grd) <- c('lng', 'lat', 'CMSAF')
+grd <- as(stack(lonLayer, latLayer, G0yCMSAF, elevES), 'SpatialGridDataFrame')
+names(grd) <- c('lng', 'lat', 'CMSAF', 'elev')
 proj4string(grd) <- proj
 
 ##Empieza la interpolación##
@@ -158,6 +172,21 @@ CMSAFkrigG0y <- krige(G0y~CMSAF, spRedGN, grd, model=fitvgmCMSAF)
 mySPplot(CMSAFkrigG0y['var1.pred']) +
   layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
   layer(sp.lines(mapaSHP))
+
+
+vgmelev <- variogram(G0y~elev, spRedGN[!is.na(spRedGN$elev),])
+fitvgmelev <- fit.variogram(vgmelev, vgm(20000, 'Sph', 1, 10000))
+plot(vgmelev, fitvgmelev)
+
+elevkrigG0y <- krige(G0y~elev, spRedGN[!is.na(spRedGN$elev),], grd, model=fitvgmelev)
+
+mySPplot(elevkrigG0y['var1.pred']) +
+  layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
+  layer(sp.lines(mapaSHP))
+
+
+
+
 
 
 ####MEDIAS MENSUALES, en elaboración

@@ -146,7 +146,7 @@ p+glayer(panel.text(x[10], y[10], group.number))
 
 ###Datos de elevación disponibles en http://diva-gis.org/data/
 ##por alguna razón getData no es capaz de descargar adecuadamente la información
-elevES <- raster('/home/oscar/Datos/ESP_alt/ESP1_alt.grd')##ESP1 es España peninsular
+elevES <- raster('/home/oscar/Datos/ESP_alt/ESP_alt.grd')##ESP1 es España peninsular
 projection(elevES) <- "+proj=longlat +datum=WGS84"
 elevESsp <- as(sampleRegular(elevES, 5e5, asRaster=TRUE), 'SpatialGridDataFrame')
 

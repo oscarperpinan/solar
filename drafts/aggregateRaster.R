@@ -17,6 +17,7 @@ setClass(
          }
          )
 
+##añadir comprobación de que index está ordenado
 setMethod("initialize",
           "RasterTime",
           function(.Object, ...){
