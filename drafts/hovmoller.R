@@ -8,7 +8,7 @@ myTheme=custom.theme.2(pch=19, cex=0.7,
 myTheme$strip.background$col='lightgray'
 myTheme$strip.shingle$col='transparent'
 
-direction <- function(object, dirXY=y){
+xyLayer <- function(object, dirXY=y){
   ## dirLayer=switch(direction,
   ## y={ ##Latitude
   latLayer <- raster(object, layer=1)
@@ -35,10 +35,11 @@ direction <- function(object, dirXY=y){
 
 setGeneric('hovmoller', function(object, ...){standardGeneric('hovmoller')})
 
-setMethod('hovmoller', signature='RasterTime',
+setMethod('hovmoller', signature='RasterStackBrick',##signature='RasterTime',
           definition=function(object, dirXY=y, xlab='Direction', ylab='Time', digits=2, add.contour=TRUE, ...){
-            idx=index(object)
-            dirLayer <- direction(object, dirXY=substitute(dirXY))
+            idx=getZ(object) ##index(object)
+            ##add STOPIFNOT idx class timeExtended
+            dirLayer <- xyLayer(object, dirXY=substitute(dirXY))
             z <- zonal(object, dirLayer, mean, digits=digits)
             colnames(z) <- c(xlab, as.character(idx))
             if (add.contour){
@@ -49,10 +50,11 @@ setMethod('hovmoller', signature='RasterTime',
               contour=FALSE
               labels=FALSE
               pretty=FALSE
-              }
-            p <- levelplot(z[,-1],
-                           row.values=z[,1], xlab=xlab,
-                           ylab=ylab,
+            }
+            dat <- expand.grid(x=z[,1], y=idx)
+            dat$z <- as.vector(as.numeric(z[,-1]))
+            p <- levelplot(z~x*y, data=dat,
+                           xlab=xlab, ylab=ylab,
                            contour=contour, labels=labels, pretty=pretty,
                            par.settings=myTheme)
             p
@@ -61,10 +63,11 @@ setMethod('hovmoller', signature='RasterTime',
 
 setGeneric('horizonplot')
 
-setMethod('horizonplot', signature='RasterTime',
-          definition=function(x, data=NULL, dirXY=y, xlab='Time', ylab='Direction', digits=0, ...){
-            idx=index(x)
-            dirLayer <- direction(x, dirXY=substitute(dirXY))
+setMethod('horizonplot', signature='RasterStackBrick',##signature='RasterTime',
+          definition=function(x, data=NULL, dirXY=y, xlab='Time', ylab='direction', digits=0, ...){
+            idx=getZ(x)##index(x)
+            ##add STOPIFNOT class(idx) timeExtended
+            dirLayer <- xyLayer(x, dirXY=substitute(dirXY))
             z <- zonal(x, dirLayer, mean, digits=digits)
             nRows <- nrow(z)
             zz <- as.data.frame(t(z[,-1]), row.names='')
@@ -79,10 +82,12 @@ setMethod('horizonplot', signature='RasterTime',
 
 setGeneric('xyplot')
 
-setMethod('xyplot', signature='RasterTime',
+setMethod('xyplot', signature='RasterStackBrick',#Time',
           definition=function(x, data=NULL, dirXY=y, xlab='Time', ylab='', digits=0, ...){
-            idx=index(x)
-            dirLayer <- direction(x, dirXY=substitute(dirXY))
+            ##idx=index(x)
+            idx=getZ(x)
+            ##add STOPIFNOT
+            dirLayer <- xyLayer(x, dirXY=substitute(dirXY))
             z <- zonal(x, dirLayer, mean, digits=digits)
             nRows <- nrow(z)
             zz <- as.data.frame(t(z[,-1]), row.names='')
@@ -105,13 +110,13 @@ stackSIS <- stackSIS*24 ##para pasar de W/m2 (irradiancia media) a Wh/m2
 setwd(old)
 
 idx <- seq(as.Date('2008-01-15'), as.Date('2008-12-15'), 'month')
-idx <- as.yearmon(idx)
 
-SISmm <- new('RasterTime', stackSIS, index=idx)
+##SISmm <- new('RasterTime', stackSIS, index=idx)
+SISmm <- setZ(stackSIS, idx)
 
 hovmoller(SISmm)
 horizonplot(SISmm)
-
+xyplot(SISmm)
 
 
 ##Ejemplo con valores diarios
