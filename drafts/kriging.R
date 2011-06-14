@@ -85,8 +85,8 @@ G0yCMSAF <- crop(G0yCMSAF, elevES)##igualo la extensión de ambos rasters
 elevES <- resample(elevES, G0yCMSAF, 'bilinear')##remuestro el raster de elevación para igualarlo a CMSAF
 ##G0yCMSAF <- mask(G0yCMSAF, elevES)##finalmente pongo a "NA" todo lo que está a nivel del mar
 
-spplot(elevES)
-spplot(G0yCMSAF)
+mySPplot(elevES)
+mySPplot(G0yCMSAF)
 
 ##Ahora incorporo al SpatialPointsDataFrame una capa más
 ##con los valores de CMSAF en las posiciones de las estaciones
