@@ -19,15 +19,21 @@ spplot(SISmm)##better with names.attr=layerNames(SISmm)
 
 ##Do not close the last graphical window
 ##Interaction
+##Use the left button of the mouse to identify points and the right button to finish
 chosen <- identifyRaster(SISmm, layer=3, values=TRUE)
 chosen
-
+##Use the left button of the mouse to build a border with points, and the right button to finish.
+##The points enclosed by the border will be highlighted and returned as a SpatialPoints object.
 reg <- chooseRegion()
 summary(reg)
 
 ##Density, etc.
 densityplot(SISmm)
+densityplot(SISmm, FUN=as.yearqtr)##FUN applies to z if not NULL
+
 histogram(SISmm)
+histogram(SISmm, FUN=as.yearqtr)
+
 splom(SISmm, plot.loess=TRUE)##fast if plot.loess=FALSE
 
 ##Graphical tools for time series
