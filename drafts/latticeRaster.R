@@ -193,31 +193,62 @@ setMethod('splom',
           }
           )
 
+setGeneric('levelplot')
 
-###Customized spplot
-          ## mySPplot <- function(x,
-          ##                      names.attr=names(x),
-          ##                      par.settings=myTheme,
-          ##                      between=list(x=0.5, y=0.2),
-          ##                      as.table=TRUE,
-          ##                      xscale.components=xscale,
-          ##                      yscale.components=yscale,
-          ##                      ...){
-          ##   p <-spplot(x, names.attr=names.attr,
-          ##              par.settings=par.settings,
-          ##              scales=list(draw=TRUE),
-          ##              between=between,
-          ##              as.table=as.table,
-          ##              xscale.components=xscale.components,
-          ##              yscale.components=yscale.components)
-          ##   p
-          ## }
+setMethod('levelplot',
+          signature='Raster',
+          definition=function(x, layer,
+            par.settings=myTheme,
+            between=list(x=0.5, y=0.2),
+            as.table=TRUE,
+            scales=list(draw=TRUE),
+            xscale.components=xscale,
+            yscale.components=yscale,
+            ...) {
+            
+            if (!missing(layer)) {
+              object <- subset(x, layer)
+              } else {object <- x}
+  
+            dat <- sampleRegular(object, size=1e5, asRaster=TRUE)
+            nms <- layerNames(dat)
+            x <- xFromCell(dat, 1:ncell(dat))
+            y <- yFromCell(dat, 1:ncell(dat))
+            dat <- as.data.frame(getValues(dat))
+            names(dat) <- nms
+            df <- cbind(data.frame(x=x, y=y), dat)
 
-          ## setMethod('spplot',
-          ##           'Raster',
-          ##           function(obj, size=1e+05, ...){
-          ##             smp<- sampleRegular(obj, size=size, asRaster=TRUE)
-          ##             SP <- as(smp, 'SpatialGridDataFrame')
-          ##             mySPplot(SP, names.attr=layerNames(obj), ...)
-          ##             }
-          ##             )
+  
+            ##aspect and scales(from sp:::spplot.grid, sp:::longlat.scales, sp:::mapasp)
+            bb <- extent(object)
+            xlim=c(bb@xmin, bb@xmax)
+            ylim=c(bb@ymin, bb@ymax)
+  
+            if (isLonLat(object)){
+              xlab='Longitude'
+              ylab='Latitude'
+            
+              aspect=(diff(ylim)/diff(xlim))/cos((mean(ylim) * pi)/180)
+    
+              if (!is.null(scales$draw) && scales$draw==TRUE){
+                scales=list(x=list(at=pretty(xlim)), y=list(at=pretty(ylim)))
+                scales$y$labels=parse(text=sp:::degreeLabelsNS(scales$y$at))
+                scales$x$labels=parse(text=sp:::degreeLabelsEW(scales$x$at))
+              }
+            } else aspect='iso'
+          
+            ##formula
+            form <- as.formula(paste(paste(nms, collapse='+'), 'x*y', sep='~'))
+            p <- levelplot(form, data=df,
+                           scales=scales, aspect=aspect,
+                           xlab=xlab, ylab=ylab,
+                           par.settings=par.settings,
+                           between=between,
+                           as.table=as.table,
+                           xscale.components=xscale.components,
+                           yscale.components=yscale.components,
+                           ...)
+            p
+          }
+)
+
