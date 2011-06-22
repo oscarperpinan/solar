@@ -138,7 +138,7 @@ latLayer[] <- yFromCell(G0yCMSAF, 1:ncell(G0yCMSAF))
 lonLayer <- raster(G0yCMSAF)
 lonLayer[] <- xFromCell(G0yCMSAF, 1:ncell(G0yCMSAF))
 
-grd <- as(stack(lonLayer, latLayer, G0yCMSAF)##, elev), 'SpatialGridDataFrame')
+grd <- as(stack(lonLayer, latLayer, G0yCMSAF), 'SpatialGridDataFrame')
 names(grd) <- c('lng', 'lat', 'CMSAF')##, 'elev')
 proj4string(grd) <- proj
 
