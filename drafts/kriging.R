@@ -2,8 +2,13 @@ library(sp)
 library(maptools)
 library(raster)
 library(gstat)
+library(lattice)
+library(latticeExtra)
+library(solaR)##instalar version 0.24
 
-source('/home/oscar/Investigacion/solar/drafts/mySPplot.R')
+##instalar la versión última de raster y no hace falta la siguiente linea
+###source('/home/oscar/Investigacion/solar/drafts/mySPplot.R')
+
 
 ##proyección de todos los datos
 proj <- CRS('+proj=latlon +ellps=WGS84')
@@ -19,7 +24,7 @@ setwd(old)
 ##Latitud y longitud de (algunas) estaciones de SIAR
 ##construido en drafts/redEstaciones.R
 
-load('/home/oscar/Investigacion/solar/drafts/redGN.RData')
+load('/home/oscar/Investigacion/solar/drafts/redGN.RData')##cambiar
 
 ##Objecto SpatialPointsDataFrame
 spRedGN <- SpatialPointsDataFrame(coords=redGN[c('lng', 'lat')],
@@ -77,16 +82,18 @@ DiasMes <- c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 ##y sumar todas las capas, nuevamente dividiendo entre mil
 G0yCMSAF <- calc(stackSIS*DiasMes, sum)/1000
 
+spplot(G0yCMSAF)
+
 ##Ahora incorporo información sobre elevación
-elevES <- raster('/home/oscar/Datos/ESP_alt/ESP_alt.grd')
-projection(elevES) <- "+proj=longlat +datum=WGS84"
+## elevES <- raster('/home/oscar/Datos/ESP_alt/ESP_alt.grd')
+## projection(elevES) <- "+proj=longlat +datum=WGS84"
 
-G0yCMSAF <- crop(G0yCMSAF, elevES)##igualo la extensión de ambos rasters
-elevES <- resample(elevES, G0yCMSAF, 'bilinear')##remuestro el raster de elevación para igualarlo a CMSAF
-##G0yCMSAF <- mask(G0yCMSAF, elevES)##finalmente pongo a "NA" todo lo que está a nivel del mar
+## G0yCMSAF <- crop(G0yCMSAF, elevES)##igualo la extensión de ambos rasters
+## elevES <- resample(elevES, G0yCMSAF, 'bilinear')##remuestro el raster de elevación para igualarlo a CMSAF
+## ##G0yCMSAF <- mask(G0yCMSAF, elevES)##finalmente pongo a "NA" todo lo que está a nivel del mar
 
-mySPplot(elevES)
-mySPplot(G0yCMSAF)
+## spplot(elevES)
+
 
 ##Ahora incorporo al SpatialPointsDataFrame una capa más
 ##con los valores de CMSAF en las posiciones de las estaciones
@@ -94,8 +101,22 @@ mySPplot(G0yCMSAF)
 spRedGN$CMSAF <- extract(G0yCMSAF, spRedGN)
 ##y también calculo la diferencia entre ambas
 spRedGN$dif <-spRedGN$G0y-spRedGN$CMSAF
+
 ##Lo mismo con datos de elevación
-spRedGN$elev <- extract(elevES, spRedGN)
+##spRedGN$elev <- extract(elevES, spRedGN)
+
+###Análisis de valores (sin considerar caracter espacial)
+datG0y <- as.data.frame(spRedGN)
+datG0y[abs(datG0y$dif)>500,]
+
+##diferencia frente a la latitud para cinco grupos de G0y
+xyplot(dif~lat, groups=cut(G0y, 5), data=datG0y, auto.key=list(space='right'))
+##y 5 grupos de CMSAF
+xyplot(dif~lat, groups=cut(CMSAF, 5), data=datG0y, auto.key=list(space='right'))
+##G0y frente a CMSAF para cinco grupos de latitud
+xyplot(G0y~CMSAF, groups=cut(lat, 5), data=datG0y)
+
+###etc, etc,
 
 
 ####Empieza el análisis estadístico
@@ -117,8 +138,8 @@ latLayer[] <- yFromCell(G0yCMSAF, 1:ncell(G0yCMSAF))
 lonLayer <- raster(G0yCMSAF)
 lonLayer[] <- xFromCell(G0yCMSAF, 1:ncell(G0yCMSAF))
 
-grd <- as(stack(lonLayer, latLayer, G0yCMSAF, elevES), 'SpatialGridDataFrame')
-names(grd) <- c('lng', 'lat', 'CMSAF', 'elev')
+grd <- as(stack(lonLayer, latLayer, G0yCMSAF)##, elev), 'SpatialGridDataFrame')
+names(grd) <- c('lng', 'lat', 'CMSAF')##, 'elev')
 proj4string(grd) <- proj
 
 ##Empieza la interpolación##
@@ -126,28 +147,28 @@ proj4string(grd) <- proj
 ##En primer lugar, el método IDW
 idwG0y <- krige(G0y~1, spRedGN, grd)
 
-mySPplot(idwG0y['var1.pred']) +
+spplot(idwG0y['var1.pred']) +
   layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
   layer(sp.lines(mapaSHP))
 
 ##En segundo lugar un ajuste de superficie
 surfG0y <- krige(G0y~1, spRedGN, grd, degree=2)
 
-mySPplot(surfG0y['var1.pred']) +
+spplot(surfG0y['var1.pred']) +
   layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
   layer(sp.lines(mapaSHP))
 
 ##En tercer lugar, un ordinary kriging usando el variograma
 okrigG0y <- krige(G0y~1, spRedGN, grd, model=fitvgmG0y)
 
-mySPplot(okrigG0y['var1.pred']) +
+spplot(okrigG0y['var1.pred']) +
   layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
   layer(sp.lines(mapaSHP))
 
 ##En cuarto lugar, universal kriging usando la latitud y longitud
 LLkrigG0y <- krige(G0y~lat+lng, spRedGN, grd, model=fitvgmG0y)
 
-mySPplot(LLkrigG0y['var1.pred']) +
+spplot(LLkrigG0y['var1.pred']) +
   layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
   layer(sp.lines(mapaSHP))
 
@@ -169,20 +190,20 @@ plot(vgmCMSAF, fitvgmCMSAF)
 
 CMSAFkrigG0y <- krige(G0y~CMSAF, spRedGN, grd, model=fitvgmCMSAF)
 
-mySPplot(CMSAFkrigG0y['var1.pred']) +
+spplot(CMSAFkrigG0y['var1.pred']) +
   layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
   layer(sp.lines(mapaSHP))
 
 
-vgmelev <- variogram(G0y~elev, spRedGN[!is.na(spRedGN$elev),])
-fitvgmelev <- fit.variogram(vgmelev, vgm(20000, 'Sph', 1, 10000))
-plot(vgmelev, fitvgmelev)
+## vgmelev <- variogram(G0y~elev, spRedGN[!is.na(spRedGN$elev),])
+## fitvgmelev <- fit.variogram(vgmelev, vgm(20000, 'Sph', 1, 10000))
+## plot(vgmelev, fitvgmelev)
 
-elevkrigG0y <- krige(G0y~elev, spRedGN[!is.na(spRedGN$elev),], grd, model=fitvgmelev)
+## elevkrigG0y <- krige(G0y~elev, spRedGN[!is.na(spRedGN$elev),], grd, model=fitvgmelev)
 
-mySPplot(elevkrigG0y['var1.pred']) +
-  layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
-  layer(sp.lines(mapaSHP))
+## spplot(elevkrigG0y['var1.pred']) +
+##   layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
+##   layer(sp.lines(mapaSHP))
 
 
 
@@ -219,5 +240,5 @@ mySPplot(elevkrigG0y['var1.pred']) +
 ## gridded(grd) <- TRUE
 ## proj4string(grd) <- proj
 ## krigeG0dm <- krige(Mar~1, spSMP, grd)
-## mySPplot(krigeG0dm)+layer(sp.points(spSMP, pch=19, col='black', cex=0.7))
+## spplot(krigeG0dm)+layer(sp.points(spSMP, pch=19, col='black', cex=0.7))
 

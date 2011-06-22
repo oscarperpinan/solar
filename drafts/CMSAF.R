@@ -307,49 +307,79 @@ plot(vg)
 kr <- idw(Data1~1, x, spJan)
 
 ####Calculo GEF a partir de datos de CMSAF
-listFich <- dir('/home/oscar/Datos/CMSAF/', pattern='2008')
+##Solar irradiation data from CMSAF
+##Data available from http://www.box.net/shared/rl51y1t9sldxk54ogd44
 
 old <- getwd()
-setwd('/home/oscar/Datos/CMSAF')##Cambiar!!!
-
+##change to your folder...
+setwd('/home/oscar/Datos/CMSAF')
+listFich <- dir(pattern='2008')
 listNC <- lapply(listFich, raster)
-brickSIS <- do.call(brick, listNC)
-brickSIS <- brickSIS*24##mean daily irradiance to irradiation (Wh/m2)
+stackSIS <- do.call(stack, listNC)
+stackSIS <- stackSIS*24 ##from irradiance (W/m2) to irradiation Wh/m2
+setwd(old)
 
-idx <- fBTd(year=2008)
-SIS <- new('RasterTime', brickSIS, index=idx)
+idx <- fBTd('prom', year=2008)
 
-## gefRaster <- writeStart(raster(SIS), filename='gefCMSAF', overwrite=TRUE)
-## bs <- blockSize(SIS)
-## for (i in seq_len(bs$n)){
-##   vals <- getValues(SIS, row=bs$row[i], nrows=bs$nrow[i])
-##   rows <- seq(bs$row[i], length=bs$nrow[i])
-##   cells <- cellFromRow(SIS, rows)
-##   ## lats <- yFromRow(SIS, rows)
-##   ## soles <- lapply(lats, function(x)calcSol(x, BTd=index(SIS)))
-##   gefVector <- vector(mode='numeric', length=length(cells))
-##   for (j in seq_along(cells)){
-##     lat <- yFromCell(SIS, cells[j])
-##     gef <- calcGef(lat, prom=list(G0dm=vals[j,], Ta=25))
-##     gefVector[j] <- as.data.frameY(gef)$Gef
-##     }
-##     gefRaster <- writeValues(gefRaster, gefVector, bs$row[i])
-##   }
-## gefRaster <- writeStop(gefRaster)
+SISmm <- setZ(stackSIS, idx)
+layerNames(SISmm) <- as.character(idx)
 
-##otra forma
-latLayer <- raster(SIS)
-layerNames(latLayer) <- 'Latitude'
-latLayer[] <- yFromCell(SIS, 1:ncell(SIS))
+spplot(SISmm, names.attr=layerNames(SISmm))
 
+##Improvements to spplot
+xscale.raster <- function(...){ans <- xscale.components.default(...); ans$top=FALSE; ans}
+yscale.raster <- function(...){ans <- yscale.components.default(...); ans$right=FALSE; ans}
+
+myTheme=custom.theme.2(pch=19, cex=0.7,
+  region=rev(brewer.pal(9, 'YlOrRd')))
+myTheme$strip.background$col='transparent'
+myTheme$strip.shingle$col='transparent'
+myTheme$strip.border$col='transparent'
+
+p <- spplot(SISmm,
+            names.attr=layerNames(SISmm),
+            as.table=TRUE,
+            par.settings=myTheme,
+            between=list(x=0.5, y=0.2),
+            scales=list(draw=TRUE),
+            xscale.components=xscale.raster,
+            yscale.components=yscale.raster)
+
+##Administrative borders for Spain
+##http://biogeo.ucdavis.edu/data/diva/adm/ESP_adm.zip
+##It is also available with raster::getData although it does not work for me...
+library(maptools)
+proj <- CRS('+proj=latlon +ellps=WGS84')
+old <- getwd()
+setwd('/home/oscar/Datos/ESP_adm')##Cambiar!!!
+mapaSHP <- readShapeLines('ESP_adm2.shp', proj4string=proj)
+setwd(old)
+
+trellis.device(jpeg, file='CMSAF_G0dm.jpg', width=1280, height=960, quality=100)
+p + layer(sp.lines(mapaSHP))
+dev.off()
+
+##Calculation of yearly effective irradiation
+##A latitude layer for calculations with solaR::calcGef
+latLayer <- init(SISmm, v='y')
+
+##The function to be applied to each cell of the 13 layers
 foo <- function(x, ...){
-  gef <- calcGef(lat=x[1], prom=list(G0dm=x[2:13]))
-  result <- as.data.frameY(gef)[c('Gefd', 'Befd', 'Defd')]
+  gef <- calcGef(lat=x[1], dataRad=list(G0dm=x[2:13]))
+  result <- as.data.frameY(gef)[c('Gefd', 'Befd', 'Defd')]##the results are yearly values
   as.numeric(result)
 }
-
-
-gefS <- calc(stack(latLayer, SIS), foo,
-             filename='/home/oscar/Datos/CMSAF/gefCMSAF2',
+##calc applies the function to the stack of latitude and irradiation
+gefS <- calc(stack(latLayer, SISmm), foo,
+             filename='/home/oscar/Datos/CMSAF/gefCMSAF',##change to your folder
              overwrite=TRUE)
+layerNames(gefS)=c('Gefd', 'Befd', 'Defd')##Three layers
+
+##The result is available here:
+##http://www.box.net/shared/is4gdf5ltkhdqlvf5aeb
+gefS <- stack('/home/oscar/Datos/CMSAF/gefCMSAF')
 layerNames(gefS)=c('Gefd', 'Befd', 'Defd')
+
+trellis.device(jpeg, file='CMSAF_Gef.jpg', width=1280, height=960, quality=100)
+spplot(subset(gefS, 'Gefd'), par.settings=myTheme, scales=list(draw=TRUE)) +  layer(sp.lines(mapaSHP))
+dev.off()
