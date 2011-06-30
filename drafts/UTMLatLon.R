@@ -10,13 +10,14 @@ proj <- CRS('+proj=latlon +ellps=WGS84')
 mapaSHP <- readShapeLines('ESP_adm2.shp', proj4string=proj)
 setwd(old)
 
-datos <- read.csv2('/home/oscar/Investigacion/solar/drafts/UTM_latlon.csv',
+datos <- read.csv2('/home/oscar/Investigacion/solar/drafts/UTM_latlon_2.csv',
                    colClasses=c('factor', 'factor', 'factor', 'factor', 
                                    'numeric', 'numeric', 'numeric',
                                    'integer', 'character', 'character',
                                    'character')
                    )
 
+datos <- subset(datos, subset=!(is.na(Huso) & Latitud=='' & Longitud==''))
 datosUTM29 <- subset(datos, Huso==29, select=-c(Latitud, Longitud, SignoLongitud))
 datosUTM30 <- subset(datos, Huso==30, select=-c(Latitud, Longitud, SignoLongitud))
 datosUTM31 <- subset(datos, Huso==31, select=-c(Latitud, Longitud, SignoLongitud))
@@ -66,30 +67,29 @@ SPlonlat <- spRbind(SPlonlat29, SPlonlat30)
 SPlonlat <- spRbind(SPlonlat, SPlonlat31)
 SPlonlat <- spRbind(SPlonlat, SPlonlatNoUTM)
 ##Primera representación.
-##Compruebo que hay varias estaciones que se escapan de la península
-spplot(SPlonlat['Comunidad'], key.space='right') + layer(sp.lines(mapaSHP))
-##Elimino estas estaciones erróneas y vuelvo a representar
-##Compruebo que algunas estaciones se salen de su comunidad
-idxError1 <- which(coordinates(SPlonlat)[,2]<30)
-SPlonlat[idxError1,]
+## spplot(SPlonlat['Comunidad'], key.space='right') + layer(sp.lines(mapaSHP)) 
+## ##Elimino estas estaciones erróneas y vuelvo a representar
+## ##Compruebo que algunas estaciones se salen de su comunidad
+## idxError1 <- which(coordinates(SPlonlat)[,2]<30)
+## SPlonlat[idxError1,]
 
-SPlonlat2<- SPlonlat[-idxError1,]
-
+## SPlonlat2<- SPlonlat[-idxError1,]
 trellis.device(pdf, file='RedEstaciones20110630.pdf')
-spplot(SPlonlat2['Comunidad'],
+spplot(SPlonlat['Comunidad'], col.regions=brewer.pal(n=12, 'Paired'),
        key.space='right', scales=list(draw=TRUE),
        type=c('p','g')) + layer(sp.lines(mapaSHP))
 dev.off()
-##Estaciones con longitud superior a 1
-idxError2 <- which(coordinates(SPlonlat2)[,1]>1)
-SPlonlat2[idxError2,]
+##Estaciones con longitud superior a 0.9
+## idxError2 <- which(coordinates(SPlonlat)[,1]>0.5)
+## SPlonlat[idxError2,]
 
 ##Hay dos de Extremadura fuera de sitio
-extr <- SPlonlat2[SPlonlat2$Comunidad=='Extremadura',]
-idxExtr <- rev(order(coordinates(extr)[,2]))[1:2]
-extr[idxExtr,]
+## extr <- SPlonlat[SPlonlat$Comunidad=='Extremadura',]
+## idxExtr <- rev(order(coordinates(extr)[,2]))[1:2]
+## extr[idxExtr,]
 
-##Y también una de Andalucia
-andal <- SPlonlat2[SPlonlat2$Comunidad=='Andalucia',]
-idxAndal <- which.max(coordinates(extr)[,2])
-andal[idxAndal,]
+## ##Y también una de Andalucia
+## andal <- SPlonlat[SPlonlat$Comunidad=='Andalucia',]
+## idxAndal <- rev(order(coordinates(andal)[,2]))
+## andal[idxAndal,]
+
