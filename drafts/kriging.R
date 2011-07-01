@@ -1,72 +1,51 @@
 library(sp)
 library(maptools)
 library(raster)
+library(rasterVis)## se instala con install.packages("rasterVis", repos="http://R-Forge.R-project.org")
 library(gstat)
 library(lattice)
 library(latticeExtra)
 library(solaR)##instalar version 0.24
 
-##instalar la versión última de raster y no hace falta la siguiente linea
-###source('/home/oscar/Investigacion/solar/drafts/mySPplot.R')
+##Función para hacer kriging con Raster
+##Devuelve un RasterStack
+##La primera capa es la predicción y la segunda es la varianza
+krigeRaster <- function(formula, data, raster, ...){
+  latLayer <- init(raster, v='y')
+  lonLayer <- init(raster, v='x')
 
+  grd <- as(stack(lonLayer, latLayer, raster), 'SpatialGridDataFrame')
+  names(grd) <- c('lon', 'lat', deparse(substitute(raster)))
+  proj4string(grd) <- proj
+
+  resSP <- krige(formula, data, grd, ...)
+  res <- as(resSP, 'RasterStack')
+  layerNames(res) <- c('pred', 'var')
+  res
+}
+
+
+######  RECUPERAMOS DATOS  ######################################
+
+###Obtenidos en UTMLonLat.R
+##Contiene una lista de objetos Meteo (spainMeteo) y el índice de los
+##que sirven (idxMeteo). De esta forma, trabajamos con
+##spainMeteoOK<-spainMeteo[idxMeteo]
+load('spainMeteo20110701.RData')
+
+##Obtenidos en Gef_CMSAF_SIAR.R
+##Contiene los datos de la red SIAR en formato data.frame y en
+##SpatialPointsDataFrame junto con los resultados de cálculo de
+##radiación efectiva anual
+load('gefSIAR.RData')
 
 ##proyección de todos los datos
-proj <- CRS('+proj=latlon +ellps=WGS84')
-
-##Descargo y descomprimo un zip de http://biogeo.ucdavis.edu/data/diva/adm/ESP_adm.zip
-##Contiene un Shapefile con información de las fronteras entre provincias de españa.
-old <- getwd()
-setwd('/home/oscar/Datos/ESP_adm')##Cambiar!!!
-##Leo el contenido:
-mapaSHP <- readShapeLines('ESP_adm2.shp', proj4string=proj)
-setwd(old)
-
-##Latitud y longitud de (algunas) estaciones de SIAR
-##construido en drafts/redEstaciones.R
-
-load('/home/oscar/Investigacion/solar/drafts/redGN.RData')##cambiar
-
-##Objecto SpatialPointsDataFrame
-spRedGN <- SpatialPointsDataFrame(coords=redGN[c('lng', 'lat')],
-                                   data=redGN[c('NomProv', 'NomEst')],
-                                   proj4string=proj)
+proj <- CRS(proj4string(spSIARGef))
 
 
-###Obtengo todos los datos de estas estaciones desde el 2004 al 2010
-##En la llamada a APPLY debo eliminar las dos últimas columnas (caracteres)
-##para que no convierta todo a character
+#####  RADIACION HORIZONTAL  ###########
 
-##No ejecutar (los resultados están en spainMeteo.RData, ver a continuación)
-spainMeteo <- apply(redGN[, 1:4], 1,
-                    function(x){
-                      readSIAR(prov=x[3], est=x[4],
-                               start='01/01/2004', end='31/12/2010',
-                               lat=x[1])
-                    }
-                    )
-##el resultado es una lista de objetos Meteo,
-##cada uno el resultado de una estación con datos
-##desde el 2004 hasta el 2010.
-
-##save(file='spainMeteo', spainMeteo)
-old <- getwd()
-setwd('/home/oscar/Datos/MAPA_SIAR/')##CAMBIAR!!
-load('spainMeteo.RData')
-setwd(old)
-                    
-####Medias de sumas anuales
-meanYearlySums <- function(x)mean(aggregate(getG0(x), year, sum, na.rm=1))
-
-##aplico la función a cada una de las estaciones que componen la lista spainMeteo
-##divido entre 1000 para pasar a kWh
-spainG0y <- sapply(spainMeteo, meanYearlySums)/1000
-##añado el resultado como una capa más al SpatialPointsDataFrame
-spRedGN$G0y=spainG0y
-
-##dejo fuera canarias para que el kriging funcione bien...lo siento :-)
-spRedGN <- spRedGN[coordinates(spRedGN)[,2]>30,]
-
-##Datos de 2008 de CMSAFç
+##Datos de 2008 de CMSAF
 ##compongo un objeto stack de la librería raster
 old <- getwd()
 setwd('/home/oscar/Datos/CMSAF')##Cambiar!!!
@@ -82,100 +61,108 @@ DiasMes <- c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 ##y sumar todas las capas, nuevamente dividiendo entre mil
 G0yCMSAF <- calc(stackSIS*DiasMes, sum)/1000
 
-spplot(G0yCMSAF)
+levelplot(G0yCMSAF)
 
-##Ahora incorporo información sobre elevación
-## elevES <- raster('/home/oscar/Datos/ESP_alt/ESP_alt.grd')
-## projection(elevES) <- "+proj=longlat +datum=WGS84"
+## #Creo una rejilla para la interpolación
+## ##necesito que contenga la latitud y longitud
+## ##para el universal kriging
+## latLayer <- init(G0yCMSAF, v='y')
+## lonLayer <- init(G0yCMSAF, v='x')
 
-## G0yCMSAF <- crop(G0yCMSAF, elevES)##igualo la extensión de ambos rasters
-## elevES <- resample(elevES, G0yCMSAF, 'bilinear')##remuestro el raster de elevación para igualarlo a CMSAF
-## ##G0yCMSAF <- mask(G0yCMSAF, elevES)##finalmente pongo a "NA" todo lo que está a nivel del mar
+## grd <- as(stack(lonLayer, latLayer, G0yCMSAF), 'SpatialGridDataFrame')
+## names(grd) <- c('lon', 'lat', 'G0yCMSAF')
+## proj4string(grd) <- proj
 
-## spplot(elevES)
+##Descargo y descomprimo un zip de http://biogeo.ucdavis.edu/data/diva/adm/ESP_adm.zip
+##Contiene un Shapefile con información de las fronteras entre provincias de españa.
+old <- getwd()
+setwd('/home/oscar/Datos/ESP_adm')##Cambiar!!!
+##Leo el contenido:
+mapaSHP <- readShapeLines('ESP_adm2.shp', proj4string=proj)
+setwd(old)
 
-
+###Trabajaremos sólo con aquelas estaciones con al menos dos años
+###completos y 1000 kWh/m2 anuales de radiación
+spGef <- spSIARGef[spSIARGef$ndays>=730 & spSIARGef$G0y>=1000,]
+idxNms <- which(names(spGef) %in% c('G0y', 'Fixed', 'Two', 'Horiz'))
+names(spGef)[idxNms] <- paste(names(spGef)[idxNms], 'SIAR', sep='')
 ##Ahora incorporo al SpatialPointsDataFrame una capa más
 ##con los valores de CMSAF en las posiciones de las estaciones
 ##con la función extract de raster
-spRedGN$CMSAF <- extract(G0yCMSAF, spRedGN)
+spGef$G0yCMSAF <- extract(G0yCMSAF, spGef)
 ##y también calculo la diferencia entre ambas
-spRedGN$dif <-spRedGN$G0y-spRedGN$CMSAF
-
-##Lo mismo con datos de elevación
-##spRedGN$elev <- extract(elevES, spRedGN)
+spGef$difG0y <-spGef$G0ySIAR-spGef$G0yCMSAF
 
 ###Análisis de valores (sin considerar caracter espacial)
-datG0y <- as.data.frame(spRedGN)
-datG0y[abs(datG0y$dif)>500,]
+datGef <- as.data.frame(spGef)
+##Ejemplos...
+##diferencia frente a la latitud para grupos de G0ySIAR
+xyplot(difG0y~lat, groups=cut(G0ySIAR, 5), data=datGef, auto.key=list(space='right'))
 
-##diferencia frente a la latitud para cinco grupos de G0y
-xyplot(dif~lat, groups=cut(G0y, 5), data=datG0y, auto.key=list(space='right'))
 ##y 5 grupos de CMSAF
-xyplot(dif~lat, groups=cut(CMSAF, 5), data=datG0y, auto.key=list(space='right'))
+xyplot(difG0y~lat, groups=cut(G0yCMSAF, 5), data=datGef, auto.key=list(space='right'))
 ##G0y frente a CMSAF para cinco grupos de latitud
-xyplot(G0y~CMSAF, groups=cut(lat, 5), data=datG0y)
+xyplot(G0ySIAR~G0yCMSAF, groups=cut(lat, 5), data=datGef)
 
+bwplot(difG0y~cut(lat, 10), data=datGef)
 ###etc, etc,
-
 
 ####Empieza el análisis estadístico
 
 ##Ajuste del variograma
-vgmG0y <- variogram(G0y~1, data=spRedGN)
+vgmG0y <- variogram(G0ySIAR~1, data=spGef)
 plot(vgmG0y)
 ##por inspección parece que el modelo esférico ajusta bien
-##con los valores 25000 y 1
-##y con un nugget de 10000
-fitvgmG0y <- fit.variogram(vgmG0y, vgm(25000, 'Sph', 1, 10000))
+modelG0y <- vgm(psill=17000, model='Sph', range=200, nugget=5000)
+fitvgmG0y <- fit.variogram(vgmG0y, modelG0y)
 plot(vgmG0y, fitvgmG0y)
 
-##Creo una rejilla para la interpolación
-##necesito que contenga la latitud y longitud
-##para el universal kriging
-latLayer <- raster(G0yCMSAF)
-latLayer[] <- yFromCell(G0yCMSAF, 1:ncell(G0yCMSAF))
-lonLayer <- raster(G0yCMSAF)
-lonLayer[] <- xFromCell(G0yCMSAF, 1:ncell(G0yCMSAF))
-
-grd <- as(stack(lonLayer, latLayer, G0yCMSAF), 'SpatialGridDataFrame')
-names(grd) <- c('lng', 'lat', 'CMSAF')##, 'elev')
-proj4string(grd) <- proj
-
-##Empieza la interpolación##
+##Tipos de Interpolación:
 
 ##En primer lugar, el método IDW
-idwG0y <- krige(G0y~1, spRedGN, grd)
+idwG0y <- krigeRaster(G0ySIAR~1, spGef, G0yCMSAF)
 
-spplot(idwG0y['var1.pred']) +
-  layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
+levelplot(idwG0y, layer='pred') +
+  layer(sp.points(spGef, pch=19, cex=0.3, col='black')) +
   layer(sp.lines(mapaSHP))
 
 ##En segundo lugar un ajuste de superficie
-surfG0y <- krige(G0y~1, spRedGN, grd, degree=2)
+surfG0y <- krigeRaster(G0ySIAR~1, spGef, G0yCMSAF, degree=2)
 
-spplot(surfG0y['var1.pred']) +
-  layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
+levelplot(surfG0y, layer='pred') +
+  layer(sp.points(spGef, pch=19, cex=0.3, col='black')) +
+  layer(sp.lines(mapaSHP))
+
+levelplot(surfG0y, layer='var')+
+  layer(sp.points(spGef, pch=19, cex=0.3, col='black')) +
   layer(sp.lines(mapaSHP))
 
 ##En tercer lugar, un ordinary kriging usando el variograma
-okrigG0y <- krige(G0y~1, spRedGN, grd, model=fitvgmG0y)
+okrigG0y <- krigeRaster(G0ySIAR~1, spGef, G0yCMSAF, model=fitvgmG0y)
 
-spplot(okrigG0y['var1.pred']) +
-  layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
+levelplot(okrigG0y, layer='pred') +
+  layer(sp.points(spGef, pch=19, cex=0.3, col='black')) +
+  layer(sp.lines(mapaSHP))
+
+levelplot(okrigG0y, layer='var') +
+  layer(sp.points(spGef, pch=19, cex=0.3, col='black')) +
   layer(sp.lines(mapaSHP))
 
 ##En cuarto lugar, universal kriging usando la latitud y longitud
-LLkrigG0y <- krige(G0y~lat+lng, spRedGN, grd, model=fitvgmG0y)
+LLkrigG0y <- krigeRaster(G0ySIAR~lat+lon, spGef, G0yCMSAF, model=fitvgmG0y)
 
-spplot(LLkrigG0y['var1.pred']) +
-  layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
+levelplot(LLkrigG0y, layer='pred') +
+  layer(sp.points(spGef, pch=19, cex=0.3, col='black')) +
+  layer(sp.lines(mapaSHP))
+
+levelplot(LLkrigG0y, layer='var') +
+  layer(sp.points(spGef, pch=19, cex=0.3, col='black')) +
   layer(sp.lines(mapaSHP))
 
 ##Diagnostico
-surf <- krige.cv(G0y~1, spRedGN, degree=2)
-LL <- krige.cv(G0y~lat+lng, spRedGN, model=fitvgmG0y)
-ord <- krige.cv(G0y~1, spRedGN, model=fitvgmG0y)
+surf <- krige.cv(G0ySIAR~1, spGef, degree=2)
+LL <- krige.cv(G0ySIAR~lat+lon, spGef, model=fitvgmG0y)
+ord <- krige.cv(G0ySIAR~1, spGef, model=fitvgmG0y)
 
 surfPlot <- bubble(surf, 'residual')
 llPlot <- bubble(LL, 'residual')
@@ -184,61 +171,59 @@ ordPlot <- bubble(ord, 'residual')
 
 ##En quinto lugar, universal kriging usando datos de CMSAF
 ##Primero hay que ajustar nuevamente el variograma
-vgmCMSAF <- variogram(G0y~CMSAF, spRedGN)
-fitvgmCMSAF <- fit.variogram(vgmCMSAF, vgm(20000, 'Sph', 1, 10000))
+vgmCMSAF <- variogram(G0ySIAR~G0yCMSAF, spGef)
+plot(vgmCMSAF)
+fitvgmCMSAF <- fit.variogram(vgmCMSAF, vgm(psill=12000, model='Sph', range=100, nugget=5000))
 plot(vgmCMSAF, fitvgmCMSAF)
 
-CMSAFkrigG0y <- krige(G0y~CMSAF, spRedGN, grd, model=fitvgmCMSAF)
+CMSAFkrigG0y <- krigeRaster(G0ySIAR~G0yCMSAF, spGef, G0yCMSAF, model=fitvgmCMSAF)
 
-spplot(CMSAFkrigG0y['var1.pred']) +
-  layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
+levelplot(CMSAFkrigG0y, layer='pred') +
+  layer(sp.points(spGef, pch=19, cex=0.3, col='black')) +
   layer(sp.lines(mapaSHP))
 
-
-## vgmelev <- variogram(G0y~elev, spRedGN[!is.na(spRedGN$elev),])
-## fitvgmelev <- fit.variogram(vgmelev, vgm(20000, 'Sph', 1, 10000))
-## plot(vgmelev, fitvgmelev)
-
-## elevkrigG0y <- krige(G0y~elev, spRedGN[!is.na(spRedGN$elev),], grd, model=fitvgmelev)
-
-## spplot(elevkrigG0y['var1.pred']) +
-##   layer(sp.points(spRedGN, pch=19, cex=0.7, col='black')) +
-##   layer(sp.lines(mapaSHP))
-
-
+levelplot(CMSAFkrigG0y, layer='var', par.settings=BTCTheme) +
+  layer(sp.points(spGef, pch=19, cex=0.3, col='black')) +
+  layer(sp.lines(mapaSHP))
+##Ejemplos de representación de resultados
+##más ejemplos en http://rastervis.r-forge.r-project.org/
+histogram(CMSAFkrigG0y)
+splom(CMSAFkrigG0y)
+xyplot(var~pred|cut(y, 6), CMSAFkrigG0y)
+xyplot(pred~y, CMSAFkrigG0y)
+xyplot(var~y, CMSAFkrigG0y)
 
 
+##### RADIACION EFECTIVA #######
+
+##Resultados de 2008 de CMSAF
+##compongo un objeto stack de la librería raster
+old <- getwd()
+setwd('/home/oscar/Datos/CMSAF')##Cambiar!!!
+gefCMSAF <- stack('gefCMSAFTracking')
+layerNames(gefCMSAF) <- c('Fixed', 'Two', 'Horiz')
+setwd(old)
+
+gefExtract <- as.data.frame(extract(gefCMSAF, spGef))
+names(gefExtract) <- paste(layerNames(gefCMSAF), 'CMSAF', sep='')
+
+spGef <- spCbind(spGef, gefExtract)
+datGef <- as.data.frame(spGef)
+
+## Sistemas Estáticos
+##Se trata de sustituir G0y por Fixed utilizando
+##el código anterior para radiación horizontal
+FixedCMSAF <- raster(gefCMSAF, layer='Fixed')
+
+vgmFixed <- variogram(FixedSIAR~1, data=spGef)
+plot(vgmFixed)
+##COMPROBAR QUE LOS VALORES SIGUEN SIENDO ADECUADOS
+modelFixed <- vgm(psill=17000, model='Sph', range=200, nugget=5000)
+fitvgmFixed <- fit.variogram(vgmFixed, modelFixed)
+plot(vgmFixed, fitvgmFixed)
 
 
-####MEDIAS MENSUALES, en elaboración
-## foo <- function(x){
-##   prov=as.numeric(x[3])
-##   est=as.numeric(x[4])
-##   tryError <- try(meteo <- readSIAR(prov=prov, est=est,start='01/01/2008', end='31/12/2008'))
-##   g0 <- getG0(meteo)
-##   G0dm <- aggregate(g0, by=as.yearmon, FUN=function(x, ...)mean(x, na.rm=1))
-##   idx<- seq(from=as.POSIXct('2008-01-01'), to=as.POSIXct('2008-12-31'), by='month')
-##   idx <- as.yearmon(idx)
-##   G0dm
-## }
+##En primer lugar, el método IDW
+idwFixed <- krigeRaster(FixedSIAR~1, spGef, FixedCMSAF)
 
-## smp <- redGN[1:25,]
-## dataG0dm <- apply(smp, 1, foo)
-## dataG0dm <- t(dataG0dm)
-## colnames(dataG0dm) <- month.abb
-## smp <- cbind(smp, dataG0dm)
-
-## proj <- CRS('+proj=latlon +ellps=WGS84')
-## spSMP <- SpatialPointsDataFrame(coords=smp[c('lng', 'lat')],
-##                                    data=smp[,7:18],
-##                                    proj4string=proj)
-
-## box <- t(bbox(spSMP))
-
-## grd <- expand.grid(lng=seq(box[1,1], box[2,1], .1), lat=seq(box[1,2], box[2,2], .1))
-## coordinates(grd) <- ~lng+lat
-## gridded(grd) <- TRUE
-## proj4string(grd) <- proj
-## krigeG0dm <- krige(Mar~1, spSMP, grd)
-## spplot(krigeG0dm)+layer(sp.points(spSMP, pch=19, col='black', cex=0.7))
-
+###etc etc

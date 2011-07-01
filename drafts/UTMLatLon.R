@@ -6,7 +6,7 @@ library(maptools)
 ##Leo fronteras administrativas
 old <- getwd()
 setwd('/home/oscar/Datos/ESP_adm')##Cambiar!!!
-proj <- CRS('+proj=latlon +ellps=WGS84')
+proj <- CRS('+proj=longlat +ellps=WGS84')
 mapaSHP <- readShapeLines('ESP_adm2.shp', proj4string=proj)
 setwd(old)
 
@@ -60,9 +60,9 @@ SPUTM31 <- SpatialPointsDataFrame(coords=datosUTM31[c("UTMX", "UTMY")],
                     proj4string=projUTM31)
 
 ##Transformo de UTM a long-lat
-SPlonlat29 <- spTransform(SPUTM29, CRS("+proj=longlat"))
-SPlonlat30 <- spTransform(SPUTM30, CRS("+proj=longlat"))
-SPlonlat31 <- spTransform(SPUTM31, CRS("+proj=longlat"))
+SPlonlat29 <- spTransform(SPUTM29, proj)
+SPlonlat30 <- spTransform(SPUTM30, proj)
+SPlonlat31 <- spTransform(SPUTM31, proj)
 
 SPlonlatNoUTM <- SpatialPointsDataFrame(coords=datosLonLat[c("Longitud", "Latitud")],
                              data=datosLonLat[c('Altitud', 'N_Estacion', 'Estacion',
@@ -72,6 +72,7 @@ SPlonlatNoUTM <- SpatialPointsDataFrame(coords=datosLonLat[c("Longitud", "Latitu
 SPlonlat <- spRbind(SPlonlat29, SPlonlat30)
 SPlonlat <- spRbind(SPlonlat, SPlonlat31)
 SPlonlat <- spRbind(SPlonlat, SPlonlatNoUTM)
+coordnames(SPlonlat) <- c('lon', 'lat')
 ##Primera representación.
 ## spplot(SPlonlat['Comunidad'], key.space='right') + layer(sp.lines(mapaSHP)) 
 ## ##Elimino estas estaciones erróneas y vuelvo a representar
@@ -100,8 +101,10 @@ dev.off()
 ## andal[idxAndal,]
 
 redSIAR <- as.data.frame(SPlonlat)
-names(redSIAR)[7:8] <- c('lon', 'lat')
 
+##En la llamada a APPLY hay que eliminar las columnas con caracteres
+##para que no convierta todo a character
+###NO EJECUTAR, recuperar con load()
 spainMeteo <- apply(redSIAR[, c(8, 4, 2)], 1,
                     function(x){
                       try(readSIAR(prov=x[2], est=x[3],
@@ -113,8 +116,10 @@ spainMeteo <- apply(redSIAR[, c(8, 4, 2)], 1,
 
 idxMeteo <- sapply(spainMeteo, function(x)class(x)=='Meteo')
 spainMeteoOK <- spainMeteo[idxMeteo]
-redSIAROK <- redSIAR[idxMeteo,]
-SPlonlatOK <- SPlonlat[idxMeteo,]
+
+##Días registrados
+fooDays <- function(x)as.numeric(diff(range(indexD(x))))
+ndays <- sapply(spainMeteoOK, fooDays)
 
 ####Medias de sumas anuales
 meanYearlySums <- function(x)mean(aggregate(getG0(x), year, sum, na.rm=1))
@@ -122,31 +127,17 @@ meanYearlySums <- function(x)mean(aggregate(getG0(x), year, sum, na.rm=1))
 ##aplico la función a cada una de las estaciones que componen la lista spainMeteo
 ##divido entre 1000 para pasar a kWh
 spainG0y <- sapply(spainMeteoOK, meanYearlySums)/1000
+
+redSIAROK <- redSIAR[idxMeteo,]
+SPlonlatOK <- SPlonlat[idxMeteo,]
+
 ##añado el resultado como una capa más al SpatialPointsDataFrame
 redSIAROK$G0y=spainG0y
+redSIAROK$ndays=ndays
 SPlonlatOK$G0y=spainG0y
+SPlonlatOK$ndays=ndays
 
-
-###Cálculo de radiación efectiva
-foo <- function(x){
-  gefFixed <- calcGef(lat=getLat(x), dataRad=x, modeRad='bd', modeTrk='fixed')
-  gef2x <- calcGef(lat=getLat(x), dataRad=x, modeRad='bd', modeTrk='two')
-  gefHoriz <- calcGef(lat=getLat(x), dataRad=x, modeRad='bd', modeTrk='horiz')
-  resultFixed <- mean(as.data.frameY(gefFixed)$Gefd)
-  result2x <- mean(as.data.frameY(gef2x)$Gefd)
-  resultHoriz <- mean(as.data.frameY(gefHoriz)$Gefd)
-  result <- c(resultFixed, result2x, resultHoriz)
-  result
-  }
-
-gefSIAR <- lapply(spainMeteoOK, foo)
-gefSIAR <- as.data.frame(do.call(rbind, gefSIAR))
-names(gefSIAR) <- c('Fixed', 'Two', 'Horiz')
-
-redSIAROK <- cbind(redSIAROK, gefSIAR)
-SPlonlatOK <- spCbind(SPlonlatOK, gefSIAR)
-
-spplot(SPlonlatOK[c('Fixed', 'Two', 'Horiz')])
-
+save(redSIAR, redSIAROK, SPlonlat, SPlonlatOK, file='redSIAR.RData')
 save(spainMeteo, idxMeteo, file='spainMeteo20110701.RData')
-save(redSIAR, redSIAROK, SPlonlat, SPlonlatOK, gefSIAR, file='gefSIAR.RData')
+####FIN DE CALCULOS###########################################
+
