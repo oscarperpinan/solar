@@ -42,9 +42,10 @@ foo <- function(x, ...){
 ##calc applies the function to the stack of latitude and irradiation
 gefS <- calc(stack(latLayer, SISmm), foo,
              filename='/home/oscar/Datos/CMSAF/gefCMSAFTracking',##change to your folder
-             overwrite=TRUE)
-layerNames(gefS)=c('Fixed', '2x', 'Horiz')
+             overwrite=TRUE, progress='text')
+
+layerNames(gefS)=c('Fixed', 'Two', 'Horiz')
 
 gefS <- stack('/home/oscar/Datos/CMSAF/gefCMSAFTracking')
-layerNames(gefS)=c('Fixed', '2x', 'Horiz')
+layerNames(gefS)=c('Fixed', 'Two', 'Horiz')
 
