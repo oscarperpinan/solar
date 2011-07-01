@@ -1,0 +1,395 @@
+"Comunidad";"Provincia";"N_Provincia";"N_Estacion";"Estacion";"Altitud";"UTMX";"UTMY";"Huso";"Latitud";"Longitud";"SignoLongitud"
+"Andalucia";"Cádiz";11;1;"Basurta-Jerez de la Frontera";60;766377;4072277;;"36º 45' 29''";"06º 00' 58'' ";-0
+"Andalucia";"Cádiz";11;5;"Conil de la Frontera";26;757532;4025267;;"36º 20' 14'' ";"06º 07' 50''";-0
+"Andalucia";"Cádiz";11;101;"IFAPA Centro de Chipiona";7;732243;4070604;;"36º 45' 07''";"06º 23' 55''";-0
+"Andalucia";"Cádiz";11;2;"Jerez de la Frontera";32;767119;4059604;;"36º 38' 38''";"06º 00' 44''";-0
+"Andalucia";"Cádiz";11;7;"Jimena de la Frontera";53;286186;4032550;;"36º 24' 49''";"05º 23' 04''";-0
+"Andalucia";"Cádiz";11;10;"Puerto de Santa María";20;753735;4055018;;"36º 37' 03''";"06º 09' 05''";-0
+"Andalucia";"Cádiz";11;8;"Puerto de Santa María";20;754761;4056297;;"36º 37' 03''";"06º 09' 05''";-0
+"Andalucia";"Cádiz";11;9;"Sanlúcar de Barrameda";22;204391,3;4075859,2;;"36º 50' 07''";"06º 17' 38''";-0
+"Andalucia";"Cádiz";11;6;"Vejer de Frontera";24;245032;4019509;;"36º 17' 10''";"05º 50' 19''";-0
+"Andalucia";"Cádiz";11;4;"Villamartín";171;266228;4081004;;"36º 50' 43''";"05º 37' 18''";-0
+"Andalucia";"Sevilla";41;5;"Aznalcázar ";4;742264;4115401;;"37º 09' 10''";"06º 16' 19''";-0
+"Andalucia";"Sevilla";41;9;"Ecija";125;316742;4162890;;"37º 35' 39''";"05º 04' 32''";-0
+"Andalucia";"Sevilla";41;17;"Guillena";191;759588;4156231;;"37º 30' 57''";"06º 03' 46''";-0
+"Andalucia";"Sevilla";41;19;"IFAPA Centro Las Torres-Tomejil";11;238115;4156016;;"37º 30' 48''";"05º 57' 46''";-0
+"Andalucia";"Sevilla";41;21;"IFAPA Centro de Los Palacios";21;238591;4119785;;"37º 11' 14''";"05º 56' 41''";-0
+"Andalucia";"Sevilla";41;101;"IFAPA Centro Las Torres-Tomejil, Finca Tomejil";79;271069;4142690;;"37º 24' 07''";"05º 35' 10''";-0
+"Andalucia";"Sevilla";41;20;"Isla Mayor";35;755917;4111564;;"37º 06' 53''";"06º 07' 11''";-0
+"Andalucia";"Sevilla";41;10;"La Luisiana";188;303201;4155652;;"37º 31' 34''";"05º 13' 37''";-0
+"Andalucia";"Sevilla";41;7;"La Puebla del Río";25;754404;4124003;;"37º 13' 38''";"06º 07' 57''";-0
+"Andalucia";"Sevilla";41;8;"La Puebla del Río II";41;762644;4108077;;"37º 04' 53''";"06º 02' 43''";-0
+"Andalucia";"Sevilla";41;12;"La Rinconada";37;241387;4149790;;"37º 27' 29''";"05º 55' 25''";-0
+"Andalucia";"Sevilla";41;2;"Las Cabezas de San Juan";25;243428;4100700;;"37º 01' 00''";"05º 53' 01''";-0
+"Andalucia";"Sevilla";41;3;"Lebrija I";25;755906;4096340;;"36º 58' 40''";"06º 07' 30''";-0
+"Andalucia";"Sevilla";41;4;"Lebrija 2";40;766472;4088031;;"36º 54' 00''";"06º 00' 34''";-0
+"Andalucia";"Sevilla";41;15;"Lora del Río";68;276058;4171237;;"37º 39' 37''";"05º 32' 19''";-0
+"Andalucia";"Sevilla";41;16;"Los Morales";90;262802;4117969;;"37º 10' 38''";"05º 40' 18''";-0
+"Andalucia";"Sevilla";41;1;"Los Palacios y Villafranca";21;239190;4118995;;"37º 10' 49''";"05º 56' 15''";-0
+"Andalucia";"Sevilla";41;11;"Osuna";214;310778;4125500;;"37º 15' 22''";"05º 08' 01''";-0
+"Andalucia";"Sevilla";41;18;"Puebla Cazalla";229;291518;4121868;;"37º 13' 09''";"05º 20' 58''";-0
+"Andalucia";"Sevilla";41;13;"Sanlúcar La Mayor";88;743029;4145411;;"37º 25' 22''";"06º 15' 13''";-0
+"Andalucia";"Sevilla";41;6;"Villafranco del Guadalquivir";45;753295;4109806;;"37º 05' 59''";"06º 08' 59''";-0
+"Andalucia";"Sevilla";41;22;"Villanueva del Río y Minas";38;262609;4164005;;"37º 36' 52''";"05º 40' 57''";-0
+"Andalucia";"Sevilla";41;14;"Villanueva del Río y Minas";;;;;;;-0
+"Andalucia";"Jaén";23;6;"Alcaudete";645;404875;4159665;30;;;
+"Andalucia";"Jaén";23;11;"Chiclana de Segura";510;504003;4239630;30;;;
+"Andalucia";"Jaén";23;1;"Huesa";793;494672;4177995;30;;;
+"Andalucia";"Jaén";23;104;"IFAPA Centro MEngibar";;;;;;;
+"Andalucia";"Jaén";23;15;"Jaén";299;432285;4194160;30;;;
+"Andalucia";"Jaén";23;103;"Jódar";488;470716;4192610;30;;;
+"Andalucia";"Jaén";23;12;"La Higuera de Arjona";267;411556;4200824;30;;;
+"Andalucia";"Jaén";23;9;"Linares";443;443111;4212750;30;;;
+"Andalucia";"Jaén";23;7;"Mancha Real";436;447686;4196913;30;;;
+"Andalucia";"Jaén";23;16;"Marmolejo";208;396245;4211908;30;;;
+"Andalucia";"Jaén";23;10;"Marmolejo";208;400901;4212858;30;;;
+"Andalucia";"Jaén";23;13;"Mengíbar";373;427706;4202345;30;;;
+"Andalucia";"Jaén";23;2;"Pozo Alcón";893;506267;4169627;30;;;
+"Andalucia";"Jaén";23;4;"Sabiote";822;479441;4214871;30;;;
+"Andalucia";"Jaén";23;3;"San José de los Propios";509;479835;4190273;30;;;
+"Andalucia";"Jaén";23;14;"Santo Tomé";571;492827;4209275;30;;;
+"Andalucia";"Jaén";23;5;"Torreblascopedro";291;439562;4204997;30;;;
+"Andalucia";"Jaén";23;101;"Torreperogil";536;478684;4203206;30;;;
+"Andalucia";"Jaén";23;8;"Ubeda";358;473694;4199725;30;;;
+"Andalucia";"Jaén";23;102;"Villacarrillo";650;482519;4213079;30;;;
+"Andalucia";"Almería";4;10;"Adra";42;500710;4066978;30;;;
+"Andalucia";"Almería";4;2;"Almería";22;553334;4076947;30;;;
+"Andalucia";"Almería";4;8;"Cuevas de Almanzora";;;;;;;
+"Andalucia";"Almería";4;5;"Fiñana";971;514418;4112459;30;;;
+"Andalucia";"Almería";4;1;"La Mojonera";142;526472;4071536;30;;;
+"Andalucia";"Almería";4;11;"Níjar";182;575091;4089921;30;;;
+"Andalucia";"Almería";4;4;"Tabernas";435;562095;4105449;30;;;
+"Andalucia";"Almería";4;12;"Tíjola";796;547943;4137207;30;;;
+"Andalucia";"Almería";4;6;"Virgen de Fátima-Cuevas de Almanzora";185;608951;4138960;30;;;
+"Andalucia";"Córdoba";14;2;"Adamuz";90;373219;4206727;30;;;
+"Andalucia";"Córdoba";14;8;"Baena";334;384952;4172611;30;;;
+"Andalucia";"Córdoba";14;1;"Bélmez";523;306747;4236499;30;;;
+"Andalucia";"Córdoba";14;6;"Córdoba";117;341642;4192085;30;;;
+"Andalucia";"Córdoba";14;5;"El Carpio";165;367901;4197541;30;;;
+"Andalucia";"Córdoba";14;4;"Hornachuelos";157;309705;4177125;30;;;
+"Andalucia";"Córdoba";14;101;"IFAPA Centro de Cabra";547;373628;4151309;30;;;
+"Andalucia";"Córdoba";14;102;"IFAPA Centro de Hinojosa del Duque";543;315628;4263208;30;;;
+"Andalucia";"Córdoba";14;9;"Palma del Río";55;303825;4177917;30;;;
+"Andalucia";"Córdoba";14;7;"Santaella";207;333494;4154701;30;;;
+"Andalucia";"Granada";18;11;"Almuñecar";14;438973;4066413;30;;;
+"Andalucia";"Granada";18;1;"Baza";814;520628;4157712;30;;;
+"Andalucia";"Granada";18;7;"Cádiar";950;483724;4086564;30;;;
+"Andalucia";"Granada";18;101;"IFAPA Centro Camino del Purchil";630;443423;4114357;30;;;
+"Andalucia";"Granada";18;5;"Iznalloz";935;451312;4141428;30;;;
+"Andalucia";"Granada";18;6;"Jerez del Marquesado";1212;486806;4116224;30;;;
+"Andalucia";"Granada";18;3;"Loja";487;399051;4114478;30;;;
+"Andalucia";"Granada";18;10;"Padul";781;446712;4097327;30;;;
+"Andalucia";"Granada";18;4;"Pinos Puente";594;431534;4124395;30;;;
+"Andalucia";"Granada";18;2;"Puebla de Don Fabrique";1110;554482;4192456;30;;;
+"Andalucia";"Granada";18;8;"Zafarraya";905;397421;4094617;30;;;
+"Andalucia";"Huelva";21;10;"Almonte";18;724620;4114778;;"37º 09' 06''";"06º 28' 14''";-0
+"Andalucia";"Huelva";21;6;"Aroche";299;680649;4203384;;"37º 57' 34''";"06º 56' 37''";-0
+"Andalucia";"Huelva";21;8;"El Campillo";406;711868;4171123;;"37º 39' 44''";"06º 35' 53''";-0
+"Andalucia";"Huelva";21;1;"El Tojalillo-Gibraleón";52;674879;4132208;;"37º 19' 10''";"07º 01' 35''";-0
+"Andalucia";"Huelva";21;3;"Gibraleón";169;671800;4142595;;"37º 24' 49''";"07º 03' 31''";-0
+"Andalucia";"Huelva";21;101;"IFAPA Centro Las Torres-Tomegil. Finca El Cebollar";63;162785;4128508;;"37º 14' 29''";"06º 48' 03''";-0
+"Andalucia";"Huelva";21;102;"IFAPA El Cebollar Bajo plastico";63;162886;4128606;;"37º 14' 32''";"06º 47' 59''";-0
+"Andalucia";"Huelva";21;9;"La Palma del Condado";192;717814;4138619;;"37º 22' 05''";"06º 32' 25''";-0
+"Andalucia";"Huelva";21;7;"La Puebla de Guzmán";288;654836;4157771;;"37º 33' 12''";"07º 14' 49''";-0
+"Andalucia";"Huelva";21;2;"Lepe";74;655814;4123108;;"37º 14' 27''";"07º 14' 36''";-0
+"Andalucia";"Huelva";21;4;"Moguer";87;696178;4113619;;"37º 08' 52''";"06º 47' 28''";-0
+"Andalucia";"Huelva";21;5;"Niebla";52;700713;4135997;;"37º 20' 54''";"06º 44' 02''";-0
+"Andalucia";"Málaga";29;10;"Antequera";457;360377;4100109;30;;;
+"Andalucia";"Málaga";29;5;"Archidona";516;372960;4104563;30;;;
+"Andalucia";"Málaga";29;9;"Cártama";95;350221;4064985;30;;;
+"Andalucia";"Málaga";29;101;"IFAPA Centro de Campanillas";60;360742;4066161;30;;;
+"Andalucia";"Málaga";29;7;"IFAPA Churriana";32;365802;4059951;30;;;
+"Andalucia";"Málaga";29;1;"Málaga";68;362843;4069159;30;;;
+"Andalucia";"Málaga";29;8;"Pizarra";84;347015;4070556;30;;;
+"Andalucia";"Málaga";29;6;"Sierra Yeguas";464;337035;4112001;30;;;
+"Andalucia";"Málaga";29;2;"Vélez-Málaga";49;399138;4073067;30;;;
+"Aragón";"Zaragoza";50;3;"Sádaba";438;639535;4681057;30;;;
+"Aragón";"Zaragoza";50;4;"El Bayo";379;644736;4670972;30;;;
+"Aragón";"Zaragoza";50;5;"Ejea de los Caballeros";317;649276;4662411;30;;;
+"Aragón";"Zaragoza";50;6;"Luna";409;670788;4662687;30;;;
+"Aragón";"Zaragoza";50;7;"Tauste";361;653910;4651678;30;;;
+"Aragón";"Zaragoza";50;8;"Santa Engracia";253;638544;4642591;30;;;
+"Aragón";"Zaragoza";50;28;"Tarazona";516;604106;4641438;30;;;
+"Aragón";"Zaragoza";50;29;"Borja";366;623985;4634978;30;;;
+"Aragón";"Zaragoza";50;30;"Torres de Bellerén";209;660624;4626529;30;;;
+"Aragón";"Zaragoza";50;31;"Épila";321;643200;4604933;30;;;
+"Aragón";"Zaragoza";50;32;"Almonacid de la Sierra";393;639593;4590498;30;;;
+"Aragón";"Zaragoza";50;33;"Zuera";302;686739;4637927;30;;;
+"Aragón";"Zaragoza";50;34;"Montañana";222;680982;4620427;30;;;
+"Aragón";"Zaragoza";50;35;"Pastriz";524;612376;4576711;30;;;
+"Aragón";"Zaragoza";50;36;"Osera de Ebro";253;705581;4602408;30;;;
+"Aragón";"Zaragoza";50;37;"Quinto";239;707573;4585050;30;;;
+"Aragón";"Zaragoza";50;38;"Caspe";175;745309;4576848;30;;;
+"Aragón";"Zaragoza";50;39;"Fabara";246;261253;4561304;31;;;
+"Aragón";"Zaragoza";50;40;"Calatayud";518;615956;4580234;30;;;
+"Aragón";"Zaragoza";50;41;"Belchite";328;690709;4580358;30;;;
+"Aragón";"Zaragoza";50;43;"Daroca";753;632372;4552156;30;;;
+"Aragón";"Zaragoza";50;49;"Boquiñeni";245;645276;4634116;30;;;
+"Aragón";"Huesca";22;1;"Santa Cilia de Jaca";666;687216;4715191;30;;;
+"Aragón";"Huesca";22;2;"Banastón";562;267097;4697206;31;;;
+"Aragón";"Huesca";22;9;"Gurrea de Gállego";363;688023;4651685;30;;;
+"Aragón";"Huesca";22;10;" Huesca";420;716924;4665025;30;;;
+"Aragón";"Huesca";22;11;"Barbastro";410;261015;4655478;31;;;
+"Aragón";"Huesca";22;12;"Selgua";304;261866;4647275;31;;;
+"Aragón";"Huesca";22;13;"Alfántega";246;263211;4634139;31;;;
+"Aragón";"Huesca";22;14;"Alcolea de Cinca";227;256708;4625361;31;;;
+"Aragón";"Huesca";22;15;"San Esteban de Litera";315;276412;4640493;31;;;
+"Aragón";"Huesca";22;16;"Tamarite de Litera";221;282122;4628985;31;;;
+"Aragón";"Huesca";22;17;"Tardienta";361;706628;4649593;30;;;
+"Aragón";"Huesca";22;18;"Grañén";312;719275;4647006;30;;;
+"Aragón";"Huesca";22;19;"Huerto";415;737390;4648171;30;;;
+"Aragón";"Huesca";22;20;"Sodeto";312;727666;4640742;30;;;
+"Aragón";"Huesca";22;21;"Lanaja";368;721315;4629695;30;;;
+"Aragón";"Huesca";22;22;"Sariñena";283;734771;4628457;30;;;
+"Aragón";"Huesca";22;23;"Valfarta";352;738048;4601902;30;;;
+"Aragón";"Huesca";22;24;"Monte Julia";274;269905;4625084;31;;;
+"Aragón";"Huesca";22;25;"Zaidín";175;274292;4613236;31;;;
+"Aragón";"Huesca";22;26;"Fraga";81;279238;4597307;31;;;
+"Aragón";"Huesca";22;27;"Candasnos";320;257420;4594099;31;;;
+"Aragón";"Teruel";44;42;"Híjar";300;707220;4565812;30;;;
+"Aragón";"Teruel";44;44;"Monreal del campo";955;638881;4515921;30;;;
+"Aragón";"Teruel";44;45;"Alcañiz";315;731896;4553190;30;;;
+"Aragón";"Teruel";44;46;"Calanda";433;734842;4538189;30;;;
+"Aragón";"Teruel";44;47;"Villarquemado";1004;644971;4487707;30;;;
+"Aragón";"Teruel";44;48;"Teruel";928;655845;4468111;30;;;
+"Castilla La Mancha";"Albacete";2;1;"TARAZONA";677;529692;4346583;30;;;
+"Castilla La Mancha";"Albacete";2;2;"JUANACO";698;664184;4307954;30;;;
+"Castilla La Mancha";"Albacete";2;3;"ALMANSA";579;612300;4260690;30;;;
+"Castilla La Mancha";"Albacete";2;4;"HELLÍN";677;595314;4311962;30;;;
+"Castilla La Mancha";"Albacete";2;5;"ALBACETE";682;630940;4276220;30;;;
+"Castilla La Mancha";"Albacete";2;6;"Ontur";872;608291;4295449;30;;;
+"Castilla La Mancha";"Albacete";2;7;"Pozo Cañada";722;585335;4328526;30;;;
+"Castilla La Mancha";"Albacete";2;8;"La Gineta";695;606389;4336016;30;;;
+"Castilla La Mancha";"Albacete";2;9;"Motilleja";531;675774;4289496;30;;;
+"Castilla La Mancha";"Albacete";2;10;"Caudete";;;;;;;
+"Castilla La Mancha";"Ciudad Real";13;1;"ALCÁZAR DE SAN JUAN";690;469241;4327718;30;;;
+"Castilla La Mancha";"Ciudad Real";13;2;"Manzanares";615;393935;4343618;30;;;
+"Castilla La Mancha";"Ciudad Real";13;3;"PORZUNA";662;414460;4322127;30;;;
+"Castilla La Mancha";"Ciudad Real";13;4;"CIUDAD REAL";710;446262;4311560;30;;;
+"Castilla La Mancha";"Ciudad Real";13;5;"Bolaños";647;517494;4299012;30;;;
+"Castilla La Mancha";"Ciudad Real";13;6;"Villahermosa-Tajoneras";727;495118;4325438;30;;;
+"Castilla La Mancha";"Ciudad Real";13;7;"Argamasilla de Alba";659;471647;4359110;30;;;
+"Castilla La Mancha";"Ciudad Real";13;8;"Herencia";622;440113;4318157;30;;;
+"Castilla La Mancha";"Ciudad Real";13;9;"Daimiel";640;418027;4320835;30;;;
+"Castilla La Mancha";"Ciudad Real";13;101;"Entresierra";652;469542;4330684;30;;;
+"Castilla La Mancha";"Ciudad Real";13;10;"MANZANARES";887;510388;4283371;30;;;
+"Castilla La Mancha";"Ciudad Real";13;11;"Montiel";978;511988;4283090;30;;;
+"Castilla La Mancha";"Cuenca";16;1;"EL SANCHÓN";720;520780;4369517;30;;;
+"Castilla La Mancha";"Cuenca";16;2;"PEDERNOSO";728;578256;4367851;30;;;
+"Castilla La Mancha";"Cuenca";16;3;"El Picazo";707;505513;4440733;30;;;
+"Castilla La Mancha";"Cuenca";16;4;"Barajas de Melo";1053;615300;4432004;30;;;
+"Castilla La Mancha";"Cuenca";16;5;"Cañete";;;;;;;
+"Castilla La Mancha";"Cuenca";16;6;"Mariana";;;;;;;
+"Castilla La Mancha";"Cuenca";16;7;"Villaconejos de Trabaque";820;599384;4362528;30;;;
+"Castilla La Mancha";"Cuenca";16;8;"Villnueva de la Jara";940;573223;4445249;30;;;
+"Castilla La Mancha";"Cuenca";16;9;"Mariana";;;;;;;
+"Castilla La Mancha";"Guadalajara";19;1;"Finca El Serranillo";808;504592;4530893;30;;;
+"Castilla La Mancha";"Guadalajara";19;2;"JADRAQUE";759;498931;4486844;30;;;
+"Castilla La Mancha";"Guadalajara";19;3;"Armuña de Tajuña";664;479188;4493565;30;;;
+"Castilla La Mancha";"Guadalajara";19;4;"Alovera";1129;601457;4517023;30;;;
+"Castilla La Mancha";"Guadalajara";19;5;"Prados Redondos";589;501226;4451203;30;;;
+"Castilla La Mancha";"Guadalajara";19;6;"Illana";692;482375;4503550;30;;;
+"Castilla La Mancha";"Guadalajara";19;9;"Marchamalo";676;483014;4501945;30;;;
+"Castilla La Mancha";"Toledo";45;1;"VEGAS DE SAN ANTONIO";400;354961;4424690;30;;;
+"Castilla La Mancha";"Toledo";45;2;"MAGÁN";507;419481;4420988;30;;;
+"Castilla La Mancha";"Toledo";45;2;"MAGÁN";471;419893;4421506;30;;;
+"Castilla La Mancha";"Toledo";45;3;"CALERA Y CHOZAS";387;331720;4415390;30;;;
+"Castilla La Mancha";"Toledo";45;4;"Los Navalmorales";725;358149;4398519;30;;;
+"Castilla La Mancha";"Toledo";45;5;"Alcolea del Tajo";371;316876;4409523;30;;;
+"Castilla La Mancha";"Toledo";45;6;"Mora";754;434087;4392395;30;;;
+"Castilla La Mancha";"Toledo";45;6;"Mora";738;433809;4391038;30;;;
+"Castilla La Mancha";"Toledo";45;7;"Recas";609;416683;4434672;30;;;
+"Castilla La Mancha";"Toledo";45;8;"Villarrubia de Santiago";573;471590;4431896;30;;;
+"Castilla La Mancha";"Toledo";45;9;"La Rinconada";432;379987;4410264;30;;;
+"Castilla La Mancha";"Toledo";45;10;"La Puebla de Almoradiel";698;488433;4384582;30;;;
+"Castilla y León";"Ávila";5;1;"Nava de Arévalo";921;351519;4539902;30;;;
+"Castilla y León";"Ávila";5;101;"Muñogalindo";1128;338844;4495807;30;;;
+"Castilla y León";"Ávila";5;102;"Losar del Barco";1024;284881;4474923;30;;;
+"Castilla y León";"Ávila";5;2;"Valle de Valdelucio";479;411485;4730709;30;;;
+"Castilla y León";"Ávila";5;3;"Lerma";976;436765;4648564;30;;;
+"Castilla y León";"Ávila";5;4;"Tardajos";840;432940;4689308;30;;;
+"Castilla y León";"Ávila";5;5;"Vadocondes";822;452310;4608676;30;;;
+"Castilla y León";"Ávila";5;7;"Santa Gadea del Cid";811;491173;4725736;30;;;
+"Castilla y León";"Ávila";5;101;"Valle de Losa";491;482038;4759479;30;;;
+"Castilla y León";"Ávila";5;102;"Condado de Treviño";562;525363;4729699;30;;;
+"Castilla y León";"León";24;1;"Carracedelo";463;193498;4717644;30;;;
+"Castilla y León";"León";24;2;"Mansilla Mayor";791;299027;4709549;30;;;
+"Castilla y León";"León";24;3;"Cubillas de los Oteros";772;293294;4694837;30;;;
+"Castilla y León";"León";24;4;"Zotes del Paramo";776;274743;4682745;30;;;
+"Castilla y León";"León";24;5;"Quintana del Marco";750;263733;4676030;30;;;
+"Castilla y León";"León";24;6;"Hospital de Orbigo";818;262997;4705231;30;;;
+"Castilla y León";"León";24;7;"Bustillo del Páramo";850;269679;4702275;30;;;
+"Castilla y León";"León";24;8;"Sahagún";839;334821;4692703;30;;;
+"Castilla y León";"León";24;9;"Santas Martas";879;307171;4702757;30;;;
+"Castilla y León";"Palencia";34;1;"Torquemada";741;392418;4654977;30;;;
+"Castilla y León";"Palencia";34;2;"Villamuriel de Cerrato";737;374989;4645559;30;;;
+"Castilla y León";"Palencia";34;3;"Fuentes de Nava";742;353827;4661301;30;;;
+"Castilla y León";"Palencia";34;4;"Villoldo";804;368165;4679393;30;;;
+"Castilla y León";"Palencia";34;5;"Lantadilla";793;392713;4687446;30;;;
+"Castilla y León";"Palencia";34;6;"Herrera de Pisuerga";810;392376;4711511;30;;;
+"Castilla y León";"Palencia";34;7;"Villaluenga de la Vega";916;354100;4709649;30;;;
+"Castilla y León";"Palencia";34;101;"Villaeles de Valdavia";885;372118;4714888;30;;;
+"Castilla y León";"Salamanca";37;1;"Ciudad Rodrigo";635;204574;4502228;30;;;
+"Castilla y León";"Salamanca";37;3;"Aldearrubia";815;290354;4542200;30;;;
+"Castilla y León";"Salamanca";37;101;"Arabayona";847;298870;4546765;30;;;
+"Castilla y León";"Salamanca";37;102;"Ejeme";816;286868;4516157;30;;;
+"Castilla y León";"Segovia";40;1;"Gomezserracín";812;391213;4571449;30;;;
+"Castilla y León";"Segovia";40;2;"Nava de la Asunción";802;375257;4555430;30;;;
+"Castilla y León";"Segovia";40;1;"Almazán";947;537068;4592465;30;;;
+"Castilla y León";"Segovia";40;2;"San Esteban de Gormaz";852;481639;4598220;30;;;
+"Castilla y León";"Segovia";40;3;"Fuentecantos";1011;547015;4632540;30;;;
+"Castilla y León";"Segovia";40;101;"Hinojosa del Campo";1043;576391;4621676;30;;;
+"Castilla y León";"Valladolid";47;1;"Mayorga";749;309995;4671436;30;;;
+"Castilla y León";"Valladolid";47;2;"Torrecilla de la Orden";774;309957;4565555;30;;;
+"Castilla y León";"Valladolid";47;3;"Olmedo";740;356214;4572635;30;;;
+"Castilla y León";"Valladolid";47;5;"Encinas de Esgueva";800;409296;4623036;30;;;
+"Castilla y León";"Valladolid";47;6;"Tordesillas";671;334011;4597224;30;;;
+"Castilla y León";"Valladolid";47;7;"Valbuena de Duero";740;393138;4613083;30;;;
+"Castilla y León";"Valladolid";47;8;"Medina de Rioseco";739;331604;4639434;30;;;
+"Castilla y León";"Valladolid";47;101;"Valladolid";714;355037;4609692;30;;;
+"Castilla y León";"Valladolid";47;102;"Medina del Campo";726;340614;4575992;30;;;
+"Castilla y León";"Valladolid";47;103;"Rueda";751;334380;4585701;30;;;
+"Castilla y León";"Zamora";49;1;"Quiruelas de Vidriales";707;266390;4655186;30;;;
+"Castilla y León";"Zamora";49;2;"Villaralbo";656;277149;4597327;30;;;
+"Castilla y León";"Zamora";49;4;"Villalpando";686;300155;4633143;30;;;
+"Castilla y León";"Zamora";49;5;"Pozuelo de Tábara";699;258380;4629423;30;;;
+"Castilla y León";"Zamora";49;6;"Barcial del Barco";695;280775;4645951;30;;;
+"Castilla y León";"Zamora";49;7;"Toro";642;293817;4595955;30;;;
+"Extremadura";"Badajoz";6;103;"Puebla de Alcocer";500;390433;50539;;"38º59'06""";"5º15'28""";-0
+"Extremadura";"Badajoz";6;210;"PALAZUELO";290;390600;54400;;"39º06'46""";"5º44'12""";-0
+"Extremadura";"Badajoz";6;105;"DON BENITO-EFA";260;385800;55400;;"38º57'32""";"5º51'19""";-0
+"Extremadura";"Badajoz";6;3;"Don Benito";267;385543;55340;;"38º57'15""";"5º51'42""";-0
+"Extremadura";"Badajoz";6;204;"RUEDA CHICA";186;385500;64400;;"39º09'41""";"6º7'28""";-0
+"Extremadura";"Badajoz";6;203;"Talavera La Real-Bercial";200;385300;65000;;"38º35'6""";"5º56'58""";-0
+"Extremadura";"Badajoz";6;205;"Guadajira-La Orden";186;385100;64000;;"38º51'02""";"6º40'57""";-0
+"Extremadura";"Badajoz";6;206;"Arroyo de San Serván";220;385200;62800;;"38º51'10""";"6º27'75""";-0
+"Extremadura";"Badajoz";6;101;"Mérida";265;385047;61905;;"38º54'57""";"6º20'44""";-0
+"Extremadura";"Badajoz";6;4;"Villagonzalo";266;385017;61105;;"38º51'47""";"6º11'48""";-0
+"Extremadura";"Badajoz";6;6;"Olivenza";202;384320;70326;;"38º40'53""";"7º06'05""";-0
+"Extremadura";"Badajoz";6;207;"Almendralejo-Don Rodrigo";385;384000;62300;;"38º40'45""";"6º41'29""";-0
+"Extremadura";"Badajoz";6;1;"Zalamea de la Serena";459;384048;54123;;"38º38'59""";"5º39'25""";-0
+"Extremadura";"Badajoz";6;2;"Monterrubio";499;383535;52255;;"38º35'21""";"5º26'36""";-0
+"Extremadura";"Badajoz";6;7;"Villafranca de los Barros";406;383406;20409;;"39º33'44""";"6º20'16""";-0
+"Extremadura";"Badajoz";6;5;"Jerez de los Caballeros";261;381658;64409;;"38º19'09""";"6º46'15""";-0
+"Extremadura";"Badajoz";6;104;"Fuente de Cantos";600;381235;61823;;"38º14'47""";"6º18'33""";-0
+"Extremadura";"Badajoz";6;102;"Azuaga";540;382333;54223;;"38º15'34""";"5º40'40""";-0
+"Extremadura";"Cáceres";10;101;"Hurdes-Azabal";574;401800;61800;;"40º17'41''";"6º15'26''";-0
+"Extremadura";"Cáceres";10;12;"Gargantilla";596;401428;55626;;"40º14'53''";"5º55'13''";-0
+"Extremadura";"Cáceres";10;3;"Zarza de Granadilla";383;401225;60243;;"40º14'15""";"6º02'50""";-0
+"Extremadura";"Cáceres";10;16;"Moraleja";252;400259;64027;;"40º04'03""";"6º39'64""";-0
+"Extremadura";"Cáceres";10;15;"Valdastillas";634;400757;55234;;"40º07'56""";"5º52'46""";-0
+"Extremadura";"Cáceres";10;11;"Jarandilla de la Vera";508;400608;53842;;"40º07'35""";"5º39'30""";-0
+"Extremadura";"Cáceres";10;13;"Talayuela";277;400047;53347;;"39º59'08""";"5º36'35""";-0
+"Extremadura";"Cáceres";10;10;"Tejeda de Tietar";235;395738;55133;;"40º01'12""";"5º52'06""";-0
+"Extremadura";"Cáceres";10;4;"Aldehuela del Jerte";262;400034;61339;;"40º00'34""";"6º14'21""";-0
+"Extremadura";"Cáceres";10;6;"Coria";235;395816;62617;;"39º59'00""";"6º32'23""";-0
+"Extremadura";"Cáceres";10;9;"Peraleda de la Mata";309;395136;52809;;"39º51'14""";"5º27'40""";-0
+"Extremadura";"Cáceres";10;1;"Casatejada";274;395209;54037;;"39º53'15""";"5º41'00""";-0
+"Extremadura";"Cáceres";10;105;"Mirabel";541;395116;61232;;"39º51'44""";"6º13'55""";-0
+"Extremadura";"Cáceres";10;104;"ALCANTARA";327;394452;65348;;"39º43'09""";"6º53'11""";-0
+"Extremadura";"Cáceres";10;2;"Aliseda";327;391634;63756;;"39º25'26""";"6º41'29""";-0
+"Extremadura";"Cáceres";10;8;"Valdesalor";382;392209;61937;;"39º22'41""";"6º20'51""";-0
+"Extremadura";"Cáceres";10;102;"Madroñera";625;392758;54539;;"39º25'35""";"5º45'15""";-0
+"Extremadura";"Cáceres";10;103;"GUADALUPE";740;392318;52048;;"39º27'07""";"5º19'48""";-0
+"Extremadura";"Cáceres";10;7;"Madrigalejo";297;390813;53540;;"39º08'18""";"5º37'43""";-0
+"Galicia";"Lugo";27;1;"Castro de Rei";428;623222;4779463;29;;;
+"Galicia";"Lugo";27;2;"Momforte de Lemos";645;623277;4703623;29;;;
+"Galicia";"A Coruña";15;1;"A Capela";372;575301;4810098;29;;;
+"Galicia";"A Coruña";15;2;"Boimorto";480;571147;4762072;29;;;
+"Navarra";"Navarra";31;104;"Arazuri";396;604479;4740699;30;;;
+"Navarra";"Navarra";31;8;"Adiós";444;602726;4726970;30;;;
+"Navarra";"Navarra";31;107;"Lumbier";484;641412;4725301;30;;;
+"Navarra";"Navarra";31;108;"Ancin";469;567977;4723118;30;;;
+"Navarra";"Navarra";31;9;"Artajona";353;599328;4715487;30;;;
+"Navarra";"Navarra";31;5;"Aibar";421;638318;4713350;30;;;
+"Navarra";"Navarra";31;6;"San Martin de Unix";447;614143;4707871;30;;;
+"Navarra";"Navarra";31;10;"Miranda de Arga";343;597966;4707438;30;;;
+"Navarra";"Navarra";31;111;"Lerin ";354;584216;4706412;30;;;
+"Navarra";"Navarra";31;10;"Bargota";375;557811;4703462;30;;;
+"Navarra";"Navarra";31;104;"Olite";375;611257;4699457;30;;;
+"Navarra";"Navarra";31;11;"Falces";290;599450;4697636;30;;;
+"Navarra";"Navarra";31;7;"Murillo del fruto";393;624623;4693814;30;;;
+"Navarra";"Navarra";31;105;"Traibuenas";312;614130;4691051;30;;;
+"Navarra";"Navarra";31;103;"Sartagudas";307;578235;4690609;30;;;
+"Navarra";"Navarra";31;12;"San Adrián";385;591511;4688335;30;;;
+"Navarra";"Navarra";31;14;"Bardenas Reales (El Plano)";425;622302;4684074;30;;;
+"Navarra";"Navarra";31;110;"Funes";371;598594;4681430;30;;;
+"Navarra";"Navarra";31;102;"Bardenas Reales (El Barranco)";298;610980;4680207;30;;;
+"Navarra";"Navarra";31;101;"Cadreita";267;605909;4673851;30;;;
+"Navarra";"Navarra";31;109;"Corella";392;596016;4663472;30;;;
+"Navarra";"Navarra";31;1;"Tudela";258;618468;4658470;30;;;
+"Navarra";"Navarra";31;2;"Fitero";450;595987;4655954;30;;;
+"Navarra";"Navarra";31;3;"Cascante";330;605832;4654795;30;;;
+"Navarra";"Navarra";31;4;"Ablitas";338;612462;4650683;30;;;
+"Navarra";"Navarra";31;15;"Los Arcos";419;567173;4710398;30;;;
+"Navarra";"Navarra";31;16;"Sesma";438;572005;4703134;30;;;
+"Comunidad Valenciana";"Alicante";3;17;"Agost";337;;;;" 38°26'28.21""";"  0°38'22.37""";-0
+"Comunidad Valenciana";"Alicante";3;10;"Almoradí";7;;;;" 38° 6'34.65""";"  0°47'31.21""";-0
+"Comunidad Valenciana";"Alicante";3;15;"Altea";83;;;;" 38°36'1.14""";"  0° 2'57.02""";-0
+"Comunidad Valenciana";"Alicante";3;102;"Callosa d`en Sarrià";259;;;;" 38°39'4.77""";"  0° 7'21.12""";-0
+"Comunidad Valenciana";"Alicante";3;2;"Camp de Mirra";601;;;;" 38°41'12.15""";"  0°46'37.34""";-0
+"Comunidad Valenciana";"Alicante";3;16;"Castalla";680;;;;" 38°35'42.68""";"  0°40'20.10""";-0
+"Comunidad Valenciana";"Alicante";3;13;"Catral";5;;;;" 38° 9'39.41""";"  0°48'5.40""";-0
+"Comunidad Valenciana";"Alicante";3;9;"Crevillente";122;;;;" 38°14'49.32""";"  0°48'12.57""";-0
+"Comunidad Valenciana";"Alicante";3;5;"Dénia Gata";13;;;;" 38°50'25.40""";"  0° 6'30.99""";0
+"Comunidad Valenciana";"Alicante";3;101;"Elx EEA";88;;;;" 38°16'1.83""";"  0°41'42.79""";-0
+"Comunidad Valenciana";"Alicante";3;8;"Monforte del Cid";222;;;;" 38°22'45.24""";"  0°43'45.25""";-0
+"Comunidad Valenciana";"Alicante";3;7;"Novelda";245;;;;" 38°23'7.09""";"  0°45'55.39""";-0
+"Comunidad Valenciana";"Alicante";3;4;"Ondara";36;;;;"38°49'33.86""";"  0° 0'57.25""";0
+"Comunidad Valenciana";"Alicante";3;14;"Orihuela";22;;;;" 38° 5'2.22""";"  0°56'41.22""";-0
+"Comunidad Valenciana";"Alicante";3;11;"Orihuela la Murada";85;;;;" 38°10'23.38""";"  0°57'53.06""";-0
+"Comunidad Valenciana";"Alicante";3;12;"Pilar de la Horadada";17;;;;" 37°51'55.38""";"  0°47'33.03""";-0
+"Comunidad Valenciana";"Alicante";3;6;"Pinoso";613;;;;" 38°24'4.03""";"  1° 2'29.68""";-0
+"Comunidad Valenciana";"Alicante";3;18;"Planes";439;;;;" 38°47'7.80""";"  0°20'40.32""";-0
+"Comunidad Valenciana";"Alicante";3;3;"Vila Joiosa";32;;;;" 38°30'27.90""";"  0°13'57.41""";-0
+"Comunidad Valenciana";"Alicante";3;19;"Villena";573;;;;" 38°38'10.85""";"  0°51'58.10""";-0
+"Comunidad Valenciana";"Castellón";12;4;"Benicarló";15;;;;" 40°25'7.34""";"  0°25'23.17""";0
+"Comunidad Valenciana";"Castellón";12;6;"Burriana";17;;;;" 39°53'23.53""";"  0° 5'1.30""";-0
+"Comunidad Valenciana";"Castellón";12;5;"Castelló Benadresa";178;;;;" 40° 0'56.80""";"  0° 8'6.86""";-0
+"Comunidad Valenciana";"Castellón";12;8;"Nules";17;;;;" 39°51'9.33""";"  0° 9'30.62""";-0
+"Comunidad Valenciana";"Castellón";12;10;"Onda";192;;;;" 39°57'55.08""";"  0°15'45.53""";-0
+"Comunidad Valenciana";"Castellón";12;7;"Ribera de Cabanes";8;;;;" 40° 8'7.25""";"  0° 8'55.35""";0
+"Comunidad Valenciana";"Castellón";12;3;"San Rafael del Río";246;;;;" 40°36'22.69""";"  0°20'59.62""";0
+"Comunidad Valenciana";"Castellón";12;9;"Segorbe";340;;;;" 39°51'11.79""";"  0°29'5.98""";-0
+"Comunidad Valenciana";"Castellón";12;1;"Vall d`Uixó";120;;;;" 39°49'23.99""";"  0°13'57.22""";-0
+"Comunidad Valenciana";"Castellón";12;101;"Vila-real EEA";44;;;;" 39°56'18.07""";"  0° 6'6.58""";-0
+"Comunidad Valenciana";"Valencia";46;14;"Algemesí";24;;;;" 39°11'37.92""";"  0°26'5.13""";-0
+"Comunidad Valenciana";"Valencia";46;10;"Benavites";36;;;;" 39°44'25.94"" ";"0°15'26.49""";-0
+"Comunidad Valenciana";"Valencia";46;4;"Benifaió";19;;;;"39°17'6.88""";" 0°25'37.48""";-0
+"Comunidad Valenciana";"Valencia";46;16;"Bétera";121;;;;"39°35'18.54""";" 0°27'31.91""";-0
+"Comunidad Valenciana";"Valencia";46;25;"Bolbaite";270;;;;" 39° 3'45.60""";"  0°40'28.60""";-0
+"Comunidad Valenciana";"Valencia";46;21;"Campo Arcís";587;;;;" 39°25'55.20""";"  1°10'2.82""";-0
+"Comunidad Valenciana";"Valencia";46;10;"Carcaixent EEA";25;;;;" 39° 7'16.40""";"  0°26'58.86""";-0
+"Comunidad Valenciana";"Valencia";46;1020;"Carcaixent EEA Invernadero";25;;;;" 39° 7'16.40""";"  0°26'58.86""";-0
+"Comunidad Valenciana";"Valencia";46;103;"Carlet CE Coop";51;;;;" 39°13'39.76""";"  0°31'23.26""";-0
+"Comunidad Valenciana";"Valencia";46;1030;"Carlet malla";51;;;;" 39°13'39.76""";"  0°31'23.26""";-0
+"Comunidad Valenciana";"Valencia";46;5;"Cheste";225;;;;" 39°29'42.39""";"  0°41'4.20""";-0
+"Comunidad Valenciana";"Valencia";46;27;"Chulilla";523;;;;" 39°39'22.73""";"  0°53'30.72""";-0
+"Comunidad Valenciana";"Valencia";46;23;"Gandia Marxuquera";102;;;;" 38°58'5.84""";"  0°14'51.54""";-0
+"Comunidad Valenciana";"Valencia";46;2;"Llíria";178;;;;" 39°37'28.50""";"  0°35'41.13""";-0
+"Comunidad Valenciana";"Valencia";46;104;"Llutxent EEA";297;;;;" 38°56'33.57""";"  0°21'23.97""";-0
+"Comunidad Valenciana";"Valencia";46;107;"Manises";108;;;;" 39°29'26.64"" ";"0°27'21.18""";-0
+"Comunidad Valenciana";"Valencia";46;101;"Moncada IVIA";34;;;;" 39°32'43.95""";"  0°23'36.46""";-0
+"Comunidad Valenciana";"Valencia";46;1010;"Moncada malla";34;;;;" 39°32'43.95""";"  0°23'36.46""";-0
+"Comunidad Valenciana";"Valencia";46;18;"Montesa";255;;;;" 38°56'58.83""";"  0°39'3.97""";-0
+"Comunidad Valenciana";"Valencia";46;13;"Navarrés";253;;;;" 39° 6'4.35""";" 0°41'37.28""";-0
+"Comunidad Valenciana";"Valencia";46;1;"Pedralba";201;;;;" 39°36'17.45""";"  0°43'35.50""";-0
+"Comunidad Valenciana";"Valencia";46;17;"Picassent";47;;;;" 39°21'36.00""";"  0°27'45.46""";-0
+"Comunidad Valenciana";"Valencia";46;12;"Pobla del Duc";240;;;;" 38°54'12.53""";" 0°25'2.49""";-0
+"Comunidad Valenciana";"Valencia";46;24;"Polinyá de Xúquer";11;;;;" 39°11'45.84""";"  0°22'10.63""";-0
+"Comunidad Valenciana";"Valencia";46;11;"Puig";46;;;;" 39°35'24.55""";" 0°18'7.55""";-0
+"Comunidad Valenciana";"Valencia";46;106;"Requena Cerrito";648;;;;" 39°29'16.36""";"  1° 6'1.16""";-0
+"Comunidad Valenciana";"Valencia";46;105;"Requena Roma";648;;;;" 39°29'16.36""";"  1° 6'1.16""";-0
+"Comunidad Valenciana";"Valencia";46;20;"Sagunt";51;;;;" 39°40'48.50""";"0°16'41.80""";-0
+"Comunidad Valenciana";"Valencia";46;9;"Sagunto";51;;;;" 39°40'48.50""";"0°16'41.80""";-0
+"Comunidad Valenciana";"Valencia";46;6;"Tavernes de Valldigna";51;;;;" 39° 4'18.00""";"  0°16'3.77""";-0
+"Comunidad Valenciana";"Valencia";46;3;"Turís";277;;;;" 39°23'23.20""";"  0°42'41.08""";-0
+"Comunidad Valenciana";"Valencia";46;22;"Villalonga";132;;;;" 38°53'5.54""";"  0°12'33.71""";-0
+"Comunidad Valenciana";"Valencia";46;7;"Villanueva de Castellón";34;;;;" 39° 4'46.35""";"  0°30'50.98""";-0
+"Comunidad Valenciana";"Valencia";46;8;"Xàtiva";115;;;;" 38°59'19.93""";"  0°30'56.21""";-0
+"Comunidad de Madrid";"Madrid";28;3;"Aranjuez";551;;;;" 40° 1'55.53""";"  3°36'11.84""";-0
+"Comunidad de Madrid";"Madrid";28;2;"Arganda";648;;;;" 40°18'3.42""";"  3°26'17.09""";-0
+"Comunidad de Madrid";"Madrid";28;6;"Chinchón";749;;;;" 40° 8'24.68""";"3°24'56.46""";-0
+"Comunidad de Madrid";"Madrid";28;4;"Fuentidueña de Tajo";559;;;;" 40° 7'5.49""";"  3° 9'34.38""";-0
+"Comunidad de Madrid";"Madrid";28;5;"San Martín de la Vega";515;;;;" 40°12'28.07""";"  3°34'6.76""";-0
+"Comunidad de Madrid";"Madrid";28;102;"Villa del Prado";513;;;;" 40°16'36.42""";"  4°18'20.31""";-0
