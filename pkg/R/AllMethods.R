@@ -736,11 +736,11 @@ setMethod('xyplot',
 setGeneric('shadeplot', function(x, ...)standardGeneric('shadeplot'))
 
 setMethod('shadeplot', signature(x='Shade'),
-          function(x, y, ...,
+          function(x, 
                    main='',
                    xlab=expression(L[ew]),
                    ylab=expression(L[ns]),
-                   n=9){
+                   n=9, ...){
             red=x@distances
             FS.loess=x@FS.loess
             Yf.loess=x@Yf.loess
@@ -751,8 +751,10 @@ setMethod('shadeplot', signature(x='Shade'),
               Lns=seq(min(red$Lns),max(red$Lns),length=100)
               Red=expand.grid(Lew=Lew,Lns=Lns)
               FS=predict(FS.loess,Red)
+              Red$FS=as.numeric(FS)
               AreaG=with(struct,L*W)
               GRR=Red$Lew*Red$Lns/AreaG
+              Red$GRR=GRR
               FS.m<-matrix(1-FS,
                            nrow=length(Lew),
                            ncol=length(Lns))
@@ -766,7 +768,15 @@ setMethod('shadeplot', signature(x='Shade'),
               } else {
                 paleta=rev(heat.colors(n))}
               par(mar=c(4.1,4.1,2.1,2.1))
-              filled.contour(x=Lew,y=Lns,z=FS.m,...,
+              ##alternativa con levelplot y layer
+              ## levelplot((1-FS)~Lew*Lns,  data=Red, aspect='iso',
+              ##           xlab=xlab, ylab=ylab, main=main,
+              ##           subscripts=TRUE, contour=TRUE, lwd=0.6) + 
+              ##     layer(panel.contourplot(Lew, Lns, GRR,
+              ##                             lty=3, labels=TRUE,
+              ##                             region=FALSE, contour=TRUE,
+              ##                             subscripts=TRUE), data=Red)
+              filled.contour(x=Lew,y=Lns,z=FS.m,#...,
                              col=paleta, #levels=niveles,
                              nlevels=n,
                              plot.title=title(xlab=xlab,
