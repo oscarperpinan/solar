@@ -46,7 +46,8 @@ readMAPA(prov, est, start, end, lat=0, format='\%d/\%m/\%Y')
   \code{\link{readG0dm}},
   \code{\link{readBD}},
   \code{\link{fTemp}},
-  \code{\link{RedEstaciones}}.
+  \code{\link{RedEstaciones}},
+  \code{\link{read.zoo}}
 }
 \examples{
 \dontrun{
