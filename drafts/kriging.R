@@ -1,7 +1,7 @@
 library(sp)
 library(maptools)
 library(raster)
-library(rasterVis)## se instala con install.packages("rasterVis", repos="http://R-Forge.R-project.org")
+library(rasterVis)
 library(gstat)
 library(lattice)
 library(latticeExtra)
