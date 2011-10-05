@@ -141,3 +141,26 @@ save(redSIAR, redSIAROK, SPlonlat, SPlonlatOK, file='redSIAR.RData')
 save(spainMeteo, idxMeteo, file='spainMeteo20110701.RData')
 ####FIN DE CALCULOS###########################################
 
+
+#### Preparo redSIAR para incluirlo en solaR
+
+SIAR <- redSIAROK[,c(2:8, 1)]
+
+library(sp)
+library(maptools)
+
+proj <- CRS('+proj=longlat +ellps=WGS84')
+spSIAR <- SpatialPointsDataFrame(redSIAR[, c(6, 7)], redSIAR[, -c(6, 7)],
+                                 proj4str=CRS('+proj=longlat +ellps=WGS84'))
+
+###download a shapefile with the administrative borders of Spain
+download.file('http://www.gadm.org/data/shp/ESP_adm.zip', 'ESP_adm.zip')
+unzip('ESP_adm.zip')
+
+mapaSHP <- readShapeLines('ESP_adm2.shp', proj4string=proj)
+
+##Plot the stations in a map
+spplot(spSIAR['Comunidad'],
+       col.regions=brewer.pal(n=12, 'Paired'),
+       key.space='right', scales=list(draw=TRUE),
+       type=c('p','g')) + layer(sp.lines(mapaSHP))
