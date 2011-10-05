@@ -46,11 +46,13 @@ readMAPA(prov, est, start, end, lat=0, format='\%d/\%m/\%Y')
   \code{\link{readG0dm}},
   \code{\link{readBD}},
   \code{\link{fTemp}},
-  \code{\link{RedEstaciones}},
+  \code{\link{SIAR}},
   \code{\link{read.zoo}}
 }
 \examples{
 \dontrun{
+data(SIAR)
+subset(SIAR, Provincia=='Madrid')
 #Aranjuez, Madrid
 BD<-readSIAR(28,3,'01/01/2008','31/12/2008')
 
