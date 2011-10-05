@@ -1,8 +1,8 @@
 Package: solaR
 Type: Package
 Title: Solar Photovoltaic Systems
-Version: 0.24
-Date: 2011-06-06
+Version: 0.25
+Date: 2011-10-05
 Encoding: UTF-8
 Author: Oscar Perpiñán Lamigueiro
 Maintainer: Oscar Perpiñán Lamigueiro <oscar.perpinan@upm.es>
