@@ -413,11 +413,11 @@ available at \url{www.marm.es/siar}.
 This webpage provides daily measurements from a set of agroclimatic stations 
 located in Spain. This function needs the code of the station and its province, 
 and the start and end date. The codes of stations and provinces are stored at the
-dataset \texttt{RedEstaciones}. For example, there are several stations in Madrid:
+dataset \texttt{SIAR}. For example, there are several stations in Madrid:
 
 <<echo=TRUE>>=
-data(RedEstaciones)
-Madrid<-subset(RedEstaciones,NomProv=='Madrid')
+data(SIAR)
+Madrid<-subset(SIAR, Provincia=='Madrid')
 print(Madrid)
 @
 
@@ -748,7 +748,7 @@ calculate the productivity of a grid connected PV system. It is
 possible to complete this process with the \texttt{lapply}
 function. Therefore we obtain a list of \texttt{ProdGCPV} objects:
 <<>>=
-EstMadrid <- subset(RedEstaciones, NomProv=='Madrid')
+EstMadrid <- subset(SIAR, Provincia=='Madrid')
 nEstMadrid <- nrow(EstMadrid)
 namesMadrid <- EstMadrid$NomEst
 
