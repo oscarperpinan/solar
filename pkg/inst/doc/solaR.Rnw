@@ -132,11 +132,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 %\VignetteIndexEntry{Introduction to solaR}
 \usepackage{flafter}
-\usepackage{boxedminipage}
-\renewenvironment{Schunk}{\begin{center}
-    \scriptsize
-    \begin{boxedminipage}{0.95\textwidth}}{
-    \end{boxedminipage}\end{center}}
+% \usepackage{boxedminipage}
+% \renewenvironment{Schunk}{\begin{center}
+%     \scriptsize
+%     \begin{boxedminipage}{0.95\textwidth}}{
+%     \end{boxedminipage}\end{center}}
+
+\DefineVerbatimEnvironment{Sinput}{Verbatim} {xleftmargin=2em}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{xleftmargin=2em}
+\DefineVerbatimEnvironment{Scode}{Verbatim}{xleftmargin=2em}
+\fvset{listparameters={\setlength{\topsep}{0pt}}}
+\renewenvironment{Schunk}{\vspace{\topsep}}{\vspace{\topsep}}
 
 \usepackage{siunitx}
 \sisetup{per=fraction,fraction=nice, decimalsymbol=comma}
@@ -153,7 +159,12 @@
 
 \begin{document}
 
+<<echo=false>>=
+options(continue=" ")
+@
+
 \setkeys{Gin}{width=0.5\textwidth}
+
 \begin{titlingpage}
 
 \title{Introduction to \emph{solaR}}
@@ -493,32 +504,36 @@ print(p)
 \caption{Components of horizontal irradiation calculated with \texttt{calcG0}.\label{fig:calcG0}}
 \end{figure}
 
-\texttt{solaR} accepts intradaily irradiation data sources. For example, the Measurement and Instrumentation Data Center of the NREL (NREL-MIDC) provides meteorological data from a variety of stations. We will try the \emph{La Ola - Lanai} station at Hawaii (\url{http://www.nrel.gov/midc/la_ola_lanai/}).
+\texttt{solaR} accepts intradaily irradiation data sources. For
+example, the Measurement and Instrumentation Data Center of the NREL
+(NREL-MIDC) provides meteorological data from a variety of
+stations. We will try the \emph{La Ola - Lanai} station at Hawaii
+(\url{http://www.nrel.gov/midc/la_ola_lanai/}). First, we have to
+change the names of the columns and calculate the horizontal direct
+irradiation, since only the normal direct irradiation is included in
+the file. The datalogger program runs using Greenwich Mean Time (GMT),
+and data is converted to Hawaiian Standard Time (HST) after data
+collection. With \texttt{local2Solar} we can calculate the Mean Solar
+Time of the index.
+
 <<echo=TRUE>>=
 file='http://www.nrel.gov/midc/apps/plot.pl?site=LANAI&start=20090722&edy=19&emo=11&eyr=2010&zenloc=19&year=2010&month=11&day=1&endyear=2010&endmonth=11&endday=19&time=1&inst=3&inst=4&inst=5&inst=10&type=data&first=3&math=0&second=-1&value=0.0&global=-1&direct=-1&diffuse=-1&user=0&axis=1'
 
-dat <- read.table(file, header=TRUE, sep=',')
-
 lat=20.77
 lon=-156.9339
-@ 
+dat <- read.zoo(file,
+                col.names = c('date', 'hour', 'G0', 'B', 'D0', 'Ta'),
+                index = list(1, 2),
+                FUN = function(d, h) as.POSIXct(paste(d, h), format = '%m/%d/%Y %H:%M', tz = 'HST'),
+                FUN2 = function(x) local2Solar(x, lon),
+                header=TRUE, sep=',')
 
-First, we have to change the names of the columns and calculate the horizontal direct irradiation, since only the normal direct irradiation is included in the file.
-<<>>=
-names(dat) <- c('date', 'hour', 'G0', 'B', 'D0', 'Ta')
 dat$B0 <- dat$G0-dat$D0
 @ 
 
-The datalogger program runs using Greenwich Mean Time (GMT), and data is converted to Hawaiian Standard Time (HST) after data collection. With \texttt{local2Solar} we can calculate the Mean Solar Time of the index.
+Finally, the  object \texttt{Meteo} is obtained with (figure \ref{fig:NREL-MIDC}):
 <<>>=
-idxLocal <- with(dat, as.POSIXct(paste(date, hour), format='%m/%d/%Y %H:%M', tz='HST'))
-idx <- local2Solar(idxLocal, lon=lon)
-@ 
-
-Therefore, the  object \texttt{Meteo} is obtained with (figure \ref{fig:NREL-MIDC}):
-<<>>=
-z <- zoo(dat[,c('G0', 'D0', 'B0', 'Ta')], idx)
-NRELMeteo <- zoo2Meteo(z, lat=lat)
+NRELMeteo <- zoo2Meteo(dat, lat=lat, source='NREL-La Ola-Lanai')
 @ 
 
 \begin{figure}
