@@ -1111,70 +1111,222 @@ setMethod('mergesolaR',
 ##           )
 
 ##WINDOW
-## setGeneric('window')
+setGeneric('window')
+
+DayOfMonth=c(31,28,31,30,31,30,31,31,30,31,30,31) ###OJO
 
 ## start <- as.POSIXct('2009-01-01')
 ## end <- as.POSIXct('2009-01-31')
 
-## setMethod('window',
-##           signature='Meteo',
-##           definition=function(x, start, end,...){
-##             if (!is.null(start)) start <- truncDay(start)
-##             if (!is.null(end)) end <- truncDay(end)+86400-1
-##             x@data <- window(x@data, start=start, end=end, ...)
-##             x
-##           }
-##           )
+setMethod('window',
+          signature='Meteo',
+          definition=function(x, start=NULL, end=NULL,...){
+            if (!is.null(start)) start <- truncDay(start)
+            if (!is.null(end)) end <- truncDay(end)+86400-1
+            x@data <- window(x@data, start=start, end=end, ...)
+            x
+          }
+          )
 
-## setMethod('window',
-##           signature='Sol',
-##           definition=function(x, start, end, ...){
-##             if (!is.null(start)) start <- truncDay(start)
-##             if (!is.null(end)) end <- truncDay(end)+86400-1##The end is the last second of the day
-##             solI <- x@solI
-##             idxI <- index(solI)
-##             match <- x@match
-##             if (is.null(start)){
-##               if (is.null(end)){
-##                 wIdx <- seq_along(idxI)
-##               } else {
-##                 wIdx <- which(idxI <= end)
-##               }
-##             } else {
-##               if (is.null(end)){
-##                 wIdx <- which(idxI >= start)
-##               } else {
-##                 wIdx <- which(idxI >= start & idxI <= end)
-##               }}
-##             x@solI <- solI[wIdx,]
-##             x@match <- match[wIdx]
-##             x@solD <- window(x@solD, start=start, end=end)
-##             x
-##             }
-##           )
+setMethod('window',
+          signature='Sol',
+          definition=function(x, start=NULL, end=NULL, ...){
+            if (!is.null(start)) start <- truncDay(start)
+            if (!is.null(end)) end <- truncDay(end)+86400-1##The end is the last second of the day
+            solI <- x@solI
+            idxI <- index(solI)
+            match <- x@match
+            if (is.null(start)){
+              if (is.null(end)){
+                wIdx <- seq_along(idxI)
+              } else {
+                wIdx <- which(idxI <= end)
+              }
+            } else {
+              if (is.null(end)){
+                wIdx <- which(idxI >= start)
+              } else {
+                wIdx <- which(idxI >= start & idxI <= end)
+              }}
+            x@solI <- solI[wIdx,]
+            x@match <- match[wIdx]
+            x@solD <- window(x@solD, start=start, end=end, ...)
+            x
+            }
+          )
 
-## setMethod('window',
-##           signature='G0',
-##           definition=function(x, start, end, ...){
-##             if (!is.null(start)) start <- truncDay(start)
-##             if (!is.null(end)) end <- truncDay(end)+86400-1
-##             sol <- window(as(x, 'Sol'), start=start, end=end, ...) ##Sol method
-##             meteo <- window(as(x, 'Meteo'), start=start, end=end, ...) ##Meteo method
-##             g0Iw <- window(x@G0I, start=start, end=end,...) ##zoo method
-##             Taw <- window(x@Ta, start=start, end=end,...) ##zoo method
-##             ##GENERAR G0d, G0dm, G0dy
-##             g0dw <- window(x@G0D, start=start, end=end)
-            ## ## g0dmw <- window(x@G0dm, start=as.yearmon(start), end=as.yearmon(end))
-            ## ## g0yw <- window(x@G0y, start=year(start), end=year(end))
-##             result <- new('G0',
-##                           meteo,
-##                           sol,
-##                           G0D=g0dw,
-##                           G0dm=g0dmw,
-##                           G0y=g0yw,
-##                           G0I=g0Iw,
-##                           Ta=Taw)
-##             result
-##           }
-##           )
+setMethod('window',
+          signature='G0',
+          definition=function(x, start=NULL, end=NULL, ...){
+            sol <- window(as(x, 'Sol'), start=start, end=end, ...) ##Sol method
+            meteo <- window(as(x, 'Meteo'), start=start, end=end, ...) ##Meteo method
 
+            ## The sol methods already includes a procedure to correct the start and end values
+            idx <- indexI(sol)
+            start <- idx[1]
+            end <- idx[length(idx)]
+            
+            G0Iw <- window(x@G0I, start=start, end=end,...) ##zoo method
+            Taw <- window(x@Ta, start=start, end=end,...) ##zoo method
+            G0dw <- window(x@G0D, start=start, end=end, ...) ##zoo method
+
+            G0dmw <- aggregate(G0dw[,c('G0d', 'D0d', 'B0d')], by=as.yearmon,
+                               FUN=function(x, ...)mean(x, na.rm=1)/1000) ##kWh
+            if (x@type=='prom'){
+              G0yw=zoo(t(colSums(G0dmw*DayOfMonth)),
+                unique(year(index(G0dmw))))
+            } else {
+              G0yw=aggregate(G0dw[,c('G0d', 'D0d', 'B0d')], by=year,
+                FUN=function(x, ...)sum(x, na.rm=1)/1000) ##kWh
+            }
+
+            result <- new('G0',
+                          meteo,
+                          sol,
+                          G0D=G0dw,
+                          G0dm=G0dmw,
+                          G0y=G0yw,
+                          G0I=G0Iw,
+                          Ta=Taw)
+            result
+          }
+          )
+
+
+setMethod('window',
+          signature='Gef',
+          definition=function(x, start=NULL, end=NULL, ...){
+            g0 <- window(as(x, 'G0'), start=start, end=end, ...) ##G0 method
+
+            ## The sol methods already includes a procedure to correct the start and end values
+            idx <- indexI(g0)
+            start <- idx[1]
+            end <- idx[length(idx)]
+
+
+            GefIw <- window(x@GefI, start=start, end=end,...) ##zoo method
+            Thetaw <- window(x@Theta, start=start, end=end,...) ##zoo method
+            Gefdw <- window(x@GefD, start=start, end=end, ...) ##zoo method
+
+            Gefdmw <- aggregate(Gefdw[,c('Bod', 'Bnd', 'Gd', 'Dd', 'Bd', 'Gefd', 'Defd', 'Befd')],
+                                by=as.yearmon,
+                                FUN=function(x, ...)mean(x, na.rm=1)/1000) ##kWh
+            if (x@type=='prom'){
+              Gefyw=zoo(t(colSums(Gefdmw*DayOfMonth)),
+                unique(year(index(Gefdmw))))
+            } else {
+              Gefyw=aggregate(Gefdw[,c('Bod', 'Bnd', 'Gd', 'Dd', 'Bd', 'Gefd', 'Defd', 'Befd')],
+                by=year,
+                FUN=function(x, ...)sum(x, na.rm=1)/1000) ##kWh
+            }
+
+            result <- new('Gef',
+                          g0,
+                          GefD=Gefdw,
+                          Gefdm=Gefdmw,
+                          Gefy=Gefyw,
+                          GefI=GefIw,
+                          Theta=Thetaw,
+                          iS=x@iS,
+                          alb=x@alb,
+                          modeTrk=x@modeTrk,
+                          modeShd=x@modeShd,
+                          angGen=x@angGen,
+                          struct=x@struct,
+                          distances=x@distances
+                          )
+            result
+          }
+          )
+
+
+setMethod('window',
+          signature='ProdGCPV',
+          definition=function(x, start=NULL, end=NULL, ...){
+            gef <- window(as(x, 'Gef'), start=start, end=end, ...) ##Gef method
+
+            ## The sol methods already includes a procedure to correct the start and end values
+            idx <- indexI(gef)
+            start <- idx[1]
+            end <- idx[length(idx)]
+
+
+            prodIw <- window(x@prodI, start=start, end=end,...) ##zoo method
+            prodDw <- window(x@prodD, start=start, end=end,...) ##zoo method
+
+            if (x@type=='prom'){
+              prodDmw <- prodDw/1000
+              prodDmw$Yf <- prodDw$Yf
+              prodyw=zoo(t(colSums(prodDmw*DayOfMonth)),
+                unique(year(index(prodDmw))))
+            } else {
+              prodDmw <- aggregate(prodDw/1000,
+                                   by=as.yearmon,
+                                   mean, na.rm=1)
+              prodyw=aggregate(prodDw/1000,
+                by=year,
+                sum, na.rm=1) ##kWh
+              prodDmw$Yf=prodDmw$Yf*1000
+              prodyw$Yf=prodyw$Yf*1000
+            }
+
+            result <- new('ProdGCPV',
+                          gef,
+                          prodD=prodDw,
+                          prodDm=prodDmw,
+                          prody=prodyw,
+                          prodI=prodIw,
+                          module=x@module,
+                          generator=x@generator,
+                          inverter=x@inverter,
+                          effSys=x@effSys
+                          )
+            result
+          }
+          )
+
+setMethod('window',
+          signature='ProdPVPS',
+          definition=function(x, start=NULL, end=NULL, ...){
+            gef <- window(as(x, 'Gef'), start=start, end=end, ...) ##Gef method
+
+            ## The sol methods already includes a procedure to correct the start and end values
+            idx <- indexI(gef)
+            start <- idx[1]
+            end <- idx[length(idx)]
+
+
+            prodIw <- window(x@prodI, start=start, end=end,...) ##zoo method
+            prodDw <- window(x@prodD, start=start, end=end,...) ##zoo method
+
+            if (x@type=='prom'){
+              prodDmw <- prodDw
+              prodDmw$Eac <- prodDw$Eac/1000
+              prodyw=zoo(t(colSums(prodDmw*DayOfMonth)),
+                unique(year(index(prodDmw))))
+            } else {
+              prodDmw <- aggregate(prodDw,
+                                   by=as.yearmon,
+                                   mean, na.rm=1)
+              prodyw=aggregate(prodDw,
+                by=year,
+                sum, na.rm=1) ##kWh
+              prodDmw$Eac=prodDmw$Eac/1000
+              prodyw$Eac=prodyw$Eac/1000
+            }
+
+            result <- new('ProdPVPS',
+                          gef,
+                          prodD=prodDw,
+                          prodDm=prodDmw,
+                          prody=prodyw,
+                          prodI=prodIw,
+                          pump=x@pump,
+                          H=x@H,
+                          Pg=x@Pg,
+                          converter=x@converter,
+                          effSys=x@effSys
+                          )
+            result
+          }
+          )
