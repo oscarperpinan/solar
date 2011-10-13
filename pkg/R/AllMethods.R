@@ -1043,7 +1043,7 @@ setMethod('mergesolaR',
 ##             horizonplot(z, colorkey=TRUE)
 ##           })
 
-###splom
+## splom
 ## splomsolaR <- function(x, ...){
 ##   splom(x,
 ##         panel=panel.hexbinplot,
@@ -1113,8 +1113,8 @@ setMethod('mergesolaR',
 ##WINDOW
 ## setGeneric('window')
 
-## ## start <- as.POSIXct('2011-11-01 12:00:00')
-## ## end <- as.POSIXct('2011-12-13 16:00:00')
+## start <- as.POSIXct('2009-01-01')
+## end <- as.POSIXct('2009-01-31')
 
 ## setMethod('window',
 ##           signature='Meteo',
@@ -1130,7 +1130,7 @@ setMethod('mergesolaR',
 ##           signature='Sol',
 ##           definition=function(x, start, end, ...){
 ##             if (!is.null(start)) start <- truncDay(start)
-##             if (!is.null(end)) end <- truncDay(end)+86400-1
+##             if (!is.null(end)) end <- truncDay(end)+86400-1##The end is the last second of the day
 ##             solI <- x@solI
 ##             idxI <- index(solI)
 ##             match <- x@match
@@ -1164,8 +1164,8 @@ setMethod('mergesolaR',
 ##             Taw <- window(x@Ta, start=start, end=end,...) ##zoo method
 ##             ##GENERAR G0d, G0dm, G0dy
 ##             g0dw <- window(x@G0D, start=start, end=end)
-## ##            g0dmw <- window(x@G0dm, start=as.yearmon(start), end=as.yearmon(end))
-## ##            g0yw <- window(x@G0y, start=year(start), end=year(end))
+            ## ## g0dmw <- window(x@G0dm, start=as.yearmon(start), end=as.yearmon(end))
+            ## ## g0yw <- window(x@G0y, start=year(start), end=year(end))
 ##             result <- new('G0',
 ##                           meteo,
 ##                           sol,
@@ -1177,3 +1177,4 @@ setMethod('mergesolaR',
 ##             result
 ##           }
 ##           )
+

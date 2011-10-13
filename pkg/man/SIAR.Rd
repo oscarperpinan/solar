@@ -18,7 +18,7 @@
       division of Spain).}
     \item{\code{lon}}{Longitude (degrees)}
     \item{\code{lat}}{Latitude (degrees)}
-    \item{\code{alt}}{Altitude (meters)}
+    \item{\code{Altitud}}{Altitude (meters)}
 }}
 \details{
 The number codes of the stations and provinces have been obtained with a
@@ -45,7 +45,7 @@ library(sp)
 library(maptools)
 
 proj <- CRS('+proj=longlat +ellps=WGS84')
-spSIAR <- SpatialPointsDataFrame(redSIAR[, c(6, 7)], redSIAR[, -c(6, 7)],
+spSIAR <- SpatialPointsDataFrame(SIAR[, c(6, 7)], SIAR[, -c(6, 7)],
                                  proj4str=proj)
 
 
@@ -56,10 +56,12 @@ unzip('ESP_adm.zip')
 mapaSHP <- readShapeLines('ESP_adm2.shp', proj4string=proj)
 setwd(old)
 
-spplot(spSIAR['Comunidad'],
+p <- spplot(spSIAR['Comunidad'],
        col.regions=brewer.pal(n=12, 'Paired'),
        key.space='right', scales=list(draw=TRUE),
-       type=c('p','g')) + layer(sp.lines(mapaSHP))
+       type=c('p','g'))
+
+p  + layer(sp.lines(mapaSHP))
 
 
 }

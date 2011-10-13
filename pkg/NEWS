@@ -1,4 +1,8 @@
+solaR 0.25
+==========
+* New SIAR dataset (with RedEstaciones now deprecated)
 solaR 0.24
+==========
 * The url of http://www.mapa.es/siar has been changed to
   http://www.marm.es/siar. The readMAPA function has
   been fixed. Moreover, this function has been renamed to

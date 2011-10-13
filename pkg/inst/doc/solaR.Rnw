@@ -1441,6 +1441,7 @@ ease the understanding by international users.
 \backmatter
 
 \bibliography{solaR}
-\bibliographystyle{jss}
+%\bibliographystyle{jss}
+\bibliographystyle{siam}
 
 \end{document}
