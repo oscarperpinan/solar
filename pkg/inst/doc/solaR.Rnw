@@ -765,7 +765,7 @@ function. Therefore we obtain a list of \texttt{ProdGCPV} objects:
 <<>>=
 EstMadrid <- subset(SIAR, Provincia=='Madrid')
 nEstMadrid <- nrow(EstMadrid)
-namesMadrid <- EstMadrid$NomEst
+namesMadrid <- EstMadrid$Estacion
 
 prodMadrid <- lapply(1:nEstMadrid,
                      function(x){try(prodGCPV(lat=41, modeRad='siar',

@@ -1111,64 +1111,87 @@ setMethod('mergesolaR',
 ##           )
 
 ##WINDOW
-setGeneric('window')
 
 DayOfMonth=c(31,28,31,30,31,30,31,31,30,31,30,31) ###OJO
 
 ## start <- as.POSIXct('2009-01-01')
 ## end <- as.POSIXct('2009-01-31')
 
-setMethod('window',
+setMethod('[',
           signature='Meteo',
-          definition=function(x, start=NULL, end=NULL,...){
-            if (!is.null(start)) start <- truncDay(start)
-            if (!is.null(end)) end <- truncDay(end)+86400-1
-            x@data <- window(x@data, start=start, end=end, ...)
+          definition=function(x, i, j,...){
+            if (!missing(i)) {
+              i <- truncDay(i)
+            } else {
+              i <- indexD(x)[1]
+            }
+            if (!missing(j)) {
+              j <- truncDay(j)+86400-1 ##The end is the last second of the day
+            } else {
+              nDays <- length(indexD(x))
+              j <- indexD(x)[nDays]+86400-1
+            }
+            stopifnot(j>i)
+
+            if (!is.null(i)) i <- truncDay(i)
+            if (!is.null(j)) j <- truncDay(j)+86400-1
+            x@data <- window(x@data, start=i, end=j, ...) ##zoo method
             x
           }
           )
 
-setMethod('window',
+
+setMethod('[',
           signature='Sol',
-          definition=function(x, start=NULL, end=NULL, ...){
-            if (!is.null(start)) start <- truncDay(start)
-            if (!is.null(end)) end <- truncDay(end)+86400-1##The end is the last second of the day
+          definition=function(x, i, j, ...){
+            if (!missing(i)) {
+              i <- truncDay(i)
+              } else {
+                i <- indexD(x)[1]
+                }
+            if (!missing(j)) {
+              j <- truncDay(j)+86400-1##The end is the last second of the day
+              } else {
+                nDays <- length(indexD(x))
+                j <- indexD(x)[nDays]+86400-1
+                }
+            stopifnot(j>i)
             solI <- x@solI
             idxI <- index(solI)
             match <- x@match
-            if (is.null(start)){
-              if (is.null(end)){
+            if (missing(i)){
+              if (missing(j)){
                 wIdx <- seq_along(idxI)
               } else {
-                wIdx <- which(idxI <= end)
+                wIdx <- which(idxI <= j)
               }
             } else {
-              if (is.null(end)){
-                wIdx <- which(idxI >= start)
+              if (missing(j)){
+                wIdx <- which(idxI >= i)
               } else {
-                wIdx <- which(idxI >= start & idxI <= end)
+                wIdx <- which(idxI >= i & idxI <= j)
               }}
             x@solI <- solI[wIdx,]
             x@match <- match[wIdx]
-            x@solD <- window(x@solD, start=start, end=end, ...)
+            x@solD <- window(x@solD, start=i, end=j, ...)
             x
             }
           )
 
-setMethod('window',
+setMethod('[',
           signature='G0',
-          definition=function(x, start=NULL, end=NULL, ...){
-            sol <- window(as(x, 'Sol'), start=start, end=end, ...) ##Sol method
-            meteo <- window(as(x, 'Meteo'), start=start, end=end, ...) ##Meteo method
+          definition=function(x, i, j, ...){
+            sol <- as(x, 'Sol')[i=i, j=j, ...] ##Sol method
+            meteo <- as(x, 'Meteo')[i=i, j=j, ...] ##Meteo method
 
             ## The sol methods already includes a procedure to correct the start and end values
             idx <- indexI(sol)
             start <- idx[1]
             end <- idx[length(idx)]
             
-            G0Iw <- window(x@G0I, start=start, end=end,...) ##zoo method
-            Taw <- window(x@Ta, start=start, end=end,...) ##zoo method
-            G0dw <- window(x@G0D, start=start, end=end, ...) ##zoo method
+            G0Iw <- window(x@G0I, start=start, end=end)##,...) ##zoo method
+            Taw <- window(x@Ta, start=start, end=end)##,...) ##zoo method
+            G0dw <- window(x@G0D, start=truncDay(start), end=truncDay(end))##, ...) ##zoo method
 
             G0dmw <- aggregate(G0dw[,c('G0d', 'D0d', 'B0d')], by=as.yearmon,
                                FUN=function(x, ...)mean(x, na.rm=1)/1000) ##kWh
@@ -1193,10 +1216,10 @@ setMethod('window',
           )
 
 
-setMethod('window',
+setMethod('[',
           signature='Gef',
-          definition=function(x, start=NULL, end=NULL, ...){
-            g0 <- window(as(x, 'G0'), start=start, end=end, ...) ##G0 method
+          definition=function(x, i, j, ...){
+            g0 <- as(x, 'G0')[i=i, j=j, ...] ##G0 method
 
             ## The sol methods already includes a procedure to correct the start and end values
             idx <- indexI(g0)
@@ -1206,7 +1229,7 @@ setMethod('window',
 
             GefIw <- window(x@GefI, start=start, end=end,...) ##zoo method
             Thetaw <- window(x@Theta, start=start, end=end,...) ##zoo method
-            Gefdw <- window(x@GefD, start=start, end=end, ...) ##zoo method
+            Gefdw <- window(x@GefD, start=truncDay(start), end=truncDay(end), ...) ##zoo method
 
             Gefdmw <- aggregate(Gefdw[,c('Bod', 'Bnd', 'Gd', 'Dd', 'Bd', 'Gefd', 'Defd', 'Befd')],
                                 by=as.yearmon,
@@ -1240,10 +1263,10 @@ setMethod('window',
           )
 
 
-setMethod('window',
+setMethod('[',
           signature='ProdGCPV',
-          definition=function(x, start=NULL, end=NULL, ...){
-            gef <- window(as(x, 'Gef'), start=start, end=end, ...) ##Gef method
+          definition=function(x, i, j, ...){
+            gef <- as(x, 'Gef')[i=i, j=j, ...] ##Gef method
 
             ## The sol methods already includes a procedure to correct the start and end values
             idx <- indexI(gef)
@@ -1252,7 +1275,7 @@ setMethod('window',
 
 
             prodIw <- window(x@prodI, start=start, end=end,...) ##zoo method
-            prodDw <- window(x@prodD, start=start, end=end,...) ##zoo method
+            prodDw <- window(x@prodD, start=truncDay(start), end=truncDay(end),...) ##zoo method
 
             if (x@type=='prom'){
               prodDmw <- prodDw/1000
@@ -1285,10 +1308,10 @@ setMethod('window',
           }
           )
 
-setMethod('window',
+setMethod('[',
           signature='ProdPVPS',
-          definition=function(x, start=NULL, end=NULL, ...){
-            gef <- window(as(x, 'Gef'), start=start, end=end, ...) ##Gef method
+          definition=function(x, i, j, ...){
+            gef <- as(x, 'Gef')[i=i, j=j, ...] ##Gef method
 
             ## The sol methods already includes a procedure to correct the start and end values
             idx <- indexI(gef)
@@ -1297,7 +1320,7 @@ setMethod('window',
 
 
             prodIw <- window(x@prodI, start=start, end=end,...) ##zoo method
-            prodDw <- window(x@prodD, start=start, end=end,...) ##zoo method
+            prodDw <- window(x@prodD, start=truncDay(start), end=truncDay(end),...) ##zoo method
 
             if (x@type=='prom'){
               prodDmw <- prodDw

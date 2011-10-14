@@ -2,36 +2,36 @@
 \docType{methods}
 \alias{window}
 \alias{window-methods}
-\alias{window,Meteo-method}
-\alias{window,Sol-method}
-\alias{window,G0-method}
-\alias{window,Gef-method}
-\alias{window,ProdGCPV-method}
-\alias{window,ProdPVPS-method}
+\alias{[,Meteo-method}
+\alias{[,Sol-method}
+\alias{[,G0-method}
+\alias{[,Gef-method}
+\alias{[,ProdGCPV-method}
+\alias{[,ProdPVPS-method}
 
 
-\title{Methods for Function window}
+\title{Methods for extracting a time window}
 \description{Method for extracting the subset of a \code{solaR} object
   whose daily time index (\code{\link{indexD}}) is comprised between the
   times \code{start} and \code{end}.
 }
 
 \usage{
-\S4method{window}{Meteo}(x, start=NULL, end=NULL, ...)
-\S4method{window}{Sol}(x, start=NULL, end=NULL, ...)
-\S4method{window}{G0}(x, start=NULL, end=NULL, ...)
-\S4method{window}{Gef}(x, start=NULL, end=NULL, ...)
-\S4method{window}{ProdGCPV}(x, start=NULL, end=NULL, ...)
-\S4method{window}{ProdPVPS}(x, start=NULL, end=NULL, ...)
+\S4method{[}{Meteo}(x, i, j, ..., drop = TRUE)
+\S4method{[}{Sol}(x, i, j, ..., drop = TRUE)
+\S4method{[}{G0}(x, i, j, ..., drop = TRUE)
+\S4method{[}{Gef}(x, i, j, ..., drop = TRUE)
+\S4method{[}{ProdGCPV}(x, i, j, ..., drop = TRUE)
+\S4method{[}{ProdPVPS}(x, i, j, ..., drop = TRUE)
 }
 
 \arguments{
   \item{x}{A \code{Meteo}, \code{Sol}, etc. object.}
-  \item{start}{an index/time value (\code{Date} or \code{POSIXct}
-    classes)}
-  \item{end}{an index/time value (\code{Date} or \code{POSIXct}
-    classes)}
-  \item{...}{Additional arguments for \code{window.zoo}}
+  \item{i}{an index/time value (\code{Date} or \code{POSIXct}
+    classes) defining the start of the time window.}
+  \item{j}{an index/time value (\code{Date} or \code{POSIXct}
+    classes) defining the end of the time window.}
+  \item{..., drop}{Additional arguments for \code{window.zoo}}
 }
 \seealso{
   \code{\link{window.zoo}}
