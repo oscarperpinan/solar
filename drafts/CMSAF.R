@@ -377,9 +377,14 @@ layerNames(gefS)=c('Gefd', 'Befd', 'Defd')##Three layers
 
 ##The result is available here:
 ##http://www.box.net/shared/is4gdf5ltkhdqlvf5aeb
-gefS <- stack('/home/oscar/Datos/CMSAF/gefCMSAF')
+gefS <- stack('/home/oscar/Datos/CMSAF/gefCMSAF.grd')
 layerNames(gefS)=c('Gefd', 'Befd', 'Defd')
 
-trellis.device(jpeg, file='CMSAF_Gef.jpg', width=1280, height=960, quality=100)
-spplot(subset(gefS, 'Gefd'), par.settings=myTheme, scales=list(draw=TRUE)) +  layer(sp.lines(mapaSHP))
+library(rasterVis)
+trellis.device(pdf, file='CMSAF_Gef.pdf')
+levelplot(gefS, layers='Gefd') + layer(sp.lines(mapaSHP, lwd=0.6))
 dev.off()
+
+## trellis.device(jpeg, file='CMSAF_Gef.jpg', width=1280, height=960, quality=100)
+## spplot(subset(gefS, 'Gefd'), par.settings=myTheme, scales=list(draw=TRUE)) +  layer(sp.lines(mapaSHP))
+## dev.off()
