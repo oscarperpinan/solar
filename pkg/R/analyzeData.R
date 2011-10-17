@@ -19,10 +19,10 @@ analyzeData<-function(x, ref=NULL){
 ###Estadísticos por filas
 ###(comportamiento del conjunto de variables a lo largo del tiempo)
   Mean<-apply(x, 1, mean, na.rm=1)
-  Median<-apply(x, 1,median, na.rm=1)
-  Desv<-apply(x, 1,sd, na.rm=1)
-  Mad<-apply(x, 1,mad, na.rm=1)
-  IQR<-apply(x, 1,IQR, na.rm=1)
+  Median<-apply(x, 1, median, na.rm=1)
+  Desv<-apply(x, 1, sd, na.rm=1)
+  Mad<-apply(x, 1, mad, na.rm=1)
+  IQR<-apply(x, 1, IQR, na.rm=1)
   x.stat<-cbind(Mean, Median, Desv, Mad, IQR)
 
 ###Referencia con sus estadísticos
@@ -34,9 +34,9 @@ analyzeData<-function(x, ref=NULL){
   Dif<-x-ref
 
 ###Estadísticos de cada variable (por columnas) en el periodo completo
-  SDUnit<-sd(x, na.rm=1) ##SD de CADA variable
-  ME<-apply(Dif,2,mean,na.rm=1)
-  RMSDc<-apply(Dif,2,sd,na.rm=1)
+  SDUnit<-apply(x, 2, sd, na.rm=1) ##SD de CADA variable
+  ME<-apply(Dif, 2, mean, na.rm=1)
+  RMSDc<-apply(Dif , 2, sd,na.rm=1)
   DifSD<-SDUnit-SDRef
 
   ##Valores relativos (respecto a la desv estandar de la referencia)

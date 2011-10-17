@@ -111,8 +111,8 @@ dif<-prodEx-prodStat$stat$Median;
 ##xyplot(dif[,1:18], superpose=TRUE, auto.key=FALSE)
 day=as.Date('2008-8-29')
 horizonplot(window(dif, start=day-90, end=day),
-origin=0, layout=c(1, 22), colorkey=TRUE, colorkey.digits=1,
-scales=list(y=list(relation="same")))
+            origin=0, layout=c(1, 22), colorkey=TRUE, colorkey.digits=1,
+            scales=list(y=list(relation="same")))
 
 ###With a external reference
 ref1=apply(prodEx, 1, median, na.rm=1)
