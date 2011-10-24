@@ -49,8 +49,7 @@ TargetDiagram<-function(x, end, ndays, ref=NULL, color=NULL, cex=0.8, ...){
               aspect='iso',
               col='black',
               strip=strip.custom(strip.levels=c(TRUE,TRUE),
-                strip.names=c(TRUE,TRUE),
-                bg='gray', fg='transparent'),
+                strip.names=c(TRUE,TRUE)),
               panel=function(x,y,cex=cex,...){
                 panel.text(x,y, labels=Unitfc, cex=cex, ...)
                 panel.abline(h=0,v=0,lty=2,col='gray')

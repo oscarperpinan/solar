@@ -553,19 +553,33 @@ setMethod('show', 'ProdPVPS',
 
 ###XYPLOT
 
-## myTheme <- custom.theme.2(pch=19, cex=0.8, alpha=0.6, region=rev(brewer.pal(9, 'YlOrRd')))
-## myTheme$strip.background$col='transparent'
-## lattice.options(default.theme=myTheme)
 
-solaR.theme=custom.theme.2(pch=19, cex=0.7,
-  region=rev(brewer.pal(9, 'YlOrRd')))
-solaR.theme$strip.background$col='lightgray'
-solaR.theme$strip.shingle$col='transparent'
+xscale.solar <- function(...){ans <- xscale.components.default(...); ans$top=FALSE; ans}
+yscale.solar <- function(...){ans <- yscale.components.default(...); ans$right=FALSE; ans}
+
+solaR.theme <- function(pch=19, cex=0.7, region=rev(brewer.pal(9, 'YlOrRd')), ...) {
+  theme <- custom.theme.2(pch=pch, cex=cex, region=region, ...)
+  theme$strip.background$col='transparent'
+  theme$strip.shingle$col='transparent'
+  theme$strip.border$col='transparent'
+  theme
+}
+
+solaR.theme.2 <- function(pch=19, cex=0.7, region=rev(brewer.pal(9, 'YlOrRd')), ...) {
+  theme <- custom.theme.2(pch=pch, cex=cex, region=region, ...)
+  theme$strip.background$col='lightgray'
+  theme$strip.shingle$col='lightgray'
+  theme
+}
 
 
 setMethod('xyplot',
           signature=c(x='formula', data='zoo'),
-          definition=function(x, data, par.settings=solaR.theme,...){            
+          definition=function(x, data,
+            par.settings=solaR.theme,
+            xscale.components=xscale.solar,
+            yscale.components=yscale.solar,
+            ...){            
             data0=as.data.frame(data)
             ind=index(data)
             data0$day=doy(ind) ##Incorporo dia, mes y año para facilitar la formula.
@@ -575,6 +589,8 @@ setMethod('xyplot',
               data0$w=h2r(hms(ind)-12) ##hora solar en radianes
             }
             xyplot(x, data0, par.settings=par.settings,
+                   xscale.components=yscale.components,
+                   yscale.components=yscale.components,
                    strip=strip.custom(strip.levels=c(TRUE, TRUE)),...)
           }
           )
@@ -606,11 +622,16 @@ setMethod('xyplot',
 
 setMethod('xyplot',
           signature=c(x='Meteo', data='missing'),
-          definition=function(x, data, par.settings=solaR.theme,
+          definition=function(x, data,
+            par.settings=solaR.theme.2,
+            ## xscale.components=xscale.solar,
+            ## yscale.components=yscale.solar,
             strip=FALSE, strip.left=TRUE,...){
             x0=getData(x)
             N=ncol(x0)
             xyplot(x0, par.settings=par.settings,
+                   ## xscale.components=xscale.components,
+                   ## yscale.components=yscale.components,
                    layout=c(1, N),
                    scales=list(cex=0.6, rot= 0),
                    strip=strip, strip.left=TRUE,
@@ -621,35 +642,55 @@ setMethod('xyplot',
 
 setMethod('xyplot',
           signature=c(x='G0', data='missing'),
-          definition=function(x, data, par.settings=solaR.theme, ...){
+          definition=function(x, data,
+            par.settings=solaR.theme.2,
+            ## xscale.components=xscale.solar,
+            ## yscale.components=yscale.solar,
+            ...){
             x0=as.zooD(x, complete=FALSE)
             xyplot(x0, par.settings=par.settings,
-                   ...,
+                   ## xscale.components=xscale.components,
+                   ## yscale.components=yscale.components,
                    superpose=TRUE,
                    auto.key=list(space='right'),
-                   ylab='Wh/m²')
+                   ylab='Wh/m²',
+                   ...)
           }
           )
 
 setMethod('xyplot',
           signature=c(x='ProdGCPV', data='missing'),
-          definition=function(x, data, par.settings=solaR.theme, ...){
+          definition=function(x, data,
+            par.settings=solaR.theme.2,
+            ## xscale.components=xscale.solar,
+            ## yscale.components=yscale.solar,
+            ...){
             x0=as.zooD(x, complete=FALSE)
             xyplot(x0, layout=c(1, 3),
+                   par.settings=par.settings,
+                   ## xscale.components=xscale.components,
+                   ## yscale.components=yscale.components,
                    strip=FALSE,
                    strip.left=TRUE,
-                   par.settings=par.settings, ...)
+                   ...)
           }
           )
 
 setMethod('xyplot',
           signature=c(x='ProdPVPS', data='missing'),
-          definition=function(x, data, par.settings=solaR.theme, ...){
+          definition=function(x, data,
+            par.settings=solaR.theme.2,
+            ## xscale.components=xscale.solar,
+            ## yscale.components=yscale.solar,
+            ...){
             x0=as.zooD(x, complete=FALSE)
             xyplot(x0, layout=c(1, 3),
+                   par.settings=par.settings,
+                   ## xscale.components=xscale.components,
+                   ## yscale.components=yscale.components,
                    strip=FALSE,
                    strip.left=TRUE,
-                   par.settings=par.settings, ...)
+                   ...)
           }
           )
 
@@ -658,7 +699,9 @@ setMethod('levelplot',
           signature=c(x='formula', data='zoo'),
           definition=function(x, data,
             par.settings=solaR.theme,
-##            panel=panel.levelplot.raster, interpolate=TRUE,...){
+            ##            panel=panel.levelplot.raster, interpolate=TRUE,...){
+            xscale.components=xscale.solar,
+            yscale.components=yscale.solar,
             ...){
             data0=as.data.frame(data)
             ind=index(data)
@@ -669,7 +712,9 @@ setMethod('levelplot',
               data0$w=h2r(hms(ind)-12) ##hora solar en radianes
             }
             levelplot(x, data0, par.settings=par.settings,
- ##                     panel=panel, interpolate=interpolate,
+                      xscale.components=xscale.components,
+                      yscale.components=yscale.components,
+                      ##                     panel=panel, interpolate=interpolate,
                       ...)
           }
           )
