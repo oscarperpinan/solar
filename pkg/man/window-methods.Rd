@@ -13,7 +13,7 @@
 \title{Methods for extracting a time window}
 \description{Method for extracting the subset of a \code{solaR} object
   whose daily time index (\code{\link{indexD}}) is comprised between the
-  times \code{start} and \code{end}.
+  times \code{i} and \code{j}.
 }
 
 \usage{
@@ -36,6 +36,17 @@
 \seealso{
   \code{\link{window.zoo}}
 \code{\link{indexD}}
+}
+\examples{
+lat=37.2
+sol=calcSol(lat, BTd=fBTd(mode='serie'))
+range(indexD(sol))
+
+start <- as.POSIXct('2011-01-01')
+end <- as.POSIXct('2011-01-31')
+
+solWindow <- sol[start, end]
+range(indexD(solWindow))
 }
 \keyword{methods}
 \author{Oscar Perpiñán Lamigueiro}
