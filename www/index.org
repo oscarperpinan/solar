@@ -1102,3 +1102,5 @@ these time intervals.
 #   \label{fig:TargetMerge}
 # \end{figure}
 
+* Org-mode
+This webpage has been produced with [[http://orgmode.org/][org-mode]]. You can download the [[https://r-forge.r-project.org/scm/viewvc.php/*checkout*/www/index.org?root%3Dsolar][org file]].
