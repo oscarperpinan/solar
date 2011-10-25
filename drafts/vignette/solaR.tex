@@ -573,33 +573,3 @@ in  $\si{\mega\joule\per\meter\squared}$, but \texttt{readSIAR} converts the val
 \begin{Schunk}
 \begin{Sinput}
 > Aranjuez <- readSIAR(28, 3, "01/01/2009", "31/12/2009")
-\end{Sinput}
-\begin{Soutput}
-Downloading data from www.marm.es/siar...
-\end{Soutput}
-\end{Schunk}
-
-\begin{figure}
-  \centering
-\begin{Schunk}
-\begin{Sinput}
-> p = xyplot(G0 ~ TempMedia | month, data = Aranjuez, type = c("p", 
-     "r"))
-> print(p)
-\end{Sinput}
-\end{Schunk}
-\includegraphics{solaR-018}
-  \caption{Daily irradiation and mean temperature in the station of Aranjuez.}
-  \label{fig:Aranjuez}
-\end{figure}
-
-This database includes information of maximum and minimum values of temperature. 
-The function \texttt{fTemp} calculates a profile of the ambient temperature with this information
-following the method proposed in \cite{Huld.Suri.ea2006}. 
-The evolution of this synthetic temperature during March is displayed in the figure \ref{fig:Ta}.
-
-\begin{Schunk}
-\begin{Sinput}
-> lat = 41
-> sol = calcSol(lat, BTd = indexD(Aranjuez), sample = "hour")
-> Temp <- fTemp(sol, Aranjuez)
