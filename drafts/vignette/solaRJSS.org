@@ -74,7 +74,7 @@ of daily global radiation are available) are obtained with
 =fBTd(mode = 'prom')=. The azimuth and height solar angles during
 these days are displayed in the next figure.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > lat = 37.2
 > SolD <- fSolD(lat, BTd = fBTd(mode = "prom"))
 > SolI <- fSolI(SolD, sample = "10 min", keep.night = FALSE)
@@ -103,7 +103,7 @@ methods are named as 'cooper' \cite{Cooper1969}, 'spencer'
 \cite{Spencer1971}, 'michalsky' (default) \cite{Michalsky1988} and
 'strous' \cite{Strous2011}:
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > lat=37.2
 > BTd=fBTd(mode='serie')
 > solStrous <- fSolD(lat, BTd, method='strous')
@@ -160,7 +160,7 @@ and for intradaily values \cite{Ridley.Boland.ea2010}.  Besides, the
 user may define a particular correlation through the argument
 =f=.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > BTd = fBTd(mode = "serie")
 > SolD <- fSolD(lat, BTd[100])
 > SolI <- fSolI(SolD, sample = "hour")
@@ -183,7 +183,7 @@ The daily profile of the irradiance is obtained with the function
 the profiles for the ``monthly average days'' are obtained with the next code
 (fig. \ref{fig:ComponentesIrradiancia}).
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > sol <- calcSol(lat, fBTd(mode = "prom"), sample = "hour", keep.night = FALSE)
 > G0dm = c(2.766, 3.491, 4.494, 5.912, 6.989, 7.742, 7.919, 7.027, 
      5.369, 3.562, 2.814, 2.179) * 1000
@@ -218,7 +218,7 @@ intradaily data.
 For example, the =helios= dataset included in the package,
 obtained from http://helios.ies-def.upm.es, can be converted to
 a =Meteo= object with the next code:
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > data("helios")
 > names(helios) = c("date", "G0", "TempMax", "TempMin")
 > bd = df2Meteo(helios, dates.col = "date", lat = 41, source = "helios-IES", 
@@ -263,7 +263,7 @@ recommended. Both methods provide a =zoo= object.
 For example, the 2009 data from the station at Aranjuez is displayed
 in the next figure.  
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > Aranjuez <- readSIAR(28, 3, "01/01/2009", "31/12/2009")
 > xyplot(G0 ~ TempMedia | month, data = Aranjuez, type = c("p", "r"))
 #+END_SRC
@@ -287,7 +287,7 @@ ambient temperature with this information following the method
 proposed in \cite{Huld.Suri.ea2006}.  The evolution of this synthetic
 time series of temperature during March is displayed in the next figure.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > lat = 41
 > sol = calcSol(lat, BTd = indexD(Aranjuez), sample = "hour")
 > Temp <- fTemp(sol, Aranjuez)
@@ -315,7 +315,7 @@ the components of horizontal irradiation and irradiance are obtained
 from the measurements of the meteorological station of Aranjuez
 (next figure).
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > g0 <- calcG0(lat = 37.2, modeRad = "siar", dataRad = list(prov = 28, 
      est = 3, start = "01/01/2009", end = "31/12/2009"))
 #+END_SRC
@@ -344,7 +344,7 @@ collection. The function =local2Solar= calculates the Mean Solar
 Time of the index. Besides, the horizontal direct irradiation is
 obtained, since it is not included in the file.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > lat = 20.77
 > lon = -156.9339
 > dat <- read.zoo(file, 
@@ -360,7 +360,7 @@ obtained, since it is not included in the file.
 
 Finally, the  object =Meteo= is obtained with =zoo2Meteo= (figure \ref{fig:NREL-MIDC}):
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > NRELMeteo <- zoo2Meteo(dat, lat = lat, source = "NREL-La Ola-Lanai")
 #+END_SRC
 
@@ -374,7 +374,7 @@ Finally, the  object =Meteo= is obtained with =zoo2Meteo= (figure \ref{fig:NREL-
 With this data, a =G0= object can be calculated. Since both
 diffuse and direct components are available, no correlation is needed (corr='none'):
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > g0NREL <- calcG0(lat = lat, modeRad = "bdI", dataRad = NRELMeteo, 
      corr = "none")
 #+END_SRC
@@ -382,7 +382,7 @@ diffuse and direct components are available, no correlation is needed (corr='non
 If these components were not available, a fd-kt hourly correlation is
 needed \cite{Ridley.Boland.ea2010}:
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > g0BRL <- calcG0(lat = lat, modeRad = "bdI", dataRad = NRELMeteo, 
      corr = "BRL")
 #+END_SRC
@@ -429,7 +429,7 @@ irradiance and irradiation on a fixed surface can be estimated. The figure
 incident irradiance versus the cosine of the angle of incidence for
 this system.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > gef <- calcGef(lat = 37.2, modeRad = "prev", dataRad = g0, 
       beta = 30)
 > xyplot(Gef/G ~ cosTheta | month, data = gef, type = c("p", 
@@ -454,7 +454,7 @@ evolution of the inclination angle is displayed in the figure
 =struct= arguments will be detailed in the \ref{sec:shadows}
 section.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > structHoriz = list(L = 4.83)
 > distHoriz = data.frame(Lew = structHoriz$L * 4, H = 0)
 > gefBT = calcGef(lat = 37.2, dataRad = prom, sample = "10 min", 
@@ -485,7 +485,7 @@ generator (=generator=) and the losses of the system (=effSys=).
 For example, the electrical power, voltage and current of a certain PV
 system is calculated with:
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > inclin = data.frame(Gef = c(200, 400, 600, 800, 1000), Ta = 25)
 > fProd(inclin)
 
@@ -512,7 +512,7 @@ Anyway, the inverter input voltage and current are  =Vdc= e
 set to =Vmin= (the minimum value of the MPP window of the
 inverter), $\SI{420}{\volt}$,  since =Vmpp= is below this value.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > inclin = data.frame(Gef = 800, Ta = 30)
 > gen1 = list(Nms = 10, Nmp = 11)
 > inv1 = list(Ki = c(0.01, 0.025, 0.05), Pinv = 25000, Vmin = 420, 
@@ -527,7 +527,7 @@ inverter), $\SI{420}{\volt}$,  since =Vmpp= is below this value.
 
 For this configuration, the losses due to the voltage limitation are:
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > with(prod, Vdc * Idc/(Vmpp * Impp))
 
 [1] 0.961
@@ -543,7 +543,7 @@ working as fixed, NS horizontal axis tracking and two-axis tracking
 systems.  The parameters of the generator, module, inverter and rest
 of the system are those by default in =prodGCPV=. 
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > ProdFixed <- prodGCPV(lat = lat, dataRad = prom, keep.night = FALSE)
 > Prod2x <- prodGCPV(lat = lat, dataRad = prom, modeTrk = "two", 
      keep.night = FALSE)
@@ -565,7 +565,7 @@ calculate the productivity of a grid connected PV system with the
 =ProdGCPV= objects. In order to prevent from the erroneous
 behaviour of some stations, the code includes the use of =try=:
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > EstMadrid <- subset(SIAR, Provincia == "Madrid")
 > nEstMadrid <- nrow(EstMadrid)
 > namesMadrid <- EstMadrid$Estacion
@@ -590,7 +590,7 @@ station. It can be displayed (for example) with the
 result will be revisited with the =Target Diagram} tool (figure
 \ref{fig:TargetMerge}). 
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > horizonplot(YfMadrid - rowMeans(YfMadrid), origin = 0, 
      scales = list(y = list(relation = "same")), colorkey = TRUE))
 #+END_SRC
@@ -626,7 +626,7 @@ functions. These functions are integrated in =calcShd=,
 First, the dimensions of the support structures (=struct=) and
 the distances between them (=distances=) have to be defined. 
 With a two-axis tracking system:
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > struct2x = list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
 > dist2x = data.frame(Lew = 40, Lns = 30, H = 0)
 > prod2xShd <- prodGCPV(lat = lat, dataRad = prom, modeTrk = "two", 
@@ -634,7 +634,7 @@ With a two-axis tracking system:
 #+END_SRC
 
 Then, a N-S horizontal axis tracking system without backtracking, 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > structHoriz = list(L = 4.83)
 > distHoriz = data.frame(Lew = structHoriz$L * 4, H = 0) 
 > prodHorizShd <- prodGCPV(lat = lat, dataRad = prom, sample = "10 min", 
@@ -643,7 +643,7 @@ Then, a N-S horizontal axis tracking system without backtracking,
 #+END_SRC
 
 and a N-S horizontal axis tracking system with backtracking, 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > prodHorizBT <- prodGCPV(lat = lat, dataRad = prom, sample = "10 min", 
      modeTrk = "horiz", modeShd = "bt", betaLim = 60, distances = distHoriz, 
      struct = structHoriz)
@@ -651,7 +651,7 @@ and a N-S horizontal axis tracking system with backtracking,
 
 Finally, the /yearly/ performance of these systems is compared
 with the method =compare= (fig. \ref{fig:compare}):
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > comp <- compare(ProdFixed, Prod2x, ProdHoriz, prod2xShd, 
      prodHorizShd, prodHorizBT)
 > head(comp)
@@ -669,7 +669,7 @@ with the method =compare= (fig. \ref{fig:compare}):
 The methods =losses= and =compareLosses= calculate and
 compare their /yearly/ losses, respectively (fig. \ref{fig:compareLosses}):
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > compL <- compareLosses(ProdFixed, Prod2x, ProdHoriz, prod2xShd, 
      prodHorizShd, prodHorizBT)
 > head(compL)
@@ -735,7 +735,7 @@ For example, let's design a PV plant with a grid of trackers of 2 rows
 and 8 columns using a two-axis tracker whose dimensions are
 $\SI{23.11}{\meter}$ width and $\SI{9.8}{\meter}$ height.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > struct2x = list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
 #+END_SRC
 
@@ -743,7 +743,7 @@ The separations between trackers range from $\SI{30}{\meter}$ and
 $\SI{50}{\meter}$ for the East-West direction and from $\SI{20}{\meter}$
 and $\SI{50}{\meter}$ for the North-South direction.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > dist2x = list(Lew = c(30, 50), Lns = c(20, 50))
 #+END_SRC
 
@@ -752,7 +752,7 @@ maximum value of =distances=, with =res= as the
 increment, in meters, of the sequence. In this example,
 =res=5=.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > ShdM2x <- optimShd(lat = lat, dataRad = prom, modeTrk = "two", 
      modeShd = c("area", "prom"), distances = dist2x, struct = struct2x, 
      res = 5, prog = FALSE)
@@ -794,7 +794,7 @@ For example, the performance of the [[http://net.grundfos.com/Appl/WebCAPS/InitC
 whose information is available in the dataset =pumpCoef=, working
 with $H=\SI{40}{m}$ is simulated with:
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > data("pumpCoef")
 > CoefSP8A44 <- subset(pumpCoef, Qn == 8 & stages == 44)
 > fSP8A44 <- fPump(pump = CoefSP8A44, H = 40)
@@ -806,7 +806,7 @@ frequency.  These functions allow the calculation of the performance
 for any electrical power inside the range of the pump (figure
 \ref{fig:EficienciaMotobomba}):
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > SP8A44 = with(fSP8A44, {
      Pac = seq(lim[1], lim[2], by = 100)
      Pb = fPb(Pac)
@@ -863,7 +863,7 @@ nomogram for the SP8A44 pump working in a range of heights from 50 to
 curve of 50 meters shows that this pump does not work correctly with
 this height.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > Pg = seq(3000, 5500, by = 500)
 > H = seq(50, 80, by = 5)
 > NmgSP8A44 <- NmgPVPS(pump = CoefSP8A44, Pg = Pg, H = H, Gd = 6000, 
@@ -900,7 +900,7 @@ As an example of the interaction of =sp= and =solaR=, let's
 draw a map of the extraterrestial irradiance. First, the mean solar time for a range of
 longitudes with =local2Solar= is calculated with:
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > hh <- as.POSIXct('2011-05-01 11:00:00', tz='CET')
 > latitude <- seq(70, -70, -1)
 > longitude <- seq(-180, 180, 1)
@@ -912,7 +912,7 @@ Then, the irradiance for the window defined by =latitude= and
 assigned to the =NA= elements in order to get them black coloured
 in the map.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > solList <- lapply(latitude, calcSol, BTi = horaLong)
 > Bo0List <- lapply(solList, function(x) as.data.frameI(x)$Bo0) 
 > Bo0 <- do.call('c', Bo0List)
@@ -922,7 +922,7 @@ in the map.
 
 The =data.frame= is now converted to an
 =SpatialPixelsDataFrame=. The result is displayed in the next figure.
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > Bo0DF <- expand.grid(lon = longitude, lat = latitude)
 > Bo0DF$Bo0 <- c(Bo0)
 > proj <- CRS('+proj=latlon +ellps=WGS84') 
@@ -958,7 +958,7 @@ monitoring in operational mode. The data is freely accesible here
 after a registration process.
 
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > library("raster")
 > old <- setwd('CMSAF') ##folder where the files are stored
 > listFich <- dir(pattern = '2008')
@@ -972,7 +972,7 @@ with =calcGef= (section \ref{sec:effective}). The next function uses =calcGef= t
 yearly values (=as.data.frameY=) of effective global, diffuse and
 direct irradiation:
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > foo <- function(x, ...){
                gef <- calcGef(lat = x[1], dataRad = list(G0dm = x[2:13]))
                result <- as.data.frameY(gef)[c('Gefd', 'Befd', 'Defd')]
@@ -984,7 +984,7 @@ direct irradiation:
 The function =calc= from =raster= applies this function to each
 cell of the =raster=:
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > latLayer <- init(SISmm, v = 'y')
 > gefS <- calc(stack(latLayer, SISmm), foo,
              filename = 'CMSAF/gefCMSAF',
@@ -997,7 +997,7 @@ effective irradiation using the
 =levelplot= method included in the =rasterVis= package, with the administrative borders
 overlaid (available [[http://biogeo.ucdavis.edu/data/diva/adm/ESP_adm.zip][here]]) with the =layer= mechanism of the =latticeExtra= package:
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > library("maptools")
 > library("rasterVis")
 > proj <- CRS(projection(SISmm))
@@ -1048,7 +1048,7 @@ productivity from a PV plant composed of 22 systems
 (=data("prodEx")=) showing that the system no.20 is not
 working correctly during these periods.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > data("prodEx")
 > ndays = c(5, 10, 15, 20)
 > palette = brewer.pal(n = length(ndays), name = "Set1")
@@ -1072,7 +1072,7 @@ working correctly during these periods.
 # station is consistently different from the rest of the stations of Madrid during
 # these time intervals.
 
-#+BEGIN_SRC r
+#+BEGIN_SRC r :tangle yes
 > TDMadrid <- TargetDiagram(YfMadrid, 
      end = as.POSIXct("2010-12-31"), 
      ndays = c(10, 20, 30, 40, 50, 60), 

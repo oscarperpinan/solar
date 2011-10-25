@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title><code>solaR</code>: Solar Radiation and Photovoltaic Systems with <code>R</code></title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2011-10-25 02:13:19 CEST"/>
+<meta name="generated" content="2011-10-25 02:26:09 CEST"/>
 <meta name="author" content="Oscar Perpiñán Lamigueiro"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -827,7 +827,7 @@ working as fixed, NS horizontal axis tracking and two-axis tracking
 systems.  The parameters of the generator, module, inverter and rest
 of the system are those by default <span style="color: #a020f0;">in</span> =prodGCPV=. 
 
-<span style="color: #b22222;">#</span><span style="color: #b22222;">+BEGIN_SRC r</span>
+<span style="color: #b22222;">#</span><span style="color: #b22222;">+BEGIN_SRC r :tangle</span>
 &gt; ProdFixed <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, keep.night = <span style="color: #228b22;">FALSE</span>)
 &gt; Prod2x <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"two"</span>, 
      keep.night = <span style="color: #228b22;">FALSE</span>)
@@ -1507,19 +1507,6 @@ working correctly during these periods.
 <img src="figs/TDMadrid_crop.png"  alt="figs/TDMadrid_crop.png" />
 </p>
 
-
-
-<pre class="src src-ditaa">+---------+
-| cBLU    |
-|         |
-|    +----+
-|    |cPNK|
-|    |    |
-+----+----+
-</pre>
-
-
-
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
@@ -1537,7 +1524,7 @@ working correctly during these periods.
 </div>
 </div>
 <div id="postamble">
-<p class="date">Date: 2011-10-25 02:13:19 CEST</p>
+<p class="date">Date: 2011-10-25 02:26:09 CEST</p>
 <p class="author">Author: Oscar Perpiñán Lamigueiro</p>
 <p class="creator">Org version 7.6 with Emacs version 23</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
