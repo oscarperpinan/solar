@@ -1,0 +1,1514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title><code>solaR</code>: Solar Radiation and Photovoltaic Systems with <code>R</code></title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-10-25 14:14:34 CEST"/>
+<meta name="author" content="Oscar Perpiñán Lamigueiro"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title"><code>solaR</code>: Solar Radiation and Photovoltaic Systems with <code>R</code></h1>
+
+
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Introduction </a></li>
+<li><a href="#sec-2">2 Solar Geometry </a></li>
+<li><a href="#sec-3">3 Solar Radiation </a>
+<ul>
+<li><a href="#sec-3-1">3.1 Irradiation and irradiance on the horizontal plane </a></li>
+<li><a href="#sec-3-2">3.2 Meteorological data </a></li>
+<li><a href="#sec-3-3">3.3 The function <code>calcG0</code> </a></li>
+<li><a href="#sec-3-4">3.4 Irradiation and irradiance on the generator plane </a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 Productivity of a Grid Connected PV System </a>
+<ul>
+<li><a href="#sec-4-1">4.1 Using <code>mergesolaR</code> </a></li>
+<li><a href="#sec-4-2">4.2 Shadows </a></li>
+<li><a href="#sec-4-3">4.3 Position of trackers in a PV plant </a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5 PV pumping systems </a>
+<ul>
+<li><a href="#sec-5-1">5.1 Simulation of centrifugal pumps </a></li>
+<li><a href="#sec-5-2">5.2 Nomograms of PVPS </a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6 Spatial calculations </a>
+<ul>
+<li><a href="#sec-6-1">6.1 <code>solaR</code> and <code>sp</code> </a></li>
+<li><a href="#sec-6-2">6.2 <code>solaR</code> and <code>raster</code> </a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7 Target Diagram </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><a name="Introduction" id="Introduction"></a><span class="section-number-2">1</span> Introduction </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+The <code>solaR</code> package includes a set of functions to calculate
+the solar radiation incident on a photovoltaic generator and simulate the 
+performance of several applications of the photovoltaic energy.
+This package performs the whole calculation procedure from both <i>daily</i> and 
+<i>intradaily</i> global horizontal irradiation to the final productivity of 
+grid connected PV systems and water pumping PV systems. 
+</p>
+<p>
+The package stands on a set of <code>S4</code> classes. The core of each
+class is a group of slots with yearly, monthly, daily and intradaily
+multivariate time series (with the <code>zoo</code> package
+). The classes share a variety of
+methods to access the information (for example, <code>as.zooD</code>
+provides a <code>zoo</code> object with the daily multivariate time series of
+the corresponding object) and several visualisation methods based on
+the <code>lattice</code>  and <code>latticeExtra</code>
+ packages. The next figure
+shows the classes and their relationships. Each frame contains the
+name of the class and its constructor function:
+</p>
+
+<ul>
+<li><code>Sol</code>: sun geometry. It is created with <a href="#sec-2"><code>calcSol</code></a>.
+</li>
+<li><code>Meteo</code>: meteorological data. It can be <a href="#sec-3-2">created with several functions</a>: <code>readSIAR</code>, <code>zoo2Meteo</code>, etc.
+</li>
+<li><code>G0</code>: horizontal irradiation and irradiance (contains
+  classes <code>Meteo</code> and <code>Sol</code>). It is created with
+  <a href="#sec-3-3"><code>calcG0</code></a>.
+</li>
+<li><code>Gef</code>: effective irradiation and irradiance (contains class
+  <code>G0</code>). It is created with <a href="#sec-3-4"><code>calcGef</code></a>.
+</li>
+<li><code>ProdGCPV</code>: performance of a Grid Connected Photovoltaic
+  System (GCPV) (contains class <code>Gef</code>). It is created with
+  <a href="#sec-4"><code>prodGCPV</code></a>.
+</li>
+<li><code>ProdPVPS</code>: performance of a Photovoltaic Pumping System
+  (contains class <code>Gef</code>). It is created with <a href="#sec-5-1"><code>prodPVPS</code></a>.
+</li>
+<li><code>Shade</code>: shadows in a GCPV system (contains class
+  <code>ProdGCPV</code>). It is created with <a href="#sec-4-3"><code>optimShd</code></a>.
+</li>
+</ul>
+
+
+
+<p>
+Besides, <code>solaR</code> includes a tool for the visual statistical analysis of
+the performance of a large PV plant composed of several systems.
+</p>
+<p>
+<img src="figs/classScheme.png" width="300" alt="figs/classScheme.png" />
+</p>
+<p>
+The development version can be found at <a href="http://r-forge.r-project.org/projects/solar/">R-Forge</a> and the stable version is at <a href="http://cran.r-project.org/web/packages/solaR/">CRAN</a>.
+</p>
+<p>
+<a href="http://procomun.wordpress.com/documentos/libroesf/">This book</a> (in Spanish) contains detailed information about solar radiation and photovoltaic systems.
+I usually publish news and examples about <code>solaR</code> at <a href="http://procomun.wordpress.com/tag/solar/">this blog</a>.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><a name="calcSol" id="calcSol"></a><span class="section-number-2">2</span> Solar Geometry </h2>
+<div class="outline-text-2" id="text-2">
+
+<p>The apparent movement of the Sun is defined with a set of equations
+included in the functions <code>fSolD</code> and
+<code>fSolI</code>. <code>fSolD</code> computes the daily apparent movement of
+the Sun from the Earth. This movement is mainly described (for the
+simulation of photovoltaic systems) by the declination angle, the
+sunset angle and the daily extra-atmospheric irradiation.  On the
+other hand, <code>fSolI</code> computes the angles which describe the
+intradaily apparent movement of the Sun from the Earth.
+</p>
+<p>
+Besides, the function <code>fBTd</code> generates time bases with
+different structures. For example, the so called
+``monthly average days'' (commonly used when only 12 monthly averages
+of daily global radiation are available) are obtained with
+<code>fBTd(mode = 'prom')</code>. The azimuth and height solar angles during
+these days are displayed in the next figure.
+</p>
+
+
+
+<pre class="src src-r">&gt; lat = 37.2
+&gt; SolD <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd = fBTd(mode = <span style="color: #8b2252;">"prom"</span>))
+&gt; SolI <span style="color: #008b8b;">&lt;-</span> fSolI(SolD, sample = <span style="color: #8b2252;">"10 min"</span>, keep.night = <span style="color: #228b22;">FALSE</span>)
+&gt; mon = month.abb
+&gt; p <span style="color: #008b8b;">&lt;-</span> xyplot(r2d(AlS) ~ r2d(AzS), groups = month, data = SolI, 
+     type = <span style="color: #8b2252;">"l"</span>, col = <span style="color: #8b2252;">"black"</span>, 
+     xlab = expression(psi[s]), 
+     ylab = expression(gamma[s]))
+&gt; p + glayer({
+     idx <span style="color: #008b8b;">&lt;-</span> round(length(x)/2 + 1)
+     panel.text(x[idx], y[idx], mon[group.value], pos = 3, offset = 0.2, 
+         cex = 0.8)
+ })
+</pre>
+
+
+
+
+<p>
+<img src="figs/solaR-006.png" width="640" alt="figs/solaR-006.png" />
+</p>
+
+<p>
+<code>solaR</code> provides four methods for the sun geometry calculations. These
+methods are named as 'cooper' , 'spencer', 'michalsky' (default)  and
+'strous':
+</p>
+
+
+
+<pre class="src src-r">&gt; lat=37.2
+&gt; BTd=fBTd(mode=<span style="color: #8b2252;">'serie'</span>)
+&gt; solStrous <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd, method=<span style="color: #8b2252;">'strous'</span>)
+&gt; solSpencer <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd, method=<span style="color: #8b2252;">'spencer'</span>)
+&gt; solCooper <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd, method=<span style="color: #8b2252;">'cooper'</span>)
+&gt; solMichalsky <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd, method=<span style="color: #8b2252;">'michalsky'</span>)
+&gt; decDif <span style="color: #008b8b;">&lt;-</span> solMichalsky$decl - cbind(solStrous$decl, 
+      solSpencer$decl, solCooper$decl)
+&gt; names(decDif) <span style="color: #008b8b;">&lt;-</span> c(<span style="color: #8b2252;">'strous'</span>, <span style="color: #8b2252;">'spencer'</span>, <span style="color: #8b2252;">'cooper'</span>)
+</pre>
+
+
+
+
+<p>
+<img src="figs/decl.png" width="640" alt="figs/decl.png" />
+</p>
+
+
+<p>
+These functions are included in a function, <code>calcSol</code>.
+It constructs an object of class <code>Sol</code> containing in
+its slots the <code>zoo</code> objects created by <code>fSolD</code> and
+<code>fSolI</code>.  
+</p>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Solar Radiation </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+Values of global horizontal irradiation are commonly available either
+as monthly averages of daily values or as a time series of daily
+values during one or several years.  The analysis of the performance
+of a PV system starts from the transformation of the global horizontal
+irradiation to global, diffuse and direct horizontal irradiance and
+irradiation, and then irradiance and irradiation on the generator
+surface.
+</p>
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Irradiation and irradiance on the horizontal plane </h3>
+<div class="outline-text-3" id="text-3-1">
+
+
+<p>
+The function <code>fCompD</code> extracts the diffuse and direct components
+from the daily global irradiation on a horizontal surface by means of
+regressions between the clearness index and the diffuse fraction
+parameters.  This function need the results from <code>fSolD</code>, a set
+of values of global horizontal irradiation (Wh/m²), and the correlation between the
+clearness index and the diffuse fraction.  
+</p>
+<p>
+<code>solaR</code> includes predefined correlations for monthly means of
+daily values, for daily values
+and for intradaily values.  Besides, the
+user may define a particular correlation through the argument
+<code>f</code>.
+</p>
+
+
+
+<pre class="src src-r">&gt; BTd = fBTd(mode = <span style="color: #8b2252;">"serie"</span>)
+&gt; SolD <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd[100])
+&gt; SolI <span style="color: #008b8b;">&lt;-</span> fSolI(SolD, sample = <span style="color: #8b2252;">"hour"</span>)
+&gt; G0d = zoo(5000, index(SolD))
+&gt; fCompD(SolD, G0d, corr = <span style="color: #8b2252;">"Page"</span>)
+
+               Fd    Ktd  G0d  D0d  B0d
+2011-04-10 0.4123 0.5201 5000 2062 2938
+
+&gt; fCompD(SolD, G0d, corr = <span style="color: #8b2252;">"CPR"</span>)
+
+               Fd    Ktd  G0d  D0d  B0d
+2011-04-10 0.5658 0.5201 5000 2829 2171
+</pre>
+
+
+
+
+
+<p>
+The daily profile of the irradiance is obtained with the function
+<code>fCompI</code>.  This function needs the information provided by
+<code>fCompD</code> and <code>fSolI</code>, or <code>calcSol</code>. For example,
+the profiles for the ``monthly average days'' are obtained with the next code:
+</p>
+
+
+
+<pre class="src src-r">&gt; sol <span style="color: #008b8b;">&lt;-</span> calcSol(lat, fBTd(mode = <span style="color: #8b2252;">"prom"</span>), sample = <span style="color: #8b2252;">"hour"</span>, keep.night = <span style="color: #228b22;">FALSE</span>)
+&gt; G0dm = c(2.766, 3.491, 4.494, 5.912, 6.989, 7.742, 7.919, 7.027, 
+     5.369, 3.562, 2.814, 2.179) * 1000
+&gt; Ta = c(10, 14.1, 15.6, 17.2, 19.3, 21.2, 28.4, 29.9, 24.3, 18.2, 
+     17.2, 15.2)
+&gt; BD <span style="color: #008b8b;">&lt;-</span> readG0dm(G0dm = G0dm, Ta = Ta, lat = 37.2)
+&gt; compD <span style="color: #008b8b;">&lt;-</span> fCompD(sol, BD, corr = <span style="color: #8b2252;">"Page"</span>)
+&gt; compI <span style="color: #008b8b;">&lt;-</span> fCompI(sol, compD)
+</pre>
+
+
+
+
+
+<p>
+<img src="figs/compI.png" width="640" alt="figs/compI.png" />
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2"><a name="meteo" id="meteo"></a><span class="section-number-3">3.2</span> Meteorological data </h3>
+<div class="outline-text-3" id="text-3-2">
+
+
+<p>
+There are several functions to construct a <code>Meteo</code> object with
+radiation and temperature data.  For daily data, the functions
+<code>readBD</code> and <code>df2Meteo</code> are recommended if it is stored in a
+local file or a <code>data.frame</code>, while <code>readG0dm</code> is indicated
+when only 12 monthly averages are available. The correspondent
+functions for intradaily data are <code>readBDi</code> and
+<code>dfI2Meteo</code>. Besides, <code>zoo2Meteo</code> can construct a
+<code>Meteo</code> object from a <code>zoo</code> object both for daily and
+intradaily data.
+</p>
+<p>
+For example, the <code>helios</code> dataset included in the package,
+obtained from <a href="http://helios.ies-def.upm.es">http://helios.ies-def.upm.es</a>, can be converted to
+a <code>Meteo</code> object with the next code:
+</p>
+
+
+<pre class="src src-r">&gt; data(<span style="color: #8b2252;">"helios"</span>)
+&gt; names(helios) = c(<span style="color: #8b2252;">"date"</span>, <span style="color: #8b2252;">"G0"</span>, <span style="color: #8b2252;">"TempMax"</span>, <span style="color: #8b2252;">"TempMin"</span>)
+&gt; bd = df2Meteo(helios, dates.col = <span style="color: #8b2252;">"date"</span>, lat = 41, <span style="color: #008b8b;">source</span> = <span style="color: #8b2252;">"helios-IES"</span>, 
+     format = <span style="color: #8b2252;">"%Y/%m/%d"</span>)
+&gt; bd
+
+Object of class  Meteo 
+
+Source of meteorological information: bd-helios-IES 
+Latitude of <span style="color: #008b8b;">source</span>:  41 degrees
+
+Meteorological Data:
+     Index                           G0           TempMax         TempMin      
+ Min.   :2009-01-01 00:00:00   Min.   :  326   Min.   : 1.41   Min.   :-37.50  
+ 1st Qu.:2009-04-08 12:00:00   1st Qu.: 2523   1st Qu.:14.41   1st Qu.:  1.95  
+ Median :2009-07-07 00:00:00   Median : 4746   Median :23.16   Median :  7.91  
+ Mean   :2009-07-04 21:29:54   Mean   : 4812   Mean   :22.59   Mean   :  5.32  
+ 3rd Qu.:2009-10-03 12:00:00   3rd Qu.: 7140   3rd Qu.:31.06   3rd Qu.: 15.11  
+ Max.   :2009-12-31 00:00:00   Max.   :11254   Max.   :38.04   Max.   : 24.80  
+</pre>
+
+
+
+
+
+<p>
+On the other hand, the function <code>readSIAR</code> is able to download
+the meteorological data available at <a href="http://www.marm.es/siar">http://www.marm.es/siar</a>.  This
+web page provides daily measurements from a set of agroclimatic
+stations located in Spain (next figure). This function needs
+the code of the station and its province, and the start and end
+date. The codes of stations and provinces are stored at the dataset
+<code>SIAR</code>. 
+</p>
+<p>
+<img src="figs/siar_crop.png" width="640" alt="figs/siar_crop.png" />
+</p>
+<p>
+<code>readSIAR</code> constructs an object of class <code>Meteo</code>. The
+raw data is obtained with the method <code>getData</code>.  If only the
+irradiation series is needed, the method <code>getG0</code> is
+recommended. Both methods provide a <code>zoo</code> object. 
+For example, the 2009 data from the station at Aranjuez is displayed
+in the next figure.  
+</p>
+
+
+
+<pre class="src src-r">&gt; Aranjuez <span style="color: #008b8b;">&lt;-</span> readSIAR(28, 3, <span style="color: #8b2252;">"01/01/2009"</span>, <span style="color: #8b2252;">"31/12/2009"</span>)
+&gt; xyplot(G0 ~ TempMedia | month, data = Aranjuez, type = c(<span style="color: #8b2252;">"p"</span>, <span style="color: #8b2252;">"r"</span>))
+</pre>
+
+
+
+
+<p>
+It is important to note that the radiation
+measurements available at the web page are in
+MJ/m², but <code>readSIAR</code> converts
+the values to Wh/m²:
+</p>
+
+<p>
+<img src="figs/tempAranjuez.png" width="640" alt="figs/tempAranjuez.png" />
+</p>
+<p>
+The SIAR network includes information of maximum and minimum values of
+temperature.  The function <code>fTemp</code> calculates a profile of the
+ambient temperature with this information. The evolution of this synthetic
+time series of temperature during March is displayed in the next figure.
+</p>
+
+
+
+<pre class="src src-r">&gt; lat = 41
+&gt; sol = calcSol(lat, BTd = indexD(Aranjuez), sample = <span style="color: #8b2252;">"hour"</span>)
+&gt; Temp <span style="color: #008b8b;">&lt;-</span> fTemp(sol, Aranjuez)
+&gt; wTemp = window(Temp, start = as.POSIXct(<span style="color: #8b2252;">"2009-03-01"</span>), 
+      end = as.POSIXct(<span style="color: #8b2252;">"2009-03-31"</span>))
+&gt; xyplot(wTemp, col = <span style="color: #8b2252;">"black"</span>, ylab = <span style="color: #8b2252;">"T"</span>) + 
+      layer_(panel.xblocks(x, DoY, col = c(<span style="color: #8b2252;">"lightgray"</span>, <span style="color: #8b2252;">"white"</span>)))
+</pre>
+
+
+
+
+<p>
+<img src="figs/solaR-020.png" width="640" alt="figs/solaR-020.png" />
+</p>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3-3" class="outline-3">
+<h3 id="sec-3-3"><a name="calcG0" id="calcG0"></a><span class="section-number-3">3.3</span> The function <code>calcG0</code> </h3>
+<div class="outline-text-3" id="text-3-3">
+
+<p>The previous steps are included in the function <code>calcG0</code>, the
+constructor of the class <code>G0</code>. For example, with the next code,
+the components of horizontal irradiation and irradiance are obtained
+from the measurements of the meteorological station of Aranjuez
+(next figure).
+</p>
+
+
+
+<pre class="src src-r">&gt; g0 <span style="color: #008b8b;">&lt;-</span> calcG0(lat = 37.2, modeRad = <span style="color: #8b2252;">"siar"</span>, dataRad = list(prov = 28, 
+     est = 3, start = <span style="color: #8b2252;">"01/01/2009"</span>, end = <span style="color: #8b2252;">"31/12/2009"</span>))
+</pre>
+
+
+
+
+<p>
+<img src="figs/solaR-022.png" width="640" alt="figs/solaR-022.png" />
+</p>
+<p>
+<code>solaR</code> accepts intradaily irradiation data sources. For example, the <a href="http://www.nrel.gov/midc/la_ola_lanai/"><i>La Ola - Lanai= station at Hawaii</i></a>
+ from the Measurement and Instrumentation Data Center of the NREL
+(NREL-MIDC) provides meteorological data with 1-minute sampling rate\footnote{The data for
+  the example are available <a href="http://www.nrel.gov/midc/apps/plot.pl?site=LANAI&amp;start=20090722&amp;edy=19&amp;emo=11&amp;eyr=2010&amp;zenloc=19&amp;year=2010&amp;month=11&amp;day=1&amp;endyear=2010&amp;endmonth=11&amp;endday=19&amp;time=1&amp;inst=3&amp;inst=4&amp;inst=5&amp;inst=10&amp;type=data&amp;first=3&amp;math=0&amp;second=-1&amp;value=0.0&amp;global=-1&amp;direct=-1&amp;diffuse=-1&amp;user=0&amp;axis=1">here</a>.
+</p>
+<p>
+The local data logger program runs using Greenwich Mean Time (GMT), and
+data is converted to Hawaiian Standard Time (HST) after data
+collection. The function <code>local2Solar</code> calculates the Mean Solar
+Time of the index. Besides, the horizontal direct irradiation is
+obtained, since it is not included in the file.
+</p>
+
+
+
+<pre class="src src-r">&gt; lat = 20.77
+&gt; lon = -156.9339
+&gt; dat <span style="color: #008b8b;">&lt;-</span> read.zoo(file, 
+     col.names = c(<span style="color: #8b2252;">"date"</span>, <span style="color: #8b2252;">"hour"</span>, <span style="color: #8b2252;">"G0"</span>, <span style="color: #8b2252;">"B"</span>, <span style="color: #8b2252;">"D0"</span>, <span style="color: #8b2252;">"Ta"</span>), 
+     index = list(1, 2), 
+     FUN = <span style="color: #a020f0;">function</span>(d, h) as.POSIXct(paste(d, h), 
+         format = <span style="color: #8b2252;">"%m/%d/%Y %H:%M"</span>, tz = <span style="color: #8b2252;">"HST"</span>), 
+     FUN2 = <span style="color: #a020f0;">function</span>(x) local2Solar(x, lon), 
+     header = <span style="color: #228b22;">TRUE</span>, sep = <span style="color: #8b2252;">","</span>)
+&gt; dat$B0 <span style="color: #008b8b;">&lt;-</span> dat$G0 - dat$D0
+
+</pre>
+
+
+
+
+<p>
+Finally, the  object <code>Meteo</code> is obtained with <code>zoo2Meteo</code>:
+</p>
+
+
+
+<pre class="src src-r">&gt; NRELMeteo <span style="color: #008b8b;">&lt;-</span> zoo2Meteo(dat, lat = lat, <span style="color: #008b8b;">source</span> = <span style="color: #8b2252;">"NREL-La Ola-Lanai"</span>)
+</pre>
+
+
+
+
+<p>
+<img src="figs/solaR-025.png" width="640" alt="figs/solaR-025.png" />
+</p>
+<p>
+With this data, a <code>G0</code> object can be calculated. Since both
+diffuse and direct components are available, no correlation is needed (corr='none'):
+</p>
+
+
+
+<pre class="src src-r">&gt; g0NREL <span style="color: #008b8b;">&lt;-</span> calcG0(lat = lat, modeRad = <span style="color: #8b2252;">"bdI"</span>, dataRad = NRELMeteo, 
+     corr = <span style="color: #8b2252;">"none"</span>)
+</pre>
+
+
+
+
+<p>
+If these components were not available, a fd-kt hourly correlation is
+needed :
+</p>
+
+
+
+<pre class="src src-r">&gt; g0BRL <span style="color: #008b8b;">&lt;-</span> calcG0(lat = lat, modeRad = <span style="color: #8b2252;">"bdI"</span>, dataRad = NRELMeteo, 
+     corr = <span style="color: #8b2252;">"BRL"</span>)
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3-4" class="outline-3">
+<h3 id="sec-3-4"><a name="calcGef" id="calcGef"></a><span class="section-number-3">3.4</span> Irradiation and irradiance on the generator plane </h3>
+<div class="outline-text-3" id="text-3-4">
+
+
+<p>
+The solar irradiance incident on an inclined surface can be calculated
+from the direct and diffuse irradiance on a horizontal surface, and
+from the evolution of the angles of the Sun and the surface. The
+transformation of the direct radiation is straightforward since only
+geometric considerations are needed. However, the treatment of the
+diffuse irradiance is more complex since it involves the modelling of
+the atmosphere.
+</p>
+<p>
+There are several models for the estimation of diffuse irradiance on
+an inclined surface. The proposal of Hay and McKay combines simplicity
+and acceptable results. This model divides the
+diffuse component in isotropic and anisotropic whose values depends on
+a anisotropy index.  
+</p>
+<p>
+On the other hand, the effective irradiance &mdash;the fraction of the
+incident irradiance that reaches the cells inside a PV module&mdash; is
+calculated with the losses due to the angle of incidence and
+dirtiness. This behaviour can be simulated with a model proposed by
+Martin and Ruiz requiring information about the angles of the surface
+and the level of dirtiness.
+</p>
+<p>
+The orientation, azimuth and incidence angle are calculated from the
+results of <code>fSolI</code> or <code>calcSol</code> with the functions
+<code>fTheta</code> and <code>fInclin</code>. These functions can estimate
+the geometry and irradiance for fixed systems, and two-axis and
+horizontal North-South trackers. Besides, the movement of a horizontal NS
+tracker due to the backtracking strategy 
+can be calculated with information about the tracker and the distance
+between the trackers included in the system.
+</p>
+<p>
+Both functions are integrated in <code>calcGef</code>, which constructs an
+object of class <code>Gef</code>. 
+</p>
+<p>
+For example, with the results of <a href="#sec-3-3"><code>calcG0</code></a>, the
+irradiance and irradiation on a fixed surface can be estimated. The next figure
+shows the relation between the effective and
+incident irradiance versus the cosine of the angle of incidence for
+this system.
+</p>
+
+
+
+<pre class="src src-r">&gt; gef <span style="color: #008b8b;">&lt;-</span> calcGef(lat = 37.2, modeRad = <span style="color: #8b2252;">"prev"</span>, dataRad = g0, 
+      beta = 30)
+&gt; xyplot(Gef/G ~ cosTheta | month, data = gef, type = c(<span style="color: #8b2252;">"p"</span>, 
+      <span style="color: #8b2252;">"smooth"</span>), cex = 0.4, alpha = 0.5)
+</pre>
+
+
+
+
+<p>
+<img src="figs/aoi.png" width="640" alt="figs/aoi.png" />
+</p>
+<p>
+The next lines of code calculate the movement of a N-S horizontal axis
+tracker with <i>backtracking</i> (modeShd='bt') and whose
+inclination angle is limited to 60 degrees (betaLim=60). The
+evolution of the inclination angle is displayed in the next figure. 
+The meaning of the <code>distances</code> and
+<code>struct</code> arguments will be detailed <a href="#sec-4-3">here</a>.
+</p>
+
+
+
+<pre class="src src-r">&gt; structHoriz = list(L = 4.83)
+&gt; distHoriz = data.frame(Lew = structHoriz$L * 4, H = 0)
+&gt; gefBT = calcGef(lat = 37.2, dataRad = prom, sample = <span style="color: #8b2252;">"10 min"</span>, 
+     modeTrk = <span style="color: #8b2252;">"horiz"</span>, modeShd = <span style="color: #8b2252;">"bt"</span>, betaLim = 60, distances = distHoriz, 
+     struct = structHoriz)
+</pre>
+
+
+
+
+<p>
+<img src="figs/solaR-032.png" width="640" alt="figs/solaR-032.png" />
+</p>
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><a name="prodGCPV" id="prodGCPV"></a><span class="section-number-2">4</span> Productivity of a Grid Connected PV System </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+The function <code>fProd</code>
+simulates the performance of a Grid Connected PV (GCPV) system under
+certain irradiance and temperature conditions. The system is defined
+with a set of parameters: characteristics of the PV
+module (<code>module</code>) and the inverter (<code>inverter</code>), the electrical arrangement of the PV
+generator (<code>generator</code>) and the losses of the system (<code>effSys</code>).
+</p>
+<p>
+For example, the electrical power, voltage and current of a certain PV
+system is calculated with:
+</p>
+
+
+
+<pre class="src src-r">&gt; inclin = data.frame(Gef = c(200, 400, 600, 800, 1000), Ta = 25)
+&gt; fProd(inclin)
+
+   Gef Ta    Tc   Voc   Isc  Vmpp   Impp   Vdc    Idc   Pac   Pdc   EffI
+1  200 25 31.75 673.3 10.34 533.1  9.586 533.1  9.586  4212  4737 0.9164
+2  400 25 38.50 655.4 20.68 516.3 19.090 516.3 19.090  8275  9137 0.9334
+3  600 25 45.25 637.5 31.02 499.6 28.506 499.6 28.506 11972 13202 0.9346
+4  800 25 52.00 619.7 41.36 483.0 37.824 483.0 37.824 15323 16936 0.9325
+5 1000 25 58.75 601.8 51.70 466.5 47.037 466.5 47.037 18342 20342 0.9293
+</pre>
+
+
+
+
+
+<p>
+First, <code>fProd</code> computes the Maximum Power Point (MPP) of the
+generator (<code>Vmpp</code> and <code>Impp</code>) at the irradiance and
+ambient temperature conditions contained in <code>Inclin</code>. Next, it
+checks that this point is inside the MPP window of the inverter, as
+defined by <code>inverter$Vmin</code> and <code>inverter$Vmax</code>.  If
+the MPP value is outside this range, the function assigns the limit
+value to the voltage, and calculates the correspondent current value
+with a warning.
+</p>
+<p>
+Anyway, the inverter input voltage and current are  <code>Vdc</code> e
+<code>Idc</code>. With the next code, the <code>Vdc</code> value is
+set to <code>Vmin</code> (the minimum value of the MPP window of the
+inverter), 420V,  since <code>Vmpp</code> is below this value.
+</p>
+
+
+
+<pre class="src src-r">&gt; inclin = data.frame(Gef = 800, Ta = 30)
+&gt; gen1 = list(Nms = 10, Nmp = 11)
+&gt; inv1 = list(Ki = c(0.01, 0.025, 0.05), Pinv = 25000, Vmin = 420, 
+     Vmax = 750, Gumb = 20)
+&gt; prod = fProd(inclin, generator = gen1, inverter = inv1)
+&gt; print(prod)
+
+  Gef Ta Tc   Voc   Isc  Vmpp  Impp Vdc   Idc   Pac   Pdc   EffI
+1 800 30 57 505.3 41.36 392.3 37.68 420 33.83 11943 13169 0.9346
+</pre>
+
+
+
+
+
+<p>
+For this configuration, the losses due to the voltage limitation are:
+</p>
+
+
+
+<pre class="src src-r">&gt; with(prod, Vdc * Idc/(Vmpp * Impp))
+
+0.961
+</pre>
+
+
+
+
+
+<p>
+The function <code>prodGCPV</code> integrates the calculation procedure of
+irradiation, irradiance and simulation of the GCPV system. It
+constructs an object of class <code>ProdGCPV</code>.
+</p>
+<p>
+The next code computes the productivity of the previous GCPV system
+working as fixed, NS horizontal axis tracking and two-axis tracking
+systems.  The parameters of the generator, module, inverter and rest
+of the system are those by default in <code>prodGCPV</code>. 
+</p>
+
+
+
+<pre class="src src-r">&gt; ProdFixed <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, keep.night = <span style="color: #228b22;">FALSE</span>)
+&gt; Prod2x <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"two"</span>, 
+     keep.night = <span style="color: #228b22;">FALSE</span>)
+&gt; ProdHoriz <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"horiz"</span>, 
+     keep.night = <span style="color: #228b22;">FALSE</span>)
+</pre>
+
+
+
+
+
+
+</div>
+
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Using <code>mergesolaR</code> </h3>
+<div class="outline-text-3" id="text-4-1">
+
+
+
+<p>
+The <code>mergesolaR</code> method is designed to merge <i>daily</i> time series
+of several <code>solaR</code> objects. 
+</p>
+<p>
+The next example retrieves the daily irradiation of the whole set of
+meteorological stations of Madrid (Spain) and use this information to
+calculate the productivity of a grid connected PV system with the
+<code>lapply</code> and <code>prodGCPV</code> functions. The result is a list of
+<code>ProdGCPV</code> objects. In order to prevent from the erroneous
+behaviour of some stations, the code includes the use of <code>try</code>:
+</p>
+
+
+
+<pre class="src src-r">&gt; EstMadrid <span style="color: #008b8b;">&lt;-</span> subset(SIAR, Provincia == <span style="color: #8b2252;">"Madrid"</span>)
+&gt; nEstMadrid <span style="color: #008b8b;">&lt;-</span> nrow(EstMadrid)
+&gt; namesMadrid <span style="color: #008b8b;">&lt;-</span> EstMadrid$Estacion
+&gt; prodMadrid <span style="color: #008b8b;">&lt;-</span> lapply(1:nEstMadrid, <span style="color: #a020f0;">function</span>(x) {
+     try(prodGCPV(lat = 41, modeRad = <span style="color: #8b2252;">"siar"</span>, dataRad = list(prov = 28, 
+         est = x, start = <span style="color: #8b2252;">"01/01/2009"</span>, end = <span style="color: #8b2252;">"31/12/2010"</span>)))
+ })
+
+&gt; names(prodMadrid) <span style="color: #008b8b;">&lt;-</span> namesMadrid
+&gt; okMadrid <span style="color: #008b8b;">&lt;-</span> lapply(prodMadrid, class) != <span style="color: #8b2252;">"try-error"</span>
+&gt; prodMadrid <span style="color: #008b8b;">&lt;-</span> prodMadrid[okMadrid]
+&gt; YfMadrid <span style="color: #008b8b;">&lt;-</span> do.call(mergesolaR, prodMadrid)
+
+</pre>
+
+
+
+
+<p>
+<code>mergesolaR</code> with a set of <code>ProdGCPV</code> objects merges
+the daily time series of the <code>Yf</code> variable of each object. The
+result is a multivariate <code>zoo</code> object where each column is the
+daily productivity with the radiation data of each meteorological
+station. It can be displayed (for example) with the
+<code>horizonplot</code> function. This
+result will be revisited with the <a href="#sec-7"><code>TargetDiagram</code></a> tool.
+</p>
+
+
+
+<pre class="src src-r">&gt; horizonplot(YfMadrid - rowMeans(YfMadrid), origin = 0, 
+     scales = list(y = list(relation = <span style="color: #8b2252;">"same"</span>)), colorkey = <span style="color: #228b22;">TRUE</span>))
+</pre>
+
+
+
+
+
+<p>
+<img src="figs/solaR-041.png" width="640" alt="figs/solaR-041.png" />
+<a name="horizonplot" id="horizonplot"></a>
+</p>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Shadows </h3>
+<div class="outline-text-3" id="text-4-2">
+
+
+<p>
+The shadows on PV generators alter the performance of the PV
+generators and reduce their productivity.  This
+package includes functions for the estimation of mutual shadows
+between generators belonging to the same system. <code>fSombra2X</code>,
+<code>fSombraHoriz</code>, <code>fSombraEst</code>, calculate the shadows in
+two-axis, horizontal axis and fixed systems, respectively.  The
+function <code>fSombra6</code> is indicated for groups of two-axis
+trackers.  Finally, <code>fSombra</code> is a wrapper to the previous
+functions. These functions are integrated in <code>calcShd</code>,
+<code>calcGef</code> and <code>prodGCPV</code>, as these examples show.
+</p>
+<p>
+First, the dimensions of the support structures (<code>struct</code>) and
+the distances between them (<code>distances</code>) have to be defined. 
+With a two-axis tracking system:
+</p>
+
+
+<pre class="src src-r">&gt; struct2x = list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
+&gt; dist2x = data.frame(Lew = 40, Lns = 30, H = 0)
+&gt; prod2xShd <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"two"</span>, 
+     modeShd = <span style="color: #8b2252;">"area"</span>, struct = struct2x, distances = dist2x)
+</pre>
+
+
+
+
+<p>
+Then, a N-S horizontal axis tracking system without backtracking, 
+</p>
+
+
+<pre class="src src-r">&gt; structHoriz = list(L = 4.83)
+&gt; distHoriz = data.frame(Lew = structHoriz$L * 4, H = 0) 
+&gt; prodHorizShd <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, sample = <span style="color: #8b2252;">"10 min"</span>, 
+     modeTrk = <span style="color: #8b2252;">"horiz"</span>, modeShd = <span style="color: #8b2252;">"area"</span>, betaLim = 60, distances = distHoriz, 
+     struct = structHoriz)
+</pre>
+
+
+
+
+<p>
+and a N-S horizontal axis tracking system with backtracking, 
+</p>
+
+
+<pre class="src src-r">&gt; prodHorizBT <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, sample = <span style="color: #8b2252;">"10 min"</span>, 
+     modeTrk = <span style="color: #8b2252;">"horiz"</span>, modeShd = <span style="color: #8b2252;">"bt"</span>, betaLim = 60, distances = distHoriz, 
+     struct = structHoriz)
+</pre>
+
+
+
+
+<p>
+Finally, the <i>yearly</i> performance of these systems is compared
+with the method <code>compare</code>:
+</p>
+
+
+<pre class="src src-r">&gt; comp <span style="color: #008b8b;">&lt;-</span> compare(ProdFixed, Prod2x, ProdHoriz, prod2xShd, 
+     prodHorizShd, prodHorizBT)
+&gt; head(comp)
+
+  values  ind      name
+1   1836  G0d ProdFixed
+2   1969 Gefd ProdFixed
+3   1506   Yf ProdFixed
+4   1836  G0d    Prod2x
+5   2961 Gefd    Prod2x
+6   2235   Yf    Prod2x
+</pre>
+
+
+
+
+
+<p> 
+<img src="figs/solaR-048.png" width="640" alt="figs/solaR-048.png" />
+</p>
+
+
+<p>
+The methods <code>losses</code> and <code>compareLosses</code> calculate and
+compare their <i>yearly</i> losses, respectively:
+</p>
+
+
+
+<pre class="src src-r">&gt; compL <span style="color: #008b8b;">&lt;-</span> compareLosses(ProdFixed, Prod2x, ProdHoriz, prod2xShd, 
+     prodHorizShd, prodHorizBT)
+&gt; head(compL)
+
+         id  values      name
+1   Shadows 0.00000 ProdFixed
+2       AoI 0.05894 ProdFixed
+3 Generator 0.08392 ProdFixed
+4        DC 0.07441 ProdFixed
+5  Inverter 0.07038 ProdFixed
+6        AC 0.02973 ProdFixed
+</pre>
+
+
+
+
+
+<p>
+<img src="figs/solaR-049.png" width="640" alt="figs/solaR-049.png" />
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><a name="optimShd" id="optimShd"></a><span class="section-number-3">4.3</span> Position of trackers in a PV plant </h3>
+<div class="outline-text-3" id="text-4-3">
+
+<p>One of the tasks of the design of a PV tracking system is to place the
+set of trackers. This task must cope with the compromise of minimizing
+the losses due to mutual shadows while requiring the minimum land
+area.
+</p>
+<p>
+The area of the PV generator and the total land requirement are
+commonly related with the Ground Coverage Ratio (GCR). This ratio
+quantifies the percentage of land being effectively occupied by the
+system. In order to focus on the land area required, the inverse of
+this ratio, the Ground Requirement Ratio (GRR), is preferable. The GRR
+is the ratio between the ground area required for installing the whole
+set of trackers and the generator area.
+</p>
+<p>
+A suitable approach to the problem is to simulate the planned system
+for a set of distances between the trackers of the plant. Without any
+additional constraint, the optimum design may be the one which
+achieves the highest productivity with the lowest ground requirement
+ratio. 
+</p>
+<p>
+However, it should be noted that this approach to the problem is not
+complete since the land requirements and the costs of wiring and
+equipments should be included as additional constraints
+.
+</p>
+<p>
+The function <code>optimShd</code> computes the productivity for a set of
+combinations of distances between the elements of the plant
+. The designer should adopt the decision from
+these results with the adequate economical translations.
+</p>
+<p>
+For example, let's design a PV plant with a grid of trackers of 2 rows
+and 8 columns using a two-axis tracker whose dimensions are
+23.11m width and 9.8m height.
+</p>
+
+
+
+<pre class="src src-r">&gt; struct2x = list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
+</pre>
+
+
+
+
+<p>
+The separations between trackers range from 30 meter and
+50 meter for the East-West direction and from 20 meter
+and 50 meter for the North-South direction.
+</p>
+
+
+
+<pre class="src src-r">&gt; dist2x = list(Lew = c(30, 50), Lns = c(20, 50))
+</pre>
+
+
+
+
+<p>
+<code>optimShd</code> constructs a sequence from the minimum to the
+maximum value of <code>distances</code>, with <code>res</code> as the
+increment, in meters, of the sequence. In this example,
+<code>res=5</code>.
+</p>
+
+
+
+<pre class="src src-r">&gt; ShdM2x <span style="color: #008b8b;">&lt;-</span> optimShd(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"two"</span>, 
+     modeShd = c(<span style="color: #8b2252;">"area"</span>, <span style="color: #8b2252;">"prom"</span>), distances = dist2x, struct = struct2x, 
+     res = 5, prog = <span style="color: #228b22;">FALSE</span>)
+
+&gt; shadeplot(ShdM2x)
+</pre>
+
+
+
+
+<p>
+Besides, the <code>Shade</code> object includes the local fitting of the
+sequence of <code>Yf</code> and <code>FS</code> values (slots named
+<code>Yf.loess</code> and <code>FS.loess</code>). The <code>predict</code> method is
+used with these <code>loess</code> slots inside the <code>shadeplot</code> method
+of the <code>Shade</code> class (next figure).
+</p>
+
+<p>
+<img src="figs/solaR-058.png" width="640" alt="figs/solaR-058.png" />
+</p>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> PV pumping systems </h2>
+<div class="outline-text-2" id="text-5">
+
+
+
+
+</div>
+
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><a name="prodPVPS" id="prodPVPS"></a><span class="section-number-3">5.1</span> Simulation of centrifugal pumps </h3>
+<div class="outline-text-3" id="text-5-1">
+
+<p>The first step for the simulation of the performance of a PV pumping
+system (PVPS) is the characterization of the pump under the
+supposition of constant manometric height
+. The function <code>fPump</code> computes the
+performance of the different parts of a centrifugal pump fed by a
+frequency converter following the affinity laws.
+</p>
+<p>
+For example, the performance of the <a href="http://net.grundfos.com/Appl/WebCAPS/InitCtrl?mode=1">SP8A44 pump</a>
+whose information is available in the dataset <code>pumpCoef</code>, working
+with H=40m is simulated with:
+</p>
+
+
+
+<pre class="src src-r">&gt; data(<span style="color: #8b2252;">"pumpCoef"</span>)
+&gt; CoefSP8A44 <span style="color: #008b8b;">&lt;-</span> subset(pumpCoef, Qn == 8 &amp; stages == 44)
+&gt; fSP8A44 <span style="color: #008b8b;">&lt;-</span> fPump(pump = CoefSP8A44, H = 40)
+</pre>
+
+
+
+
+<p>
+The result of <code>fPump</code> is a set of functions which relate the
+electrical power and the flow, hydraulical and mechanical power, and
+frequency.  These functions allow the calculation of the performance
+for any electrical power inside the range of the pump:
+</p>
+
+
+
+<pre class="src src-r">&gt; SP8A44 = with(fSP8A44, {
+     Pac = seq(lim[1], lim[2], by = 100)
+     Pb = fPb(Pac)
+     etam = Pb/Pac
+     Ph = fPh(Pac)
+     etab = Ph/Pb
+     f = fFreq(Pac)
+     Q = fQ(Pac)
+     result = data.frame(Q, Pac, Pb, Ph, etam, etab, f)
+ })
+&gt; SP8A44$etamb = with(SP8A44, etab * etam) 
+
+&gt; lab = c(expression(eta[motor]), expression(eta[pump]), expression(eta[mp]))
+&gt; p <span style="color: #008b8b;">&lt;-</span> xyplot(etam + etab + etamb ~ Pac, data = SP8A44, type = <span style="color: #8b2252;">"l"</span>, 
+     ylab = <span style="color: #8b2252;">"Efficiency"</span>)
+&gt; p + glayer(panel.text(x[1], y[1], lab[group.number], pos = 3))
+
+</pre>
+
+
+
+
+
+<p>
+<img src="figs/efficiencyPVPS.png" width="640" alt="figs/efficiencyPVPS.png" />
+</p>
+
+
+<p>
+The performance of a PVPS follows the same procedure as the one
+described for the GCPV systems.  The function <code>prodPVPS</code> is the
+equivalent to the function <code>prodGCPV</code>.  The inputs are very
+similar between them, although there are some changes due to the
+different composition of the system. This function does not allow for
+the calculation of shadows.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><a name="NmgPVPS" id="NmgPVPS"></a><span class="section-number-3">5.2</span> Nomograms of PVPS </h3>
+<div class="outline-text-3" id="text-5-2">
+
+<p>The international standard IEC 61725 is of common usage in public
+licitations of PVPS.  This standard proposes a equation of the
+irradiance profile with several parameters such as the length of the
+day, the daily irradiation and the maximum value of the irradiance.
+With this profile, the performance of a PVPS can be calculated for
+several manometric heights and nominal PV power values. A nomogram can
+display the set of combinations.  This graphical tool can help to
+choose the best combination of pump and PV generator for certain
+conditions of irradiation and height.
+</p>
+<p>
+This kind of graphics is provided by the function
+<code>NmgPVPS</code>. For example, the next figure is a
+nomogram for the SP8A44 pump working in a range of heights from 50 to
+80 meters, with different PV generators. The peculiar shape of the
+curve of 50 meters shows that this pump does not work correctly with
+this height.
+</p>
+
+
+
+<pre class="src src-r">&gt; Pg = seq(3000, 5500, by = 500)
+&gt; H = seq(50, 80, by = 5)
+&gt; NmgSP8A44 <span style="color: #008b8b;">&lt;-</span> NmgPVPS(pump = CoefSP8A44, Pg = Pg, H = H, Gd = 6000, 
+     title = <span style="color: #8b2252;">"Selection of Pumps"</span>)
+</pre>
+
+
+
+
+<p>
+<img src="figs/solaR-063.png" width="640" alt="figs/solaR-063.png" />
+</p>
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><a name="spatial" id="spatial"></a><span class="section-number-2">6</span> Spatial calculations </h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p>
+<code>solaR</code> is designed for time series associated to a
+location defined by the latitude and longitude values, and the
+temperature and irradiation conditions. However, <code>solaR</code> can also be
+easily combined with spatial packages.
+</p>
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> <code>solaR</code> and <code>sp</code> </h3>
+<div class="outline-text-3" id="text-6-1">
+
+
+
+
+<p>
+As an example of the interaction of <code>sp</code> and <code>solaR</code>, let's
+draw a map of the extraterrestial irradiance. First, the mean solar time for a range of
+longitudes with <code>local2Solar</code> is calculated with:
+</p>
+
+
+
+<pre class="src src-r">&gt; hh <span style="color: #008b8b;">&lt;-</span> as.POSIXct(<span style="color: #8b2252;">'2011-05-01 11:00:00'</span>, tz=<span style="color: #8b2252;">'CET'</span>)
+&gt; latitude <span style="color: #008b8b;">&lt;-</span> seq(70, -70, -1)
+&gt; longitude <span style="color: #008b8b;">&lt;-</span> seq(-180, 180, 1)
+&gt; horaLong <span style="color: #008b8b;">&lt;-</span> local2Solar(hh, longitude)
+</pre>
+
+
+
+
+<p>
+Then, the irradiance for the window defined by <code>latitude</code> and
+<code>longitude</code> is calculated with <code>calcSol</code>. The zero value is
+assigned to the <code>NA</code> elements in order to get them black coloured
+in the map.
+</p>
+
+
+
+<pre class="src src-r">&gt; solList <span style="color: #008b8b;">&lt;-</span> lapply(latitude, calcSol, BTi = horaLong)
+&gt; Bo0List <span style="color: #008b8b;">&lt;-</span> lapply(solList, <span style="color: #a020f0;">function</span>(x) as.data.frameI(x)$Bo0) 
+&gt; Bo0 <span style="color: #008b8b;">&lt;-</span> do.call(<span style="color: #8b2252;">'c'</span>, Bo0List)
+&gt; Bo0[is.na(Bo0)] <span style="color: #008b8b;">&lt;-</span> 0
+</pre>
+
+
+
+
+
+<p>
+The <code>data.frame</code> is now converted to an
+<code>SpatialPixelsDataFrame</code>. The result is displayed in the next figure.
+</p>
+
+
+<pre class="src src-r">&gt; Bo0DF <span style="color: #008b8b;">&lt;-</span> expand.grid(lon = longitude, lat = latitude)
+&gt; Bo0DF$Bo0 <span style="color: #008b8b;">&lt;-</span> c(Bo0)
+&gt; proj <span style="color: #008b8b;">&lt;-</span> CRS(<span style="color: #8b2252;">'+proj=latlon +ellps=WGS84'</span>) 
+&gt; Bo0SP <span style="color: #008b8b;">&lt;-</span> SpatialPixelsDataFrame(points = Bo0DF[,1:2],
+      data=Bo0DF[<span style="color: #8b2252;">"Bo0"</span>], proj4string = proj)
+
+&gt; paleta=colorRampPalette(rev(brewer.pal(<span style="color: #8b2252;">'Greys'</span>, n=9)))
+&gt; p <span style="color: #008b8b;">&lt;-</span> spplot(Bo0SP, scales = list(draw = <span style="color: #228b22;">TRUE</span>), col.regions = paleta,
+      cuts = 50)
+&gt; world <span style="color: #008b8b;">&lt;-</span> map(<span style="color: #8b2252;">"world"</span>, plot = <span style="color: #228b22;">FALSE</span>)
+&gt; world_sp <span style="color: #008b8b;">&lt;-</span> map2SpatialLines(world, proj4string = proj)
+&gt; p2 <span style="color: #008b8b;">&lt;-</span> p+layer(sp.lines(world_sp, lwd = 0.5))
+</pre>
+
+
+
+
+<p>
+<img src="figs/bo0_crop.png"  alt="figs/bo0_crop.png" />
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> <code>solaR</code> and <code>raster</code> </h3>
+<div class="outline-text-3" id="text-6-2">
+
+
+
+
+<p>
+As an example of the interaction of <code>raster</code> and <code>solaR</code>,
+<a href="http://www.box.net/shared/rl51y1t9sldxk54ogd44">several files</a> with monthly averages of global solar radiation over the
+Iberian Peninsula are read with <code>raster</code> and transformed with <code>solaR</code>. This
+information is provided by the Satellite Application Facility on
+Climate Monitoring <a href="http://www.cmsaf.eu/">CMSAF</a>. CMSAF generates, archives and distributes widely recognised high-quality
+satellite-derived products and services relevant for climate
+monitoring in operational mode. The data is freely accesible
+after a registration process.
+</p>
+
+
+
+
+<pre class="src src-r">&gt; <span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"raster"</span>)
+&gt; old <span style="color: #008b8b;">&lt;-</span> setwd(<span style="color: #8b2252;">'CMSAF'</span>) <span style="color: #b22222;">##</span><span style="color: #b22222;">folder where the files are stored</span>
+&gt; listFich <span style="color: #008b8b;">&lt;-</span> dir(pattern = <span style="color: #8b2252;">'2008'</span>)
+&gt; stackSIS <span style="color: #008b8b;">&lt;-</span> stack(listFich)
+&gt; stackSIS <span style="color: #008b8b;">&lt;-</span> stackSIS*24 <span style="color: #b22222;">##</span><span style="color: #b22222;">from irradiance (W/m2) to irradiation Wh/m2</span>
+&gt; setwd(old)
+</pre>
+
+
+
+
+<p>
+The yearly effective irradiance on an inclined plane can be calculated
+with <a href="#sec-3-4"><code>calcGef</code></a>. The next function uses <code>calcGef</code> to provide
+yearly values (<code>as.data.frameY</code>) of effective global, diffuse and
+direct irradiation:
+</p>
+
+
+
+<pre class="src src-r">&gt; <span style="color: #0000ff;">foo</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(x, ...){
+               gef <span style="color: #008b8b;">&lt;-</span> calcGef(lat = x[1], dataRad = list(G0dm = x[2:13]))
+               result <span style="color: #008b8b;">&lt;-</span> as.data.frameY(gef)[c(<span style="color: #8b2252;">'Gefd'</span>, <span style="color: #8b2252;">'Befd'</span>, <span style="color: #8b2252;">'Defd'</span>)]
+               as.numeric(result)
+  }
+</pre>
+
+
+
+
+
+<p>
+The function <code>calc</code> from <code>raster</code> applies this function to each
+cell of the <code>raster</code>:
+</p>
+
+
+
+<pre class="src src-r">&gt; latLayer <span style="color: #008b8b;">&lt;-</span> init(SISmm, v = <span style="color: #8b2252;">'y'</span>)
+&gt; gefS <span style="color: #008b8b;">&lt;-</span> calc(stack(latLayer, SISmm), foo,
+             filename = <span style="color: #8b2252;">'CMSAF/gefCMSAF'</span>,
+             overwrite = <span style="color: #228b22;">TRUE</span>)
+&gt; layerNames(gefS) <span style="color: #008b8b;">&lt;-</span> c(<span style="color: #8b2252;">'Gefd'</span>, <span style="color: #8b2252;">'Befd'</span>, <span style="color: #8b2252;">'Defd'</span>)
+</pre>
+
+
+
+
+<p>
+The next figure displays the results for the global
+effective irradiation using the
+<code>levelplot</code> method included in the <code>rasterVis</code> package, with the administrative borders
+overlaid (available <a href="http://biogeo.ucdavis.edu/data/diva/adm/ESP_adm.zip">here</a>) with the <code>layer</code> mechanism of the <code>latticeExtra</code> package:
+</p>
+
+
+
+<pre class="src src-r">&gt; <span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"maptools"</span>)
+&gt; <span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"rasterVis"</span>)
+&gt; proj <span style="color: #008b8b;">&lt;-</span> CRS(projection(SISmm))
+&gt; mapaSHP <span style="color: #008b8b;">&lt;-</span> readShapeLines(<span style="color: #8b2252;">'ESP_adm2.shp'</span>, proj4string = proj)
+&gt; levelplot(gefS, layers = <span style="color: #8b2252;">'Gefd'</span>) + layer(sp.lines(mapaSHP, lwd = 0.7))
+</pre>
+
+
+
+
+
+<p>
+<img src="figs/CMSAF_Gef-crop.png"  alt="figs/CMSAF_Gef-crop.png" />
+</p>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><a name="Target_Diagram" id="Target_Diagram"></a><span class="section-number-2">7</span> Target Diagram </h2>
+<div class="outline-text-2" id="text-7">
+
+
+<p>
+In a PV plant, the individual systems are theoretically identical and
+their performance along the time should be the same. Due to their
+practical differences &ndash;power tolerance, dispersion losses, dust&ndash;,
+the individual performance of each system will deviate from the
+average behaviour. However, when a system is performing correctly,
+these deviations are constrained inside a range and should not be
+regarded as a sign of malfunctioning.
+</p>
+<p>
+If these common deviations are assumed as a random process, a
+statistical analysis of the performance of the whole set of systems
+can identify a faulty system as the one that departs significantly
+from the mean behaviour.
+</p>
+<p>
+The functions <code>analyzeData</code> and <code>TargetDiagram</code> compare the
+daily performance of each system with a reference (for example, the
+median of the whole set) during a time period of N days preceding the
+current day. They calculate a set of statistics of the performance of
+the PV plant as a whole, and another set of the comparison with the
+reference. 
+</p>
+<p>
+This statistical analysis can be summarised with a graphical tool
+named "Target Diagram", which plots together the root mean square
+difference, the average difference and the standard deviation of the
+difference. Besides, this diagram includes the sign of the difference
+of the standard deviations of the system and the reference.
+</p>
+<p>
+The example of the next figure uses a dataset of
+productivity from a PV plant composed of 22 systems
+(<code>data("prodEx")</code>) showing that the system no.20 is not
+working correctly during these periods.
+</p>
+
+
+
+<pre class="src src-r">&gt; data(<span style="color: #8b2252;">"prodEx"</span>)
+&gt; ndays = c(5, 10, 15, 20)
+&gt; palette = brewer.pal(n = length(ndays), name = <span style="color: #8b2252;">"Set1"</span>)
+&gt; TDColor <span style="color: #008b8b;">&lt;-</span> TargetDiagram(prodEx, end = day, 
+      ndays = ndays, 
+      color = palette)
+</pre>
+
+
+
+
+<p>
+<img src="figs/TDprod_crop.png" width="640" alt="figs/TDprod_crop.png" />
+</p>
+<p>
+A <a href="#horizonplot">previous figure</a> displayed the result of an example
+with <code>mergesolaR</code> and the SIAR network. The function
+<code>TargetDiagram</code> is an alternative tool to show the behaviour of
+the set of meteorological stations (figure
+<a href="#fig-TargetMerge">TargetMerge</a>). Once again, the behaviour of the Aranjuez
+station is consistently different from the rest of the stations of Madrid during
+these time intervals.
+</p>
+
+
+
+<pre class="src src-r">&gt; TDMadrid <span style="color: #008b8b;">&lt;-</span> TargetDiagram(YfMadrid, 
+     end = as.POSIXct(<span style="color: #8b2252;">"2010-12-31"</span>), 
+     ndays = c(10, 20, 30, 40, 50, 60), 
+     cex = 0.7)
+</pre>
+
+
+
+
+
+<p>
+<img src="figs/TDMadrid_crop.png" width="640" alt="figs/TDMadrid_crop.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2011-10-25 14:14:34 CEST</p>
+<p class="author">Author: Oscar Perpiñán Lamigueiro</p>
+<p class="creator">Org version 7.7 with Emacs version 23</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>
