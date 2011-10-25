@@ -7,7 +7,7 @@ Encoding: UTF-8
 Author: Oscar Perpiñán Lamigueiro
 Maintainer: Oscar Perpiñán Lamigueiro <oscar.perpinan@upm.es>
 Description: Calculation methods of solar radiation and performance of photovoltaic systems from daily and intradaily irradiation data sources.
-URL: http://procomun.wordpress.com
+URL: http://solar.r-forge.r-project.org/; http://procomun.wordpress.com
 License: GPL-3
 LazyLoad: yes
 LazyData: yes
