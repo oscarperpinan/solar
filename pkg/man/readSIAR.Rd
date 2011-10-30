@@ -74,7 +74,6 @@ the previous \code{RedEstaciones} (not available in this version).  }
   \code{\link{readG0dm}},
   \code{\link{readBD}},
   \code{\link{fTemp}},
-  \code{\link{SIAR}},
   \code{\link{read.zoo}}
 }
 \examples{

@@ -2,6 +2,12 @@
 \docType{methods}
 \alias{window}
 \alias{window-methods}
+\alias{[,Meteo,ANY,ANY-method}
+\alias{[,Sol,ANY,ANY-method}
+\alias{[,G0,ANY,ANY-method}
+\alias{[,Gef,ANY,ANY-method}
+\alias{[,ProdGCPV,ANY,ANY-method}
+\alias{[,ProdPVPS,ANY,ANY-method}
 \alias{[,Meteo-method}
 \alias{[,Sol-method}
 \alias{[,G0-method}
