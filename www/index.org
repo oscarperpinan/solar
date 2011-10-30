@@ -250,7 +250,7 @@ the meteorological data available at http://www.marm.es/siar.  This
 web page provides daily measurements from a set of agroclimatic
 stations located in Spain (next figure). This function needs
 the code of the station and its province, and the start and end
-date. The number codes of the stations and provinces are available [[http:/solar.r-forge.r-project.org/data/SIAR.csv][here]]:
+date. The number codes of the stations and provinces are available [[http://solar.r-forge.r-project.org/data/SIAR.csv][here]]:
 
 #+begin_src r :tangle yes
 SIAR <- read.csv('http://solar.r-forge.r-project.org/data/SIAR.csv')
