@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title><code>solaR</code>: Solar Radiation and Photovoltaic Systems with <code>R</code></title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2011-10-25 14:43:52 CEST"/>
+<meta name="generated" content="2011-10-30 11:14:54 CET"/>
 <meta name="author" content="Oscar Perpiñán Lamigueiro"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -106,7 +106,7 @@ lang="en" xml:lang="en">
 </li>
 <li><a href="#sec-4">4 Productivity of a Grid Connected PV System </a>
 <ul>
-<li><a href="#sec-4-1">4.1 Using <code>mergesolaR</code> </a></li>
+<li><a href="#sec-4-1">4.1 Merging daily solar time series </a></li>
 <li><a href="#sec-4-2">4.2 Shadows </a></li>
 <li><a href="#sec-4-3">4.3 Position of trackers in a PV plant </a></li>
 </ul>
@@ -225,15 +225,15 @@ these days are displayed in the next figure.
 
 
 
-<pre class="src src-r">&gt; lat = 37.2
-&gt; SolD <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd = fBTd(mode = <span style="color: #8b2252;">"prom"</span>))
-&gt; SolI <span style="color: #008b8b;">&lt;-</span> fSolI(SolD, sample = <span style="color: #8b2252;">"10 min"</span>, keep.night = <span style="color: #228b22;">FALSE</span>)
-&gt; mon = month.abb
-&gt; p <span style="color: #008b8b;">&lt;-</span> xyplot(r2d(AlS) ~ r2d(AzS), groups = month, data = SolI, 
+<pre class="src src-r">lat = 37.2
+SolD <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd = fBTd(mode = <span style="color: #8b2252;">"prom"</span>))
+SolI <span style="color: #008b8b;">&lt;-</span> fSolI(SolD, sample = <span style="color: #8b2252;">"10 min"</span>, keep.night = <span style="color: #228b22;">FALSE</span>)
+mon = month.abb
+p <span style="color: #008b8b;">&lt;-</span> xyplot(r2d(AlS) ~ r2d(AzS), groups = month, data = SolI, 
      type = <span style="color: #8b2252;">"l"</span>, col = <span style="color: #8b2252;">"black"</span>, 
      xlab = expression(psi[s]), 
      ylab = expression(gamma[s]))
-&gt; p + glayer({
+p + glayer({
      idx <span style="color: #008b8b;">&lt;-</span> round(length(x)/2 + 1)
      panel.text(x[idx], y[idx], mon[group.value], pos = 3, offset = 0.2, 
          cex = 0.8)
@@ -255,15 +255,15 @@ methods are named as 'cooper' , 'spencer', 'michalsky' (default)  and
 
 
 
-<pre class="src src-r">&gt; lat=37.2
-&gt; BTd=fBTd(mode=<span style="color: #8b2252;">'serie'</span>)
-&gt; solStrous <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd, method=<span style="color: #8b2252;">'strous'</span>)
-&gt; solSpencer <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd, method=<span style="color: #8b2252;">'spencer'</span>)
-&gt; solCooper <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd, method=<span style="color: #8b2252;">'cooper'</span>)
-&gt; solMichalsky <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd, method=<span style="color: #8b2252;">'michalsky'</span>)
-&gt; decDif <span style="color: #008b8b;">&lt;-</span> solMichalsky$decl - cbind(solStrous$decl, 
+<pre class="src src-r">lat=37.2
+BTd=fBTd(mode=<span style="color: #8b2252;">'serie'</span>)
+solStrous <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd, method=<span style="color: #8b2252;">'strous'</span>)
+solSpencer <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd, method=<span style="color: #8b2252;">'spencer'</span>)
+solCooper <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd, method=<span style="color: #8b2252;">'cooper'</span>)
+solMichalsky <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd, method=<span style="color: #8b2252;">'michalsky'</span>)
+decDif <span style="color: #008b8b;">&lt;-</span> solMichalsky$decl - cbind(solStrous$decl, 
       solSpencer$decl, solCooper$decl)
-&gt; names(decDif) <span style="color: #008b8b;">&lt;-</span> c(<span style="color: #8b2252;">'strous'</span>, <span style="color: #8b2252;">'spencer'</span>, <span style="color: #8b2252;">'cooper'</span>)
+names(decDif) <span style="color: #008b8b;">&lt;-</span> c(<span style="color: #8b2252;">'strous'</span>, <span style="color: #8b2252;">'spencer'</span>, <span style="color: #8b2252;">'cooper'</span>)
 </pre>
 
 
@@ -327,16 +327,16 @@ user may define a particular correlation through the argument
 
 
 
-<pre class="src src-r">&gt; BTd = fBTd(mode = <span style="color: #8b2252;">"serie"</span>)
-&gt; SolD <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd[100])
-&gt; SolI <span style="color: #008b8b;">&lt;-</span> fSolI(SolD, sample = <span style="color: #8b2252;">"hour"</span>)
-&gt; G0d = zoo(5000, index(SolD))
-&gt; fCompD(SolD, G0d, corr = <span style="color: #8b2252;">"Page"</span>)
+<pre class="src src-r">BTd = fBTd(mode = <span style="color: #8b2252;">"serie"</span>)
+SolD <span style="color: #008b8b;">&lt;-</span> fSolD(lat, BTd[100])
+SolI <span style="color: #008b8b;">&lt;-</span> fSolI(SolD, sample = <span style="color: #8b2252;">"hour"</span>)
+G0d = zoo(5000, index(SolD))
+fCompD(SolD, G0d, corr = <span style="color: #8b2252;">"Page"</span>)
 
                Fd    Ktd  G0d  D0d  B0d
 2011-04-10 0.4123 0.5201 5000 2062 2938
 
-&gt; fCompD(SolD, G0d, corr = <span style="color: #8b2252;">"CPR"</span>)
+fCompD(SolD, G0d, corr = <span style="color: #8b2252;">"CPR"</span>)
 
                Fd    Ktd  G0d  D0d  B0d
 2011-04-10 0.5658 0.5201 5000 2829 2171
@@ -355,14 +355,14 @@ the profiles for the ``monthly average days'' are obtained with the next code:
 
 
 
-<pre class="src src-r">&gt; sol <span style="color: #008b8b;">&lt;-</span> calcSol(lat, fBTd(mode = <span style="color: #8b2252;">"prom"</span>), sample = <span style="color: #8b2252;">"hour"</span>, keep.night = <span style="color: #228b22;">FALSE</span>)
-&gt; G0dm = c(2.766, 3.491, 4.494, 5.912, 6.989, 7.742, 7.919, 7.027, 
+<pre class="src src-r">sol <span style="color: #008b8b;">&lt;-</span> calcSol(lat, fBTd(mode = <span style="color: #8b2252;">"prom"</span>), sample = <span style="color: #8b2252;">"hour"</span>, keep.night = <span style="color: #228b22;">FALSE</span>)
+G0dm = c(2.766, 3.491, 4.494, 5.912, 6.989, 7.742, 7.919, 7.027, 
      5.369, 3.562, 2.814, 2.179) * 1000
-&gt; Ta = c(10, 14.1, 15.6, 17.2, 19.3, 21.2, 28.4, 29.9, 24.3, 18.2, 
+Ta = c(10, 14.1, 15.6, 17.2, 19.3, 21.2, 28.4, 29.9, 24.3, 18.2, 
      17.2, 15.2)
-&gt; BD <span style="color: #008b8b;">&lt;-</span> readG0dm(G0dm = G0dm, Ta = Ta, lat = 37.2)
-&gt; compD <span style="color: #008b8b;">&lt;-</span> fCompD(sol, BD, corr = <span style="color: #8b2252;">"Page"</span>)
-&gt; compI <span style="color: #008b8b;">&lt;-</span> fCompI(sol, compD)
+BD <span style="color: #008b8b;">&lt;-</span> readG0dm(G0dm = G0dm, Ta = Ta, lat = 37.2)
+compD <span style="color: #008b8b;">&lt;-</span> fCompD(sol, BD, corr = <span style="color: #8b2252;">"Page"</span>)
+compI <span style="color: #008b8b;">&lt;-</span> fCompI(sol, compD)
 </pre>
 
 
@@ -399,11 +399,12 @@ a <code>Meteo</code> object with the next code:
 </p>
 
 
-<pre class="src src-r">&gt; data(<span style="color: #8b2252;">"helios"</span>)
-&gt; names(helios) = c(<span style="color: #8b2252;">"date"</span>, <span style="color: #8b2252;">"G0"</span>, <span style="color: #8b2252;">"TempMax"</span>, <span style="color: #8b2252;">"TempMin"</span>)
-&gt; bd = df2Meteo(helios, dates.col = <span style="color: #8b2252;">"date"</span>, lat = 41, <span style="color: #008b8b;">source</span> = <span style="color: #8b2252;">"helios-IES"</span>, 
+
+<pre class="src src-r">data(<span style="color: #8b2252;">"helios"</span>)
+names(helios) = c(<span style="color: #8b2252;">"date"</span>, <span style="color: #8b2252;">"G0"</span>, <span style="color: #8b2252;">"TempMax"</span>, <span style="color: #8b2252;">"TempMin"</span>)
+bd = df2Meteo(helios, dates.col = <span style="color: #8b2252;">"date"</span>, lat = 41, <span style="color: #008b8b;">source</span> = <span style="color: #8b2252;">"helios-IES"</span>, 
      format = <span style="color: #8b2252;">"%Y/%m/%d"</span>)
-&gt; bd
+bd
 
 Object of class  Meteo 
 
@@ -430,9 +431,37 @@ the meteorological data available at <a href="http://www.marm.es/siar">http://ww
 web page provides daily measurements from a set of agroclimatic
 stations located in Spain (next figure). This function needs
 the code of the station and its province, and the start and end
-date. The codes of stations and provinces are stored at the dataset
-<code>SIAR</code>. 
+date. The number codes of the stations and provinces are available <a href="http:/solar.r-forge.r-project.org/data/SIAR.csv">here</a>:
 </p>
+
+
+
+<pre class="src src-r">SIAR <span style="color: #008b8b;">&lt;-</span> read.csv(<span style="color: #8b2252;">'http://solar.r-forge.r-project.org/data/SIAR.csv'</span>)
+proj <span style="color: #008b8b;">&lt;-</span> CRS(<span style="color: #8b2252;">'+proj=longlat +ellps=WGS84'</span>)
+spSIAR <span style="color: #008b8b;">&lt;-</span> SpatialPointsDataFrame(SIAR[, c(6, 7)], SIAR[, -c(6, 7)],
+                                 proj4str=proj)
+
+
+<span style="color: #b22222;">###</span><span style="color: #b22222;">download a shapefile with the administrative borders of Spain</span>
+old <span style="color: #008b8b;">&lt;-</span> setwd(tempdir())
+download.file(<span style="color: #8b2252;">'http://www.gadm.org/data/shp/ESP_adm.zip'</span>, <span style="color: #8b2252;">'ESP_adm.zip'</span>)
+unzip(<span style="color: #8b2252;">'ESP_adm.zip'</span>)
+mapaSHP <span style="color: #008b8b;">&lt;-</span> readShapeLines(<span style="color: #8b2252;">'ESP_adm2.shp'</span>, proj4string=proj)
+setwd(old)
+
+p <span style="color: #008b8b;">&lt;-</span> spplot(spSIAR[<span style="color: #8b2252;">'Comunidad'</span>],
+       col.regions=brewer.pal(n=12, <span style="color: #8b2252;">'Paired'</span>),
+       key.space=<span style="color: #8b2252;">'right'</span>, scales=list(draw=<span style="color: #228b22;">TRUE</span>),
+       type=c(<span style="color: #8b2252;">'p'</span>,<span style="color: #8b2252;">'g'</span>))
+
+p  + layer(sp.lines(mapaSHP))
+}
+
+
+</pre>
+
+
+
 <p>
 <img src="figs/siar_crop.png" width="640" alt="figs/siar_crop.png" />
 </p>
@@ -447,8 +476,8 @@ in the next figure.
 
 
 
-<pre class="src src-r">&gt; Aranjuez <span style="color: #008b8b;">&lt;-</span> readSIAR(28, 3, <span style="color: #8b2252;">"01/01/2009"</span>, <span style="color: #8b2252;">"31/12/2009"</span>)
-&gt; xyplot(G0 ~ TempMedia | month, data = Aranjuez, type = c(<span style="color: #8b2252;">"p"</span>, <span style="color: #8b2252;">"r"</span>))
+<pre class="src src-r">Aranjuez <span style="color: #008b8b;">&lt;-</span> readSIAR(28, 3, <span style="color: #8b2252;">"01/01/2009"</span>, <span style="color: #8b2252;">"31/12/2009"</span>)
+xyplot(G0 ~ TempMedia | month, data = Aranjuez, type = c(<span style="color: #8b2252;">"p"</span>, <span style="color: #8b2252;">"r"</span>))
 </pre>
 
 
@@ -473,12 +502,12 @@ time series of temperature during March is displayed in the next figure.
 
 
 
-<pre class="src src-r">&gt; lat = 41
-&gt; sol = calcSol(lat, BTd = indexD(Aranjuez), sample = <span style="color: #8b2252;">"hour"</span>)
-&gt; Temp <span style="color: #008b8b;">&lt;-</span> fTemp(sol, Aranjuez)
-&gt; wTemp = window(Temp, start = as.POSIXct(<span style="color: #8b2252;">"2009-03-01"</span>), 
+<pre class="src src-r">lat = 41
+sol = calcSol(lat, BTd = indexD(Aranjuez), sample = <span style="color: #8b2252;">"hour"</span>)
+Temp <span style="color: #008b8b;">&lt;-</span> fTemp(sol, Aranjuez)
+wTemp = window(Temp, start = as.POSIXct(<span style="color: #8b2252;">"2009-03-01"</span>), 
       end = as.POSIXct(<span style="color: #8b2252;">"2009-03-31"</span>))
-&gt; xyplot(wTemp, col = <span style="color: #8b2252;">"black"</span>, ylab = <span style="color: #8b2252;">"T"</span>) + 
+xyplot(wTemp, col = <span style="color: #8b2252;">"black"</span>, ylab = <span style="color: #8b2252;">"T"</span>) + 
       layer_(panel.xblocks(x, DoY, col = c(<span style="color: #8b2252;">"lightgray"</span>, <span style="color: #8b2252;">"white"</span>)))
 </pre>
 
@@ -507,7 +536,7 @@ from the measurements of the meteorological station of Aranjuez
 
 
 
-<pre class="src src-r">&gt; g0 <span style="color: #008b8b;">&lt;-</span> calcG0(lat = 37.2, modeRad = <span style="color: #8b2252;">"siar"</span>, dataRad = list(prov = 28, 
+<pre class="src src-r">g0 <span style="color: #008b8b;">&lt;-</span> calcG0(lat = 37.2, modeRad = <span style="color: #8b2252;">"siar"</span>, dataRad = list(prov = 28, 
      est = 3, start = <span style="color: #8b2252;">"01/01/2009"</span>, end = <span style="color: #8b2252;">"31/12/2009"</span>))
 </pre>
 
@@ -533,16 +562,16 @@ obtained, since it is not included in the file.
 
 
 
-<pre class="src src-r">&gt; lat = 20.77
-&gt; lon = -156.9339
-&gt; dat <span style="color: #008b8b;">&lt;-</span> read.zoo(file, 
+<pre class="src src-r">lat = 20.77
+lon = -156.9339
+dat <span style="color: #008b8b;">&lt;-</span> read.zoo(file, 
      col.names = c(<span style="color: #8b2252;">"date"</span>, <span style="color: #8b2252;">"hour"</span>, <span style="color: #8b2252;">"G0"</span>, <span style="color: #8b2252;">"B"</span>, <span style="color: #8b2252;">"D0"</span>, <span style="color: #8b2252;">"Ta"</span>), 
      index = list(1, 2), 
      FUN = <span style="color: #a020f0;">function</span>(d, h) as.POSIXct(paste(d, h), 
          format = <span style="color: #8b2252;">"%m/%d/%Y %H:%M"</span>, tz = <span style="color: #8b2252;">"HST"</span>), 
      FUN2 = <span style="color: #a020f0;">function</span>(x) local2Solar(x, lon), 
      header = <span style="color: #228b22;">TRUE</span>, sep = <span style="color: #8b2252;">","</span>)
-&gt; dat$B0 <span style="color: #008b8b;">&lt;-</span> dat$G0 - dat$D0
+dat$B0 <span style="color: #008b8b;">&lt;-</span> dat$G0 - dat$D0
 
 </pre>
 
@@ -555,7 +584,7 @@ Finally, the  object <code>Meteo</code> is obtained with <code>zoo2Meteo</code>:
 
 
 
-<pre class="src src-r">&gt; NRELMeteo <span style="color: #008b8b;">&lt;-</span> zoo2Meteo(dat, lat = lat, <span style="color: #008b8b;">source</span> = <span style="color: #8b2252;">"NREL-La Ola-Lanai"</span>)
+<pre class="src src-r">NRELMeteo <span style="color: #008b8b;">&lt;-</span> zoo2Meteo(dat, lat = lat, <span style="color: #008b8b;">source</span> = <span style="color: #8b2252;">"NREL-La Ola-Lanai"</span>)
 </pre>
 
 
@@ -571,7 +600,7 @@ diffuse and direct components are available, no correlation is needed (corr='non
 
 
 
-<pre class="src src-r">&gt; g0NREL <span style="color: #008b8b;">&lt;-</span> calcG0(lat = lat, modeRad = <span style="color: #8b2252;">"bdI"</span>, dataRad = NRELMeteo, 
+<pre class="src src-r">g0NREL <span style="color: #008b8b;">&lt;-</span> calcG0(lat = lat, modeRad = <span style="color: #8b2252;">"bdI"</span>, dataRad = NRELMeteo, 
      corr = <span style="color: #8b2252;">"none"</span>)
 </pre>
 
@@ -585,7 +614,7 @@ needed :
 
 
 
-<pre class="src src-r">&gt; g0BRL <span style="color: #008b8b;">&lt;-</span> calcG0(lat = lat, modeRad = <span style="color: #8b2252;">"bdI"</span>, dataRad = NRELMeteo, 
+<pre class="src src-r">g0BRL <span style="color: #008b8b;">&lt;-</span> calcG0(lat = lat, modeRad = <span style="color: #8b2252;">"bdI"</span>, dataRad = NRELMeteo, 
      corr = <span style="color: #8b2252;">"BRL"</span>)
 </pre>
 
@@ -649,9 +678,9 @@ this system.
 
 
 
-<pre class="src src-r">&gt; gef <span style="color: #008b8b;">&lt;-</span> calcGef(lat = 37.2, modeRad = <span style="color: #8b2252;">"prev"</span>, dataRad = g0, 
+<pre class="src src-r">gef <span style="color: #008b8b;">&lt;-</span> calcGef(lat = 37.2, modeRad = <span style="color: #8b2252;">"prev"</span>, dataRad = g0, 
       beta = 30)
-&gt; xyplot(Gef/G ~ cosTheta | month, data = gef, type = c(<span style="color: #8b2252;">"p"</span>, 
+xyplot(Gef/G ~ cosTheta | month, data = gef, type = c(<span style="color: #8b2252;">"p"</span>, 
       <span style="color: #8b2252;">"smooth"</span>), cex = 0.4, alpha = 0.5)
 </pre>
 
@@ -672,9 +701,9 @@ The meaning of the <code>distances</code> and
 
 
 
-<pre class="src src-r">&gt; structHoriz = list(L = 4.83)
-&gt; distHoriz = data.frame(Lew = structHoriz$L * 4, H = 0)
-&gt; gefBT = calcGef(lat = 37.2, dataRad = prom, sample = <span style="color: #8b2252;">"10 min"</span>, 
+<pre class="src src-r">structHoriz = list(L = 4.83)
+distHoriz = data.frame(Lew = structHoriz$L * 4, H = 0)
+gefBT = calcGef(lat = 37.2, dataRad = prom, sample = <span style="color: #8b2252;">"10 min"</span>, 
      modeTrk = <span style="color: #8b2252;">"horiz"</span>, modeShd = <span style="color: #8b2252;">"bt"</span>, betaLim = 60, distances = distHoriz, 
      struct = structHoriz)
 </pre>
@@ -713,8 +742,8 @@ system is calculated with:
 
 
 
-<pre class="src src-r">&gt; inclin = data.frame(Gef = c(200, 400, 600, 800, 1000), Ta = 25)
-&gt; fProd(inclin)
+<pre class="src src-r">inclin = data.frame(Gef = c(200, 400, 600, 800, 1000), Ta = 25)
+fProd(inclin)
 
    Gef Ta    Tc   Voc   Isc  Vmpp   Impp   Vdc    Idc   Pac   Pdc   EffI
 1  200 25 31.75 673.3 10.34 533.1  9.586 533.1  9.586  4212  4737 0.9164
@@ -747,12 +776,12 @@ inverter), 420V,  since <code>Vmpp</code> is below this value.
 
 
 
-<pre class="src src-r">&gt; inclin = data.frame(Gef = 800, Ta = 30)
-&gt; gen1 = list(Nms = 10, Nmp = 11)
-&gt; inv1 = list(Ki = c(0.01, 0.025, 0.05), Pinv = 25000, Vmin = 420, 
+<pre class="src src-r">inclin = data.frame(Gef = 800, Ta = 30)
+gen1 = list(Nms = 10, Nmp = 11)
+inv1 = list(Ki = c(0.01, 0.025, 0.05), Pinv = 25000, Vmin = 420, 
      Vmax = 750, Gumb = 20)
-&gt; prod = fProd(inclin, generator = gen1, inverter = inv1)
-&gt; print(prod)
+prod = fProd(inclin, generator = gen1, inverter = inv1)
+print(prod)
 
   Gef Ta Tc   Voc   Isc  Vmpp  Impp Vdc   Idc   Pac   Pdc   EffI
 1 800 30 57 505.3 41.36 392.3 37.68 420 33.83 11943 13169 0.9346
@@ -768,7 +797,7 @@ For this configuration, the losses due to the voltage limitation are:
 
 
 
-<pre class="src src-r">&gt; with(prod, Vdc * Idc/(Vmpp * Impp))
+<pre class="src src-r">with(prod, Vdc * Idc/(Vmpp * Impp))
 
 0.961
 </pre>
@@ -791,10 +820,10 @@ of the system are those by default in <code>prodGCPV</code>.
 
 
 
-<pre class="src src-r">&gt; ProdFixed <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, keep.night = <span style="color: #228b22;">FALSE</span>)
-&gt; Prod2x <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"two"</span>, 
+<pre class="src src-r">ProdFixed <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, keep.night = <span style="color: #228b22;">FALSE</span>)
+Prod2x <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"two"</span>, 
      keep.night = <span style="color: #228b22;">FALSE</span>)
-&gt; ProdHoriz <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"horiz"</span>, 
+ProdHoriz <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"horiz"</span>, 
      keep.night = <span style="color: #228b22;">FALSE</span>)
 </pre>
 
@@ -806,7 +835,7 @@ of the system are those by default in <code>prodGCPV</code>.
 </div>
 
 <div id="outline-container-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Using <code>mergesolaR</code> </h3>
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Merging daily solar time series </h3>
 <div class="outline-text-3" id="text-4-1">
 
 
@@ -826,18 +855,18 @@ behaviour of some stations, the code includes the use of <code>try</code>:
 
 
 
-<pre class="src src-r">&gt; EstMadrid <span style="color: #008b8b;">&lt;-</span> subset(SIAR, Provincia == <span style="color: #8b2252;">"Madrid"</span>)
-&gt; nEstMadrid <span style="color: #008b8b;">&lt;-</span> nrow(EstMadrid)
-&gt; namesMadrid <span style="color: #008b8b;">&lt;-</span> EstMadrid$Estacion
-&gt; prodMadrid <span style="color: #008b8b;">&lt;-</span> lapply(1:nEstMadrid, <span style="color: #a020f0;">function</span>(x) {
+<pre class="src src-r">EstMadrid <span style="color: #008b8b;">&lt;-</span> subset(SIAR, Provincia == <span style="color: #8b2252;">"Madrid"</span>)
+nEstMadrid <span style="color: #008b8b;">&lt;-</span> nrow(EstMadrid)
+namesMadrid <span style="color: #008b8b;">&lt;-</span> EstMadrid$Estacion
+prodMadrid <span style="color: #008b8b;">&lt;-</span> lapply(1:nEstMadrid, <span style="color: #a020f0;">function</span>(x) {
      try(prodGCPV(lat = 41, modeRad = <span style="color: #8b2252;">"siar"</span>, dataRad = list(prov = 28, 
          est = x, start = <span style="color: #8b2252;">"01/01/2009"</span>, end = <span style="color: #8b2252;">"31/12/2010"</span>)))
  })
 
-&gt; names(prodMadrid) <span style="color: #008b8b;">&lt;-</span> namesMadrid
-&gt; okMadrid <span style="color: #008b8b;">&lt;-</span> lapply(prodMadrid, class) != <span style="color: #8b2252;">"try-error"</span>
-&gt; prodMadrid <span style="color: #008b8b;">&lt;-</span> prodMadrid[okMadrid]
-&gt; YfMadrid <span style="color: #008b8b;">&lt;-</span> do.call(mergesolaR, prodMadrid)
+names(prodMadrid) <span style="color: #008b8b;">&lt;-</span> namesMadrid
+okMadrid <span style="color: #008b8b;">&lt;-</span> lapply(prodMadrid, class) != <span style="color: #8b2252;">"try-error"</span>
+prodMadrid <span style="color: #008b8b;">&lt;-</span> prodMadrid[okMadrid]
+YfMadrid <span style="color: #008b8b;">&lt;-</span> do.call(mergesolaR, prodMadrid)
 
 </pre>
 
@@ -856,7 +885,7 @@ result will be revisited with the <a href="#sec-7"><code>TargetDiagram</code></a
 
 
 
-<pre class="src src-r">&gt; horizonplot(YfMadrid - rowMeans(YfMadrid), origin = 0, 
+<pre class="src src-r">horizonplot(YfMadrid - rowMeans(YfMadrid), origin = 0, 
      scales = list(y = list(relation = <span style="color: #8b2252;">"same"</span>)), colorkey = <span style="color: #228b22;">TRUE</span>))
 </pre>
 
@@ -901,9 +930,9 @@ With a two-axis tracking system:
 </p>
 
 
-<pre class="src src-r">&gt; struct2x = list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
-&gt; dist2x = data.frame(Lew = 40, Lns = 30, H = 0)
-&gt; prod2xShd <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"two"</span>, 
+<pre class="src src-r">struct2x = list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
+dist2x = data.frame(Lew = 40, Lns = 30, H = 0)
+prod2xShd <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"two"</span>, 
      modeShd = <span style="color: #8b2252;">"area"</span>, struct = struct2x, distances = dist2x)
 </pre>
 
@@ -915,9 +944,9 @@ Then, a N-S horizontal axis tracking system without backtracking,
 </p>
 
 
-<pre class="src src-r">&gt; structHoriz = list(L = 4.83)
-&gt; distHoriz = data.frame(Lew = structHoriz$L * 4, H = 0) 
-&gt; prodHorizShd <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, sample = <span style="color: #8b2252;">"10 min"</span>, 
+<pre class="src src-r">structHoriz = list(L = 4.83)
+distHoriz = data.frame(Lew = structHoriz$L * 4, H = 0) 
+prodHorizShd <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, sample = <span style="color: #8b2252;">"10 min"</span>, 
      modeTrk = <span style="color: #8b2252;">"horiz"</span>, modeShd = <span style="color: #8b2252;">"area"</span>, betaLim = 60, distances = distHoriz, 
      struct = structHoriz)
 </pre>
@@ -930,7 +959,7 @@ and a N-S horizontal axis tracking system with backtracking,
 </p>
 
 
-<pre class="src src-r">&gt; prodHorizBT <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, sample = <span style="color: #8b2252;">"10 min"</span>, 
+<pre class="src src-r">prodHorizBT <span style="color: #008b8b;">&lt;-</span> prodGCPV(lat = lat, dataRad = prom, sample = <span style="color: #8b2252;">"10 min"</span>, 
      modeTrk = <span style="color: #8b2252;">"horiz"</span>, modeShd = <span style="color: #8b2252;">"bt"</span>, betaLim = 60, distances = distHoriz, 
      struct = structHoriz)
 </pre>
@@ -944,9 +973,9 @@ with the method <code>compare</code>:
 </p>
 
 
-<pre class="src src-r">&gt; comp <span style="color: #008b8b;">&lt;-</span> compare(ProdFixed, Prod2x, ProdHoriz, prod2xShd, 
+<pre class="src src-r">comp <span style="color: #008b8b;">&lt;-</span> compare(ProdFixed, Prod2x, ProdHoriz, prod2xShd, 
      prodHorizShd, prodHorizBT)
-&gt; head(comp)
+head(comp)
 
   values  ind      name
 1   1836  G0d ProdFixed
@@ -973,9 +1002,9 @@ compare their <i>yearly</i> losses, respectively:
 
 
 
-<pre class="src src-r">&gt; compL <span style="color: #008b8b;">&lt;-</span> compareLosses(ProdFixed, Prod2x, ProdHoriz, prod2xShd, 
+<pre class="src src-r">compL <span style="color: #008b8b;">&lt;-</span> compareLosses(ProdFixed, Prod2x, ProdHoriz, prod2xShd, 
      prodHorizShd, prodHorizBT)
-&gt; head(compL)
+head(compL)
 
          id  values      name
 1   Shadows 0.00000 ProdFixed
@@ -1043,7 +1072,7 @@ and 8 columns using a two-axis tracker whose dimensions are
 
 
 
-<pre class="src src-r">&gt; struct2x = list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
+<pre class="src src-r">struct2x = list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
 </pre>
 
 
@@ -1057,7 +1086,7 @@ and 50 meter for the North-South direction.
 
 
 
-<pre class="src src-r">&gt; dist2x = list(Lew = c(30, 50), Lns = c(20, 50))
+<pre class="src src-r">dist2x = list(Lew = c(30, 50), Lns = c(20, 50))
 </pre>
 
 
@@ -1072,11 +1101,11 @@ increment, in meters, of the sequence. In this example,
 
 
 
-<pre class="src src-r">&gt; ShdM2x <span style="color: #008b8b;">&lt;-</span> optimShd(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"two"</span>, 
+<pre class="src src-r">ShdM2x <span style="color: #008b8b;">&lt;-</span> optimShd(lat = lat, dataRad = prom, modeTrk = <span style="color: #8b2252;">"two"</span>, 
      modeShd = c(<span style="color: #8b2252;">"area"</span>, <span style="color: #8b2252;">"prom"</span>), distances = dist2x, struct = struct2x, 
      res = 5, prog = <span style="color: #228b22;">FALSE</span>)
 
-&gt; shadeplot(ShdM2x)
+shadeplot(ShdM2x)
 </pre>
 
 
@@ -1130,9 +1159,9 @@ with H=40m is simulated with:
 
 
 
-<pre class="src src-r">&gt; data(<span style="color: #8b2252;">"pumpCoef"</span>)
-&gt; CoefSP8A44 <span style="color: #008b8b;">&lt;-</span> subset(pumpCoef, Qn == 8 &amp; stages == 44)
-&gt; fSP8A44 <span style="color: #008b8b;">&lt;-</span> fPump(pump = CoefSP8A44, H = 40)
+<pre class="src src-r">data(<span style="color: #8b2252;">"pumpCoef"</span>)
+CoefSP8A44 <span style="color: #008b8b;">&lt;-</span> subset(pumpCoef, Qn == 8 &amp; stages == 44)
+fSP8A44 <span style="color: #008b8b;">&lt;-</span> fPump(pump = CoefSP8A44, H = 40)
 </pre>
 
 
@@ -1147,7 +1176,7 @@ for any electrical power inside the range of the pump:
 
 
 
-<pre class="src src-r">&gt; SP8A44 = with(fSP8A44, {
+<pre class="src src-r">SP8A44 = with(fSP8A44, {
      Pac = seq(lim[1], lim[2], by = 100)
      Pb = fPb(Pac)
      etam = Pb/Pac
@@ -1157,12 +1186,12 @@ for any electrical power inside the range of the pump:
      Q = fQ(Pac)
      result = data.frame(Q, Pac, Pb, Ph, etam, etab, f)
  })
-&gt; SP8A44$etamb = with(SP8A44, etab * etam) 
+SP8A44$etamb = with(SP8A44, etab * etam) 
 
-&gt; lab = c(expression(eta[motor]), expression(eta[pump]), expression(eta[mp]))
-&gt; p <span style="color: #008b8b;">&lt;-</span> xyplot(etam + etab + etamb ~ Pac, data = SP8A44, type = <span style="color: #8b2252;">"l"</span>, 
+lab = c(expression(eta[motor]), expression(eta[pump]), expression(eta[mp]))
+p <span style="color: #008b8b;">&lt;-</span> xyplot(etam + etab + etamb ~ Pac, data = SP8A44, type = <span style="color: #8b2252;">"l"</span>, 
      ylab = <span style="color: #8b2252;">"Efficiency"</span>)
-&gt; p + glayer(panel.text(x[1], y[1], lab[group.number], pos = 3))
+p + glayer(panel.text(x[1], y[1], lab[group.number], pos = 3))
 
 </pre>
 
@@ -1212,9 +1241,9 @@ this height.
 
 
 
-<pre class="src src-r">&gt; Pg = seq(3000, 5500, by = 500)
-&gt; H = seq(50, 80, by = 5)
-&gt; NmgSP8A44 <span style="color: #008b8b;">&lt;-</span> NmgPVPS(pump = CoefSP8A44, Pg = Pg, H = H, Gd = 6000, 
+<pre class="src src-r">Pg = seq(3000, 5500, by = 500)
+H = seq(50, 80, by = 5)
+NmgSP8A44 <span style="color: #008b8b;">&lt;-</span> NmgPVPS(pump = CoefSP8A44, Pg = Pg, H = H, Gd = 6000, 
      title = <span style="color: #8b2252;">"Selection of Pumps"</span>)
 </pre>
 
@@ -1261,10 +1290,10 @@ longitudes with <code>local2Solar</code> is calculated with:
 
 
 
-<pre class="src src-r">&gt; hh <span style="color: #008b8b;">&lt;-</span> as.POSIXct(<span style="color: #8b2252;">'2011-05-01 11:00:00'</span>, tz=<span style="color: #8b2252;">'CET'</span>)
-&gt; latitude <span style="color: #008b8b;">&lt;-</span> seq(70, -70, -1)
-&gt; longitude <span style="color: #008b8b;">&lt;-</span> seq(-180, 180, 1)
-&gt; horaLong <span style="color: #008b8b;">&lt;-</span> local2Solar(hh, longitude)
+<pre class="src src-r">hh <span style="color: #008b8b;">&lt;-</span> as.POSIXct(<span style="color: #8b2252;">'2011-05-01 11:00:00'</span>, tz=<span style="color: #8b2252;">'CET'</span>)
+latitude <span style="color: #008b8b;">&lt;-</span> seq(70, -70, -1)
+longitude <span style="color: #008b8b;">&lt;-</span> seq(-180, 180, 1)
+horaLong <span style="color: #008b8b;">&lt;-</span> local2Solar(hh, longitude)
 </pre>
 
 
@@ -1279,10 +1308,10 @@ in the map.
 
 
 
-<pre class="src src-r">&gt; solList <span style="color: #008b8b;">&lt;-</span> lapply(latitude, calcSol, BTi = horaLong)
-&gt; Bo0List <span style="color: #008b8b;">&lt;-</span> lapply(solList, <span style="color: #a020f0;">function</span>(x) as.data.frameI(x)$Bo0) 
-&gt; Bo0 <span style="color: #008b8b;">&lt;-</span> do.call(<span style="color: #8b2252;">'c'</span>, Bo0List)
-&gt; Bo0[is.na(Bo0)] <span style="color: #008b8b;">&lt;-</span> 0
+<pre class="src src-r">solList <span style="color: #008b8b;">&lt;-</span> lapply(latitude, calcSol, BTi = horaLong)
+Bo0List <span style="color: #008b8b;">&lt;-</span> lapply(solList, <span style="color: #a020f0;">function</span>(x) as.data.frameI(x)$Bo0) 
+Bo0 <span style="color: #008b8b;">&lt;-</span> do.call(<span style="color: #8b2252;">'c'</span>, Bo0List)
+Bo0[is.na(Bo0)] <span style="color: #008b8b;">&lt;-</span> 0
 </pre>
 
 
@@ -1295,18 +1324,18 @@ The <code>data.frame</code> is now converted to an
 </p>
 
 
-<pre class="src src-r">&gt; Bo0DF <span style="color: #008b8b;">&lt;-</span> expand.grid(lon = longitude, lat = latitude)
-&gt; Bo0DF$Bo0 <span style="color: #008b8b;">&lt;-</span> c(Bo0)
-&gt; proj <span style="color: #008b8b;">&lt;-</span> CRS(<span style="color: #8b2252;">'+proj=latlon +ellps=WGS84'</span>) 
-&gt; Bo0SP <span style="color: #008b8b;">&lt;-</span> SpatialPixelsDataFrame(points = Bo0DF[,1:2],
+<pre class="src src-r">Bo0DF <span style="color: #008b8b;">&lt;-</span> expand.grid(lon = longitude, lat = latitude)
+Bo0DF$Bo0 <span style="color: #008b8b;">&lt;-</span> c(Bo0)
+proj <span style="color: #008b8b;">&lt;-</span> CRS(<span style="color: #8b2252;">'+proj=latlon +ellps=WGS84'</span>) 
+Bo0SP <span style="color: #008b8b;">&lt;-</span> SpatialPixelsDataFrame(points = Bo0DF[,1:2],
       data=Bo0DF[<span style="color: #8b2252;">"Bo0"</span>], proj4string = proj)
 
-&gt; paleta=colorRampPalette(rev(brewer.pal(<span style="color: #8b2252;">'Greys'</span>, n=9)))
-&gt; p <span style="color: #008b8b;">&lt;-</span> spplot(Bo0SP, scales = list(draw = <span style="color: #228b22;">TRUE</span>), col.regions = paleta,
+paleta=colorRampPalette(rev(brewer.pal(<span style="color: #8b2252;">'Greys'</span>, n=9)))
+p <span style="color: #008b8b;">&lt;-</span> spplot(Bo0SP, scales = list(draw = <span style="color: #228b22;">TRUE</span>), col.regions = paleta,
       cuts = 50)
-&gt; world <span style="color: #008b8b;">&lt;-</span> map(<span style="color: #8b2252;">"world"</span>, plot = <span style="color: #228b22;">FALSE</span>)
-&gt; world_sp <span style="color: #008b8b;">&lt;-</span> map2SpatialLines(world, proj4string = proj)
-&gt; p2 <span style="color: #008b8b;">&lt;-</span> p+layer(sp.lines(world_sp, lwd = 0.5))
+world <span style="color: #008b8b;">&lt;-</span> map(<span style="color: #8b2252;">"world"</span>, plot = <span style="color: #228b22;">FALSE</span>)
+world_sp <span style="color: #008b8b;">&lt;-</span> map2SpatialLines(world, proj4string = proj)
+p2 <span style="color: #008b8b;">&lt;-</span> p+layer(sp.lines(world_sp, lwd = 0.5))
 </pre>
 
 
@@ -1340,12 +1369,12 @@ after a registration process.
 
 
 
-<pre class="src src-r">&gt; <span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"raster"</span>)
-&gt; old <span style="color: #008b8b;">&lt;-</span> setwd(<span style="color: #8b2252;">'CMSAF'</span>) <span style="color: #b22222;">##</span><span style="color: #b22222;">folder where the files are stored</span>
-&gt; listFich <span style="color: #008b8b;">&lt;-</span> dir(pattern = <span style="color: #8b2252;">'2008'</span>)
-&gt; stackSIS <span style="color: #008b8b;">&lt;-</span> stack(listFich)
-&gt; stackSIS <span style="color: #008b8b;">&lt;-</span> stackSIS*24 <span style="color: #b22222;">##</span><span style="color: #b22222;">from irradiance (W/m2) to irradiation Wh/m2</span>
-&gt; setwd(old)
+<pre class="src src-r"><span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"raster"</span>)
+old <span style="color: #008b8b;">&lt;-</span> setwd(<span style="color: #8b2252;">'CMSAF'</span>) <span style="color: #b22222;">##</span><span style="color: #b22222;">folder where the files are stored</span>
+listFich <span style="color: #008b8b;">&lt;-</span> dir(pattern = <span style="color: #8b2252;">'2008'</span>)
+stackSIS <span style="color: #008b8b;">&lt;-</span> stack(listFich)
+stackSIS <span style="color: #008b8b;">&lt;-</span> stackSIS*24 <span style="color: #b22222;">##</span><span style="color: #b22222;">from irradiance (W/m2) to irradiation Wh/m2</span>
+setwd(old)
 </pre>
 
 
@@ -1360,7 +1389,7 @@ direct irradiation:
 
 
 
-<pre class="src src-r">&gt; <span style="color: #0000ff;">foo</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(x, ...){
+<pre class="src src-r"><span style="color: #0000ff;">foo</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(x, ...){
                gef <span style="color: #008b8b;">&lt;-</span> calcGef(lat = x[1], dataRad = list(G0dm = x[2:13]))
                result <span style="color: #008b8b;">&lt;-</span> as.data.frameY(gef)[c(<span style="color: #8b2252;">'Gefd'</span>, <span style="color: #8b2252;">'Befd'</span>, <span style="color: #8b2252;">'Defd'</span>)]
                as.numeric(result)
@@ -1378,11 +1407,11 @@ cell of the <code>raster</code>:
 
 
 
-<pre class="src src-r">&gt; latLayer <span style="color: #008b8b;">&lt;-</span> init(SISmm, v = <span style="color: #8b2252;">'y'</span>)
-&gt; gefS <span style="color: #008b8b;">&lt;-</span> calc(stack(latLayer, SISmm), foo,
+<pre class="src src-r">latLayer <span style="color: #008b8b;">&lt;-</span> init(SISmm, v = <span style="color: #8b2252;">'y'</span>)
+gefS <span style="color: #008b8b;">&lt;-</span> calc(stack(latLayer, SISmm), foo,
              filename = <span style="color: #8b2252;">'CMSAF/gefCMSAF'</span>,
              overwrite = <span style="color: #228b22;">TRUE</span>)
-&gt; layerNames(gefS) <span style="color: #008b8b;">&lt;-</span> c(<span style="color: #8b2252;">'Gefd'</span>, <span style="color: #8b2252;">'Befd'</span>, <span style="color: #8b2252;">'Defd'</span>)
+layerNames(gefS) <span style="color: #008b8b;">&lt;-</span> c(<span style="color: #8b2252;">'Gefd'</span>, <span style="color: #8b2252;">'Befd'</span>, <span style="color: #8b2252;">'Defd'</span>)
 </pre>
 
 
@@ -1397,11 +1426,11 @@ overlaid (available <a href="http://biogeo.ucdavis.edu/data/diva/adm/ESP_adm.zip
 
 
 
-<pre class="src src-r">&gt; <span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"maptools"</span>)
-&gt; <span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"rasterVis"</span>)
-&gt; proj <span style="color: #008b8b;">&lt;-</span> CRS(projection(SISmm))
-&gt; mapaSHP <span style="color: #008b8b;">&lt;-</span> readShapeLines(<span style="color: #8b2252;">'ESP_adm2.shp'</span>, proj4string = proj)
-&gt; levelplot(gefS, layers = <span style="color: #8b2252;">'Gefd'</span>) + layer(sp.lines(mapaSHP, lwd = 0.7))
+<pre class="src src-r"><span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"maptools"</span>)
+<span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"rasterVis"</span>)
+proj <span style="color: #008b8b;">&lt;-</span> CRS(projection(SISmm))
+mapaSHP <span style="color: #008b8b;">&lt;-</span> readShapeLines(<span style="color: #8b2252;">'ESP_adm2.shp'</span>, proj4string = proj)
+levelplot(gefS, layers = <span style="color: #8b2252;">'Gefd'</span>) + layer(sp.lines(mapaSHP, lwd = 0.7))
 </pre>
 
 
@@ -1461,10 +1490,10 @@ working correctly during these periods.
 
 
 
-<pre class="src src-r">&gt; data(<span style="color: #8b2252;">"prodEx"</span>)
-&gt; ndays = c(5, 10, 15, 20)
-&gt; palette = brewer.pal(n = length(ndays), name = <span style="color: #8b2252;">"Set1"</span>)
-&gt; TDColor <span style="color: #008b8b;">&lt;-</span> TargetDiagram(prodEx, end = day, 
+<pre class="src src-r">data(<span style="color: #8b2252;">"prodEx"</span>)
+ndays = c(5, 10, 15, 20)
+palette = brewer.pal(n = length(ndays), name = <span style="color: #8b2252;">"Set1"</span>)
+TDColor <span style="color: #008b8b;">&lt;-</span> TargetDiagram(prodEx, end = day, 
       ndays = ndays, 
       color = palette)
 </pre>
@@ -1487,7 +1516,7 @@ these time intervals.
 
 
 
-<pre class="src src-r">&gt; TDMadrid <span style="color: #008b8b;">&lt;-</span> TargetDiagram(YfMadrid, 
+<pre class="src src-r">TDMadrid <span style="color: #008b8b;">&lt;-</span> TargetDiagram(YfMadrid, 
      end = as.POSIXct(<span style="color: #8b2252;">"2010-12-31"</span>), 
      ndays = c(10, 20, 30, 40, 50, 60), 
      cex = 0.7)
@@ -1508,13 +1537,13 @@ these time intervals.
 <h2 id="sec-8"><span class="section-number-2">8</span> Org-mode </h2>
 <div class="outline-text-2" id="text-8">
 
-<p>This webpage has been produced with <a href="http://orgmode.org/">org-mode</a>. You can download the <a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/www/index.org?root=solar">org file</a>.
+<p>This webpage has been produced with <a href="http://orgmode.org/">org-mode</a>. You can download the <a href="http://solar.r-forge.r-project.org/index.org">org file</a>.
 </p></div>
 </div>
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2011-10-25 14:43:52 CEST</p>
+<p class="date">Date: 2011-10-30 11:14:54 CET</p>
 <p class="author">Author: Oscar Perpiñán Lamigueiro</p>
 <p class="creator">Org version 7.7 with Emacs version 23</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
