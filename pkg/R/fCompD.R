@@ -30,7 +30,8 @@ fCompD<-function(sol, G0d, corr='CPR',f){
     indexG0d=index(G0d)
   }
 
-  stopifnot(identical(indexG0d, indexSol))
+  ## stopifnot(identical(indexG0d, indexSol)) ##fail sometimes due to tzone attribute
+  stopifnot(isTRUE(all.equal(indexG0d, indexSol,  check.attributes = FALSE)))
 
 if (corr!='none'){
 

@@ -20,7 +20,9 @@ fTemp<-function(sol, BD){
 
   stopifnot(class(sol)=='Sol')
   stopifnot(class(BD)=='Meteo')
-  stopifnot(identical(indexD(sol), indexD(BD)))
+  ##   stopifnot(identical(indexD(sol), indexD(BD))) ## sometimes due to tzone attribute
+  stopifnot(isTRUE(all.equal(indexD(sol), indexD(BD),  check.attributes = FALSE)))
+
 
   indSol<-indexI(sol)	
   ind.rep<-indexRep(sol)

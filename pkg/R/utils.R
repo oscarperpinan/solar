@@ -21,7 +21,7 @@ hour<-function(x)
 {as.numeric(format(x, "%H"))
 }
 
-minute<-function(x) 
+minute<-function(x)
 {as.numeric(format(x, "%M"))
 }
 
