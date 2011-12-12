@@ -41,21 +41,17 @@ readSIAR<-function(prov, est, start, end, lat=0, format='%d/%m/%Y'){
     start,'&F=',end,sep='')
   cat('Downloading data from www.marm.es/siar...\n')
     
-  BD<-read.table(URL,header=TRUE,skip=1,fill=TRUE,dec=',', as.is=TRUE)
-  fecha<-as.POSIXct(BD$Fecha2, tz='UTC', format=formatSIAR)
-  BD$G0<-BD$Radiacion/3.6*1000 #Cambio de unidades. G debe ir en Wh/m2, NO en kWh/m2
-  BD$Radiacion<-NULL           #eliminamos esta variable
+  ## BD<-read.table(URL,header=TRUE,skip=1,fill=TRUE,dec=',', as.is=TRUE)
+  ## fecha<-as.POSIXct(BD$Fecha2, tz='UTC', format=formatSIAR)
+  ## BD$G0<-BD$Radiacion/3.6*1000 #Cambio de unidades. G debe ir en Wh/m2, NO en kWh/m2
+  ## BD$Radiacion<-NULL           #eliminamos esta variable
     
-  BD.zoo<-zoo(BD[,-1], order.by=fecha)
+  ## BD.zoo<-zoo(BD[,-1], order.by=fecha)
 
-  ## read.zoo does not set the attribute TZ='UTC' to the index
-  ## That is a problem when using identical in fTemp
-  ## I will continue using read.table until I find a solution
-  
-  ## BD.zoo<-read.zoo(URL, index.column=1, tz='UTC', format=formatSIAR,
-  ##              header=TRUE, skip=1, fill=TRUE, dec=',', as.is=TRUE)
-  ## BD.zoo$G0 <- BD.zoo$Radiacion/3.6*1000#Cambio de unidades. G debe ir en Wh/m2, NO en kWh/m2
-  ## BD.zoo$Radiacion <- NULL
+  BD.zoo<-read.zoo(URL, index.column=1, tz='UTC', format=formatSIAR,
+               header=TRUE, skip=1, fill=TRUE, dec=',', as.is=TRUE)
+  BD.zoo$G0 <- BD.zoo$Radiacion/3.6*1000#Cambio de unidades. G debe ir en Wh/m2, NO en kWh/m2
+  BD.zoo$Radiacion <- NULL
   
     
   result<-new(Class='Meteo',
