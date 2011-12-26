@@ -55,10 +55,10 @@ fInclin(compI, angGen, iS = 2, alb = 0.2, horizBright=TRUE, HCPV=FALSE)
   Oscar Perpiñán Lamigueiro.
 }
 
-\note{The version 0.22 included a bug such that when horizBright=FALSE (default)
-  the isotropic diffuse component was set to zero. With this version
-  0.23 the bug has been corrected and the default value of horizBright
-  is TRUE.}
+% \note{The version 0.22 included a bug such that when horizBright=FALSE (default)
+%   the isotropic diffuse component was set to zero. With this version
+%   0.23 the bug has been corrected and the default value of horizBright
+%   is TRUE.}
 
 \seealso{
   \code{\link{fTheta}},

@@ -127,12 +127,18 @@ calcGef(lat,
 
 \value{A \code{Gef} object.}
 
-\references{Perpiñán, O, Energía Solar Fotovoltaica, 2011.  (\url{http://procomun.wordpress.com/documentos/libroesf/})}
+\references{\itemize{
+    \item Hay, J. E. and McKay, D. C.: Estimating Solar Irradiance on Inclined Surfaces: A Review and Assessment of Methodologies. Int. J. Solar Energy, (3):pp. 203, 1985.
+    \item Martin, N. and Ruiz, J.M.: Calculation of the PV modules angular losses under field conditions by means of an analytical model. Solar Energy Materials & Solar Cells, 70:25–38, 2001.
+    \item D. T. Reindl and W. A. Beckman and J. A. Duffie: Evaluation of
+      hourly tilted surface radiation models, Solar Energy, 45:9-17, 1990.
+    \item Perpiñán, O, Energía Solar Fotovoltaica, 2011.  (\url{http://procomun.wordpress.com/documentos/libroesf/})
+}}
 
-\note{The version 0.22 included a bug such that when horizBright=FALSE (default)
-  the isotropic diffuse component was set to zero. With this version
-  0.23 the bug has been corrected and the default value of horizBright
-  is TRUE.}
+% \note{The version 0.22 included a bug such that when horizBright=FALSE (default)
+%   the isotropic diffuse component was set to zero. From version
+%   0.23 the bug has been corrected and the default value of horizBright
+%   is TRUE.}
 
 \author{Oscar Perpiñán Lamigueiro.}
 
