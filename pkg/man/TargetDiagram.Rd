@@ -108,8 +108,9 @@ data(prodEx)
 prodStat<-analyzeData(prodEx)
 xyplot(prodStat$stat)
 dif<-prodEx-prodStat$stat$Median;
-##xyplot(dif[,1:18], superpose=TRUE, auto.key=FALSE)
+
 day=as.Date('2008-8-29')
+
 horizonplot(window(dif, start=day-90, end=day),
             origin=0, layout=c(1, 22), colorkey=TRUE, colorkey.digits=1,
             scales=list(y=list(relation="same")))
@@ -124,11 +125,12 @@ identical(prodStat, prodStat1)
 ndays=c(5, 10, 15, 20)
 
 #Color
-library(RColorBrewer)
-palette=brewer.pal(n=length(ndays), name='Set1')
+if (require(RColorBrewer)){
+    palette=brewer.pal(n=length(ndays), name='Set1')
 
-TDColor<-TargetDiagram(prodEx, end=day, ndays=ndays,
-color=palette)
+    TDColor<-TargetDiagram(prodEx, end=day, ndays=ndays,
+                           color=palette)
+}
 
 #B&W
 TDbw<-TargetDiagram(prodEx, end=day, ndays=ndays)
