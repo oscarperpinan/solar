@@ -71,7 +71,7 @@ NmgPVPS<-function(pump, Pg, H, Gd, Ta=30,
                                      ylab.axis.padding=1, axis.panel=1)))
     temaT <- modifyList(tema, list(layout.heights = list(panel = c(1, 1))))
     p1 <- xyplot(Q~Pdc, groups=H, data=resumen,
-                 ylab="Qd (m³/d)",type=c('l','g'),
+                 ylab="Qd (m\u00b3/d)",type=c('l','g'),
                  par.settings = tema1)
     
     p1lab<-p1+glayer(panel.text(x[1], y[1], group.value, pos=2, cex=0.7))
@@ -84,11 +84,11 @@ NmgPVPS<-function(pump, Pg, H, Gd, Ta=30,
     
     p<-update(c(p1lab, p2lab, x.same = TRUE),
               main=paste(title, '\nSP', pump$Qn, 'A', pump$stages, ' ',
-                'Gd ', Gd/1000," kWh/m2",sep=''),
+                'Gd ', Gd/1000," kWh/m\u00b2",sep=''),
               layout = c(1, 2),
               scales=list(x=list(draw=FALSE)),
               xlab='',                  #no dibuja el eje X
-              ylab = list(c("Qd (m³/d)","Pg (Wp)"), y = c(1/4, 3/4)),
+              ylab = list(c("Qd (m\u00b3/d)","Pg (Wp)"), y = c(1/4, 3/4)),
               par.settings = temaT
               )
     print(p)

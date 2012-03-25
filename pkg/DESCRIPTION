@@ -2,7 +2,7 @@ Package: solaR
 Type: Package
 Title: Solar Photovoltaic Systems
 Version: 0.32
-Date: 2012-03-20
+Date: 2012-03-25
 Encoding: UTF-8
 Author: Oscar Perpiñán Lamigueiro
 Maintainer: Oscar Perpiñán Lamigueiro <oscar.perpinan@upm.es>
@@ -11,5 +11,5 @@ URL: http://solar.r-forge.r-project.org/
 License: GPL-3
 LazyLoad: yes
 LazyData: yes
-Depends: methods, lattice, latticeExtra, zoo
+Depends: R (>= 2.10), methods, lattice, latticeExtra, zoo
 Suggests: RColorBrewer, sp, raster, rasterVis

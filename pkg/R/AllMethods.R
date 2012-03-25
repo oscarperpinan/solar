@@ -493,9 +493,9 @@ setMethod('show', 'G0',
 ## setMethod('show', 'Gef',
 ##           function(object){
 ##             header(object)
-##             cat('Monthly averages (kWh/m²):\n')
+##             cat('Monthly averages (kWh/m\u00b2):\n')
 ##             print(object@Gefdm)
-##             cat('\nYearly values (kWh/m²):\n')
+##             cat('\nYearly values (kWh/m\u00b2):\n')
 ##             print(object@Gefy)
 ##           }
 ##           )
@@ -653,7 +653,7 @@ setMethod('xyplot',
                    ## yscale.components=yscale.components,
                    superpose=TRUE,
                    auto.key=list(space='right'),
-                   ylab='Wh/m²',
+                   ylab='Wh/m\u00b2',
                    ...)
           }
           )
