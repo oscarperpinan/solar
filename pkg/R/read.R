@@ -15,6 +15,12 @@
  # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  #/
 checkG0Ta <- function(x, maxmin=FALSE){
+
+  if (is.null(dim(x))) {##Si data es un vector, asumo que es irradiancia global
+    dim(x) <- c(length(x), 1)
+    names(x) <- 'G0'
+    }
+  
   stopifnot('G0' %in% names(x))
 
   Tnames <- c('TempMax', 'TempMin', 'Ta')
@@ -165,10 +171,6 @@ dfI2Meteo <- function(file, lat,
 }  
 
 zoo2Meteo <- function(file, lat, source=''){
-  ## if (is.null(dim(data))) {##Si data es un vector, asumo que es irradiancia global
-  ##   dim(data) <- c(length(data), 1)
-  ##   names(data) <- 'G0'
-  ##   }
   file <- checkG0Ta(file, maxmin=TRUE)
   sample <- median(diff(index(file)))
   IsDaily <- as.numeric(sample, units='days')>=1
