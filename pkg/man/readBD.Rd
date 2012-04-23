@@ -38,13 +38,16 @@ zoo2Meteo(file, lat, source='')
 }
 \arguments{
 
-  \item{file}{The name of the file (\code{readBD} and \code{readBDi}) or \code{data.frame}
-    (\code{df2Meteo} \code{dfI2Meteo}) which the data are to be read from.
-    It must contain a column \code{G0} with
+  \item{file}{The name of the file (\code{readBD} and \code{readBDi}), \code{data.frame}
+    (\code{df2Meteo} and \code{dfI2Meteo}) or \code{zoo}
+    (\code{zoo2Meteo}) which the data are to be read from.
+    It should contain a column \code{G0} with
     \emph{daily} (\code{readBD} and \code{df2Meteo}) or
     \emph{intradaily} (\code{readBDi} and \code{dfI2Meteo})  values of
     global horizontal irradiation (Wh/m²). It should also include a column
-    named \code{Ta} with values of ambient temperature.
+    named \code{Ta} with values of ambient temperature. However, if the
+    object is only a vector with irradiation values, it will converted to a \code{zoo} with two
+    columns named \code{G0} and \code{Ta} (filled with constant values)
 
     If the \code{Meteo} object is to be used with \code{\link{calcG0}}
     (or \code{fCompD}, \code{fCompI}) and the option
@@ -53,9 +56,9 @@ zoo2Meteo(file, lat, source='')
     global, direct and diffuse irradiation on the horizontal plane.
 
     Only for daily data: if the ambient temperature is not available,
-    the file should include two columns named \code{TempMax} and \code{TempMin} with daily values
-    of maximum and minimum ambient temperature, respectively (see
-    \code{\link{fTemp}} for details).}
+    the file should include two columns named \code{TempMax} and
+    \code{TempMin} with daily values of maximum and minimum ambient
+    temperature, respectively (see \code{\link{fTemp}} for details).}
 
   \item{header, fill, dec, sep}{See \code{\link{read.table}}}
 
