@@ -58,9 +58,9 @@ spainMeteoOK <- spainMeteo[idxMeteo]
 
 ###Cálculo de radiación efectiva
 foo <- function(x){
-  gefFixed <- calcGef(lat=getLat(x), dataRad=x, modeRad='bd', modeTrk='fixed')
-  gef2x <- calcGef(lat=getLat(x), dataRad=x, modeRad='bd', modeTrk='two')
-  gefHoriz <- calcGef(lat=getLat(x), dataRad=x, modeRad='bd', modeTrk='horiz')
+  gefFixed <- calcGef(lat=getLat(x, 'deg'), dataRad=x, modeRad='bd', modeTrk='fixed')
+  gef2x <- calcGef(lat=getLat(x, 'deg'), dataRad=x, modeRad='bd', modeTrk='two')
+  gefHoriz <- calcGef(lat=getLat(x, 'deg'), dataRad=x, modeRad='bd', modeTrk='horiz')
   resultFixed <- mean(as.data.frameY(gefFixed)$Gefd)
   result2x <- mean(as.data.frameY(gef2x)$Gefd)
   resultHoriz <- mean(as.data.frameY(gefHoriz)$Gefd)
