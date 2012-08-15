@@ -164,7 +164,13 @@ prodGCPV(lat,
   to the inclined surface makes use of the \code{\link{fTheta}} and
   \code{\link{fInclin}} functions inside the \code{\link{calcGef}} function. The shadows are computed with  \code{\link{calcShd}} while the performance of the PV system is simulated with \code{\link{fProd}}.}
 
-\references{Perpiñán, O, Energía Solar Fotovoltaica, 2011.  (\url{http://procomun.wordpress.com/documentos/libroesf/})}
+\references{\itemize{
+    \item Perpiñán, O, Energía Solar Fotovoltaica, 2012.
+    (\url{http://procomun.wordpress.com/documentos/libroesf/})
+  \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
+  Systems with R", Journal of Statistical Software, 50(9), 1-32,
+  \url{http://www.jstatsoft.org/v50/i09/}
+}}
 
 \author{Oscar Perpiñán Lamigueiro}
 

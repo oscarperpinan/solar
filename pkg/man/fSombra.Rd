@@ -46,7 +46,11 @@ fSombraEst(angGen, distances,struct)
 
 \references{\itemize{
     \item Perpiñán, O.: Grandes Centrales Fotovoltaicas: producción, seguimiento y ciclo de vida. PhD Thesis, UNED, 2008. \url{http://e-spacio.uned.es/fez/view.php?pid=bibliuned:20080}.
-    \item Perpiñán, O, Energía Solar Fotovoltaica, 2011.  (\url{http://procomun.wordpress.com/documentos/libroesf/})
+    \item Perpiñán, O, Energía Solar Fotovoltaica, 2012.
+    (\url{http://procomun.wordpress.com/documentos/libroesf/})
+    \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
+  Systems with R", Journal of Statistical Software, 50(9), 1-32,
+  \url{http://www.jstatsoft.org/v50/i09/}
   }
 }
 \author{

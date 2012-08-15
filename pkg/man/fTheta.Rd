@@ -43,8 +43,13 @@ fTheta(sol, beta, alfa = 0, modeTrk = "fixed", betaLim = 90,
 }
 \references{
   \itemize{
-    \item Perpiñán, O, Energía Solar Fotovoltaica, 2011.  (\url{http://procomun.wordpress.com/documentos/libroesf/})
-    \item Panico, D., Garvison, P., Wenger, H. J., Shugar, D., Backtracking: a novel strategy for tracking PV systems, Photovoltaic Specialists Conference, 668-673, 1991
+    \item Perpiñán, O, Energía Solar Fotovoltaica, 2012.  (\url{http://procomun.wordpress.com/documentos/libroesf/})
+    \item Panico, D., Garvison, P., Wenger, H. J., Shugar, D.,
+    Backtracking: a novel strategy for tracking PV systems, Photovoltaic
+    Specialists Conference, 668-673, 1991
+    \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
+  Systems with R", Journal of Statistical Software, 50(9), 1-32,
+  \url{http://www.jstatsoft.org/v50/i09/}
 }}
 \author{
   Oscar Perpiñán Lamigueiro.

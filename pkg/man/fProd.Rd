@@ -81,7 +81,11 @@
     Voltage Dependency of the Inverter Efficiency. 22nd European
     Photovoltaic Solar Energy Conference, 2007.
     \item Alonso Garcia, M. C.: Caracterización y modelado de asociaciones de dispositivos fotovoltaicos. PhD Thesis, CIEMAT, 2005.
-    \item Perpiñán, O, Energía Solar Fotovoltaica, 2011.  (\url{http://procomun.wordpress.com/documentos/libroesf/})
+    \item Perpiñán, O, Energía Solar Fotovoltaica, 2012.
+    (\url{http://procomun.wordpress.com/documentos/libroesf/})
+    \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
+  Systems with R", Journal of Statistical Software, 50(9), 1-32,
+  \url{http://www.jstatsoft.org/v50/i09/}
 }}
 \author{
   Oscar Perpiñán Lamigueiro

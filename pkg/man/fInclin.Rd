@@ -49,7 +49,11 @@ fInclin(compI, angGen, iS = 2, alb = 0.2, horizBright=TRUE, HCPV=FALSE)
     \item Martin, N. and Ruiz, J.M.: Calculation of the PV modules angular losses under field conditions by means of an analytical model. Solar Energy Materials & Solar Cells, 70:25–38, 2001.
     \item D. T. Reindl and W. A. Beckman and J. A. Duffie: Evaluation of
       hourly tilted surface radiation models, Solar Energy, 45:9-17, 1990.
-    \item Perpiñán, O, Energía Solar Fotovoltaica, 2011.  (\url{http://procomun.wordpress.com/documentos/libroesf/})
+    \item Perpiñán, O, Energía Solar Fotovoltaica, 2012.
+    (\url{http://procomun.wordpress.com/documentos/libroesf/})
+    \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
+  Systems with R", Journal of Statistical Software, 50(9), 1-32,
+  \url{http://www.jstatsoft.org/v50/i09/}
 }}
 \author{
   Oscar Perpiñán Lamigueiro.

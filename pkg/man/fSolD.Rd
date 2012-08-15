@@ -44,10 +44,13 @@ fSolD(lat, BTd, method='michalsky')
     \item{Michalsky, J., 1988: The Astronomical Almanac's algorithm for
     approximate solar position (1950-2050), Solar Energy 40, 227-235,
     \url{ftp://climate1.gsfc.nasa.gov/wiscombe/Solar_Rad/SunAngles/sunae.f}}
-    \item{Perpiñán, O, Energía Solar Fotovoltaica, 2011.
-      \url{http://procomun.wordpress.com/documentos/libroesf/}
+    \item{Perpiñán, O, Energía Solar Fotovoltaica, 2012.
+      \url{http://procomun.wordpress.com/documentos/libroesf/}}
+    \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
+  Systems with R", Journal of Statistical Software, 50(9), 1-32,
+  \url{http://www.jstatsoft.org/v50/i09/}
     }}
-}
+
 
 \author{
   Oscar Perpiñán Lamigueiro.
