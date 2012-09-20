@@ -33,10 +33,11 @@ with spatial packages for space-time analysis.
 
 The best place to learn how to use the package is the companion
 paper published by the Journal of Statistical Software:
-[[http://www.jstatsoft.org/v50/i09/]].
+[[
+http://www.jstatsoft.org/v50/i09/]]
 
 [[http://procomun.wordpress.com/documentos/libroesf/][This book]] (in Spanish) contains detailed information about solar
-radiation and photovoltaic systems, and in [[http://procomun.wordpress.com/documentos/articulos/][my articles]] I
+radiation and photovoltaic systems. In [[http://procomun.wordpress.com/documentos/articulos/][my articles]] I
 frequently use =solaR=. Besides, I publish news and examples
 about =solaR= at [[http://procomun.wordpress.com/][this blog]].
 
@@ -68,7 +69,7 @@ A BibTeX entry for LaTeX users is
 * Software
 
 The stable version of =solaR= is hosted at CRAN:
-[[http://cran.r-project.org/packages%3DsolaR][http://cran.r-project.org/packages=solaR]]
+[[http://cran.r-project.org/package%3DsolaR][http://cran.r-project.org/package=solaR]]
 
 The development version is available at R-Forge:
 [[http://R-Forge.R-project.org/projects/solar/]]
