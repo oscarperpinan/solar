@@ -32,9 +32,7 @@ with spatial packages for space-time analysis.
 * Documentation
 
 The best place to learn how to use the package is the companion
-paper published by the Journal of Statistical Software:
-[[
-http://www.jstatsoft.org/v50/i09/]]
+paper published by the Journal of Statistical Software: [[http://www.jstatsoft.org/v50/i09/]]
 
 [[http://procomun.wordpress.com/documentos/libroesf/][This book]] (in Spanish) contains detailed information about solar
 radiation and photovoltaic systems. In [[http://procomun.wordpress.com/documentos/articulos/][my articles]] I
