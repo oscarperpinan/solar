@@ -2,18 +2,26 @@
 \Rdversion{1.2}
 \encoding{UTF-8}
 \alias{readSIAR}
-\alias{readMAPA}
 
 \title{
-  Meteorological data from www.marm.es/siar
+  Meteorological data from the SIAR network.
 }
-\description{
-  Download and transform meteorological data from \url{www.marm.es/siar} for a station of a province (Spain) in a time period.
-}
-\usage{
-readSIAR(prov, est, start, end, lat=0, format='\%d/\%m/\%Y')
-readMAPA(prov, est, start, end, lat=0, format='\%d/\%m/\%Y')
 
+\description{ IMPORTANT: The SIAR webpage has changed again and the data
+  cannot be accessed with a direct URL but using javascript
+  code. Therefore, the function \code{readSIAR} no longer works. This
+  help page is still here as a reference. The SIAR webpage is now
+  \url{http://eportal.magrama.gob.es/websiar}.
+  
+
+  % Download and transform meteorological data from
+  % the SIAR network for a station of a province (Spain) in a time
+  % period.
+}
+
+\usage{
+readSIAR(prov, est, start, end, lat=0,
+  format='\%d/\%m/\%Y')
 }
 \arguments{
   \item{prov}{numeric, number of the spanish province according to the
@@ -60,12 +68,8 @@ Cabrera and Manuel Ojeda Fernández. This dataset is an improvement of
 the previous \code{RedEstaciones} (not available in this version).  }
 
 
-\note{The webpage of SIAR has changed. The meteorological data is no
-  longer available at \url{www.mapa.es/siar}. Therefore, the name
-  \code{readMAPA} has been deprecated and the function \code{readSIAR}
-  should be used instead.}
 
-\references{\url{www.marm.es/siar}}
+\references{\url{http://eportal.magrama.gob.es/websiar/Inicio.aspx}}
 
 \author{
   Oscar Perpiñán Lamigueiro.
