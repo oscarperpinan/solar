@@ -1,0 +1,422 @@
+------------------------------------------------------------------------
+r117 | oscarperpi | 2012-10-11 15:07:23 +0200 (jue, 11 oct 2012) | 2 lines
+Changed paths:
+   M /pkg/man/readSIAR.Rd
+
+The SIAR webpage has changed and readSIAR does not work. Temporarily disabled.
+
+------------------------------------------------------------------------
+r113 | oscarperpi | 2012-08-16 00:25:14 +0200 (jue, 16 ago 2012) | 2 lines
+Changed paths:
+   M /pkg/DESCRIPTION
+   M /pkg/inst/CITATION
+   M /pkg/man/G0-class.Rd
+   M /pkg/man/Gef-class.Rd
+   M /pkg/man/HQCurve.Rd
+   M /pkg/man/NmgSFB.Rd
+   M /pkg/man/ProdGCPV-class.Rd
+   M /pkg/man/ProdPVPS-class.Rd
+   M /pkg/man/Shade-class.Rd
+   M /pkg/man/Sol-class.Rd
+   M /pkg/man/calcG0.Rd
+   M /pkg/man/calcGef.Rd
+   M /pkg/man/calcShd.Rd
+   M /pkg/man/calcSol.Rd
+   M /pkg/man/compareLosses-methods.Rd
+   M /pkg/man/fBTd.Rd
+   M /pkg/man/fCompD.Rd
+   M /pkg/man/fCompI.Rd
+   M /pkg/man/fInclin.Rd
+   M /pkg/man/fProd.Rd
+   M /pkg/man/fPump.Rd
+   M /pkg/man/fSolD.Rd
+   M /pkg/man/fSolI.Rd
+   M /pkg/man/fSombra.Rd
+   M /pkg/man/fTemp.Rd
+   M /pkg/man/fTheta.Rd
+   M /pkg/man/local2UTC.Rd
+   M /pkg/man/optimShd.Rd
+   M /pkg/man/prodGCPV.Rd
+   M /pkg/man/prodPVPS.Rd
+   M /pkg/man/pumpCoef.Rd
+
+Add JSS citation in CITATION and Rd files
+
+------------------------------------------------------------------------
+r111 | oscarperpi | 2012-04-23 15:24:48 +0200 (lun, 23 abr 2012) | 2 lines
+Changed paths:
+   M /pkg/man/readBD.Rd
+
+In zoo2Meteo the file can be a vector (zoo) without names
+
+------------------------------------------------------------------------
+r105 | oscarperpi | 2012-03-20 12:11:02 +0100 (mar, 20 mar 2012) | 2 lines
+Changed paths:
+   M /pkg/DESCRIPTION
+   M /pkg/man/TargetDiagram.Rd
+
+Fix example in TargetDiagram: if(require); at CRAN
+
+------------------------------------------------------------------------
+r104 | oscarperpi | 2011-12-26 16:28:03 +0100 (lun, 26 dic 2011) | 2 lines
+Changed paths:
+   M /pkg/man/calcGef.Rd
+   M /pkg/man/fInclin.Rd
+
+fix in doc of calcGef and fInclin
+
+------------------------------------------------------------------------
+r96 | oscarperpi | 2011-10-30 10:56:44 +0100 (dom, 30 oct 2011) | 2 lines
+Changed paths:
+   M /pkg/man/readSIAR.Rd
+   M /pkg/man/window-methods.Rd
+
+small fixes in help pages of readSIAR and window-methods
+
+------------------------------------------------------------------------
+r94 | oscarperpi | 2011-10-30 10:42:35 +0100 (dom, 30 oct 2011) | 2 lines
+Changed paths:
+   M /pkg/DESCRIPTION
+   D /pkg/data/SIAR.RData
+   D /pkg/man/SIAR.Rd
+   M /pkg/man/readSIAR.Rd
+
+SIAR.Rd is now not included (encoding warnings in R CMD check). Moved to the webpage.
+
+------------------------------------------------------------------------
+r78 | oscarperpi | 2011-10-24 21:42:15 +0200 (lun, 24 oct 2011) | 2 lines
+Changed paths:
+   M /pkg/man/window-methods.Rd
+
+add an example in window-methods
+
+------------------------------------------------------------------------
+r76 | oscarperpi | 2011-10-17 12:39:23 +0200 (lun, 17 oct 2011) | 2 lines
+Changed paths:
+   M /pkg/R/analyzeData.R
+   M /pkg/man/TargetDiagram.Rd
+
+change use of "sd" in analyzeData (since sd(<matrix>) is deprecated in R2.14)
+
+------------------------------------------------------------------------
+r74 | oscarperpi | 2011-10-14 14:44:36 +0200 (vie, 14 oct 2011) | 2 lines
+Changed paths:
+   M /pkg/R/AllMethods.R
+   M /pkg/inst/doc/solaR.Rnw
+   M /pkg/man/window-methods.Rd
+
+window method renamed to '['
+
+------------------------------------------------------------------------
+r73 | oscarperpi | 2011-10-13 20:26:03 +0200 (jue, 13 oct 2011) | 2 lines
+Changed paths:
+   M /pkg/R/AllMethods.R
+   A /pkg/man/window-methods.Rd
+
+New window method
+
+------------------------------------------------------------------------
+r72 | oscarperpi | 2011-10-13 15:10:24 +0200 (jue, 13 oct 2011) | 2 lines
+Changed paths:
+   M /pkg/DESCRIPTION
+   M /pkg/NEWS
+   M /pkg/R/AllMethods.R
+   M /pkg/R/read.R
+   M /pkg/inst/doc/solaR.Rnw
+   D /pkg/man/SIAR.RData
+   A /pkg/man/SIAR.Rd
+
+New SIAR dataset in solaR. Likely to produce warnings...
+
+------------------------------------------------------------------------
+r68 | oscarperpi | 2011-10-05 14:11:25 +0200 (mié, 05 oct 2011) | 2 lines
+Changed paths:
+   M /drafts/UTMLatLon.R
+   D /pkg/data/RedEstaciones.RData
+   A /pkg/data/SIAR.RData
+   D /pkg/man/RedEstaciones.Rd
+   A /pkg/man/SIAR.RData
+
+New SIAR.RData
+
+------------------------------------------------------------------------
+r67 | oscarperpi | 2011-10-05 14:10:59 +0200 (mié, 05 oct 2011) | 2 lines
+Changed paths:
+   M /pkg/man/readSIAR.Rd
+
+New SIAR.RData
+
+------------------------------------------------------------------------
+r66 | oscarperpi | 2011-07-14 11:17:12 +0200 (jue, 14 jul 2011) | 2 lines
+Changed paths:
+   M /pkg/R/read.R
+   M /pkg/man/readSIAR.Rd
+
+readSIAR now uses read.zoo
+
+------------------------------------------------------------------------
+r40 | oscarperpi | 2011-06-03 11:48:56 +0200 (vie, 03 jun 2011) | 1 line
+Changed paths:
+   D /pkg/R/readMAPA.R
+   D /pkg/man/readMAPA.Rd
+
+remove readMAPA.R and readMAPA.Rd
+------------------------------------------------------------------------
+r39 | oscarperpi | 2011-06-03 11:47:33 +0200 (vie, 03 jun 2011) | 2 lines
+Changed paths:
+   M /pkg/DESCRIPTION
+   M /pkg/NAMESPACE
+   M /pkg/R/calcG0.R
+   M /pkg/R/calcGef.R
+   M /pkg/R/optimShd.R
+   M /pkg/R/prodGCPV.R
+   M /pkg/R/prodPVPS.R
+   A /pkg/R/read.R
+   M /pkg/inst/doc/solaR.Rnw
+   M /pkg/inst/doc/solaR.pdf
+   M /pkg/man/Meteo-class.Rd
+   M /pkg/man/RedEstaciones.Rd
+   M /pkg/man/calcG0.Rd
+   M /pkg/man/calcGef.Rd
+   M /pkg/man/compare-methods.Rd
+   M /pkg/man/compareLosses-methods.Rd
+   M /pkg/man/fCompD.Rd
+   M /pkg/man/fTemp.Rd
+   M /pkg/man/getLat-methods.Rd
+   M /pkg/man/mergesolaR-methods.Rd
+   M /pkg/man/optimShd.Rd
+   M /pkg/man/prodGCPV.Rd
+   M /pkg/man/prodPVPS.Rd
+   M /pkg/man/readBD.Rd
+   M /pkg/man/readG0dm.Rd
+   A /pkg/man/readSIAR.Rd
+   M /pkg/man/solaR.theme.Rd
+
+fix in readMAPA (now renamed as readSIAR) due to a change in the URL of SIAR; changes in several functions with a new argument dataRad (prom, mapa, bd and bdI are now deprecated); improvements in the vignette with the memoir class
+
+------------------------------------------------------------------------
+r34 | oscarperpi | 2011-05-24 21:57:51 +0200 (mar, 24 may 2011) | 2 lines
+Changed paths:
+   M /pkg/DESCRIPTION
+   M /pkg/NAMESPACE
+   M /pkg/NEWS
+   M /pkg/R/AllMethods.R
+   M /pkg/inst/doc/solaR.Rnw
+   M /pkg/inst/doc/solaR.pdf
+   A /pkg/man/solaR.theme.Rd
+
+add solaR.theme; changes to solaR.Rnw
+
+------------------------------------------------------------------------
+r32 | oscarperpi | 2011-05-24 14:19:58 +0200 (mar, 24 may 2011) | 2 lines
+Changed paths:
+   M /pkg/NEWS
+   M /pkg/man/calcG0.Rd
+
+Add doc to calcG0 when corr is missing; Updated NEWS
+
+------------------------------------------------------------------------
+r31 | oscarperpi | 2011-05-24 13:59:38 +0200 (mar, 24 may 2011) | 4 lines
+Changed paths:
+   M /pkg/R/calcGef.R
+   M /pkg/R/fInclin.R
+   M /pkg/R/optimShd.R
+   M /pkg/R/prodGCPV.R
+   M /pkg/R/prodPVPS.R
+   M /pkg/man/calcGef.Rd
+   M /pkg/man/fInclin.Rd
+   M /pkg/man/optimShd.Rd
+   M /pkg/man/prodGCPV.Rd
+   M /pkg/man/prodPVPS.Rd
+
+horizBright bug in fInclin corrected
+horizBright default is now TRUE
+HCPV argument included
+
+------------------------------------------------------------------------
+r27 | oscarperpi | 2011-05-20 22:50:04 +0200 (vie, 20 may 2011) | 1 line
+Changed paths:
+   M /pkg/R/AllMethods.R
+   M /pkg/R/calcG0.R
+   M /pkg/R/calcGef.R
+   M /pkg/R/fInclin.R
+   M /pkg/R/fSolD.R
+   M /pkg/R/fSolI.R
+   M /pkg/R/fTheta.R
+   M /pkg/R/optimShd.R
+   M /pkg/R/prodGCPV.R
+   M /pkg/R/prodPVPS.R
+   M /pkg/inst/doc/solaR.Rnw
+   M /pkg/man/Sol-class.Rd
+   M /pkg/man/calcG0.Rd
+   M /pkg/man/calcGef.Rd
+   M /pkg/man/calcSol.Rd
+   M /pkg/man/fSolD.Rd
+   M /pkg/man/fSolI.Rd
+   M /pkg/man/optimShd.Rd
+   M /pkg/man/prodGCPV.Rd
+   M /pkg/man/prodPVPS.Rd
+   M /pkg/man/utils2.Rd
+
+New sun-geometry methods in fSolI, fSolD and calcSol documented; ThzS, AlS and AzS are not set to NA outside sunrise-sunset period
+------------------------------------------------------------------------
+r25 | oscarperpi | 2011-05-16 19:20:34 +0200 (lun, 16 may 2011) | 1 line
+Changed paths:
+   M /pkg/man/as.data.frameD-methods.Rd
+   M /pkg/man/as.data.frameI-methods.Rd
+   M /pkg/man/as.data.frameM-methods.Rd
+   M /pkg/man/as.data.frameY-methods.Rd
+   M /pkg/man/as.zooD-methods.Rd
+   M /pkg/man/as.zooM-methods.Rd
+   M /pkg/man/as.zooY-methods.Rd
+   M /pkg/man/compare-methods.Rd
+   M /pkg/man/mergesolaR-methods.Rd
+
+Add S4method to some Rd files
+------------------------------------------------------------------------
+r24 | oscarperpi | 2011-05-11 18:03:50 +0200 (mié, 11 may 2011) | 1 line
+Changed paths:
+   M /drafts/sunae.R
+   M /pkg/NAMESPACE
+   M /pkg/R/AllClasses.R
+   M /pkg/R/calcSol.R
+   M /pkg/R/fSolD.R
+   M /pkg/R/fSolI.R
+   M /pkg/R/utils.R
+   M /pkg/man/utils2.Rd
+
+fSolI/fSolD/calcSol gain a method argument; Sol-class gains a method slot; h2d and d2h added in utils
+------------------------------------------------------------------------
+r23 | oscarperpi | 2011-05-11 14:58:31 +0200 (mié, 11 may 2011) | 1 line
+Changed paths:
+   A /drafts/solpos.c
+   M /drafts/sunae.R
+   M /pkg/R/calcSol.R
+   M /pkg/R/fSolD.R
+   M /pkg/man/calcSol.Rd
+
+sunae.R complete. Starting to modify calcSol.R; modified calcSol.Rd with EoT=TRUE
+------------------------------------------------------------------------
+r14 | oscarperpi | 2011-04-12 14:43:55 +0200 (mar, 12 abr 2011) | 1 line
+Changed paths:
+   M /drafts/redEstaciones.R
+   A /drafts/redGN.RData
+   M /pkg/man/Meteo-class.Rd
+   M /pkg/man/readMAPA.Rd
+
+Meteo-class.Rd and readMAPA.Rd improved with Wh/m2; more changes in redEstaciones.R; new redGN.RData
+------------------------------------------------------------------------
+r2 | oscarperpi | 2011-03-26 00:39:58 +0100 (sáb, 26 mar 2011) | 1 line
+Changed paths:
+   A /pkg/DESCRIPTION
+   A /pkg/NAMESPACE
+   A /pkg/NEWS
+   A /pkg/R
+   A /pkg/R/.Rhistory
+   A /pkg/R/AllClasses.R
+   A /pkg/R/AllMethods.R
+   A /pkg/R/HQCurve.R
+   A /pkg/R/NmgSFB.R
+   A /pkg/R/TargetDiagram.R
+   A /pkg/R/analyzeData.R
+   A /pkg/R/calcG0.R
+   A /pkg/R/calcGef.R
+   A /pkg/R/calcShd.R
+   A /pkg/R/calcSol.R
+   A /pkg/R/corrFdKt.R
+   A /pkg/R/fBTd.R
+   A /pkg/R/fCompD.R
+   A /pkg/R/fCompI.R
+   A /pkg/R/fInclin.R
+   A /pkg/R/fProd.R
+   A /pkg/R/fPump.R
+   A /pkg/R/fSolD.R
+   A /pkg/R/fSolI.R
+   A /pkg/R/fSombra.R
+   A /pkg/R/fSombra2X.R
+   A /pkg/R/fSombra6.R
+   A /pkg/R/fSombraEst.R
+   A /pkg/R/fSombraHoriz.R
+   A /pkg/R/fTemp.R
+   A /pkg/R/fTheta.R
+   A /pkg/R/optimShd.R
+   A /pkg/R/prodGCPV.R
+   A /pkg/R/prodPVPS.R
+   A /pkg/R/readMAPA.R
+   A /pkg/R/utils.R
+   A /pkg/R/zzz.R
+   A /pkg/data
+   A /pkg/data/RedEstaciones.RData
+   A /pkg/data/helios.RData
+   A /pkg/data/prodEx.RData
+   A /pkg/data/pumpCoef.RData
+   A /pkg/inst
+   A /pkg/inst/CITATION
+   A /pkg/inst/doc
+   A /pkg/inst/doc/solaR.Rnw
+   A /pkg/inst/doc/solaR.bib
+   A /pkg/inst/doc/solaR.pdf
+   A /pkg/man
+   A /pkg/man/G0-class.Rd
+   A /pkg/man/Gef-class.Rd
+   A /pkg/man/HQCurve.Rd
+   A /pkg/man/Meteo-class.Rd
+   A /pkg/man/NmgSFB.Rd
+   A /pkg/man/ProdGCPV-class.Rd
+   A /pkg/man/ProdPVPS-class.Rd
+   A /pkg/man/RedEstaciones.Rd
+   A /pkg/man/Shade-class.Rd
+   A /pkg/man/Sol-class.Rd
+   A /pkg/man/TargetDiagram.Rd
+   A /pkg/man/as.data.frameD-methods.Rd
+   A /pkg/man/as.data.frameI-methods.Rd
+   A /pkg/man/as.data.frameM-methods.Rd
+   A /pkg/man/as.data.frameY-methods.Rd
+   A /pkg/man/as.zooD-methods.Rd
+   A /pkg/man/as.zooI-methods.Rd
+   A /pkg/man/as.zooM-methods.Rd
+   A /pkg/man/as.zooY-methods.Rd
+   A /pkg/man/calcG0.Rd
+   A /pkg/man/calcGef.Rd
+   A /pkg/man/calcShd.Rd
+   A /pkg/man/calcSol.Rd
+   A /pkg/man/compare-methods.Rd
+   A /pkg/man/compareLosses-methods.Rd
+   A /pkg/man/corrFdKt.Rd
+   A /pkg/man/fBTd.Rd
+   A /pkg/man/fCompD.Rd
+   A /pkg/man/fCompI.Rd
+   A /pkg/man/fInclin.Rd
+   A /pkg/man/fProd.Rd
+   A /pkg/man/fPump.Rd
+   A /pkg/man/fSolD.Rd
+   A /pkg/man/fSolI.Rd
+   A /pkg/man/fSombra.Rd
+   A /pkg/man/fTemp.Rd
+   A /pkg/man/fTheta.Rd
+   A /pkg/man/getData-methods.Rd
+   A /pkg/man/getG0-methods.Rd
+   A /pkg/man/getLat-methods.Rd
+   A /pkg/man/helios.Rd
+   A /pkg/man/indexD-methods.Rd
+   A /pkg/man/indexI-methods.Rd
+   A /pkg/man/indexRep-methods.Rd
+   A /pkg/man/levelplot-methods.Rd
+   A /pkg/man/local2UTC.Rd
+   A /pkg/man/mergesolaR-methods.Rd
+   A /pkg/man/optimShd.Rd
+   A /pkg/man/plot-methods.Rd
+   A /pkg/man/prodExample.Rd
+   A /pkg/man/prodGCPV.Rd
+   A /pkg/man/prodPVPS.Rd
+   A /pkg/man/pumpCoef.Rd
+   A /pkg/man/readBD.Rd
+   A /pkg/man/readG0dm.Rd
+   A /pkg/man/readMAPA.Rd
+   A /pkg/man/sample2Diff.Rd
+   A /pkg/man/utils.Rd
+   A /pkg/man/utils2.Rd
+   A /pkg/man/xyplot-methods.Rd
+
+Initial import
+------------------------------------------------------------------------
