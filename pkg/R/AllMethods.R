@@ -589,7 +589,7 @@ setMethod('xyplot',
               data0$w=h2r(hms(ind)-12) ##hora solar en radianes
             }
             xyplot(x, data0, par.settings=par.settings,
-                   xscale.components=yscale.components,
+                   xscale.components=xscale.components,
                    yscale.components=yscale.components,
                    strip=strip.custom(strip.levels=c(TRUE, TRUE)),...)
           }
