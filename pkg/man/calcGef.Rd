@@ -170,38 +170,28 @@ gef2<-calcGef(lat=37.2, modeRad='prom', dataRad=list(G0dm=G0dm, Ta=Ta), modeTrk=
 print(gef2)
 xyplot(gef2)
 
-\dontrun{
-###Irradiation data from mapa.es/siar
-
 ##Fixed surface
+gefAguiar <- calcGef(lat=41, modeRad='aguiar', dataRad=G0dm)
 
-gefSIAR<-calcGef(lat=41,
-             modeRad='siar',
-             dataRad=list(prov=28,est=3,
-               start='01/01/2009', end='31/12/2009'),
-             keep.night=FALSE)
-print(gefSIAR)
-xyplot(gefSIAR)
 ##Two-axis tracker, using the previous result.
-##'gefSIAR' is internally coerced to a 'G0' object.
+##'gefAguiar' is internally coerced to a 'G0' object.
 
-gefSIAR2<-calcGef(lat=41, modeRad='prev', dataRad=gefSIAR, modeTrk='two')
-print(gefSIAR2)
-xyplot(gefSIAR2)
+gefAguiar2 <- calcGef(lat=41, modeRad='prev', dataRad=gefAguiar, modeTrk='two')
+print(gefAguiar2)
+xyplot(gefAguiar2)
 
-###Shadows between two-axis trackers, again using the gefSIAR result.
+###Shadows between two-axis trackers, again using the gefAguiar result.
 
 struct=list(W=23.11, L=9.8, Nrow=2, Ncol=8)
 distances=data.frame(Lew=40, Lns=30, H=0)
 
 gefShd<-calcGef(lat=41, modeRad='prev',
-                dataRad=gefSIAR, modeTrk='two',
+                dataRad=gefAguiar, modeTrk='two',
                 modeShd=c('area', 'prom'),
                 struct=struct, distances=distances)
 print(gefShd)
 ##The Gef0, Bef0 and Def0 values are the same as those contained in the
-##                gefSIAR2 object
-}
+##                gefAguiar2 object
 }
 
 \keyword{utilities}

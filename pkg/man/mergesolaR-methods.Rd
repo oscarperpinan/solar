@@ -42,6 +42,7 @@ prod <- mergesolaR(ProdFixed, Prod2x, ProdHoriz)
 head(prod)
 
 \dontrun{
+## Due to changes in SIAR webpage this code no longer works
 EstMadrid <- subset(RedEstaciones, NomProv=='Madrid')
 nEstMadrid <- nrow(EstMadrid)
 namesMadrid <- EstMadrid$NomEst

@@ -28,17 +28,20 @@ corr, f) }
   \item{modeRad}{A character string, describes the kind of source data of the
     global irradiation and ambient temperature.
 
-    It can be \code{modeRad='prom'} for monthly mean
-    calculations. With this option, a set of 12 values inside \code{dataRad} must
-    be provided, as defined in \code{\link{readG0dm}}.
+    It can be \code{modeRad='prom'} for monthly mean calculations. With
+    this option, a set of 12 values inside \code{dataRad} must be
+    provided, as defined in \code{\link{readG0dm}}.
 
-    When \code{modeRad='siar'} the source data is downloaded
-    from \url{www.marm.es/siar} with the information provided in
-    \code{dataRad}. In previous versions, this radiation mode was named
-    as \code{'mapa'} due to the webpage of the database. However, since the
-    database is no longer available at mapa.es, \code{modeRad='mapa'} is
-    deprecated and \code{modeRad='siar'} should be used instead.
+    \code{modeRad='aguiar'} uses a set of 12 monthly average values
+    (provided with \code{dataRad}) and produces a synthetic daily
+    irradiation time series following the procedure by Aguiar etal. (see
+    reference below).
 
+    \code{modeRad='siar'} is currently disabled. In previous versions,
+    with \code{modeRad='siar'} the source data was downloaded from
+    \url{www.marm.es/siar} with the information provided in
+    \code{dataRad}.
+    
     If \code{modeRad='bd'} the information of \emph{daily} irradiation is read from a
     file, a \code{data.frame} defined by \code{dataRad}, a \code{zoo} or a
     \code{Meteo} object. (See \code{\link{readBD}}, \code{\link{df2Meteo}}
@@ -51,20 +54,33 @@ corr, f) }
   }
 
   \item{dataRad}{\itemize{
-      \item{If \code{modeRad='prom'}, a list as defined by
-	\code{\link{readG0dm}}}
-      \item{If \code{modeRad='siar'}, a list as defined by
-	\code{\link{readSIAR}}.}
-      \item{If \code{modeRad='bd'} a \code{list} as defined by \code{\link{readBD}},
-    \code{\link{df2Meteo}} or \code{\link{zoo2Meteo}}, or a
-    \code{Meteo} object. The resulting object will include a column named \code{Ta},
-    with information about ambient temperature.}
-  \item{If \code{modeRad='bdI'} a \code{list} as defined by \code{\link{readBDi}},
-    \code{\link{dfI2Meteo}} or \code{\link{zoo2Meteo}}, or a
-    \code{Meteo} object. The resulting object will include a column named \code{Ta},
-    with information about ambient temperature.}
-}}
-\item{prom, mapa, bd, bdI}{Deprecated. \code{dataRad} should be used instead.}
+      
+      \item{If \code{modeRad='prom'} or \code{modeRad='aguiar'}, a
+	numeric with 12 values or a named list whose components will be
+	processed with \code{\link{readG0dm}}.}
+      
+      %% \item{If \code{modeRad='siar'}, a list as defined by
+      %% 	\code{\link{readSIAR}}.}
+
+      \item{If \code{modeRad='bd'} a character (name of the file to be
+    read with \code{readBD}), a \code{data.frame} (to be processed with
+    \code{df2Meteo}), a \code{zoo} (to be processed with
+    \code{zoo2Meteo}), a \code{Meteo} object, or a \code{list} as
+    defined by \code{\link{readBD}}, \code{\link{df2Meteo}} or
+    \code{\link{zoo2Meteo}}. The resulting object will include a column
+    named \code{Ta}, with information about ambient temperature.}
+
+        \item{If \code{modeRad='bdI'} a character (name of the file to
+    be read with \code{readBDi}), a \code{data.frame} (to be processed
+    with \code{dfI2Meteo}), a \code{zoo} (to be processed with
+    \code{zoo2Meteo}), a \code{Meteo} object, or a \code{list} as
+    defined by \code{\link{readBDi}}, \code{\link{dfI2Meteo}} or
+    \code{\link{zoo2Meteo}}. The resulting object will include a column
+    named \code{Ta}, with information about ambient temperature.}
+  }}
+
+  \item{prom, mapa, bd, bdI}{Deprecated. \code{dataRad} should be used
+    instead.}
 
   % \item{prom}{A list as defined by \code{\link{readG0dm}}. This list
   %   is only required when \code{modeRad='prom'}.}
@@ -124,12 +140,18 @@ corr, f) }
 \value{A \code{G0} object.}
 
 \references{\itemize{
+    
     \item Perpiñán, O, Energía Solar Fotovoltaica, 2012.
     (\url{http://procomun.wordpress.com/documentos/libroesf/})
+
     \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
     Systems with R", Journal of Statistical Software, 50(9), 1-32,
     \url{http://www.jstatsoft.org/v50/i09/}
-  }}
+
+    \item Aguiar, Collares-Pereira and Conde, "Simple procedure for
+  generating sequences of daily radiation values using a library of
+  Markov transition matrices", Solar Energy, Volume 40, Issue 3, 1988, Pages 269–279}
+  }
 
 \author{Oscar Perpiñán Lamigueiro.}
 
@@ -148,15 +170,13 @@ G0dm=c(2.766,3.491,4.494,5.912,6.989,7.742,7.919,7.027,5.369,3.562,2.814,2.179)*
 Ta=c(10, 14.1, 15.6, 17.2, 19.3, 21.2, 28.4, 29.9, 24.3, 18.2, 17.2,
   15.2)
 
-g0<-calcG0(lat=37.2, modeRad='prom', dataRad=list(G0dm=G0dm, Ta=Ta))
+g0 <- calcG0(lat=37.2, modeRad='prom', dataRad=list(G0dm=G0dm, Ta=Ta))
 print(g0)
 xyplot(g0)
 
-\dontrun{
-g0<-calcG0(lat=37.2,
-        modeRad='siar',
-        dataRad=list(prov=28,est=3,
-        start='01/01/2009', end='31/12/2009'))
+## Aguiar et al.
+
+g0 <- calcG0(lat=37.2, modeRad='aguiar', dataRad=G0dm)
 print(g0)
 xyplot(g0)
 
@@ -167,21 +187,20 @@ xyplot(g0)
 BDi=as.zooI(g0)
 BDi$Ta=25 ##Information about temperature must be contained in BDi
 
-g02<-calcG0(lat=37.2,
+g02 <- calcG0(lat=37.2,
             modeRad='bdI',
             dataRad=list(lat=37.2, file=BDi),
             corr='none')
 
 print(g02)
 
-g03<-calcG0(lat=37.2,
+g03 <- calcG0(lat=37.2,
             modeRad='bdI',
             dataRad=list(lat=37.2, file=BDi),
             corr='BRL')
 print(g03)
 
 xyplot(fd~kt, data=g03, pch=19, alpha=0.3)
-}
 
 \dontrun{
 ##NREL-MIDC

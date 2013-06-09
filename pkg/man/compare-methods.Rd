@@ -39,6 +39,7 @@ GefFixed=as(ProdFixed, 'Gef')
 compare(GefFixed, Prod2x, ProdHoriz)
 
 \dontrun{
+## Due to changes in SIAR webpage this code no longer works
 ###compare and do.call
 EstMadrid <- subset(RedEstaciones, NomProv=='Madrid')
 nEstMadrid <- nrow(EstMadrid)

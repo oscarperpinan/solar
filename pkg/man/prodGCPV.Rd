@@ -214,31 +214,29 @@ mon=month(index(ComparePac))
 xyplot(two+horiz+fixed~AzS|mon, data=ComparePac,
      type='l', auto.key=list(space='right', lines=TRUE, points=FALSE),ylab='Pac')
 
-\dontrun{
-###Use of modeRad='siar' and modeRad='prev'
-prodSIARFixed<-prodGCPV(lat=41,
-             modeRad='siar',
-             dataRad=list(prov=28,est=3,
-               start='01/01/2009', end='31/12/2009'),
-             keep.night=FALSE)
+###Use of modeRad='aguiar' and modeRad='prev'
+prodAguiarFixed <- prodGCPV(lat=41,
+                            modeRad='aguiar',
+                            dataRad=G0dm,
+                            keep.night=FALSE)
 
 ##We want to compare systems with different effective irradiance
-##so we have to convert prodSIARFixed to a 'G0' object.
-G0SIAR=as(prodSIARFixed, 'G0')
+##so we have to convert prodAguiarFixed to a 'G0' object.
+G0Aguiar=as(prodAguiarFixed, 'G0')
 
-prodSIAR2x<-prodGCPV(lat=41,modeTrk='two',modeRad='prev', dataRad=G0SIAR)
-prodSIARHoriz<-prodGCPV(lat=41, modeTrk='horiz',modeRad='prev',
-dataRad=G0SIAR)
+prodAguiar2x<-prodGCPV(lat=41,modeTrk='two',modeRad='prev', dataRad=G0Aguiar)
+prodAguiarHoriz<-prodGCPV(lat=41, modeTrk='horiz',modeRad='prev',
+dataRad=G0Aguiar)
 
 ##Comparison of yearly values
-compare(prodSIARFixed, prodSIAR2x, prodSIARHoriz)
-compareLosses(prodSIARFixed, prodSIAR2x, prodSIARHoriz)
+compare(prodAguiarFixed, prodAguiar2x, prodAguiarHoriz)
+compareLosses(prodAguiarFixed, prodAguiar2x, prodAguiarHoriz)
 
 ##Compare of daily productivities of each tracking system
-compareYf <- mergesolaR(prodSIARFixed, prodSIAR2x, prodSIARHoriz)
+compareYf <- mergesolaR(prodAguiarFixed, prodAguiar2x, prodAguiarHoriz)
 xyplot(compareYf, superpose=TRUE,
 ylab='kWh/kWp', main='Daily productivity', auto.key=list(space='right'))
-}
+
 
 ###Shadows
 #Two-axis trackers
@@ -283,7 +281,6 @@ xyplot(r2d(Beta)~r2d(w),
      xlab=expression(omega (degrees)),
      ylab=expression(beta (degrees)))
 
-\dontrun{
 compare(prodFixed, prod2x, prodHoriz, prod2xShd,
        prodHorizShd, prodHorizBT)
 
@@ -294,7 +291,6 @@ compareYf2 <- mergesolaR(prodFixed, prod2x, prodHoriz, prod2xShd,
        prodHorizShd, prodHorizBT)
 xyplot(compareYf2, superpose=TRUE,
 ylab='kWh/kWp', main='Daily productivity', auto.key=list(space='right'))
-}
 }
 
 \keyword{utilities}
