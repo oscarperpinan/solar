@@ -48,8 +48,8 @@ lat=37.2
 sol=calcSol(lat, BTd=fBTd(mode='serie'))
 range(indexD(sol))
 
-start <- as.POSIXct('2011-01-01')
-end <- as.POSIXct('2011-01-31')
+start <- as.Date(indexD(sol)[1])
+end <- start + 30
 
 solWindow <- sol[start, end]
 range(indexD(solWindow))
