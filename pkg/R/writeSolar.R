@@ -9,7 +9,7 @@ setMethod('writeSolar', signature=(object='Sol'),
           timeScales=c('i', 'd', 'm', 'y'), sep=',', ...){
               name <- strsplit(file, '\\.')[[1]][1]
               ext <- strsplit(file, '\\.')[[1]][2]
-              timeScales <- match.arg(timeScales, several=TRUE)
+              timeScales <- match.arg(timeScales, several.ok=TRUE)
               if ('i' %in% timeScales) {
                   zI <- as.zooI(object, complete=complete, day=day)
                   write.zoo(zI, file=file, sep=sep, ...)
