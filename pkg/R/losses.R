@@ -54,6 +54,10 @@ setMethod('losses',
           )
 
 ###compareLosses
+
+## compareLosses,ProdGCPV: no visible binding for global variable ‘name’
+if(getRversion() >= "2.15.1") globalVariables(c('name'))
+
 setGeneric('compareLosses', signature='...', function(...){standardGeneric('compareLosses')})
 
 setMethod('compareLosses', 'ProdGCPV',

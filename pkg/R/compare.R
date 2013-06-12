@@ -1,3 +1,10 @@
+## compareFunction: no visible binding for global variable ‘name’
+## compareFunction: no visible binding for global variable ‘x’
+## compareFunction: no visible binding for global variable ‘y’
+## compareFunction: no visible binding for global variable ‘group.value’
+
+if(getRversion() >= "2.15.1") globalVariables(c('name', 'x', 'y', 'group.value'))
+
 setGeneric('compare', signature='...', function(...){standardGeneric('compare')})
 
 compareFunction <- function(..., vars){

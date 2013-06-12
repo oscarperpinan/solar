@@ -1,19 +1,11 @@
- # Copyright (C) 2010, 2009 Oscar Perpiñán Lamigueiro
- #
- # This program is free software; you can redistribute it and/or
- # modify it under the terms of the GNU General Public License
- # as published by the Free Software Foundation; either version 2
- # of the License, or (at your option) any later version.
- #
- # This program is distributed in the hope that it will be useful,
- # but WITHOUT ANY WARRANTY; without even the implied warranty of
- # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- # GNU General Public License for more details.
- #
- # You should have received a copy of the GNU General Public License
- # along with this program; if not, write to the Free Software
- # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- #/
+## HQCurve: no visible binding for global variable ‘fb’
+## HQCurve: no visible binding for global variable ‘Q’
+## HQCurve: no visible binding for global variable ‘x’
+## HQCurve: no visible binding for global variable ‘y’
+## HQCurve: no visible binding for global variable ‘group.value’
+
+if(getRversion() >= "2.15.1") globalVariables(c('fb', 'Q', 'x', 'y', 'group.value'))
+
 HQCurve<-function(pump){
 
   w1=3000                              #frecuencia rpm sincronica
@@ -54,8 +46,8 @@ HQCurve<-function(pump){
 
 ###Curva H-Q a diferentes frecuencias
   ##Compruebo si tengo disponible el paquete lattice, que debiera haber sido cargado en .First.lib
-  lattice.disp<-("lattice" %in% .packages()) 
-  latticeExtra.disp<-("latticeExtra" %in% .packages()) 
+  lattice.disp<-("lattice" %in% .packages())
+  latticeExtra.disp<-("latticeExtra" %in% .packages())
   if (lattice.disp && latticeExtra.disp) {
     p<-xyplot(H~Q,groups=factor(fb),data=Curva, type='l',
               par.settings=custom.theme.2(),
