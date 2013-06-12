@@ -210,9 +210,9 @@ xyplot(fd~kt, data=g03, pch=19, alpha=0.3)
 ##Elevation: 381 meters AMSL
 ##Time Zone: -10.0
 
-file='http://www.nrel.gov/midc/apps/plot.pl?site=LANAI&start=20090722&edy=19&emo=11&eyr=2010&zenloc=19&year=2010&month=11&day=1&endyear=2010&endmonth=11&endday=19&time=1&inst=3&inst=4&inst=5&inst=10&type=data&first=3&math=0&second=-1&value=0.0&global=-1&direct=-1&diffuse=-1&user=0&axis=1'
+NRELurl <- 'http://goo.gl/fFEBN'
 
-dat <- read.table(file, header=TRUE, sep=',')
+dat <- read.table(NRELurl, header=TRUE, sep=',')
 names(dat) <- c('date', 'hour', 'G0', 'B', 'D0', 'Ta')
 
 ##B is direct normal. We need direct horizontal.
