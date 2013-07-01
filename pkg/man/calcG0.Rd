@@ -224,12 +224,9 @@ dat$B0 <- dat$G0-dat$D0
 idxLocal <- with(dat, as.POSIXct(paste(date, hour), format='\%m/\%d/\%Y \%H:\%M', tz='HST'))
 idx <- local2Solar(idxLocal, lon=-156.9339)
 
-z <- zoo(dat[,c('G0', 'D0', 'B0', 'Ta')], idx)
+NRELMeteo <- zoo(dat[,c('G0', 'D0', 'B0', 'Ta')], idx)
 
 lat=20.77
-
-NRELMeteo <- zoo2Meteo(z, lat=lat)
-xyplot(NRELMeteo)
 
 g0 <- calcG0(lat=lat, modeRad='bdI', dataRad=NRELMeteo, corr='none')
 xyplot(g0)
