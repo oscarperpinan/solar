@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>solaR: Solar Radiation and Photovoltaic Systems with R</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="solaR: Solar Radiation and Photovoltaic Systems with R"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-09-27 00:35:04 CEST"/>
+<meta name="author" content="Oscar Perpiñán Lamigueiro"/>
+<meta name="description" content="solaR"/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="styles.css" />
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">solaR: Solar Radiation and Photovoltaic Systems with R</h1>
+
+
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1">Introduction</h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+The <code>solaR</code> package allows for reproducible research both for
+photovoltaics (PV) systems performance and solar radiation. It
+includes a set of classes, methods and functions to calculate the
+sun geometry and the solar radiation incident on a photovoltaic
+generator and to simulate the performance of several applications
+of the photovoltaic energy. This package performs the whole
+calculation procedure from both daily and intradaily global
+horizontal irradiation to the final productivity of grid-connected
+PV systems and water pumping PV systems.
+</p>
+<p>
+It is designed using a set of S4 classes whose core is a group of
+slots with multivariate time series. The classes share a variety
+of methods to access the information and several visualization
+methods. In addition, the package provides a tool for the visual
+statistical analysis of the performance of a large PV plant
+composed of several systems.
+</p>
+<p>
+Although <code>solaR</code> is primarily designed for time series associated to
+a location defined by its latitude/longitude values and the
+temperature and irradiation conditions, it can be easily combined
+with spatial packages for space-time analysis.  
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2">Documentation</h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+The best place to learn how to use the package is the companion
+paper published by the Journal of Statistical Software: <a href="http://www.jstatsoft.org/v50/i09/">http://www.jstatsoft.org/v50/i09/</a>
+</p>
+<p>
+<a href="http://procomun.wordpress.com/documentos/libroesf/">This book</a> (in Spanish) contains detailed information about solar
+radiation and photovoltaic systems. In <a href="http://procomun.wordpress.com/documentos/articulos/">my articles</a> I
+frequently use <code>solaR</code>. Besides, I publish news and examples
+about <code>solaR</code> at <a href="http://procomun.wordpress.com/">this blog</a>.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">Citation</h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+If you use <code>solaR</code>, please cite it in any publication reporting
+results obtained with this software:
+</p>
+
+
+
+<pre class="src src-verbatim">Oscar Perpi&#241;&#225;n (2012). solaR: Solar Radiation and Photovoltaic
+Systems with R, Journal of Statistical Software, 50(9), 1-32. URL
+http://www.jstatsoft.org/v50/i09/.
+</pre>
+
+
+<p>
+A BibTeX entry for LaTeX users is
+</p>
+
+
+<pre class="src src-verbatim">@Article{,
+  title = {{solaR}: Solar Radiation and Photovoltaic Systems with {R}},
+  author = {Oscar Perpi{\~n}{\'a}n},
+  journal = {Journal of Statistical Software},
+  year = {2012},
+  volume = {50},
+  number = {9},
+  pages = {1--32},
+  url = {http://www.jstatsoft.org/v50/i09/},
+}
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4">Software</h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+The stable version of <code>solaR</code> is hosted at CRAN:
+<a href="http://cran.r-project.org/package=solaR">http://cran.r-project.org/package=solaR</a>
+</p>
+<p>
+The development version is available at R-Forge:
+<a href="http://R-Forge.R-project.org/projects/solar/">http://R-Forge.R-project.org/projects/solar/</a>
+</p>
+
+<hr/>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2012-09-27 00:35:04 CEST</p>
+<p class="author">Author: Oscar Perpiñán Lamigueiro</p>
+<p class="creator">Org version 7.8.11 with Emacs version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>
