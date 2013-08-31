@@ -29,6 +29,11 @@ a location defined by its latitude/longitude values and the
 temperature and irradiation conditions, it can be easily combined
 with spatial packages for space-time analysis.  
 
+* Software
+
+The stable version of =solaR= is hosted at [[http://cran.r-project.org/package%3DsolaR][CRAN]]. 
+The development version is available at [[http://github.com/oscarperpinan/solar/][GitHub]].
+
 * Documentation
 
 The best place to learn how to use the package is the companion
@@ -63,13 +68,5 @@ A BibTeX entry for LaTeX users is
     url = {http://www.jstatsoft.org/v50/i09/},
   }
 #+end_src
-
-* Software
-
-The stable version of =solaR= is hosted at CRAN:
-[[http://cran.r-project.org/package%3DsolaR][http://cran.r-project.org/package=solaR]]
-
-The development version is available at R-Forge:
-[[http://R-Forge.R-project.org/projects/solar/]]
 
 -----
