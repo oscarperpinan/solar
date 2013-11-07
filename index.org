@@ -40,7 +40,7 @@ The best place to learn how to use the package is the companion
 paper published by the Journal of Statistical Software: [[http://www.jstatsoft.org/v50/i09/]]
 
 [[http://procomun.wordpress.com/documentos/libroesf/][This book]] (in Spanish) contains detailed information about solar
-radiation and photovoltaic systems. In [[http://procomun.wordpress.com/documentos/articulos/][my articles]] I
+radiation and photovoltaic systems. In [[http://oscarperpinan.github.io/][my articles]] I
 frequently use =solaR=. Besides, I publish news and examples
 about =solaR= at [[http://procomun.wordpress.com/][this blog]].
 
