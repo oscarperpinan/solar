@@ -23,6 +23,14 @@ location defined by its latitude/longitude values and the temperature
 and irradiation conditions, it can be easily combined with spatial
 packages for space-time analysis.
 
+# Software #
+
+The stable version of solaR is hosted at
+[CRAN](http://cran.r-project.org/package%3DsolaR). The development
+version is available at
+[GitHub](http://github.com/oscarperpinan/solar/).
+
+
 # Documentation #
 
 The best place to learn how to use the package is the companion paper
@@ -35,3 +43,26 @@ photovoltaic systems. In
 [my articles](http://oscarperpinan.github.io/) I frequently use
 `solaR`. Besides, I publish news and examples about `solaR` at
 [my blog](http://procomun.wordpress.com/).
+
+# Citation #
+
+If you use `solaR`, please cite it in any publication reporting
+results obtained with this software:
+
+    Oscar Perpiñán (2012). solaR: Solar Radiation and Photovoltaic
+    Systems with R, Journal of Statistical Software, 50(9), 1-32. URL
+		http://www.jstatsoft.org/v50/i09/.
+
+A BibTeX entry for LaTeX users is:
+
+    @Article{,
+        title = {{solaR}: Solar Radiation and Photovoltaic Systems with {R}},
+        author = {Oscar Perpi{\~n}{\'a}n},
+        journal = {Journal of Statistical Software},
+        year = {2012},
+        volume = {50},
+        number = {9},
+        pages = {1--32},
+        url = {http://www.jstatsoft.org/v50/i09/},
+      }
+
