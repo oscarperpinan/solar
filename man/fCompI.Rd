@@ -27,20 +27,20 @@
     See below for \code{corr='none'}.}
 
   \item{corr}{A character, the correlation between the the fraction of
-    intradaily diffuse irradiation and the
-    clearness index to be used.
+    intradaily diffuse irradiation and the clearness index to be
+    used. It is ignored if \code{G0I} is not provided.
 
-    With this version several options are available, as described in
+    With this version several correlations are available, as described in
     \code{\link{corrFdKt}}. You should choose one of \emph{intradaily}
     proposals. For example, the \code{\link{FdKtCLIMEDh}} is
     selected with \code{corr='CLIMEDh'}.
 
-    If \code{corr='user'} the use of a correlation
-    defined by a function \code{f} is possible.
+    If \code{corr='user'} the use of a correlation defined by a function
+    \code{f} is possible.
 
-    If \code{corr='none'} the \code{G0I} object should include information
-    about global, diffuse and direct intradaily irradiation with columns named
-    \code{G0}, \code{D0} and \code{B0}, respectively. }
+    If \code{corr='none'} the \code{G0I} object must include information
+    about global, diffuse and direct intradaily irradiation with columns
+    named \code{G0}, \code{D0} and \code{B0}, respectively. }
 
 
   \item{f}{A function defininig a correlation between the fraction of
@@ -59,7 +59,7 @@
 \references{ \itemize{
     \item Collares-Pereira, M. y Rabl, A.,  The average distribution of solar radiation: correlations between
       diffuse and hemispherical and between daily and hourly insolation values. Solar Energy, 22:155–164, 1979.
-    \item Perpiñán, O, Energía Solar Fotovoltaica, 2012.
+    \item Perpiñán, O, Energía Solar Fotovoltaica, 2013.
     (\url{http://procomun.wordpress.com/documentos/libroesf/})
     \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
   Systems with R", Journal of Statistical Software, 50(9), 1-32,
@@ -95,6 +95,12 @@ BD<-readG0dm(G0dm=G0dm, Ta=Ta, lat=37.2)
 compD<-fCompD(sol, BD, corr = 'Page')
 compI<-fCompI(sol, compD)
 head(compI)
+
+## Use of 'corr'. The help page of calcG0 includes additional examples
+## with intradaily data
+climed <- fCompI(solI, G0I=compI, corr = 'CLIMEDh')
+ekdh <- fCompI(solI, G0I=compI, corr = 'EKDh')
+brl <- fCompI(solI, G0I=compI, corr = 'BRL')
 }
 
 \keyword{utilities}

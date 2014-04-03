@@ -75,25 +75,26 @@ FdKtBRL <- function(kt, sol){##Boland et al.
 
   if (class(sol)=='Sol') {
     sample=sol@sample
-    aux <- as.zooI(sol, day=TRUE)
+    sol <- as.zooI(sol, day=TRUE)
   } else {
     sample=median(diff(index(sol)))
   }
 
-  idx=index(aux)
-  w=coredata(aux$w)
-  aman=coredata(aux$aman)
-  Bo0=coredata(aux$Bo0)
-  Bo0d=coredata(aux$Bo0d)
-  AlS=coredata(aux$AlS)
+  idx=index(sol)
+  w=coredata(sol$w)
+  aman=coredata(sol$aman)
+  AlS=coredata(sol$AlS)
 
   ##Calculo de Ktd
-  G0=kt*Bo0
+  Bo0 <- coredata(sol$Bo0)
+  G0 <- kt*Bo0
   day <- truncDay(idx)
-  G0d=ave(G0, list(day),FUN=function(x) P2E(x, sample))
-  Ktd=coredata(G0d/Bo0d)
+  G0d <- ave(G0, list(day), FUN=function(x) P2E(x, sample))
+  Bo0d <- ave(Bo0, list(day), FUN=function(x) P2E(x, sample))
+  Ktd <- G0d/Bo0d
   Ktd[!aman]=0
-##Cálculo de la persistencia
+
+  ##Cálculo de la persistencia
   kt=zoo(kt, idx)
   ktNA=na.omit(kt)  
   iDay=truncDay(index(ktNA))
