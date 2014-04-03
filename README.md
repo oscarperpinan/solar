@@ -30,6 +30,16 @@ The stable version of solaR is hosted at
 version is available at
 [GitHub](http://github.com/oscarperpinan/solar/).
 
+Install the stable version with:
+
+    install.packages('solaR')
+
+To install the development version you need the `devtools` package:
+
+    install.packages('devtools')
+	devtools::install_github('solar', 'oscarperpinan')
+
+
 
 # Documentation #
 
