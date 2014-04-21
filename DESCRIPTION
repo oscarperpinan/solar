@@ -1,13 +1,14 @@
 Package: solaR
 Type: Package
 Title: Solar Photovoltaic Systems
-Version: 0.37
-Date: 2013-10-10
+Version: 0.38
+Date: 2014-04-21
 Encoding: UTF-8
 Author: Oscar Perpiñán Lamigueiro
 Maintainer: Oscar Perpiñán Lamigueiro <oscar.perpinan@gmail.com>
 Description: Calculation methods of solar radiation and performance of photovoltaic systems from daily and intradaily irradiation data sources.
 URL: http://oscarperpinan.github.io/solar/
+BugReports: https://github.com/oscarperpinan/solar/issues
 License: GPL-3 | file LICENSE
 LazyLoad: yes
 LazyData: yes
