@@ -1,4 +1,4 @@
-solar
+solaR
 =====
 
 The `solaR` package allows for reproducible research both for
