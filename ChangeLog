@@ -1,5 +1,14 @@
 Commits in HEAD
-cf1abe2 * HEAD origin/master master file LICENSE added in DESCRIPTION
+f017be2 * HEAD origin/master master Radiation before sunrise and after sunset is zero
+84cf12a * Fix examples with corr and cleaning
+aa620e0 * small fix in README
+05a8ccd * Daily profiles modified thanks to J. Trentmann
+6872ec0 * BugReports URL in DESCRIPTION
+06704c5 * More information about installation
+024b05a * Fix BRL correlation to work with zoo objects. help(fCompI) improved.
+1978f64 * Citation information in README.md
+784b006 * v0.37 ChangeLog updated
+cf1abe2 * file LICENSE added in DESCRIPTION
 6ebd328 * Date updated in DESCRIPTION
 4486f0d * URL updated in DESCRIPTION
 ae9bff1 * README.md expanded
@@ -91,14 +100,4 @@ de30964 * more changes to kriging in order to use Gef from CMSAF
 49a89e9 * improvements in kriging.R
 52dadec * A new rasterVis is at R-Forge now; the related files are removed from solaR/drafts
 5d7ac76 * add levelplot method
-9675fee * add again mySPplot for the EOI team; changes in kriging to use mySPplot instead of spplot
-6f84beb * add bwplot (with violinplot); modifications in histogram and densityplot
-64863d4 * add a exampleRaster; improvements in the whole set of functions for Raster; remove mySPplot
-a7759af * modifications to hovmoller and horizonplot according to changes in raster (z slot); direction is renamed to xyLayer;  the levelplot function of hovmoller uses the formula method
-146dfc3 * add identify method and choosePoints function for Raster
-3bf463b * add histogram, densityplot and splom methods for Raster*
-11cca4b * add direction function; improvement of hovmoller method; add horizonplot and xyplot methods for RasterTime
-555642a * add draft of hovmoller; improvement of mySPplot and RasterTime classes; improvements of kriging with elevation for external drift
-c9fa00f * improvements in the RasterTime class; new R file for mySPplot; comments in kriging.R for EOI
-
-type "e" to show more logs
+type "e" to show more history
