@@ -29,8 +29,8 @@ fCompI <- function(sol, compD, G0I, corr='none', f){
 
         ## Daily profile using Liu and Jordan, Collares-Pereira and Rabl
         ## proposals.
-        D0 <- D0d*rd
-        G0 <- G0d*rg
+        D0 <- D0d * rd
+        G0 <- G0d * rg
         ## This method may produce diffuse irradiance higher than global
         ## irradiance.
         G0 <- pmax(G0, D0, na.rm=TRUE)
@@ -53,8 +53,10 @@ fCompI <- function(sol, compD, G0I, corr='none', f){
         G0 <- G0 * G0d/G0dCP
         B0 <- B0 * B0d/B0dCP
 
-        kt=G0/Bo0
-        fd=D0/G0
+        kt <- G0/Bo0
+        fd <- D0/G0
+
+        
   
     } else { ## Use instantaneous values if provided through G0I
     
@@ -69,20 +71,18 @@ fCompI <- function(sol, compD, G0I, corr='none', f){
                 }
             }                                 
             ## Filter values: surface irradiation must be lower than
-            ## extraterrestial; values are only allowed between sunrise and
-            ## sunset.
-            is.na(G0) <- (G0 > Bo0 | !aman)
+            ## extraterrestial; 
+            is.na(G0) <- (G0 > Bo0)
 
             kt <- G0/Bo0
-
+    
             ## Fd-Kt correlation
             fd <- switch(corr,
-                         EKDh <- FdKtEKDh(kt),
-                         CLIMEDh <- FdKtCLIMEDh(kt),
-                         BRL <- FdKtBRL(kt, sol), 
-                         user <- f(kt, sol),      
-                         stop('Wrong descriptor of the correlation fd-kt.')
-                         )
+                         EKDh = FdKtEKDh(kt),
+                         CLIMEDh = FdKtCLIMEDh(kt),
+                         BRL = FdKtBRL(kt, sol), 
+                         user = f(kt, sol),      
+                         stop('Wrong descriptor of the correlation fd-kt.'))
             D0 <- fd * G0
             B0 <- G0 - D0
 
@@ -95,19 +95,23 @@ fCompI <- function(sol, compD, G0I, corr='none', f){
             }
 
             ## Filter values: surface irradiation must be lower than
-            ## extraterrestial; values are only allowed between sunrise and
-            ## sunset.
-            is.na(IrrData) <- (IrrData$G0 > Bo0 | !aman)
+            ## extraterrestial; 
+            is.na(IrrData) <- (IrrData$G0 > Bo0)
 
             D0 <- coredata(IrrData$D0)
             B0 <- coredata(IrrData$B0)
             G0 <- coredata(IrrData$G0)
+            ## Filter values: surface irradiation must be lower than
+            ## extraterrestial; 
+            is.na(G0) <- is.na(D0) <- is.na(B0) <- (G0 > Bo0)
       
             kt <- G0/Bo0
             fd <- D0/G0
-
         }
     }
+    ## Values outside sunrise-sunset are set to zero
+    G0[!aman] <- D0[!aman] <- B0[!aman] <- kt[!aman] <- fd[!aman] <- 0
+
     result <- zoo(data.frame(kt, fd, G0, D0, B0), order.by=indSol)
     attr(result, 'match') <- mtch
 

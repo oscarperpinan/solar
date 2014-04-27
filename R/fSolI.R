@@ -133,7 +133,7 @@ fSolI<-function(solD, sample='hour', BTi, EoT=TRUE, keep.night=TRUE, method='mic
 
   ##Irradiancia extra-atmosférica
   Bo0<-Bo*eo*cosThzS
-  is.na(Bo0) <- !aman ##Bo0 is NA outside the sunrise-sunset period
+  Bo0[!aman] <- 0 ##Bo0 is 0 outside the sunrise-sunset period
   
   ##Generador empirico de Collares-Pereira y Rabl 
   a=0.409-0.5016*sin(ws+pi/3)
