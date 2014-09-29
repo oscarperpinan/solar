@@ -1,8 +1,8 @@
 Package: solaR
 Type: Package
 Title: Solar Photovoltaic Systems
-Version: 0.39
-Date: 2014-05-20
+Version: 0.40
+Date: 2014-09-29
 Encoding: UTF-8
 Author: Oscar Perpiñán Lamigueiro
 Maintainer: Oscar Perpiñán Lamigueiro <oscar.perpinan@gmail.com>
@@ -10,7 +10,7 @@ Description: Calculation methods of solar radiation and performance of photovolt
 URL: http://oscarperpinan.github.io/solar/
 BugReports: https://github.com/oscarperpinan/solar/issues
 License: GPL-3
-LazyLoad: yes
 LazyData: yes
-Depends: R (>= 2.10), methods, lattice, latticeExtra, zoo
-Suggests: RColorBrewer, sp, raster, rasterVis
+Depends: R (>= 2.10), methods, zoo, lattice, latticeExtra
+Imports: RColorBrewer
+Suggests: sp, raster, rasterVis

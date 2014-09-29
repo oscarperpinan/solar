@@ -1,9 +1,10 @@
-## load('MTM.RData')
-## MTM <- read.table('~/R/solar/drafts/ktm.dat')
-## Ktm <- c(0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,1)#limites de ktm para elegir matriz
-## ##segun la matriz elegida, estos son los valores máximos y mínimos del kt DIARIO
-## Ktlim <- rbind(c(0.031,0.058,0.051,0.052,0.028,0.053,0.044,0.085,0.01,0.319),
-##                c(0.705,0.694,0.753,0.753,0.807,0.856,0.818,0.846,0.842,0.865))
+## Objects loaded at startup from data/MTM.RData
+if(getRversion() >= "2.15.1") globalVariables(c(
+                  'MTM', ## Markov Transition Matrices
+                  'Ktm', ## Kt limits to choose a matrix from MTM
+                  'Ktlim' ## Daily kt range of each matrix.
+                  ))
+                  
 markovG0 <- function(G0dm, solD){
   timeIndex <- index(solD)
   Bo0d <- solD$Bo0d

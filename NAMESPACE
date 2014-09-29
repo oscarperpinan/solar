@@ -1,8 +1,10 @@
+import(methods)
+importFrom(graphics, plot)
+
 import(zoo)
 import(lattice)
 import(latticeExtra)
-import(methods)
-importFrom(graphics, plot)
+importFrom(RColorBrewer, brewer.pal)
 
 export(
     ##small utilities
