@@ -63,8 +63,6 @@ ProdPVPS-class          Class "ProdPVPS": performance of a PV pumping
 Shade-class             Class "Shade": shadows in a PV system.
 Sol-class               Class "Sol": Apparent movement of the Sun from
                         the Earth
-TargetDiagram           Statistical analysis of a PV system with the
-                        Target Diagram
 aguiar                  Markov Transition Matrices for the Aguiar etal.
                         procedure
 as.data.frameD          Methods for Function as.data.frameD

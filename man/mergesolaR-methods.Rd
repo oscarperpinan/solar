@@ -63,7 +63,5 @@ horizonplot(YfMadrid-rowMeans(YfMadrid),
             scales=list(y=list(relation='same')),
             colorkey=TRUE)
 
-TargetDiagram(YfMadrid, end=as.POSIXct('2010-12-31'), ndays=c(10, 20,
-30, 40, 50, 60), cex=0.6)
 }
 }

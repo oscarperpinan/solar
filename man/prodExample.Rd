@@ -15,9 +15,5 @@
   83:11(2074–2085),
   2009.\url{http://oa.upm.es/1843/1/PERPINAN_ART2009_01.pdf}
 }
-\seealso{
-  \code{\link{TargetDiagram}},
-  \code{\link{analyzeData}}.
-}
 
 \keyword{datasets}
