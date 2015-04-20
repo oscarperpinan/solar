@@ -72,29 +72,8 @@ calcG0(lat, modeRad='prom', dataRad, prom, bd, bdI,
     named \code{Ta}, with information about ambient temperature.}
   }}
 
-  \item{prom, mapa, bd, bdI}{Deprecated. \code{dataRad} should be used
+  \item{prom, bd, bdI}{Deprecated. \code{dataRad} should be used
     instead.}
-
-  % \item{prom}{A list as defined by \code{\link{readG0dm}}. This list
-  %   is only required when \code{modeRad='prom'}.}
-
-  % \item{mapa}{A list as defined by \code{\link{readMAPA}}. This
-  %   list is only required  when \code{modeRad='mapa'}.}
-
-  % \item{bd}{A \code{list} as defined by \code{\link{readBD}},
-  %   \code{\link{df2Meteo}} or \code{\link{zoo2Meteo}}, or a
-  %   \code{Meteo} object. It is only required when
-  %   \code{modeRad='bd'}.
-    
-  %   The resulting object will include a column named \code{Ta},
-  %   with information about ambient temperature.}
-
-  % \item{bdI}{A \code{list} as defined by \code{\link{readBDi}},
-  %   \code{\link{dfI2Meteo}} or \code{\link{zoo2Meteo}}, or a
-  %   \code{Meteo} object. It is only required when \code{modeRad='bdI'}.
-
-  %   The resulting object will include a column named \code{Ta},
-  %   with information about ambient temperature.}
 
   \item{sample}{\code{character}, containing one of ‘"sec"’, ‘"min"’,
     ‘"hour"’.  This can optionally be preceded by a (positive or

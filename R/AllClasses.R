@@ -23,7 +23,7 @@ setClass(
          representation=representation(
            latData='numeric',       #latitud, en grados, >0 si Norte
            data='zoo',          #datos, incluyendo G (Wh/m2) y Ta (ºC)
-           type='character',    #a elegir entre 'prom', 'bd', 'mapa', 'bdI'
+           type='character',    #a elegir entre 'prom', 'bd', 'bdI'
            source='character' #información sobre el origen de los datos
            ),
          validity=function(object) {return(TRUE)}

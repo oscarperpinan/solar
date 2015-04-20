@@ -19,7 +19,7 @@ optimShd<-function(lat,
                    modeRad='prom', 
                    dataRad,
                    prev,
-                   prom, mapa, bd, 
+                   prom, bd, 
                    sample='hour',
                    keep.night=TRUE,
                    sunGeometry='michalsky',
@@ -40,10 +40,6 @@ optimShd<-function(lat,
     warning('backtracking is only implemented for modeTrk=horiz')}
 
   ##Guardo argumentos de la función para utilizar después
-  if (!missing(mapa)){
-    dataRad=mapa
-    warning('Use of "mapa" argument is deprecated. You should use dataRad instead.')
-  }
   if (!missing(prom)) {
     dataRad=prom
     warning('Use of "prom" argument is deprecated. You should use dataRad instead.')
