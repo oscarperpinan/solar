@@ -26,7 +26,6 @@ optimShd(lat,
          modeTrk='fixed',
          modeRad='prom',
          dataRad,
-         prev, prom, mapa, bd,
          sample='hour',
          keep.night=TRUE,
          sunGeometry='michalsky',
@@ -49,13 +48,9 @@ optimShd(lat,
 
   \item{modeTrk}{character, to be chosen from \code{'fixed'}, \code{'two'} or \code{'horiz'}. When \code{modeTrk='fixed'} the surface is fixed (inclination and azimuth angles are constant). The performance of a two-axis tracker is calculated with \code{modeTrk='two'}, and \code{modeTrk='horiz'} is the option for an horizontal N-S tracker. Its default value is \code{modeTrk='fixed'}}
 
-  \item{modeRad, dataRad, prom, mapa, bd}{Information about the source data of the
+  \item{modeRad, dataRad}{Information about the source data of the
     global irradiation. See \code{\link{calcG0}} for details. For this
     function the option \code{modeRad='bdI'} is not supported.}
-
-  \item{prev}{Deprecated, \code{dataRad} should be used instead. A
-    \code{G0} object (or something that can be coerced to a \code{G0}
-    object). It is used when \code{modeRad='prev'}.}
 
   \item{sample}{\code{character}, containing one of ‘"sec"’, ‘"min"’,
     ‘"hour"’.  This can optionally be preceded by a (positive or

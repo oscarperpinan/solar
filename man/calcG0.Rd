@@ -18,8 +18,9 @@
 
 \usage{
 
-calcG0(lat, modeRad='prom', dataRad, prom, bd, bdI,
-       sample='hour', keep.night=TRUE, sunGeometry='michalsky',
+calcG0(lat, modeRad='prom', dataRad,
+       sample='hour', keep.night=TRUE,
+       sunGeometry='michalsky',
        corr, f)
 }
 
@@ -71,9 +72,6 @@ calcG0(lat, modeRad='prom', dataRad, prom, bd, bdI,
     \code{\link{zoo2Meteo}}. The resulting object will include a column
     named \code{Ta}, with information about ambient temperature.}
   }}
-
-  \item{prom, bd, bdI}{Deprecated. \code{dataRad} should be used
-    instead.}
 
   \item{sample}{\code{character}, containing one of ‘"sec"’, ‘"min"’,
     ‘"hour"’.  This can optionally be preceded by a (positive or

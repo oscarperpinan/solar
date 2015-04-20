@@ -12,7 +12,6 @@ prodGCPV(lat,
          modeTrk='fixed',
          modeRad='prom',
          dataRad,
-         prev, prom, mapa, bd,bdI,
          sample='hour',
          keep.night=TRUE,
          sunGeometry='michalsky',
@@ -34,24 +33,8 @@ prodGCPV(lat,
   \item{modeTrk}{A character string, describing the tracking method
     of the generator. See \code{\link{calcGef}} for details.}
 
-  \item{modeRad, dataRad, prom, mapa, bd, bdI}{Information about the source data of the
+  \item{modeRad, dataRad}{Information about the source data of the
     global irradiation. See \code{\link{calcG0}} for details.}
-
-  \item{prev}{Deprecated, \code{dataRad} should be used instead. A
-    \code{Gef} or \code{G0} object (or something that can be coerced to
-    a \code{Gef} object). It is only used when
-    \code{modeRad='prev'}. \code{prodGCPV} will call
-    \code{\link{calcGef}} for the effective irradiance and irradiation
-    procedure only when \code{prev} is a \code{G0} object.}
-
-  % \item{prom}{A list as defined by \code{\link{readG0dm}}. This list
-  %   is only required when \code{modeRad='prom'}.}
-
-  %   \item{mapa}{A list as defined by \code{\link{readMAPA}}. This
-  %     list is only required  when \code{modeRad='mapa'}.}
-
-  %    \item{bd}{\code{list} as defined by \code{\link{readBD}}. This list
-  %    is only required when \code{modeRad='bd'}.}
 
   \item{sample, keep.night}{See \code{\link{calcSol}} for details.}
 
@@ -59,33 +42,8 @@ prodGCPV(lat,
     calculations. See \code{\link{calcSol}}, \code{\link{fSolD}} and \code{\link{fSolI}}.}
 
   \item{corr, f}{See \code{\link{calcG0}} for details.}
-  % \code{character}, containing one of ‘"sec"’, ‘"min"’,
-  %        ‘"hour"’.  This can optionally be preceded by a (positive or
-  %        negative) integer and a space, or followed by ‘"s"’ (used by
-  %        \code{\link{seq.POSIXt}})}
-
-  %     \item{keep.night}{\code{logical} When it is TRUE (default) the
-  %        time series includes the night.}
-
 
   \item{betaLim, beta, alfa, iS, alb, horizBright, HCPV}{See \code{\link{calcGef}} for details.}
-  %     \item{betaLim}{numeric, maximum value of the inclination angle
-  %     for a tracking surface. Its default value is 90 (no
-  %     limitation))}
-
-  %       \item{beta}{numeric, inclination angle of the surface
-  %       (degrees). It is only needed when \code{modeTrk='fixed'}.}
-
-  % \item{alfa}{numeric, azimuth angle of the surface (degrees). It is
-  % positive to the West. It is only needed when
-  % \code{modeTrk='fixed'}. Its default value is \code{alfa=0}}
-
-  % \item{iS}{integer, degree of dirtiness. Its value must be included in
-  % the set (1,2,3,4). \code{iS=1} corresponds to a clean surface while
-  % \code{iS=4} is the selection for a dirty surface. Its default value is
-  % 2}
-
-  % \item{alb}{numeric, albedo reflection coefficient. Its default value is 0.2}
 
   \item{module}{list of numeric values with information about the PV module, \describe{
       \item{\code{Vocn}}{open-circuit voltage of the module at Standard
@@ -130,31 +88,6 @@ prodGCPV(lat,
       \item{\code{Disp}}{ losses due to stops of the system (\%), default value is 0.5}
   }}
   \item{modeShd, struct, distances}{See \code{\link{calcShd}} for details.}
-  %   \item{modeShd}{character, defines the type of shadow calculation. In
-  %     this version of the package the effect of the shadow is calculated
-  %     as a proportional reduction of the circumsolar diffuse and direct
-  %     irradiances. This type of approach is selected with
-  %     \code{modeShd='area'}. In future versions other approaches which
-  %     relate the geometric shadow and the electrical connections of the PV
-  %     generator will be available. If \code{modeTrk='horiz'} it is
-  %     possible to calculate the effect of backtracking with
-  %     \code{modeShd='bt'}. If \code{modeShd=c('area','bt')} the
-  %     backtracking method will be carried out and therefore no shadows
-  %     will appear. Finally, for two-axis trackers it is possible to select
-  %     \code{modeShd='prom'} in order to calculate the effect of shadows on
-  %     an average tracker (see \code{\link{fSombra6}}).
-  % The result will include three variables (Gef0, Def0 and Bef0) with the
-  %     irradiance/irradiation without shadows as a reference.}
-
-  %  \item{struct}{\code{list}. When \code{modeTrk='fixed'} or \code{modeTrk='horiz'} only a component named \code{L}, which is the height (meters) of the tracker, is needed. For two-axis trackers (\code{modeTrk='two'}), an additional component named \code{W}, the width of the tracker, is required. Moreover, two components named \code{Nrow} and \code{Ncol} are included under this list. These components define, respectively, the number of rows and columns of the whole set of trackers in the PV plant.}
-
-  %  \item{distances}{\code{data.frame}, with a component named \code{Lew},
-  %    being the distance between horizontal NS and two-axis trackers along
-  %    the East-West direction, a component named \code{Lns} for two-axis
-  %    trackers or a component named \code{D} for the distance between fixed
-  %    surfaces. An additional component named \code{H} can be included with
-  %    the relative height (meters) between surfaces.}
-
 }
 
 \value{A \code{ProdGCPV} object.}

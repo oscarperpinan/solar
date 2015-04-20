@@ -1,24 +1,7 @@
- # Copyright (C) 2011, 2010 Oscar Perpiñán Lamigueiro
- #
- # This program is free software; you can redistribute it and/or
- # modify it under the terms of the GNU General Public License
- # as published by the Free Software Foundation; either version 2
- # of the License, or (at your option) any later version.
- #
- # This program is distributed in the hope that it will be useful,
- # but WITHOUT ANY WARRANTY; without even the implied warranty of
- # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- # GNU General Public License for more details.
- #
- # You should have received a copy of the GNU General Public License
- # along with this program; if not, write to the Free Software
- # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- #/
 calcGef<-function(lat,
                   modeTrk='fixed',      #c('two','horiz','fixed')
                   modeRad='prom', 
                   dataRad,
-                  prev, prom, bd, bdI,
                   sample='hour',
                   keep.night=TRUE,
                   sunGeometry='michalsky',
@@ -37,24 +20,20 @@ calcGef<-function(lat,
     warning('backtracking is only implemented for modeTrk=horiz')}
 		
   if (modeRad!='prev'){                 #No utilizamos un cálculo prev
-    radHoriz<-calcG0(lat=lat, modeRad=modeRad,
+    radHoriz <- calcG0(lat=lat, modeRad=modeRad,
                      dataRad=dataRad,
                      prom=prom, bd=bd, bdI=bdI,
                      sample=sample, keep.night=keep.night,
                      sunGeometry=sunGeometry,
                      corr=corr, f=f)
   } else {                     #Utilizamos un cálculo prev de calcG0
-    if (!missing(prev) & missing(dataRad)){
-      dataRad=prev
-      warning('Use of the "prev" argument is deprecated. You should use dataRad instead.')
-      }
     radHoriz <- as(dataRad, 'G0') ##OJO: ¿hace falta comprobar que coinciden lat y otras?
   } 
 
 ###Paso a inclinada y radiación efectiva
   BT=("bt" %in% modeShd) 
-  angGen<-fTheta(radHoriz, beta, alfa, modeTrk, betaLim, BT, struct, distances)
-  inclin<-fInclin(radHoriz, angGen, iS, alb, horizBright, HCPV)
+  angGen <- fTheta(radHoriz, beta, alfa, modeTrk, betaLim, BT, struct, distances)
+  inclin <- fInclin(radHoriz, angGen, iS, alb, horizBright, HCPV)
 
 ###Valores diarios, mensuales y anuales
   DayOfMonth=c(31,28,31,30,31,30,31,31,30,31,30,31) ###OJO

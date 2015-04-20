@@ -14,7 +14,6 @@ prodPVPS(lat,
          modeTrk='fixed',
          modeRad='prom',
          dataRad,
-         prev, prom, mapa, bd,bdI,
          sample='hour',
          keep.night=TRUE,
          sunGeometry='michalsky',
@@ -34,21 +33,8 @@ prodPVPS(lat,
   \item{modeTrk}{A character string, describing the tracking method
     of the generator. See \code{\link{calcGef}} for details.}
 
-  \item{modeRad, dataRad, prom, mapa, bd, bdI}{Information about the source data of the
+  \item{modeRad, dataRad}{Information about the source data of the
     global irradiation. See \code{\link{calcG0}} for details.}
-
-  \item{prev}{Deprecated, \code{dataRad} should be used instead. A
-    \code{G0} object (or something that can be coerced to a \code{G0}
-    object). It is used when \code{modeRad='prev'}.}
-
-  % \item{prom}{A list as defined by \code{\link{readG0dm}}. This list
-  %   is only required when \code{modeRad='prom'}.}
-
-  %   \item{mapa}{A list as defined by \code{\link{readMAPA}}. This
-  %     list is only required  when \code{modeRad='mapa'}.}
-
-  %    \item{bd}{\code{list} as defined by \code{\link{readBD}}. This list
-  %    is only required when \code{modeRad='bd'}.}
 
   \item{sample, keep.night}{See \code{\link{calcSol}} for
     details.}

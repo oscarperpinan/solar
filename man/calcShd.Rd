@@ -9,8 +9,15 @@
   for two-axis and horizontal N-S axis trackers and fixed surfaces.  It
   makes use of the function \code{\link{fSombra}} for the shadows factor
   calculation. It is used by the function \code{\link{calcGef}}.  }
-  \usage{ calcShd(radEf, modeTrk='fixed', modeShd='', struct=list(),
-  distances=data.frame()) } \arguments{ \item{radEf}{A
+
+\usage{
+
+calcShd(radEf, modeTrk='fixed', modeShd='',
+        struct=list(),
+        distances=data.frame())
+}
+
+\arguments{ \item{radEf}{A
   \code{\linkS4class{Gef}} object. It may be the result of the
   \code{\link{calcGef}} function.}
 
