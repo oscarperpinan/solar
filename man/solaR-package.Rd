@@ -125,7 +125,6 @@ readBD                  Daily or intradaily values of global horizontal
                         local file or a data.frame.
 readG0dm                Monthly mean values of global horizontal
                         irradiation.
-readSIAR                Meteorological data from the SIAR network.
 shadeplot               Methods for Function shadeplot
 solaR.theme             solaR theme
 window                  Methods for extracting a time window

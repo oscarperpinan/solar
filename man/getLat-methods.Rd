@@ -20,7 +20,7 @@
   \describe{
     \item{\code{signature(object = "Meteo")}}{Value of the \code{latData}
       slot, which is defined by the argument \code{lat} of the
-      \code{\link{readSIAR}}, \code{\link{readG0dm}} and
+      \code{\link{readG0dm}} and
       \code{\link{readBD}} functions, or by the \code{lat} component of the
       \code{dataRad} object passed to \code{calcG0}
       (or equivalent) . It is the latitude of the

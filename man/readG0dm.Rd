@@ -30,8 +30,7 @@ readG0dm(G0dm, Ta=25, lat=0,
   Oscar Perpiñán Lamigueiro.
 }
 \seealso{
-  \code{\link{readSIAR}},
-  \code{\link{readBD}}.
+  \code{\link{readBD}}
 }
 \examples{
 G0dm=c(2.766,3.491,4.494,5.912,6.989,7.742,7.919,7.027,5.369,3.562,2.814,2.179)*1000;

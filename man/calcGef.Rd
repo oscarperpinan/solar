@@ -37,38 +37,14 @@ calcGef(lat,
   \item{modeRad, dataRad, prom, mapa, bd, bdI}{Information about the source data of the
     global irradiation. See \code{\link{calcG0}} for details.}
 
-  %    \item{modeRad}{A character string, describes the kind of source data of the
-  % global irradiation. It can be \code{modeRad='prom'} for monthly mean
-  % calculations. With this option, a set of 12 values inside \code{prom} must
-  % be provided. When \code{modeRad='mapa'} the source data is downloaded
-  % from \url{www.mapa.es/siar} with the information provided in
-  % \code{mapa}. If \code{modeRad='bd'} the information is read from a
-  % file defined by \code{bd}.}
-
   \item{prev}{A \code{G0} object (or something that can be coerced to a
     \code{G0} object). It is used when \code{modeRad='prev'}. It is
     deprecated and \code{dataRad} should be used instead.}
 
-  % \item{prom}{A list as defined by \code{\link{readG0dm}}. This list
-  %   is only required when \code{modoRad='prom'}.}
-
-  %   \item{mapa}{A list as defined by \code{\link{readMAPA}}. This
-  %     list is only required  when \code{modoRad='mapa'}.}
-
-  %    \item{bd}{\code{list} as defined by \code{\link{readBD}}. This list
-  %    is only required when \code{modoRad='bd'}.}
   \item{sample, keep.night}{See \code{\link{calcSol}} for details.}
 
   \item{sunGeometry}{\code{character}, method for the sun geometry
     calculations. See \code{\link{calcSol}}, \code{\link{fSolD}} and \code{\link{fSolI}}.}
-
-  % \item{sample}{\code{character}, containing one of ‘"sec"’, ‘"min"’,
-  %       ‘"hour"’.  This can optionally be preceded by a (positive or
-  %       negative) integer and a space, or followed by ‘"s"’ (used by
-  %       \code{\link{seq.POSIXt}})}
-
-  %     \item{keep.night}{\code{logical} When it is TRUE (default) the
-  %       time series includes the night.}
 
   \item{corr, f}{See \code{\link{calcG0}} for details.}
   

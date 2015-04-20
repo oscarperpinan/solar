@@ -14,7 +14,7 @@
   \item{sol}{A \code{\linkS4class{Sol}} object. It may be the result of the
     \code{\link{calcSol}} function.}
   \item{BD}{A \code{\linkS4class{Meteo}} object, as provided by the
-    \code{\link{readSIAR}} or \code{\link{readBD}} functions. It must
+  \code{\link{readBD}} function. It must
     include information about \code{TempMax} and \code{TempMin}.}
 }
 \details{
@@ -45,23 +45,7 @@
 
 \seealso{
   \code{\link{calcSol}},
-  \code{\link{readSIAR}},
   \code{\link{readBD}}.
-}
-
-\examples{
-\dontrun{
-#Aranjuez, Madrid
-BD<-readSIAR(28,3,'01/01/2008','31/12/2008')
-lat=41;
-sol=calcSol(lat, BTd=indexD(BD), sample='hour')
-Temp<-fTemp(sol,BD)
-
-###Temperature of March
-library(latticeExtra)
-wTemp=window(Temp, start=as.POSIXct('2008-03-01'), end=as.POSIXct('2008-03-31'))
-xyplot(wTemp)+layer_(panel.xblocks(x, DoY, col=c('lightgray', 'white')))
-}
 }
 
 \keyword{utilities}

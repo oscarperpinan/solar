@@ -87,7 +87,6 @@ zoo2Meteo(file, lat, source='')
 }
 \seealso{
   \code{\link{read.table}},
-  \code{\link{readSIAR}},
   \code{\link{readG0dm}}.
 }
 \examples{

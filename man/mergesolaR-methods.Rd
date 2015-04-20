@@ -40,28 +40,4 @@ ProdHoriz<-prodGCPV(lat=lat,dataRad=prom, modeTrk='horiz', keep.night=FALSE)
 
 prod <- mergesolaR(ProdFixed, Prod2x, ProdHoriz)
 head(prod)
-
-\dontrun{
-## Due to changes in SIAR webpage this code no longer works
-EstMadrid <- subset(RedEstaciones, NomProv=='Madrid')
-nEstMadrid <- nrow(EstMadrid)
-namesMadrid <- EstMadrid$NomEst
-
-prodMadrid <- lapply(1:nEstMadrid,
-                     function(x){try(prodGCPV(lat=41, modeRad='siar',
-                                                  dataRad=list(prov=28, est=x,
-                                                    start='01/01/2009', end='31/12/2010'))
-                                     )})
-names(prodMadrid) <- namesMadrid
-okMadrid <- lapply(prodMadrid, class)!='try-error'
-prodMadrid <- prodMadrid[okMadrid]
-
-YfMadrid <- do.call(mergesolaR, prodMadrid)
-
-horizonplot(YfMadrid-rowMeans(YfMadrid),
-            origin=0,
-            scales=list(y=list(relation='same')),
-            colorkey=TRUE)
-
-}
 }

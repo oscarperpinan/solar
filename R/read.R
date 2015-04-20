@@ -37,42 +37,6 @@ checkG0Ta <- function(x, maxmin=FALSE){
   return(x)
 }
 
-readSIAR<-function(prov, est, start, end, lat=0, format='%d/%m/%Y'){
-  formatSIAR='%d/%m/%Y'
-  if (format!='%d/%m/%Y') { #Cambio formato de fecha al que necesita marm.es/siar
-    start=format(as.Date(start, format=format), formatSIAR)
-    end=format(as.Date(end, format=format), formatSIAR)}
-  URL=paste('http://www.marm.es/siar/exportador.asp?T=DD&P=',
-    prov,'&E=',est,'&I=',
-    start,'&F=',end,sep='')
-  cat('Downloading data from www.marm.es/siar...\n')
-    
-  ## BD<-read.table(URL,header=TRUE,skip=1,fill=TRUE,dec=',', as.is=TRUE)
-  ## fecha<-as.POSIXct(BD$Fecha2, tz='UTC', format=formatSIAR)
-  ## BD$G0<-BD$Radiacion/3.6*1000 #Cambio de unidades. G debe ir en Wh/m2, NO en kWh/m2
-  ## BD$Radiacion<-NULL           #eliminamos esta variable
-    
-  ## BD.zoo<-zoo(BD[,-1], order.by=fecha)
-
-  BD.zoo<-read.zoo(URL, index.column=1, tz='UTC', format=formatSIAR,
-               header=TRUE, skip=1, fill=TRUE, dec=',', as.is=TRUE)
-  BD.zoo$G0 <- BD.zoo$Radiacion/3.6*1000#Cambio de unidades. G debe ir en Wh/m2, NO en kWh/m2
-  BD.zoo$Radiacion <- NULL
-  
-    
-  result<-new(Class='Meteo',
-              latData=lat,              #conseguir de geonames
-              data=BD.zoo,
-              type='mapa',
-              source=paste('Est:', est, 'Prov:', prov)
-              )
-  result}
-
-readMAPA <- function(prov, est, start, end, lat=0, format='%d/%m/%Y'){
-  warning('Use of readMAPA is deprecated. You should use readSIAR instead.')
-  readSIAR(prov, est, start, end, lat, format)
-  }
-
 readG0dm<-function(G0dm, Ta=25, lat=0,
                    year= as.POSIXlt(Sys.Date())$year+1900, 
                    promDays=c(17,14,15,15,15,10,18,18,18,19,18,13), 

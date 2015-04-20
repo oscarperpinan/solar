@@ -54,7 +54,6 @@
   \code{\link{df2Meteo}},
     \code{\link{dfI2Meteo}},
   \code{\link{readG0dm}},
-  \code{\link{readSIAR}}.
 }
 
 \keyword{classes}

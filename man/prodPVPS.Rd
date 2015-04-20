@@ -124,26 +124,5 @@ prodPVPS(lat,
 
 \seealso{\code{\link{NmgPVPS}}, \code{\link{fPump}}, \code{\link{pumpCoef}}}
 
-\examples{
-library(lattice)
-
-data(pumpCoef)
-
-CoefSP8A44<-subset(pumpCoef, Qn==8&stages==44)
-
-\dontrun{
-prodSP8A44<-prodPVPS(lat=41,
-             modeRad='siar',
-             dataRad=list(prov=28,est=3,
-               start='01/01/2009', end='31/12/2009'),
-             pump=CoefSP8A44, Pg=6000, H=140)
-print(prodSP8A44)
-
-xyplot(prodSP8A44)
-
-xyplot(Q~Gef|month, data=prodSP8A44, cex=0.5)
-}
-}
-
 \keyword{utilities}
 \keyword{constructors}
