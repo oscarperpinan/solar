@@ -32,7 +32,6 @@ prodGCPV<-function(lat,
 
     radEf<-calcGef(lat=lat, modeTrk=modeTrk, modeRad=modeRad,
                    dataRad=dataRad,
-                   prom=prom, bd=bd, bdI=bdI,
                    sample=sample, keep.night=keep.night,
                    sunGeometry=sunGeometry,
                    corr=corr, f=f,

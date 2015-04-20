@@ -22,7 +22,6 @@ calcGef<-function(lat,
   if (modeRad!='prev'){                 #No utilizamos un cálculo prev
     radHoriz <- calcG0(lat=lat, modeRad=modeRad,
                      dataRad=dataRad,
-                     prom=prom, bd=bd, bdI=bdI,
                      sample=sample, keep.night=keep.night,
                      sunGeometry=sunGeometry,
                      corr=corr, f=f)
