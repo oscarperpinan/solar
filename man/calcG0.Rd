@@ -18,9 +18,10 @@
 
 \usage{
 
-calcG0(lat, modeRad='prom', dataRad, prom, mapa, bd,
-bdI, sample='hour', keep.night=TRUE, sunGeometry='michalsky',
-corr, f) }
+calcG0(lat, modeRad='prom', dataRad, prom, bd, bdI,
+       sample='hour', keep.night=TRUE, sunGeometry='michalsky',
+       corr, f)
+}
 
 \arguments{
   \item{lat}{numeric, latitude (degrees) of the point of the Earth where calculations are needed. It is positive for locations above the Equator.}

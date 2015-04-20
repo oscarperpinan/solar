@@ -18,7 +18,7 @@ calcGef<-function(lat,
                   modeTrk='fixed',      #c('two','horiz','fixed')
                   modeRad='prom', 
                   dataRad,
-                  prev, prom, mapa, bd, bdI,
+                  prev, prom, bd, bdI,
                   sample='hour',
                   keep.night=TRUE,
                   sunGeometry='michalsky',
@@ -39,7 +39,7 @@ calcGef<-function(lat,
   if (modeRad!='prev'){                 #No utilizamos un cálculo prev
     radHoriz<-calcG0(lat=lat, modeRad=modeRad,
                      dataRad=dataRad,
-                     prom=prom, mapa=mapa, bd=bd, bdI=bdI,
+                     prom=prom, bd=bd, bdI=bdI,
                      sample=sample, keep.night=keep.night,
                      sunGeometry=sunGeometry,
                      corr=corr, f=f)

@@ -18,7 +18,7 @@ calcGef(lat,
         modeTrk='fixed',
         modeRad='prom',
         dataRad,
-        prev, prom, mapa, bd,bdI,
+        prev, prom, bd,bdI,
         sample='hour',
         keep.night=TRUE,
         sunGeometry='michalsky',
@@ -34,7 +34,7 @@ calcGef(lat,
 
   \item{modeTrk}{character, to be chosen from \code{'fixed'}, \code{'two'} or \code{'horiz'}. When \code{modeTrk='fixed'} the surface is fixed (inclination and azimuth angles are constant). The performance of a two-axis tracker is calculated with \code{modeTrk='two'}, and \code{modeTrk='horiz'} is the option for an horizontal N-S tracker. Its default value is \code{modeTrk='fixed'}}
 
-  \item{modeRad, dataRad, prom, mapa, bd, bdI}{Information about the source data of the
+  \item{modeRad, dataRad, prom, bd, bdI}{Information about the source data of the
     global irradiation. See \code{\link{calcG0}} for details.}
 
   \item{prev}{A \code{G0} object (or something that can be coerced to a
