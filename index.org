@@ -67,5 +67,31 @@ A BibTeX entry for LaTeX users is
     url = {http://www.jstatsoft.org/v50/i09/},
   }
 #+end_src
+* References
+=solaR= has been cited in these publications:
+
+- Ward, H. C., Kotthaus, S., Grimmond, C. S. B., Bjorkegren, A., Wilkinson, M., Morrison, W. T. J., Evans, J.G. Morison, J.I.L., Iamarino, M. (2015). Effects of urban density on carbon dioxide exchanges: Observations of dense urban, suburban and woodland areas of southern England. Environmental Pollution, 198, 186–200. doi:10.1016/j.envpol.2014.12.031
+
+- Pebesma, E., Bivand, R., & Ribeiro, P. J. (2015). Software for Spatial Statistics. Journal of Statistical Software, 63(1). Retrieved from http://www.jstatsoft.org/v63/i01
+
+- Abdulla, K., & Wirth, Andrew Halgamuge, Saman K Steer, K. C. (2014). Selecting an Optimal Combination of Storage & Transmission Assets with a Non-Dispatchable Electricity Supply. In 7th International Conference on Information and Automation for Sustainability (ICIAfS). Retrieved from https://edas.info/cd/iciafs14/papers/1570042835.pdf
+
+- Antonanzas, J., Jimenez, E., Blanco, J., & Antonanzas-Torres, F. (2014). Potential solar thermal integration in Spanish combined cycle gas turbines. Renewable and Sustainable Energy Reviews, 37, 36–46. doi:10.1016/j.rser.2014.05.006
+
+- Davila-Gomez, L., Colmenar-Santos, A., Tawfik, M., & Castro-Gil, M. (2014). An accurate model for simulating energetic behavior of PV grid connected inverters. Simulation Modelling Practice and Theory, 49, 57–72. doi:10.1016/j.simpat.2014.08.001
+
+- Gutierrez Corea, F. V. (2014, December 1). Predicción espacio-temporal de la irradiancia solar global a corto plazo en España mediante geoestadística y redes neuronales artificiales. E.T.S.I. en Topografía, Geodesia y Cartografía (UPM). Retrieved from http://oa.upm.es/34145/1/Federico_Vladimir_Gutierrez_Corea.pdf
+
+- Gutierrez-Corea, F.-V., Manso-Callejo, M.-A., Moreno-Regidor, M.-P., & Velasco-Gómez, J. (2014). Spatial estimation of sub-hour Global Horizontal Irradiance based on official observations and remote sensors. Sensors (Basel, Switzerland), 14(4), 6758–87. doi:10.3390/s140406758
+
+- Rhodes, J. D., Upshaw, C. R., Cole, W. J., Holcomb, C. L., & Webber, M. E. (2014). A multi-objective assessment of the effect of solar PV array orientation and tilt on energy production and system economics. Solar Energy, 108, 28–40. doi:10.1016/j.solener.2014.06.032
+
+- Schmidt, J., Cancella, R., & Junior, A. O. P. (2014). An optimal mix of solar PV, wind and hydro power for a low-carbon electricity supply in Brazil. Retrieved from ftp://ftp.boku.ac.at/pub/repecftpg/repecftp/RePEc/sed/wpaper/572014.pdf
+
+- Ploennigs, J., Chen, B., Schumann, A., & Brady, N. (2013). Exploiting Generalized Additive Models for Diagnosing Abnormal Energy Use in Buildings. In Proceedings of the 5th ACM Workshop on Embedded Systems For Energy-Efficient Buildings (pp. 17:1–17:8). New York, NY, USA: ACM. doi:10.1145/2528282.2528291
+
+- Street, M., Reinhart, C., Norford, L., & Ochsendorf, J. (2013). Urban heat island in Boston--an evaluation of urban air-temperature models for predicting building energy use. In Proceedings of BS2013: 13th Conference of International Building Per-formance Simulation Association, August (pp. 26–28).
+
+- Ummel, K. (2011). SEXPOT: A spatiotemporal linear programming model to simulate global deployment of renewable power technologies. Central European University.
 
 -----

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>solaR: Solar Radiation and Photovoltaic Systems with R</title>
-<!-- 2013-11-07 jue 10:39 -->
+<!-- 2015-05-06 mié 11:42 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Oscar Perpiñán Lamigueiro" />
@@ -57,6 +57,8 @@
   pre.src-sql:before   { content: 'SQL'; }
 
   table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
   th.right  { text-align: center;  }
   th.left   { text-align: center;   }
@@ -94,7 +96,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012  Free Software Foundation, Inc.
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -172,15 +174,17 @@ with spatial packages for space-time analysis.
 </p>
 </div>
 </div>
+
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2">Software</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-The stable version of <code>solaR</code> is hosted at <a href="http://cran.r-project.org/package%3DsolaR">CRAN</a>. 
+The stable version of <code>solaR</code> is hosted at <a href="http://cran.r-project.org/package=solaR">CRAN</a>. 
 The development version is available at <a href="http://github.com/oscarperpinan/solar/">GitHub</a>.
 </p>
 </div>
 </div>
+
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3">Documentation</h2>
 <div class="outline-text-2" id="text-3">
@@ -197,6 +201,7 @@ about <code>solaR</code> at <a href="http://procomun.wordpress.com/">this blog</
 </p>
 </div>
 </div>
+
 <div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4">Citation</h2>
 <div class="outline-text-2" id="text-4">
@@ -207,9 +212,9 @@ results obtained with this software:
 
 <div class="org-src-container">
 
-<pre class="src src-verbatim">Oscar Perpiñán (2012). solaR: Solar Radiation and Photovoltaic
-Systems with R, Journal of Statistical Software, 50(9), 1-32. URL
-http://www.jstatsoft.org/v50/i09/.
+<pre class="src src-verbatim">  Oscar Perpiñán (2012). solaR: Solar Radiation and Photovoltaic
+  Systems with R, Journal of Statistical Software, 50(9), 1-32. URL
+  http://www.jstatsoft.org/v50/i09/.
 </pre>
 </div>
 
@@ -218,18 +223,64 @@ A BibTeX entry for LaTeX users is
 </p>
 <div class="org-src-container">
 
-<pre class="src src-verbatim">@Article{,
-  title = {{solaR}: Solar Radiation and Photovoltaic Systems with {R}},
-  author = {Oscar Perpi{\~n}{\'a}n},
-  journal = {Journal of Statistical Software},
-  year = {2012},
-  volume = {50},
-  number = {9},
-  pages = {1--32},
-  url = {http://www.jstatsoft.org/v50/i09/},
-}
+<pre class="src src-verbatim">  @Article{,
+    title = {{solaR}: Solar Radiation and Photovoltaic Systems with {R}},
+    author = {Oscar Perpi{\~n}{\'a}n},
+    journal = {Journal of Statistical Software},
+    year = {2012},
+    volume = {50},
+    number = {9},
+    pages = {1--32},
+    url = {http://www.jstatsoft.org/v50/i09/},
+  }
 </pre>
 </div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">References</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<code>solaR</code> has been cited in these publications:
+</p>
+
+<ul class="org-ul">
+<li>Ward, H. C., Kotthaus, S., Grimmond, C. S. B., Bjorkegren, A., Wilkinson, M., Morrison, W. T. J., Evans, J.G. Morison, J.I.L., Iamarino, M. (2015). Effects of urban density on carbon dioxide exchanges: Observations of dense urban, suburban and woodland areas of southern England. Environmental Pollution, 198, 186–200. <a href="10.1016/j.envpol.2014.12.031">10.1016/j.envpol.2014.12.031</a>
+</li>
+
+<li>Pebesma, E., Bivand, R., &amp; Ribeiro, P. J. (2015). Software for Spatial Statistics. Journal of Statistical Software, 63(1). Retrieved from <a href="http://www.jstatsoft.org/v63/i01">http://www.jstatsoft.org/v63/i01</a>
+</li>
+
+<li>Abdulla, K., &amp; Wirth, Andrew Halgamuge, Saman K Steer, K. C. (2014). Selecting an Optimal Combination of Storage &amp; Transmission Assets with a Non-Dispatchable Electricity Supply. In 7th International Conference on Information and Automation for Sustainability (ICIAfS). Retrieved from <a href="https://edas.info/cd/iciafs14/papers/1570042835.pdf">https://edas.info/cd/iciafs14/papers/1570042835.pdf</a>
+</li>
+
+<li>Antonanzas, J., Jimenez, E., Blanco, J., &amp; Antonanzas-Torres, F. (2014). Potential solar thermal integration in Spanish combined cycle gas turbines. Renewable and Sustainable Energy Reviews, 37, 36–46. <a href="10.1016/j.rser.2014.05.006">10.1016/j.rser.2014.05.006</a>
+</li>
+
+<li>Davila-Gomez, L., Colmenar-Santos, A., Tawfik, M., &amp; Castro-Gil, M. (2014). An accurate model for simulating energetic behavior of PV grid connected inverters. Simulation Modelling Practice and Theory, 49, 57–72. <a href="10.1016/j.simpat.2014.08.001">10.1016/j.simpat.2014.08.001</a>
+</li>
+
+<li>Gutierrez Corea, F. V. (2014, December 1). Predicción espacio-temporal de la irradiancia solar global a corto plazo en España mediante geoestadística y redes neuronales artificiales. E.T.S.I. en Topografía, Geodesia y Cartografía (UPM). Retrieved from <a href="http://oa.upm.es/34145/1/Federico_Vladimir_Gutierrez_Corea.pdf">http://oa.upm.es/34145/1/Federico_Vladimir_Gutierrez_Corea.pdf</a>
+</li>
+
+<li>Gutierrez-Corea, F.-V., Manso-Callejo, M.-A., Moreno-Regidor, M.-P., &amp; Velasco-Gómez, J. (2014). Spatial estimation of sub-hour Global Horizontal Irradiance based on official observations and remote sensors. Sensors (Basel, Switzerland), 14(4), 6758–87. <a href="10.3390/s140406758">10.3390/s140406758</a>
+</li>
+
+<li>Rhodes, J. D., Upshaw, C. R., Cole, W. J., Holcomb, C. L., &amp; Webber, M. E. (2014). A multi-objective assessment of the effect of solar PV array orientation and tilt on energy production and system economics. Solar Energy, 108, 28–40. <a href="10.1016/j.solener.2014.06.032">10.1016/j.solener.2014.06.032</a>
+</li>
+
+<li>Schmidt, J., Cancella, R., &amp; Junior, A. O. P. (2014). An optimal mix of solar PV, wind and hydro power for a low-carbon electricity supply in Brazil. Retrieved from <a href="ftp://ftp.boku.ac.at/pub/repecftpg/repecftp/RePEc/sed/wpaper/572014.pdf">ftp://ftp.boku.ac.at/pub/repecftpg/repecftp/RePEc/sed/wpaper/572014.pdf</a>
+</li>
+
+<li>Ploennigs, J., Chen, B., Schumann, A., &amp; Brady, N. (2013). Exploiting Generalized Additive Models for Diagnosing Abnormal Energy Use in Buildings. In Proceedings of the 5th ACM Workshop on Embedded Systems For Energy-Efficient Buildings (pp. 17:1–17:8). New York, NY, USA: ACM. <a href="10.1145/2528282.2528291">10.1145/2528282.2528291</a>
+</li>
+
+<li>Street, M., Reinhart, C., Norford, L., &amp; Ochsendorf, J. (2013). Urban heat island in Boston&#x2013;an evaluation of urban air-temperature models for predicting building energy use. In Proceedings of BS2013: 13th Conference of International Building Per-formance Simulation Association, August (pp. 26–28).
+</li>
+
+<li>Ummel, K. (2011). SEXPOT: A spatiotemporal linear programming model to simulate global deployment of renewable power technologies. Central European University.
+</li>
+</ul>
 
 <hr  />
 </div>
@@ -237,8 +288,8 @@ A BibTeX entry for LaTeX users is
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Oscar Perpiñán Lamigueiro</p>
-<p class="date">Created: 2013-11-07 jue 10:39</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.50.1 (<a href="http://orgmode.org">Org</a> mode 8.2.1)</p>
+<p class="date">Created: 2015-05-06 mié 11:42</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
