@@ -9,7 +9,7 @@
 \description{
   From the daily global, diffuse and direct irradiation values supplied by \code{fCompD}, the profile of the global, diffuse and direct irradiance is calculated with the \code{rd} and \code{rg} components of \code{fSolI}.
 }
-\usage{fCompI(sol, compD, G0I, corr='none', f)}
+\usage{fCompI(sol, compD, G0I, corr='none', f, filterG0 = TRUE)}
 
 \arguments{
   \item{sol}{A \code{Sol} object as provided by \code{\link{calcSol}} or
@@ -44,7 +44,12 @@
 
 
   \item{f}{A function defininig a correlation between the fraction of
-    diffuse irradiation and the clearness index. It is only neccessary when \code{corr='user'}}
+    diffuse irradiation and the clearness index. It is only neccessary
+    when \code{corr='user'}}
+  
+  \item{filterG0}{A logical. If \code{TRUE} (default) this function sets the
+    global irradiation values to \code{NA} when they are higher than the
+    extra-atmospheric irradiation values.}
 }
 
 \value{A \code{zoo} with these components:
@@ -59,8 +64,8 @@
 \references{ \itemize{
     \item Collares-Pereira, M. y Rabl, A.,  The average distribution of solar radiation: correlations between
       diffuse and hemispherical and between daily and hourly insolation values. Solar Energy, 22:155–164, 1979.
-    \item Perpiñán, O, Energía Solar Fotovoltaica, 2013.
-    (\url{http://procomun.wordpress.com/documentos/libroesf/})
+    \item Perpiñán, O, Energía Solar Fotovoltaica, 2015.
+    (\url{http://oscarperpinan.github.io/esf/})
     \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
   Systems with R", Journal of Statistical Software, 50(9), 1-32,
   \url{http://www.jstatsoft.org/v50/i09/}

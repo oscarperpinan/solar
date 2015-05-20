@@ -26,7 +26,8 @@ calcGef(lat,
         iS=2, alb=0.2, horizBright=TRUE, HCPV=FALSE,
         modeShd='',
         struct=list(),
-        distances=data.frame())
+        distances=data.frame(),
+        ...)
 }
 \arguments{
   \item{lat}{numeric, latitude (degrees) of the point of the Earth where calculations are needed. It is positive for locations above the Equator.}
@@ -68,32 +69,9 @@ calcGef(lat,
   \emph{effective} irradiance are set to zero. HCPV is the acronym of
   High Concentration PV system.}
 
+\item{...}{Additional arguments for \code{\link{calcSol}} and
+  \code{\link{calcG0}}}
 
-  %   \item{modeShd}{character, defines the type of shadow calculation. In
-  %     this version of the package the effect of the shadow is calculated
-  %     as a proportional reduction of the circumsolar diffuse and direct
-  %     irradiances. This type of approach is selected with
-  %     \code{modeShd='area'}. In future versions other approaches which
-  %     relate the geometric shadow and the electrical connections of the PV
-  %     generator will be available. If \code{modeTrk='horiz'} it is
-  %     possible to calculate the effect of backtracking with
-  %     \code{modeShd='bt'}. If \code{modeShd=c('area','bt')} the
-  %     backtracking method will be carried out and therefore no shadows
-  %     will appear. Finally, for two-axis trackers it is possible to select
-  %     \code{modeShd='prom'} in order to calculate the effect of shadows on
-  %     an average tracker (see \code{\link{fSombra6}}).
-  % The result will include three variables (\code{Gef0}, \code{Def0} and \code{Bef0}) with the
-  %     irradiance/irradiation without shadows as a reference.}
-
-  %  \item{struct}{\code{list}.It is only needed if \code{modeShd!=''}. When \code{modeTrk='fixed'} or \code{modeTrk='horiz'} only a component named \code{L}, which is the height (meters) of the tracker, is needed. For two-axis trackers (\code{modeTrk='two'}), an additional component named \code{W}, the width of the tracker, is required. Moreover, two components named \code{Nrow} and \code{Ncol} are included under this list. These components define, respectively, the number of rows and columns of the whole set of trackers in the PV plant.}
-
-  %  \item{distances}{It is only needed when
-  %    \code{modeShd!=''}. A\code{data.frame} with a component named
-  %    \code{Lew}, being the distance between horizontal NS and two-axis trackers along
-  %    the East-West direction, a component named \code{Lns} for two-axis
-  %    trackers or a component named \code{D} for the distance between fixed
-  %    surfaces. An additional component named \code{H} can be included with
-  %    the relative height (meters) between surfaces.}
 }
 
 \value{A \code{Gef} object.}
@@ -102,9 +80,10 @@ calcGef(lat,
     \item Hay, J. E. and McKay, D. C.: Estimating Solar Irradiance on Inclined Surfaces: A Review and Assessment of Methodologies. Int. J. Solar Energy, (3):pp. 203, 1985.
     \item Martin, N. and Ruiz, J.M.: Calculation of the PV modules angular losses under field conditions by means of an analytical model. Solar Energy Materials & Solar Cells, 70:25–38, 2001.
     \item D. T. Reindl and W. A. Beckman and J. A. Duffie: Evaluation of
-      hourly tilted surface radiation models, Solar Energy, 45:9-17, 1990.
-    \item Perpiñán, O, Energía Solar Fotovoltaica, 2012.
-    (\url{http://procomun.wordpress.com/documentos/libroesf/})
+      hourly tilted surface radiation models, Solar Energy, 45:9-17,
+      1990.
+    \item Perpiñán, O, Energía Solar Fotovoltaica, 2015.
+    (\url{http://oscarperpinan.github.io/esf/})
     \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
   Systems with R", Journal of Statistical Software, 50(9), 1-32,
   \url{http://www.jstatsoft.org/v50/i09/}

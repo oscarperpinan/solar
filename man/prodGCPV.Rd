@@ -24,8 +24,8 @@ prodGCPV(lat,
          effSys=list(),
          modeShd='',
          struct=list(),
-         distances=data.frame()
-         )
+         distances=data.frame(),
+         ...)
 }
 \arguments{
   \item{lat}{numeric, latitude (degrees) of the point of the Earth where calculations are needed. It is positive for locations above the Equator.}
@@ -87,7 +87,9 @@ prodGCPV(lat,
       \item{\code{TrafoMT}}{losses due to the MT transformer (\%), default value is 1}
       \item{\code{Disp}}{ losses due to stops of the system (\%), default value is 0.5}
   }}
-  \item{modeShd, struct, distances}{See \code{\link{calcShd}} for details.}
+  \item{modeShd, struct, distances}{See \code{\link{calcShd}} for
+    details.}
+  \item{...}{Additional arguments for \code{\link{calcG0}} or \code{\link{calcGef}}}
 }
 
 \value{A \code{ProdGCPV} object.}
@@ -98,11 +100,12 @@ prodGCPV(lat,
   \code{\link{fInclin}} functions inside the \code{\link{calcGef}} function. The shadows are computed with  \code{\link{calcShd}} while the performance of the PV system is simulated with \code{\link{fProd}}.}
 
 \references{\itemize{
-    \item Perpiñán, O, Energía Solar Fotovoltaica, 2012.
-    (\url{http://procomun.wordpress.com/documentos/libroesf/})
-  \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
-  Systems with R", Journal of Statistical Software, 50(9), 1-32,
-  \url{http://www.jstatsoft.org/v50/i09/}
+    \item Perpiñán, O, Energía Solar Fotovoltaica, 2015.
+    (\url{http://oscarperpinan.github.io/esf/})
+
+    \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
+    Systems with R", Journal of Statistical Software, 50(9), 1-32,
+    \url{http://www.jstatsoft.org/v50/i09/}
 }}
 
 \author{Oscar Perpiñán Lamigueiro}

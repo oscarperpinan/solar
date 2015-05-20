@@ -21,7 +21,7 @@
 calcG0(lat, modeRad='prom', dataRad,
        sample='hour', keep.night=TRUE,
        sunGeometry='michalsky',
-       corr, f)
+       corr, f, ...)
 }
 
 \arguments{
@@ -104,15 +104,17 @@ calcG0(lat, modeRad='prom', dataRad,
     when \code{modeRad='prom'} and to \code{BRL} when \code{modeRad='bdI'}.}
 
   \item{f}{A function defininig a correlation between the fraction of
-    diffuse irradiation and the clearness index. It is only neccessary when \code{corr='user'}}
+    diffuse irradiation and the clearness index. It is only neccessary
+    when \code{corr='user'}}
+
+  \item{...}{Additional arguments for \code{\link{fCompD}} or \code{\link{fCompI}}}
 }
 
 \value{A \code{G0} object.}
 
 \references{\itemize{
-    
-    \item Perpiñán, O, Energía Solar Fotovoltaica, 2012.
-    (\url{http://procomun.wordpress.com/documentos/libroesf/})
+    \item Perpiñán, O, Energía Solar Fotovoltaica, 2015.
+    (\url{http://oscarperpinan.github.io/esf/})
 
     \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
     Systems with R", Journal of Statistical Software, 50(9), 1-32,
