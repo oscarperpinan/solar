@@ -10,8 +10,9 @@ prodPVPS<-function(lat,
                    iS=2, alb=0.2, horizBright=TRUE, HCPV=FALSE,
                    pump , H, 
                    Pg, converter= list(), #Pnom=Pg, Ki=c(0.01,0.025,0.05)),
-                   effSys=list()
-                   ){
+                   effSys=list(),
+                   ...){
+    
   stopifnot(is.list(converter),
             is.list(effSys))
 
@@ -24,7 +25,7 @@ prodPVPS<-function(lat,
                    corr=corr, f=f,
                    betaLim=betaLim, beta=beta, alfa=alfa,
                    iS=iS, alb=alb, horizBright=horizBright, HCPV=HCPV,
-                   modeShd='')
+                   modeShd='', ...)
 		
   } else { #Utilizamos un cálculo previo de calcG0, calcGef o prodSFCR
     stopifnot(class(dataRad) %in% c('G0', 'Gef', 'ProdPVPS'))
@@ -34,7 +35,7 @@ prodPVPS<-function(lat,
                       dataRad=dataRad,
                       betaLim=betaLim, beta=beta, alfa=alfa,
                       iS=iS, alb=alb, horizBright=horizBright, HCPV=HCPV,
-                      modeShd=''),
+                      modeShd='', ...),
                     Gef=dataRad,
                     ProdPVPS=as(dataRad, 'Gef')
                     )

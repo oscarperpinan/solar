@@ -14,8 +14,8 @@ prodGCPV<-function(lat,
                    effSys=list(), 
                    modeShd='',    
                    struct=list(), 
-                   distances=data.frame()
-                   ){
+                   distances=data.frame(),
+                   ...){
 
   stopifnot(is.list(module),
             is.list(generator),
@@ -37,7 +37,7 @@ prodGCPV<-function(lat,
                    corr=corr, f=f,
                    betaLim=betaLim, beta=beta, alfa=alfa,
                    iS=iS, alb=alb, horizBright=horizBright, HCPV=HCPV,
-                   modeShd=modeShd, struct=struct, distances=distances)
+                   modeShd=modeShd, struct=struct, distances=distances, ...)
 		
   } else { #Utilizamos un cálculo previo de calcG0, calcGef o prodSFCR
 
@@ -48,7 +48,7 @@ prodGCPV<-function(lat,
                       dataRad=dataRad,
                       betaLim=betaLim, beta=beta, alfa=alfa,
                       iS=iS, alb=alb, horizBright=horizBright, HCPV=HCPV,
-                      modeShd=modeShd, struct=struct, distances=distances),
+                      modeShd=modeShd, struct=struct, distances=distances, ...),
                     Gef=dataRad,
                     ProdGCPV=as(dataRad, 'Gef')
                     )

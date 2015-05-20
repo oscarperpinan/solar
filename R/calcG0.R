@@ -4,7 +4,7 @@ calcG0 <- function(lat,
                    sample='hour',
                    keep.night=TRUE,
                    sunGeometry='michalsky',
-                   corr, f){
+                   corr, f, ...){
 
     if (missing(lat)) stop('lat missing. You must provide a latitude value.')
 
@@ -104,7 +104,7 @@ calcG0 <- function(lat,
     if (modeRad=='bdI') {
         sol <- calcSol(lat=lat, BTi=index(getData(BD)),
                        keep.night=keep.night, method=sunGeometry)
-        compI <- fCompI(sol=sol, G0I=BD, corr=corr, f=f)
+        compI <- fCompI(sol=sol, G0I=BD, corr=corr, f=f, ...)
         compD <- aggregate(compI[,c('G0', 'D0', 'B0')],
                            by=truncDay, FUN=P2E, sol@sample) #Wh
         names(compD) <- c('G0d', 'D0d', 'B0d')

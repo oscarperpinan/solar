@@ -1,4 +1,6 @@
-fCompI <- function(sol, compD, G0I, corr='none', f){
+fCompI <- function(sol, compD, G0I,
+                   corr = 'none', f,
+                   filterG0 = TRUE){
   
     ##Time indexes
     if (class(sol)=='Sol') {
@@ -55,8 +57,6 @@ fCompI <- function(sol, compD, G0I, corr='none', f){
 
         kt <- G0/Bo0
         fd <- D0/G0
-
-        
   
     } else { ## Use instantaneous values if provided through G0I
     
@@ -72,7 +72,7 @@ fCompI <- function(sol, compD, G0I, corr='none', f){
             }                                 
             ## Filter values: surface irradiation must be lower than
             ## extraterrestial; 
-            is.na(G0) <- (G0 > Bo0)
+            if (isTRUE(filterG0)) is.na(G0) <- (G0 > Bo0)
 
             kt <- G0/Bo0
     
@@ -90,20 +90,15 @@ fCompI <- function(sol, compD, G0I, corr='none', f){
 
             if (class(G0I) == 'Meteo') {
                 IrrData <- getData(G0I)
-            } else {                    #G0I es un zoo
+            } else {                    #G0I is a zoo
                 IrrData <- G0I
             }
-
-            ## Filter values: surface irradiation must be lower than
-            ## extraterrestial; 
-            is.na(IrrData) <- (IrrData$G0 > Bo0)
-
             D0 <- coredata(IrrData$D0)
             B0 <- coredata(IrrData$B0)
             G0 <- coredata(IrrData$G0)
             ## Filter values: surface irradiation must be lower than
             ## extraterrestial; 
-            is.na(G0) <- is.na(D0) <- is.na(B0) <- (G0 > Bo0)
+            if (isTRUE(filterG0)) is.na(G0) <- is.na(D0) <- is.na(B0) <- (G0 > Bo0)
       
             kt <- G0/Bo0
             fd <- D0/G0
