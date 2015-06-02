@@ -114,8 +114,8 @@ calcG0 <- function(lat,
         sol <- calcSol(lat=lat, BTd=indexD(BD),
                        sample=sample, keep.night=keep.night,
                        method=sunGeometry)
-        compD<-fCompD(sol=sol, G0d=BD, corr=corr, f)
-        compI<-fCompI(sol=sol, compD=compD)
+        compD <- fCompD(sol=sol, G0d=BD, corr=corr, f)
+        compI <- fCompI(sol=sol, compD=compD, ...)
     }
 
 ###Temperatura
