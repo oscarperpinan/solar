@@ -6,6 +6,8 @@ import(lattice)
 import(latticeExtra)
 importFrom(RColorBrewer, brewer.pal)
 
+import(data.table)
+
 export(
     ##small utilities
     hour,
