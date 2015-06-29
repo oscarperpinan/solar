@@ -150,9 +150,10 @@ fProd<-function(inclin,
       result=(-B+sqrt(B^2-4*A*C))/(2*A)
     })
   }
-  
-  is.na(PacN) <- (PacN<0)
-  EffI=PacN/PdcN
+  EffI <- PacN/PdcN
+  pacNeg <- PacN <= 0
+  PacN[pacNeg] <- PdcN[pacNeg] <- EffI[pacNeg] <- 0
+
 	
 ###Potencia AC y DC sin la normalización
   Pac=with(inverter,PacN*Pinv*(Gef>Gumb)*(1-effSys$OhmAC/100)*(1-effSys$TrafoMT/100)*(1-effSys$Disp/100))
