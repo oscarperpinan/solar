@@ -47,7 +47,7 @@
           argument \code{beta} converted from degreesto radians.}
         \item{\code{Alfa}: }{numeric, azimuth angle of the surface
           (radians). When \code{modeTrk='fixed'} it is the value of the
-          argument \code{alfa} converted from degreesto radians.}
+          argument \code{alfa} converted from degrees to radians.}
         \item{\code{cosTheta}: }{numeric, cosine of the incidence angle of the solar
           irradiance on the surface}
     }}

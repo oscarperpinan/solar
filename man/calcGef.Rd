@@ -52,7 +52,8 @@ calcGef(lat,
     limitation))}
 
   \item{alfa}{numeric, azimuth angle of the surface (degrees). It is
-    positive to the West. It is only needed when
+    measured from the south (\code{alfa = 0}), and it is negative to the
+    east and positive to the west. It is only needed when
     \code{modeTrk='fixed'}. Its default value is \code{alfa=0}}
 
   \item{iS}{integer, degree of dirtiness. Its value must be included in

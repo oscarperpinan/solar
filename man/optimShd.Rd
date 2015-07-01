@@ -63,28 +63,7 @@ optimShd(lat,
   \item{sunGeometry}{\code{character}, method for the sun geometry
     calculations. See \code{\link{calcSol}}, \code{\link{fSolD}} and \code{\link{fSolI}}.}
 
-  \item{betaLim}{numeric, maximum value of the inclination angle
-    for a tracking surface. Its default value is 90 (no
-    limitation))}
-
-  \item{beta}{numeric, inclination angle of the surface
-    (degrees). It is only needed when \code{modeTrk='fixed'}.}
-
-  \item{alfa}{numeric, azimuth angle of the surface (degrees). It is
-    positive to the West. It is only needed when
-    \code{modeTrk='fixed'}. Its default value is \code{alfa=0}}
-
-  \item{iS}{integer, degree of dirtiness. Its value must be included in
-    the set (1,2,3,4). \code{iS=1} corresponds to a clean surface while
-    \code{iS=4} is the selection for a dirty surface. Its default value is
-    2}
-
-  \item{alb}{numeric, albedo reflection coefficient. Its default value
-    is 0.2}
-
-  \item{HCPV}{logical, if TRUE the diffuse and albedo components of the
-  \emph{effective} irradiance are set to zero. HCPV is the acronym of
-  High Concentration PV system.}
+  \item{betaLim, beta, alfa, iS, alb, HCPV}{See \code{\link{calcGef}} for details.}
 
   \item{module}{list of numeric values with information about the PV module, \describe{
       \item{\code{Vocn}}{open-circuit voltage of the module at Standard
