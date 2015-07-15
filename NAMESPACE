@@ -1,10 +1,49 @@
-import(methods)
-importFrom(graphics, plot)
+importFrom("graphics",
+           "plot", "axis",
+           "contour",
+           "filled.contour",
+           "grid",
+           "par",
+           "title")
 
-import(zoo)
-import(lattice)
-import(latticeExtra)
-importFrom(RColorBrewer, brewer.pal)
+importFrom("grDevices",
+           "heat.colors")
+
+importFrom("stats",
+           "IQR",
+           "aggregate",
+           "as.formula",
+           "ave",
+           "end",
+           "lag",
+           "loess",
+           "mad",
+           "median",
+           "na.omit",
+           "predict",
+           "quantile",
+           "runif",
+           "sd",
+           "splinefun",
+           "start",
+           "uniroot",
+           "update",
+           "window")
+
+importFrom("utils",
+           "modifyList",
+           "read.table",
+           "setTxtProgressBar",
+           "stack",
+           "txtProgressBar")
+
+importFrom("RColorBrewer",
+           "brewer.pal")
+
+import("methods")
+import("zoo")
+import("lattice")
+import("latticeExtra")
 
 export(
     ##small utilities
