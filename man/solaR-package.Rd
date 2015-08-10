@@ -36,7 +36,8 @@ published by the Journal of Statistical Software:
 http://www.jstatsoft.org/v50/i09/
 
 \bold{Please note that this package needs to set the timezone to
-  \code{UTC}}.
+  \code{UTC}. Every ‘zoo’ object created by the package will have an
+  index with this time zone as a synonym of mean solar time.}.
 
 You can check it after loading \code{solaR} with:
 
