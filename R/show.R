@@ -26,9 +26,10 @@ setMethod('show', 'Sol',
             cat('Latitude:',
                 paste(round(getLat(object, 'deg'),1), 'degrees\n\n'))
             cat('Daily values:\n')
-            print(summary(object@solD))
+            print(object@solD)
             cat('\nIntradaily values:\n')
-            print(summary(object@solI))
+            nms <- setdiff(names(object@solI), names(object@solD))
+            print(object@solI[, c('date', nms), with = FALSE])
           }
           )
 

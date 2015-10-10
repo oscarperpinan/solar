@@ -22,7 +22,7 @@ fSolD <- function(d, lat, method='michalsky'){
                        ws = ws,
                        Bo0d = Bo0d,
                        EoT = EoT)
-  attr(result, 'lat') = r2d(lat)
+  attr(result, 'lat') = lat
   setkey(result, date)
   result
 }

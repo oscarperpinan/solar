@@ -33,10 +33,9 @@ setClass(
          Class='Sol', ##Angulos del sol
          representation=representation(
            lat='numeric',             #latitud, en grados, >0 si Norte
-           solD='zoo',                #angulos diarios
-           solI='zoo',                #angulos intradiarios
-           match='numeric', #indices de solD que coinciden con días de solI
-           sample='difftime',
+           solD='data.table',                #angulos diarios
+           solI='data.table',                #angulos intradiarios
+           sample='character',
            method='character' ##method used for geometry calculations
            ),
          validity=function(object) {return(TRUE)}

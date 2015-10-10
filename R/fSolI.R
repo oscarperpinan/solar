@@ -1,6 +1,6 @@
-fSolI <- function(solD, sample='hour', BTi,
-                  EoT=TRUE, keep.night=TRUE,
-                  method='michalsky')
+fSolI <- function(solD, sample = 'hour', BTi,
+                  EoT = TRUE, keep.night = TRUE,
+                  method = 'michalsky')
 {
 
     Bo <- 1367 ##Constante Solar
@@ -24,11 +24,12 @@ fSolI <- function(solD, sample='hour', BTi,
     ##Para escoger sólo aquellos días que están en solD, 
     ##por ejempo para días promedio
     ##o para días que no están en la base de datos
-
     sun <- solD[BTi]
     setkey(sun, date, time)
-
-    if (EoT) {EoT <- sol$EoT} else {EoT <- 0}
+    ## Reorder columns so date and time are first and second ones
+    setcolorder(sun, c('date', 'time', names(solD)[-1]))
+    
+    EoT <- ifelse(isTRUE(EoT), sun$EoT, 0)
     
     methods <- c('cooper', 'spencer', 'michalsky', 'strous')
     method <- match.arg(method, methods)
@@ -38,24 +39,25 @@ fSolI <- function(solD, sample='hour', BTi,
     sun[, aman := abs(w) <= abs(ws)] ##TRUE if between sunrise and sunset
 
     ##Angulos solares
-    sun[, cosThzS := sin(decl) * sin(lat) + cos(decl) * cos(w) * cos(lat)]
-    ## cosThzS[cosThzS>1]<-1
+    sun[, cosThzS := sin(decl) * sin(lat) +
+              cos(decl) * cos(w) * cos(lat)]
+    sun[cosThzS > 1, cosThzS := 1]
 
     sun[, AlS := asin(cosThzS)]
 
     sun[, cosAzS := signLat * (cos(decl) * cos(w) * sin(lat) -
                                    cos(lat) * sin(decl)) / cos(AlS)
         ]
-    ## cosAzS[cosAzS > 1] <- 1
-    ## cosAzS[cosAzS < -1] <- -1
+    sun[abs(cosAzS) > 1, cosAzS := 1 * sign(cosAzS)]
 
     ##Angulo azimutal del sol. Positivo hacia el oeste.
     sun[, AzS := sign(w) * acos(cosAzS)] 
 
     ##Irradiancia extra-atmosférica
-    sun[, Bo0 := Bo*eo*cosThzS]
-    ## Bo0[!aman] <- 0 ##Bo0 is 0 outside the sunrise-sunset period
-    
+    sun[, Bo0 := Bo * eo * cosThzS]
+    ##Bo0 is 0 outside the sunrise-sunset period
+    sun[aman != TRUE, Bo0 := 0]
+        
     ##Generador empirico de Collares-Pereira y Rabl 
     sun[, rd := Bo0/Bo0d]
     sun[, rg := {
