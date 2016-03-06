@@ -20,7 +20,7 @@ setOldClass('difftime')
 
 setClass(
          Class='Meteo', ##datos de radiación y temperatura
-         representation=representation(
+         slots = c(
            latData='numeric',       #latitud, en grados, >0 si Norte
            data='zoo',          #datos, incluyendo G (Wh/m2) y Ta (ºC)
            type='character',    #a elegir entre 'prom', 'bd', 'bdI'
@@ -31,7 +31,7 @@ setClass(
 
 setClass(
          Class='Sol', ##Angulos del sol
-         representation=representation(
+         slots = c(
            lat='numeric',             #latitud, en grados, >0 si Norte
            solD='data.table',                #angulos diarios
            solI='data.table',                #angulos intradiarios
@@ -43,7 +43,7 @@ setClass(
 
 setClass(
          Class='G0',
-         representation=representation(
+         slots = c(
            G0D='zoo',                #resultado de fCompD
            G0dm='zoo',               #aggregate, medias mensuales
            G0y='zoo',                #aggregate, valores anuales
@@ -57,7 +57,7 @@ setClass(
 
 setClass(
          Class='Gef',
-         representation=representation(
+         slots = c(
            GefD='zoo',       #aggregate, valores diarios
            Gefdm='zoo',      #aggregate, medias mensuales
            Gefy='zoo',       #aggregate, valores anuales
@@ -77,7 +77,7 @@ setClass(
 
 setClass(
          Class='ProdGCPV',
-         representation=representation(
+         slots = c(
            prodD='zoo',                 #aggregate, valores diarios
            prodDm='zoo',                #aggregate, medias mensuales
            prody='zoo',                 #aggregate, valores anuales
@@ -93,7 +93,7 @@ setClass(
 
 setClass(
          Class='ProdPVPS',
-         representation=representation(
+         slots = c(
            prodD='zoo',                 #aggregate, valores diarios
            prodDm='zoo',                #aggregate, medias mensuales
            prody='zoo',                 #aggregate, valores anuales
@@ -110,7 +110,7 @@ setClass(
 
 setClass(
          Class='Shade',
-         representation=representation(
+         slots = c(
            FS='numeric',
            GRR='numeric',
            Yf='numeric',
