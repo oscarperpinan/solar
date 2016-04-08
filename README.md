@@ -1,6 +1,6 @@
 solaR
 =====
-[![DOI](http://dx.doi.org/10.18637/jss.v050.i09)]
+[DOI](http://dx.doi.org/10.18637/jss.v050.i09)
 [![Build Status](https://travis-ci.org/oscarperpinan/solar.svg?branch=master)](https://travis-ci.org/oscarperpinan/solar)
 [![CRAN](http://www.r-pkg.org/badges/version/solaR)](http://www.r-pkg.org/pkg/solaR)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/solaR)](http://www.r-pkg.org/pkg/solaR)
