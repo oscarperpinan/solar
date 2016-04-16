@@ -1,8 +1,8 @@
 Package: solaR
 Type: Package
 Title: Radiation and Photovoltaic Systems
-Version: 0.43
-Date: 2015-07-15
+Version: 0.44
+Date: 2016-04-16
 Encoding: UTF-8
 Author: Oscar Perpiñán Lamigueiro
 Maintainer: Oscar Perpiñán Lamigueiro <oscar.perpinan@gmail.com>
@@ -13,4 +13,4 @@ License: GPL-3
 LazyData: yes
 Depends: R (>= 2.10), zoo, lattice, latticeExtra
 Imports: RColorBrewer, graphics, grDevices, stats, methods
-Suggests: sp, raster, rasterVis, tdr
+Suggests: sp, raster, rasterVis, tdr, meteoForecast
