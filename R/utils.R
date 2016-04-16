@@ -1,85 +1,73 @@
- # Copyright (C) 2011, 2010 Oscar Perpiñán Lamigueiro
- #
- # This program is free software; you can redistribute it and/or
- # modify it under the terms of the GNU General Public License
- # as published by the Free Software Foundation; either version 2
- # of the License, or (at your option) any later version.
- #
- # This program is distributed in the hope that it will be useful,
- # but WITHOUT ANY WARRANTY; without even the implied warranty of
- # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- # GNU General Public License for more details.
- #
- # You should have received a copy of the GNU General Public License
- # along with this program; if not, write to the Free Software
- # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- #/
 ###Indices temporales
 
 ###Quizás sería útil que todas estas funciones admitiesen un zoo directamente
-hour<-function(x) 
-{as.numeric(format(x, "%H"))
+hour <- function(x) 
+{
+    as.numeric(format(x, "%H"))
 }
 
-minute<-function(x)
-{as.numeric(format(x, "%M"))
+minute <- function(x)
+{
+    as.numeric(format(x, "%M"))
 }
 
-second<-function(x) 
-{as.numeric(format(x, "%S"))
+second <- function(x) 
+{
+    as.numeric(format(x, "%S"))
 }
 
-hms<-function(x)
-{hour(x)+minute(x)/60+second(x)/3600
+hms <- function(x)
+{
+    hour(x)+minute(x)/60+second(x)/3600
 }
 
-doy<-function(x){
+doy <- function(x){
   as.numeric(format(x, '%j'))
 }
 
-dom<-function(x){
+dom <- function(x){
   as.numeric(format(x, '%d'))
 }
 
-month<-function(x){
+month <- function(x){
   as.numeric(format(x, '%m'))
 }
 
-year<-function(x){
+year <- function(x){
   as.numeric(format(x, '%Y'))
 
 }
 
-  DoY<-function(x){format(x, '%j')}
+DoY <- function(x){format(x, '%j')}
 
-  DoM<-function(x){format(x, '%d')}
+DoM <- function(x){format(x, '%d')}
 
-  Month<-function(x){format(x, '%m')}
+Month <- function(x){format(x, '%m')}
 
-  Year<-function(x){format(x, '%Y')}
+Year <- function(x){format(x, '%Y')}
 
-dst<-function(x)                      #Adelanto horario por verano
+dst <- function(x)                      #Adelanto horario por verano
    {
      as.POSIXlt(x)$isdst
    }
 
 ##Angulos
 
-d2r<-function(x){x*pi/180}
+d2r <- function(x){x*pi/180}
 
-r2d<-function(x){x*180/pi}
+r2d <- function(x){x*180/pi}
 
-h2r<-function(x){x*pi/12}
-h2d<-function(x){x*180/12}
+h2r <- function(x){x*pi/12}
+h2d <- function(x){x*180/12}
 
-r2h<-function(x){x*12/pi}
-d2h<-function(x){x*12/180}
+r2h <- function(x){x*12/pi}
+d2h <- function(x){x*12/180}
 
-r2sec<-function(x){x*12/pi*3600}
+r2sec <- function(x){x*12/pi*3600}
 
 
 ##Trunca un POSIXct a días
-truncDay <- function(x){as.POSIXct(trunc(x, units='days'))}
+truncDay  <-  function(x){as.POSIXct(trunc(x, units='days'))}
 
 ## Check if daily indexes are equal (used in fCompD and fTemp)
 checkIndexD <- function(ix, iy)
@@ -96,13 +84,13 @@ checkIndexD <- function(ix, iy)
 lonHH<-function(tz)
     {            #Calcula la longitud (en radianes) de un huso horario
       stopifnot(class(tz)=='character')
-      tHH<-as.POSIXct('2000-1-1 12:00:00', tz=tz)
-      tUTC<-as.POSIXct(format(tHH, tz='UTC'), tz=tz)
+      tHH <- as.POSIXct('2000-1-1 12:00:00', tz=tz)
+      tUTC <- as.POSIXct(format(tHH, tz='UTC'), tz=tz)
       h2r(as.numeric(tHH-tUTC))
     }
 
   
-local2Solar<-function(x, lon=NULL){	
+local2Solar <- function(x, lon=NULL){	
   tz=attr(x, 'tzone')
   if (tz=='' || is.null(tz)) {tz='UTC'}
   ##Adelanto oficial por verano
@@ -120,10 +108,10 @@ local2Solar<-function(x, lon=NULL){
   {deltaL=d2r(lon)-LH
  }
   ##Hora local corregida en UTC
-  ##    tt<-format(x-AO+r2sec(deltaL), tz=tz)
-  tt<-format(x, tz=tz)
-  result<-as.POSIXct(tt, tz='UTC')-AO+r2sec(deltaL)
-  ##      result<-as.POSIXct(tt, tz='UTC')
+  ##    tt <- format(x-AO+r2sec(deltaL), tz=tz)
+  tt <- format(x, tz=tz)
+  result <- as.POSIXct(tt, tz='UTC')-AO+r2sec(deltaL)
+  ##      result <- as.POSIXct(tt, tz='UTC')
   result
 }
 
@@ -141,7 +129,7 @@ CBIND <- function(..., index=NULL){
 }
 
 ##Convierte un difftime en un número de horas
-diff2Hours <-function(by){
+diff2Hours  <- function(by){
   if (!inherits(by, 'difftime')) {
     stop('This function is only useful for difftime objects.')
   } else {
