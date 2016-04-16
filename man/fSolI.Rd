@@ -62,8 +62,7 @@ fSolI(solD, sample='hour', BTi, EoT=TRUE, keep.night=TRUE, method='michalsky')
     \item{Strous:
     \url{http://aa.quae.nl/en/reken/zonpositie.html}}
     \item{Michalsky, J., 1988: The Astronomical Almanac's algorithm for
-    approximate solar position (1950-2050), Solar Energy 40, 227-235,
-    \url{ftp://climate1.gsfc.nasa.gov/wiscombe/Solar_Rad/SunAngles/sunae.f}}
+    approximate solar position (1950-2050), Solar Energy 40, 227-235}
   \item{Collares-Pereira, M. y Rabl, A.,
     The average distribution of solar radiation: correlations between
     diffuse and hemispherical and between daily and hourly insolation
