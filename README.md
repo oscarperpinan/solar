@@ -40,12 +40,13 @@ Install the stable version with:
 
     install.packages('solaR')
 
-To install the development version you need the `devtools` package:
+You can install the development version with the [`remotes`](https://github.com/MangoTheCat/remotes#installation) package:
 
-    install.packages('devtools')
-	devtools::install_github('solar', 'oscarperpinan')
+	remotes::install_github('oscarperpinan/solar')
 
+or with [`devtools`](https://github.com/hadley/devtools):
 
+    devtools::install_github('oscarperpinan/solar')
 
 # Documentation #
 
