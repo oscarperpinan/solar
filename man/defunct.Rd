@@ -21,4 +21,5 @@
     
     \item{\code{TargetDiagram}, \code{analyzeData}: Use the \code{tdr} package}
 
-    }
+  }
+  }
