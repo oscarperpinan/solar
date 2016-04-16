@@ -81,6 +81,17 @@ r2sec<-function(x){x*12/pi*3600}
 ##Trunca un POSIXct a días
 truncDay <- function(x){as.POSIXct(trunc(x, units='days'))}
 
+## Check if daily indexes are equal (used in fCompD and fTemp)
+checkIndexD <- function(ix, iy)
+{
+    dx <- truncDay(ix)
+    dy <- truncDay(iy)
+    test <- all.equal(dx, dy,  check.attributes = FALSE)
+    if (!isTRUE(test))
+        stop('daily indexes do not match.')
+}
+
+
 ###Husos horarios
 lonHH<-function(tz)
     {            #Calcula la longitud (en radianes) de un huso horario

@@ -135,15 +135,15 @@ dfI2Meteo <- function(file, lat,
 }  
 
 zoo2Meteo <- function(file, lat, source=''){
-  file <- checkG0Ta(file, maxmin=TRUE)
-  sample <- median(diff(index(file)))
-  IsDaily <- as.numeric(sample, units='days')>=1
-  type=ifelse(IsDaily, 'bd', 'bdI')
-  result <- new(Class='Meteo',
-                latData=lat,
-                data=file,
-                type=type,
-                source=source)
+    file <- checkG0Ta(file, maxmin=TRUE)
+    sample <- median(diff(index(file)))
+    IsDaily <- as.numeric(sample, units='days')>=1
+    type <- ifelse(IsDaily, 'bd', 'bdI')
+    result <- new(Class='Meteo',
+                  latData=lat,
+                  data=file,
+                  type=type,
+                  source=source)
   return(result)
 }
 
