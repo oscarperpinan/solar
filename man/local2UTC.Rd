@@ -37,7 +37,7 @@ lonHH(tz)
   \item{index}{A \code{POSIXct} object, the index of \code{zoo} object
     constructed with \code{CBIND}.}
 
-  \item{tz}{A character, a time zone.}
+  \item{tz}{A character, a time zone as documented in \url{https://en.wikipedia.org/wiki/List_of_tz_database_time_zones}.}
 }
 \details{
 
