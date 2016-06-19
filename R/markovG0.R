@@ -12,7 +12,7 @@ markovG0 <- function(G0dm, solD){
   ktm <- G0dm/Bo0dm
 
   ##Calcula con que matriz debe trabajar para cada mes
-  whichMatrix <- findInterval(ktm, Ktm)
+  whichMatrix <- findInterval(ktm, Ktm, all.inside = TRUE)
 
   Ktd <- state <- numeric(length(timeIndex))
   state[1] <- 1
