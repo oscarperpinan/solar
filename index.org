@@ -70,9 +70,15 @@ A BibTeX entry for LaTeX users is
 * References
 =solaR= has been cited in these publications:
 
+- de Souza, Erico N., Kristina Boerder, Stan Matwin, Boris Worm, BS Halpern, S Walbridge, KA Selkoe, et al. 2016. “Improving Fishing Pattern Detection from Satellite AIS Using Data Mining and Machine Learning.” Edited by Athanassios C. Tsikliras. PLOS ONE 11 (7). Public Library of Science: e0158248. doi:10.1371/journal.pone.0158248.
+
+- Urraca, R., J. Antonanzas, M. Alia-Martinez, F.J. Martinez-de-Pison, and F. Antonanzas-Torres. 2016. “Smart Baseline Models for Solar Irradiation Forecasting.” Energy Conversion and Management 108 (January): 539–48. doi:10.1016/j.enconman.2015.11.033.
+
+- Antonanzas, J., M. Alia-Martinez, F. J. Martinez-De-Pison, and F. Antonanzas-Torres. 2015. “Towards the Hybridization of Gas-Fired Power Plants: A Case Study of Algeria.” Renewable and Sustainable Energy Reviews 51: 116–24. doi:10.1016/j.rser.2015.06.019.
+
 - Ward, H. C., Kotthaus, S., Grimmond, C. S. B., Bjorkegren, A., Wilkinson, M., Morrison, W. T. J., Evans, J.G. Morison, J.I.L., Iamarino, M. (2015). Effects of urban density on carbon dioxide exchanges: Observations of dense urban, suburban and woodland areas of southern England. Environmental Pollution, 198, 186–200. doi:10.1016/j.envpol.2014.12.031
 
-- Pebesma, E., Bivand, R., & Ribeiro, P. J. (2015). Software for Spatial Statistics. Journal of Statistical Software, 63(1). Retrieved from http://www.jstatsoft.org/v63/i01
+- Pebesma, E., Bivand, R., & Ribeiro, P. J. (2015). Software for Spatial Statistics. Journal of Statistical Software, 63(1). Retrieved from [[http://www.jstatsoft.org/v63/i01][http://www.jstatsoft.org/v63/i01]]
 
 - Abdulla, K., & Wirth, Andrew Halgamuge, Saman K Steer, K. C. (2014). Selecting an Optimal Combination of Storage & Transmission Assets with a Non-Dispatchable Electricity Supply. In 7th International Conference on Information and Automation for Sustainability (ICIAfS). Retrieved from https://edas.info/cd/iciafs14/papers/1570042835.pdf
 

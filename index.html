@@ -3,25 +3,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>solaR: Solar Radiation and Photovoltaic Systems with R</title>
-<!-- 2015-05-06 mié 11:42 -->
+<!-- 2016-07-05 mar 22:24 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>solaR: Solar Radiation and Photovoltaic Systems with R</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Oscar Perpiñán Lamigueiro" />
 <meta  name="description" content="solaR"
  />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
   .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -60,15 +67,14 @@
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
+  .footpara { display: inline; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -142,9 +148,9 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">solaR: Solar Radiation and Photovoltaic Systems with R</h1>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Introduction</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Introduction</h2>
+<div class="outline-text-2" id="text-orgheadline1">
 <p>
 The <code>solaR</code> package allows for reproducible research both for
 photovoltaics (PV) systems performance and solar radiation. It
@@ -175,9 +181,9 @@ with spatial packages for space-time analysis.
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">Software</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2">Software</h2>
+<div class="outline-text-2" id="text-orgheadline2">
 <p>
 The stable version of <code>solaR</code> is hosted at <a href="http://cran.r-project.org/package=solaR">CRAN</a>. 
 The development version is available at <a href="http://github.com/oscarperpinan/solar/">GitHub</a>.
@@ -185,9 +191,9 @@ The development version is available at <a href="http://github.com/oscarperpinan
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">Documentation</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3">Documentation</h2>
+<div class="outline-text-2" id="text-orgheadline3">
 <p>
 The best place to learn how to use the package is the companion
 paper published by the Journal of Statistical Software: <a href="http://www.jstatsoft.org/v50/i09/">http://www.jstatsoft.org/v50/i09/</a>
@@ -202,9 +208,9 @@ about <code>solaR</code> at <a href="http://procomun.wordpress.com/">this blog</
 </div>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">Citation</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4">Citation</h2>
+<div class="outline-text-2" id="text-orgheadline4">
 <p>
 If you use <code>solaR</code>, please cite it in any publication reporting
 results obtained with this software:
@@ -237,49 +243,43 @@ A BibTeX entry for LaTeX users is
 </div>
 </div>
 </div>
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5">References</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5">References</h2>
+<div class="outline-text-2" id="text-orgheadline5">
 <p>
 <code>solaR</code> has been cited in these publications:
 </p>
 
 <ul class="org-ul">
-<li>Ward, H. C., Kotthaus, S., Grimmond, C. S. B., Bjorkegren, A., Wilkinson, M., Morrison, W. T. J., Evans, J.G. Morison, J.I.L., Iamarino, M. (2015). Effects of urban density on carbon dioxide exchanges: Observations of dense urban, suburban and woodland areas of southern England. Environmental Pollution, 198, 186–200. <a href="10.1016/j.envpol.2014.12.031">10.1016/j.envpol.2014.12.031</a>
-</li>
+<li>de Souza, Erico N., Kristina Boerder, Stan Matwin, Boris Worm, BS Halpern, S Walbridge, KA Selkoe, et al. 2016. “Improving Fishing Pattern Detection from Satellite AIS Using Data Mining and Machine Learning.” Edited by Athanassios C. Tsikliras. PLOS ONE 11 (7). Public Library of Science: e0158248. <a href="http://dx.doi.org/10.1371/journal.pone.0158248">doi:10.1371/journal.pone.0158248</a>.</li>
 
-<li>Pebesma, E., Bivand, R., &amp; Ribeiro, P. J. (2015). Software for Spatial Statistics. Journal of Statistical Software, 63(1). Retrieved from <a href="http://www.jstatsoft.org/v63/i01">http://www.jstatsoft.org/v63/i01</a>
-</li>
+<li>Urraca, R., J. Antonanzas, M. Alia-Martinez, F.J. Martinez-de-Pison, and F. Antonanzas-Torres. 2016. “Smart Baseline Models for Solar Irradiation Forecasting.” Energy Conversion and Management 108 (January): 539–48. <a href="http://dx.doi.org/10.1016/j.enconman.2015.11.033">doi:10.1016/j.enconman.2015.11.033</a>.</li>
 
-<li>Abdulla, K., &amp; Wirth, Andrew Halgamuge, Saman K Steer, K. C. (2014). Selecting an Optimal Combination of Storage &amp; Transmission Assets with a Non-Dispatchable Electricity Supply. In 7th International Conference on Information and Automation for Sustainability (ICIAfS). Retrieved from <a href="https://edas.info/cd/iciafs14/papers/1570042835.pdf">https://edas.info/cd/iciafs14/papers/1570042835.pdf</a>
-</li>
+<li>Antonanzas, J., M. Alia-Martinez, F. J. Martinez-De-Pison, and F. Antonanzas-Torres. 2015. “Towards the Hybridization of Gas-Fired Power Plants: A Case Study of Algeria.” Renewable and Sustainable Energy Reviews 51: 116–24. <a href="http://dx.doi.org/10.1016/j.rser.2015.06.019">doi:10.1016/j.rser.2015.06.019</a>.</li>
 
-<li>Antonanzas, J., Jimenez, E., Blanco, J., &amp; Antonanzas-Torres, F. (2014). Potential solar thermal integration in Spanish combined cycle gas turbines. Renewable and Sustainable Energy Reviews, 37, 36–46. <a href="10.1016/j.rser.2014.05.006">10.1016/j.rser.2014.05.006</a>
-</li>
+<li>Ward, H. C., Kotthaus, S., Grimmond, C. S. B., Bjorkegren, A., Wilkinson, M., Morrison, W. T. J., Evans, J.G. Morison, J.I.L., Iamarino, M. (2015). Effects of urban density on carbon dioxide exchanges: Observations of dense urban, suburban and woodland areas of southern England. Environmental Pollution, 198, 186–200. <a href="http://dx.doi.org/10.1016/j.envpol.2014.12.031">doi:10.1016/j.envpol.2014.12.031</a></li>
 
-<li>Davila-Gomez, L., Colmenar-Santos, A., Tawfik, M., &amp; Castro-Gil, M. (2014). An accurate model for simulating energetic behavior of PV grid connected inverters. Simulation Modelling Practice and Theory, 49, 57–72. <a href="10.1016/j.simpat.2014.08.001">10.1016/j.simpat.2014.08.001</a>
-</li>
+<li>Pebesma, E., Bivand, R., &amp; Ribeiro, P. J. (2015). Software for Spatial Statistics. Journal of Statistical Software, 63(1). Retrieved from <a href="http://www.jstatsoft.org/v63/i01"><a href="http://www.jstatsoft.org/v63/i01">http://www.jstatsoft.org/v63/i01</a></a></li>
 
-<li>Gutierrez Corea, F. V. (2014, December 1). Predicción espacio-temporal de la irradiancia solar global a corto plazo en España mediante geoestadística y redes neuronales artificiales. E.T.S.I. en Topografía, Geodesia y Cartografía (UPM). Retrieved from <a href="http://oa.upm.es/34145/1/Federico_Vladimir_Gutierrez_Corea.pdf">http://oa.upm.es/34145/1/Federico_Vladimir_Gutierrez_Corea.pdf</a>
-</li>
+<li>Abdulla, K., &amp; Wirth, Andrew Halgamuge, Saman K Steer, K. C. (2014). Selecting an Optimal Combination of Storage &amp; Transmission Assets with a Non-Dispatchable Electricity Supply. In 7th International Conference on Information and Automation for Sustainability (ICIAfS). Retrieved from <a href="https://edas.info/cd/iciafs14/papers/1570042835.pdf">https://edas.info/cd/iciafs14/papers/1570042835.pdf</a></li>
 
-<li>Gutierrez-Corea, F.-V., Manso-Callejo, M.-A., Moreno-Regidor, M.-P., &amp; Velasco-Gómez, J. (2014). Spatial estimation of sub-hour Global Horizontal Irradiance based on official observations and remote sensors. Sensors (Basel, Switzerland), 14(4), 6758–87. <a href="10.3390/s140406758">10.3390/s140406758</a>
-</li>
+<li>Antonanzas, J., Jimenez, E., Blanco, J., &amp; Antonanzas-Torres, F. (2014). Potential solar thermal integration in Spanish combined cycle gas turbines. Renewable and Sustainable Energy Reviews, 37, 36–46. <a href="http://dx.doi.org/10.1016/j.rser.2014.05.006">doi:10.1016/j.rser.2014.05.006</a></li>
 
-<li>Rhodes, J. D., Upshaw, C. R., Cole, W. J., Holcomb, C. L., &amp; Webber, M. E. (2014). A multi-objective assessment of the effect of solar PV array orientation and tilt on energy production and system economics. Solar Energy, 108, 28–40. <a href="10.1016/j.solener.2014.06.032">10.1016/j.solener.2014.06.032</a>
-</li>
+<li>Davila-Gomez, L., Colmenar-Santos, A., Tawfik, M., &amp; Castro-Gil, M. (2014). An accurate model for simulating energetic behavior of PV grid connected inverters. Simulation Modelling Practice and Theory, 49, 57–72. <a href="http://dx.doi.org/10.1016/j.simpat.2014.08.001">doi:10.1016/j.simpat.2014.08.001</a></li>
 
-<li>Schmidt, J., Cancella, R., &amp; Junior, A. O. P. (2014). An optimal mix of solar PV, wind and hydro power for a low-carbon electricity supply in Brazil. Retrieved from <a href="ftp://ftp.boku.ac.at/pub/repecftpg/repecftp/RePEc/sed/wpaper/572014.pdf">ftp://ftp.boku.ac.at/pub/repecftpg/repecftp/RePEc/sed/wpaper/572014.pdf</a>
-</li>
+<li>Gutierrez Corea, F. V. (2014, December 1). Predicción espacio-temporal de la irradiancia solar global a corto plazo en España mediante geoestadística y redes neuronales artificiales. E.T.S.I. en Topografía, Geodesia y Cartografía (UPM). Retrieved from <a href="http://oa.upm.es/34145/1/Federico_Vladimir_Gutierrez_Corea.pdf">http://oa.upm.es/34145/1/Federico_Vladimir_Gutierrez_Corea.pdf</a></li>
 
-<li>Ploennigs, J., Chen, B., Schumann, A., &amp; Brady, N. (2013). Exploiting Generalized Additive Models for Diagnosing Abnormal Energy Use in Buildings. In Proceedings of the 5th ACM Workshop on Embedded Systems For Energy-Efficient Buildings (pp. 17:1–17:8). New York, NY, USA: ACM. <a href="10.1145/2528282.2528291">10.1145/2528282.2528291</a>
-</li>
+<li>Gutierrez-Corea, F.-V., Manso-Callejo, M.-A., Moreno-Regidor, M.-P., &amp; Velasco-Gómez, J. (2014). Spatial estimation of sub-hour Global Horizontal Irradiance based on official observations and remote sensors. Sensors (Basel, Switzerland), 14(4), 6758–87. <a href="http://dx.doi.org/10.3390/s140406758">doi:10.3390/s140406758</a></li>
 
-<li>Street, M., Reinhart, C., Norford, L., &amp; Ochsendorf, J. (2013). Urban heat island in Boston&#x2013;an evaluation of urban air-temperature models for predicting building energy use. In Proceedings of BS2013: 13th Conference of International Building Per-formance Simulation Association, August (pp. 26–28).
-</li>
+<li>Rhodes, J. D., Upshaw, C. R., Cole, W. J., Holcomb, C. L., &amp; Webber, M. E. (2014). A multi-objective assessment of the effect of solar PV array orientation and tilt on energy production and system economics. Solar Energy, 108, 28–40. <a href="http://dx.doi.org/10.1016/j.solener.2014.06.032">doi:10.1016/j.solener.2014.06.032</a></li>
 
-<li>Ummel, K. (2011). SEXPOT: A spatiotemporal linear programming model to simulate global deployment of renewable power technologies. Central European University.
-</li>
+<li>Schmidt, J., Cancella, R., &amp; Junior, A. O. P. (2014). An optimal mix of solar PV, wind and hydro power for a low-carbon electricity supply in Brazil. Retrieved from <a href="ftp://ftp.boku.ac.at/pub/repecftpg/repecftp/RePEc/sed/wpaper/572014.pdf">ftp://ftp.boku.ac.at/pub/repecftpg/repecftp/RePEc/sed/wpaper/572014.pdf</a></li>
+
+<li>Ploennigs, J., Chen, B., Schumann, A., &amp; Brady, N. (2013). Exploiting Generalized Additive Models for Diagnosing Abnormal Energy Use in Buildings. In Proceedings of the 5th ACM Workshop on Embedded Systems For Energy-Efficient Buildings (pp. 17:1–17:8). New York, NY, USA: ACM. <a href="http://dx.doi.org/10.1145/2528282.2528291">doi:10.1145/2528282.2528291</a></li>
+
+<li>Street, M., Reinhart, C., Norford, L., &amp; Ochsendorf, J. (2013). Urban heat island in Boston&#x2013;an evaluation of urban air-temperature models for predicting building energy use. In Proceedings of BS2013: 13th Conference of International Building Per-formance Simulation Association, August (pp. 26–28).</li>
+
+<li>Ummel, K. (2011). SEXPOT: A spatiotemporal linear programming model to simulate global deployment of renewable power technologies. Central European University.</li>
 </ul>
 
 <hr  />
@@ -288,8 +288,7 @@ A BibTeX entry for LaTeX users is
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Oscar Perpiñán Lamigueiro</p>
-<p class="date">Created: 2015-05-06 mié 11:42</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
+<p class="date">Created: 2016-07-05 mar 22:24</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
