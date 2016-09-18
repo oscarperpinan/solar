@@ -1,0 +1,103 @@
+#+TITLE: solaR: Solar Radiation and Photovoltaic Systems with R
+#+DESCRIPTION: solaR
+#+AUTHOR: Oscar Perpiñán Lamigueiro
+#+HTML_HEAD:    <link rel="stylesheet" type="text/css" href="styles.css" />
+#+OPTIONS:   num:nil toc:nil ^:nil
+
+* Introduction
+
+The =solaR= package allows for reproducible research both for
+photovoltaics (PV) systems performance and solar radiation. It
+includes a set of classes, methods and functions to calculate the
+sun geometry and the solar radiation incident on a photovoltaic
+generator and to simulate the performance of several applications
+of the photovoltaic energy. This package performs the whole
+calculation procedure from both daily and intradaily global
+horizontal irradiation to the final productivity of grid-connected
+PV systems and water pumping PV systems.
+
+It is designed using a set of S4 classes whose core is a group of
+slots with multivariate time series. The classes share a variety
+of methods to access the information and several visualization
+methods. In addition, the package provides a tool for the visual
+statistical analysis of the performance of a large PV plant
+composed of several systems.
+
+Although =solaR= is primarily designed for time series associated to
+a location defined by its latitude/longitude values and the
+temperature and irradiation conditions, it can be easily combined
+with spatial packages for space-time analysis.  
+
+* Software
+
+The stable version of =solaR= is hosted at [[http://cran.r-project.org/package%3DsolaR][CRAN]]. 
+The development version is available at [[http://github.com/oscarperpinan/solar/][GitHub]].
+
+* Documentation
+
+The best place to learn how to use the package is the companion
+paper published by the Journal of Statistical Software: [[http://www.jstatsoft.org/v50/i09/]]
+
+[[http://procomun.wordpress.com/documentos/libroesf/][This book]] (in Spanish) contains detailed information about solar
+radiation and photovoltaic systems. In [[http://oscarperpinan.github.io/][my articles]] I
+frequently use =solaR=. Besides, I publish news and examples
+about =solaR= at [[http://procomun.wordpress.com/][this blog]].
+
+* Citation 
+
+If you use =solaR=, please cite it in any publication reporting
+results obtained with this software:
+
+#+begin_src verbatim
+  Oscar Perpiñán (2012). solaR: Solar Radiation and Photovoltaic
+  Systems with R, Journal of Statistical Software, 50(9), 1-32. URL
+  http://www.jstatsoft.org/v50/i09/.
+#+end_src
+
+A BibTeX entry for LaTeX users is
+#+begin_src verbatim
+  @Article{,
+    title = {{solaR}: Solar Radiation and Photovoltaic Systems with {R}},
+    author = {Oscar Perpi{\~n}{\'a}n},
+    journal = {Journal of Statistical Software},
+    year = {2012},
+    volume = {50},
+    number = {9},
+    pages = {1--32},
+    url = {http://www.jstatsoft.org/v50/i09/},
+  }
+#+end_src
+* References
+=solaR= has been cited in these publications:
+
+- de Souza, Erico N., Kristina Boerder, Stan Matwin, Boris Worm, BS Halpern, S Walbridge, KA Selkoe, et al. 2016. “Improving Fishing Pattern Detection from Satellite AIS Using Data Mining and Machine Learning.” Edited by Athanassios C. Tsikliras. PLOS ONE 11 (7). Public Library of Science: e0158248. doi:10.1371/journal.pone.0158248.
+
+- Urraca, R., J. Antonanzas, M. Alia-Martinez, F.J. Martinez-de-Pison, and F. Antonanzas-Torres. 2016. “Smart Baseline Models for Solar Irradiation Forecasting.” Energy Conversion and Management 108 (January): 539–48. doi:10.1016/j.enconman.2015.11.033.
+
+- Antonanzas, J., M. Alia-Martinez, F. J. Martinez-De-Pison, and F. Antonanzas-Torres. 2015. “Towards the Hybridization of Gas-Fired Power Plants: A Case Study of Algeria.” Renewable and Sustainable Energy Reviews 51: 116–24. doi:10.1016/j.rser.2015.06.019.
+
+- Ward, H. C., Kotthaus, S., Grimmond, C. S. B., Bjorkegren, A., Wilkinson, M., Morrison, W. T. J., Evans, J.G. Morison, J.I.L., Iamarino, M. (2015). Effects of urban density on carbon dioxide exchanges: Observations of dense urban, suburban and woodland areas of southern England. Environmental Pollution, 198, 186–200. doi:10.1016/j.envpol.2014.12.031
+
+- Pebesma, E., Bivand, R., & Ribeiro, P. J. (2015). Software for Spatial Statistics. Journal of Statistical Software, 63(1). Retrieved from [[http://www.jstatsoft.org/v63/i01][http://www.jstatsoft.org/v63/i01]]
+
+- Abdulla, K., & Wirth, Andrew Halgamuge, Saman K Steer, K. C. (2014). Selecting an Optimal Combination of Storage & Transmission Assets with a Non-Dispatchable Electricity Supply. In 7th International Conference on Information and Automation for Sustainability (ICIAfS). Retrieved from https://edas.info/cd/iciafs14/papers/1570042835.pdf
+
+- Antonanzas, J., Jimenez, E., Blanco, J., & Antonanzas-Torres, F. (2014). Potential solar thermal integration in Spanish combined cycle gas turbines. Renewable and Sustainable Energy Reviews, 37, 36–46. doi:10.1016/j.rser.2014.05.006
+
+- Davila-Gomez, L., Colmenar-Santos, A., Tawfik, M., & Castro-Gil, M. (2014). An accurate model for simulating energetic behavior of PV grid connected inverters. Simulation Modelling Practice and Theory, 49, 57–72. doi:10.1016/j.simpat.2014.08.001
+
+- Gutierrez Corea, F. V. (2014, December 1). Predicción espacio-temporal de la irradiancia solar global a corto plazo en España mediante geoestadística y redes neuronales artificiales. E.T.S.I. en Topografía, Geodesia y Cartografía (UPM). Retrieved from http://oa.upm.es/34145/1/Federico_Vladimir_Gutierrez_Corea.pdf
+
+- Gutierrez-Corea, F.-V., Manso-Callejo, M.-A., Moreno-Regidor, M.-P., & Velasco-Gómez, J. (2014). Spatial estimation of sub-hour Global Horizontal Irradiance based on official observations and remote sensors. Sensors (Basel, Switzerland), 14(4), 6758–87. doi:10.3390/s140406758
+
+- Rhodes, J. D., Upshaw, C. R., Cole, W. J., Holcomb, C. L., & Webber, M. E. (2014). A multi-objective assessment of the effect of solar PV array orientation and tilt on energy production and system economics. Solar Energy, 108, 28–40. doi:10.1016/j.solener.2014.06.032
+
+- Schmidt, J., Cancella, R., & Junior, A. O. P. (2014). An optimal mix of solar PV, wind and hydro power for a low-carbon electricity supply in Brazil. Retrieved from ftp://ftp.boku.ac.at/pub/repecftpg/repecftp/RePEc/sed/wpaper/572014.pdf
+
+- Ploennigs, J., Chen, B., Schumann, A., & Brady, N. (2013). Exploiting Generalized Additive Models for Diagnosing Abnormal Energy Use in Buildings. In Proceedings of the 5th ACM Workshop on Embedded Systems For Energy-Efficient Buildings (pp. 17:1–17:8). New York, NY, USA: ACM. doi:10.1145/2528282.2528291
+
+- Street, M., Reinhart, C., Norford, L., & Ochsendorf, J. (2013). Urban heat island in Boston--an evaluation of urban air-temperature models for predicting building energy use. In Proceedings of BS2013: 13th Conference of International Building Per-formance Simulation Association, August (pp. 26–28).
+
+- Ummel, K. (2011). SEXPOT: A spatiotemporal linear programming model to simulate global deployment of renewable power technologies. Central European University.
+
+-----
