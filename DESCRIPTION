@@ -6,6 +6,7 @@ Date: 2016-04-16
 Encoding: UTF-8
 Author: Oscar Perpiñán Lamigueiro
 Maintainer: Oscar Perpiñán Lamigueiro <oscar.perpinan@gmail.com>
+Authors@R: person("Oscar", "Perpinan Lamigueiro", email="oscar.perpinan@gmail.com", role=c('cre', 'aut'), comment = c(ORCID = "0000-0002-4134-7196"))
 Description: Calculation methods of solar radiation and performance of photovoltaic systems from daily and intradaily irradiation data sources.
 URL: http://oscarperpinan.github.io/solar/
 BugReports: https://github.com/oscarperpinan/solar/issues
