@@ -1,8 +1,7 @@
 Package: solaR
 Type: Package
 Title: Radiation and Photovoltaic Systems
-Version: 0.44
-Date: 2016-04-16
+Version: 0.45
 Encoding: UTF-8
 Author: Oscar Perpiñán Lamigueiro
 Maintainer: Oscar Perpiñán Lamigueiro <oscar.perpinan@gmail.com>
