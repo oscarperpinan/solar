@@ -23,34 +23,34 @@
 }
 \usage{
 optimShd(lat,
-         modeTrk='fixed',
-         modeRad='prom',
+         modeTrk = 'fixed',
+         modeRad = 'prom',
          dataRad,
-         sample='hour',
-         keep.night=TRUE,
-         sunGeometry='michalsky',
-         betaLim=90, beta=abs(lat)-10, alfa=0,
-         iS=2, alb=0.2, HCPV=FALSE,
-         module=list(),
-         generator=list(),
-         inverter=list(),
-         effSys=list(),
-         modeShd='',
-         struct=list(),
-         distances=data.frame(),
-         res=2,
-         prog=TRUE)
+         sample = 'hour',
+         keep.night = TRUE,
+         sunGeometry = 'michalsky',
+         betaLim = 90, beta = abs(lat)-10, alfa = 0,
+         iS = 2, alb = 0.2, HCPV = FALSE,
+         module = list(),
+         generator = list(),
+         inverter = list(),
+         effSys = list(),
+         modeShd = '',
+         struct = list(),
+         distances = data.frame(),
+         res = 2,
+         prog = TRUE)
 
 }
 
 \arguments{
   \item{lat}{numeric, latitude (degrees) of the point of the Earth where calculations are needed. It is positive for locations above the Equator.}
 
-  \item{modeTrk}{character, to be chosen from \code{'fixed'}, \code{'two'} or \code{'horiz'}. When \code{modeTrk='fixed'} the surface is fixed (inclination and azimuth angles are constant). The performance of a two-axis tracker is calculated with \code{modeTrk='two'}, and \code{modeTrk='horiz'} is the option for an horizontal N-S tracker. Its default value is \code{modeTrk='fixed'}}
+  \item{modeTrk}{character, to be chosen from \code{'fixed'}, \code{'two'} or \code{'horiz'}. When \code{modeTrk = 'fixed'} the surface is fixed (inclination and azimuth angles are constant). The performance of a two-axis tracker is calculated with \code{modeTrk = 'two'}, and \code{modeTrk = 'horiz'} is the option for an horizontal N-S tracker. Its default value is \code{modeTrk = 'fixed'}}
 
   \item{modeRad, dataRad}{Information about the source data of the
     global irradiation. See \code{\link{calcG0}} for details. For this
-    function the option \code{modeRad='bdI'} is not supported.}
+    function the option \code{modeRad = 'bdI'} is not supported.}
 
   \item{sample}{\code{character}, containing one of ‘"sec"’, ‘"min"’,
     ‘"hour"’.  This can optionally be preceded by a (positive or
@@ -112,22 +112,22 @@ optimShd(lat,
     this version of the package the effect of the shadow is calculated
     as a proportional reduction of the circumsolar diffuse and direct
     irradiances. This type of approach is selected with
-    \code{modeShd='area'}. In future versions other approaches which
+    \code{modeShd = 'area'}. In future versions other approaches which
     relate the geometric shadow and the electrical connections of the PV
-    generator will be available. If \code{modeTrk='horiz'} it is
+    generator will be available. If \code{modeTrk = 'horiz'} it is
     possible to calculate the effect of backtracking with
-    \code{modeShd='bt'}. If \code{modeShd=c('area','bt')} the
+    \code{modeShd = 'bt'}. If \code{modeShd = c('area','bt')} the
     backtracking method will be carried out and therefore no shadows
     will appear. Finally, for two-axis trackers it is possible to select
-    \code{modeShd='prom'} in order to calculate the effect of shadows on
+    \code{modeShd = 'prom'} in order to calculate the effect of shadows on
     an average tracker (see \code{\link{fSombra6}}).
     The result will include three variables (Gef0, Def0 and Bef0) with the
     irradiance/irradiation without shadows as a reference.}
 
-  \item{struct}{\code{list}. When \code{modeTrk='fixed'} or
-    \code{modeTrk='horiz'} only a component named \code{L}, which is the
+  \item{struct}{\code{list}. When \code{modeTrk = 'fixed'} or
+    \code{modeTrk = 'horiz'} only a component named \code{L}, which is the
     height (meters) of the tracker, is needed. For two-axis trackers
-    (\code{modeTrk='two'}), an additional component named \code{W}, the
+    (\code{modeTrk = 'two'}), an additional component named \code{W}, the
     width of the tracker, is required. Moreover, two components named
     \code{Nrow} and \code{Ncol} are included under this list. These
     components define, respectively, the number of rows and columns of
@@ -135,12 +135,12 @@ optimShd(lat,
 
   \item{distances}{\code{list}, whose three components are vectors of
     length 2: \describe{ \item{\code{Lew}}{ (only when
-    \code{modeTrk='horiz'} or \code{modeTrk='two'}), minimum and maximum
+    \code{modeTrk = 'horiz'} or \code{modeTrk = 'two'}), minimum and maximum
     distance (meters) between horizontal NS and two-axis trackers along
     the East-West direction.}  \item{\code{Lns}}{ (only when
-    \code{modeTrk='two'}), minimum and maximum distance (meters) between
+    \code{modeTrk = 'two'}), minimum and maximum distance (meters) between
     two-axis trackers along the North-South direction.}
-    \item{\code{D}}{(only when \code{modeTrk='fixed'}), minimum and
+    \item{\code{D}}{(only when \code{modeTrk = 'fixed'}), minimum and
     maximum distance (meters) between fixed surfaces.}  } These
     distances, in meters, are defined between the axis of the trackers.}
     \item{res}{numeric; \code{optimShd} constructs a sequence from the
@@ -159,7 +159,7 @@ surfaces.  }
 \value{A \code{\linkS4class{Shade}} object.}
 
 \references{\itemize{
-    \item Perpiñán, O.: Grandes Centrales Fotovoltaicas: producción, seguimiento y ciclo de vida. PhD Thesis, UNED, 2008. \url{http://e-spacio.uned.es/fez/view.php?pid=bibliuned:20080}.
+    \item Perpiñán, O.: Grandes Centrales Fotovoltaicas: producción, seguimiento y ciclo de vida. PhD Thesis, UNED, 2008. \url{http://e-spacio.uned.es/fez/view.php?pid = bibliuned:20080}.
     \item Perpiñán, O, Energía Solar Fotovoltaica, 2015.
     (\url{http://oscarperpinan.github.io/esf/})
     \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
@@ -178,66 +178,66 @@ surfaces.  }
 library(lattice)
 library(latticeExtra)
 
-lat=37.2;
-G0dm=c(2766, 3491, 4494, 5912, 6989, 7742, 7919, 7027, 5369, 3562, 2814,
+lat = 37.2;
+G0dm = c(2766, 3491, 4494, 5912, 6989, 7742, 7919, 7027, 5369, 3562, 2814,
 2179)
-Ta=c(10, 14.1, 15.6, 17.2, 19.3, 21.2, 28.4, 29.9, 24.3, 18.2, 17.2, 15.2)
-prom=list(G0dm=G0dm, Ta=Ta)
+Ta = c(10, 14.1, 15.6, 17.2, 19.3, 21.2, 28.4, 29.9, 24.3, 18.2, 17.2, 15.2)
+prom = list(G0dm = G0dm, Ta = Ta)
 
 ###Two-axis trackers
-struct2x=list(W=23.11, L=9.8, Nrow=2, Ncol=8)
-dist2x=list(Lew=c(30,50),Lns=c(20,50))
+struct2x = list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
+dist2x = list(Lew = c(30,50),Lns = c(20,50))
 
 #Monthly averages
-ShdM2x<-optimShd(lat=lat, dataRad=prom, modeTrk='two',
-        modeShd=c('area','prom'), distances=dist2x, struct=struct2x, res=5)
+ShdM2x <- optimShd(lat = lat, dataRad = prom, modeTrk = 'two',
+        modeShd = c('area','prom'), distances = dist2x, struct = struct2x, res = 5)
 
 shadeplot(ShdM2x)
 
-pLew=xyplot(Yf~GRR,data=ShdM2x,groups=factor(Lew),type=c('l','g'),
-    main='Productivity for each Lew value')
+pLew = xyplot(Yf~GRR,data = ShdM2x,groups = factor(Lew),type = c('l','g'),
+    main = 'Productivity for each Lew value')
 pLew+glayer(panel.text(x[1], y[1], group.value))
 
-pLns=xyplot(Yf~GRR,data=ShdM2x,groups=factor(Lns),type=c('l','g'),
-    main='Productivity for each Lns value')
+pLns = xyplot(Yf~GRR,data = ShdM2x,groups = factor(Lns),type = c('l','g'),
+    main = 'Productivity for each Lns value')
 pLns+glayer(panel.text(x[1], y[1], group.value))
 
 ###Horizontal axis tracker
-structHoriz=list(L=4.83);
-distHoriz=list(Lew=structHoriz$L*c(2,5));
+structHoriz = list(L = 4.83);
+distHoriz = list(Lew = structHoriz$L*c(2,5));
 
 #Without backtracking
-Shd12Horiz<-optimShd(lat=lat, dataRad=prom,
-        modeTrk='horiz',
-        betaLim=60,
-        distances=distHoriz, res=2,
-        struct=structHoriz,
-        modeShd='area')
+Shd12Horiz <- optimShd(lat = lat, dataRad = prom,
+        modeTrk = 'horiz',
+        betaLim = 60,
+        distances = distHoriz, res = 2,
+        struct = structHoriz,
+        modeShd = 'area')
 
 shadeplot(Shd12Horiz)
 
-xyplot(diff(Yf)~GRR[-1],data=Shd12Horiz,type=c('l','g'))
+xyplot(diff(Yf)~GRR[-1],data = Shd12Horiz,type = c('l','g'))
 
 #with Backtracking
-Shd12HorizBT<-optimShd(lat=lat, dataRad=prom,
-        modeTrk='horiz',
-        betaLim=60,
-        distances=distHoriz, res=1,
-        struct=structHoriz,
-        modeShd='bt')
+Shd12HorizBT <- optimShd(lat = lat, dataRad = prom,
+        modeTrk = 'horiz',
+        betaLim = 60,
+        distances = distHoriz, res = 1,
+        struct = structHoriz,
+        modeShd = 'bt')
 
 shadeplot(Shd12HorizBT)
-xyplot(diff(Yf)~GRR[-1],data=Shd12HorizBT,type=c('l','g'))
+xyplot(diff(Yf)~GRR[-1],data = Shd12HorizBT,type = c('l','g'))
 
 
 ###Fixed system
-structFixed=list(L=5);
-distFixed=list(D=structFixed$L*c(1,3));
-Shd12Fixed<-optimShd(lat=lat, dataRad=prom,
-        modeTrk='fixed',
-        distances=distFixed, res=1,
-        struct=structFixed,
-        modeShd='area')
+structFixed = list(L = 5);
+distFixed = list(D = structFixed$L*c(1,3));
+Shd12Fixed <- optimShd(lat = lat, dataRad = prom,
+        modeTrk = 'fixed',
+        distances = distFixed, res = 1,
+        struct = structFixed,
+        modeShd = 'area')
 shadeplot(Shd12Fixed)
 }
 

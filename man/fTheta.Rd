@@ -10,10 +10,10 @@
   The orientation, azimuth and incidence angle are calculated from the
   results of \code{fSolI} or \code{calcSol}and from the information supplied by the
   arguments \code{beta} and \code{alfa} when the surface is fixed
-  (\code{modeTrk='fixed')} or the movement equations when a tracking
-  surface is chosen (\code{modeTrk='horiz'} or \code{modeTrk='two')}.
+  (\code{modeTrk = 'fixed')} or the movement equations when a tracking
+  surface is chosen (\code{modeTrk = 'horiz'} or \code{modeTrk = 'two')}.
   Besides, the modified movement of a horizontal NS tracker due to the
-  backtracking strategy is calculated if \code{BT=TRUE} with information
+  backtracking strategy is calculated if \code{BT = TRUE} with information
   about the tracker and the distance between the trackers included in the
   system.
 
@@ -26,21 +26,21 @@ fTheta(sol, beta, alfa = 0, modeTrk = "fixed", betaLim = 90,
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{sol}{\code{Sol} object as provided by \code{\link{calcSol}}.}
-  \item{beta}{numeric, inclination angle of the surface (degrees). It is only needed when \code{modeTrk='fixed'}.}
+  \item{beta}{numeric, inclination angle of the surface (degrees). It is only needed when \code{modeTrk = 'fixed'}.}
   \item{alfa}{numeric, azimuth angle of the surface (degrees). It is measured from the south (\code{alfa = 0}), and it is negative to the
     east and positive to the west. It is only needed when
-    \code{modeTrk='fixed'}. Its default value is \code{alfa=0} (surface
+    \code{modeTrk = 'fixed'}. Its default value is \code{alfa = 0} (surface
     facing to the south).}
-  \item{modeTrk}{character, to be chosen from \code{'fixed'}, \code{'two'} or \code{'horiz'}. When \code{modeTrk='fixed'} the surface is fixed (inclination and azimuth angles are constant). The performance of a two-axis tracker is calculated with \code{modeTrk='two'}, and \code{modeTrk='horiz'} is the option for an horizontal N-S tracker. Its default value is \code{modeTrk='fixed'}}
+  \item{modeTrk}{character, to be chosen from \code{'fixed'}, \code{'two'} or \code{'horiz'}. When \code{modeTrk = 'fixed'} the surface is fixed (inclination and azimuth angles are constant). The performance of a two-axis tracker is calculated with \code{modeTrk = 'two'}, and \code{modeTrk = 'horiz'} is the option for an horizontal N-S tracker. Its default value is \code{modeTrk = 'fixed'}}
   \item{betaLim}{numeric, maximum value of the inclination angle for a tracking surface. Its default value is 90 (no limitation))}
   \item{BT}{logical, \code{TRUE} when the bactracking technique is to be used with a horizontal NS tracker, as described by Panico et al. (see References). The default value is \code{FALSE}. In future versions of this package this technique will be available for two-axis trackers.}
-  \item{struct}{Only needed when \code{BT=TRUE}. A \code{list}, with a component named \code{L}, which is the height (meters) of the tracker. In future versions the backtracking technique will be used in conjuction with two-axis trackers, and a additional component named \code{W} will be needed.}
-  \item{dist}{Only needed when \code{BT=TRUE}. A \code{data.frame}, with a component named \code{Lew}, being the distance between the horizontal NS trackers along the East-West direction. In future versions an additional component named \code{Lns} will be needed for two-axis trackers with backtracking.}
+  \item{struct}{Only needed when \code{BT = TRUE}. A \code{list}, with a component named \code{L}, which is the height (meters) of the tracker. In future versions the backtracking technique will be used in conjuction with two-axis trackers, and a additional component named \code{W} will be needed.}
+  \item{dist}{Only needed when \code{BT = TRUE}. A \code{data.frame}, with a component named \code{Lew}, being the distance between the horizontal NS trackers along the East-West direction. In future versions an additional component named \code{Lns} will be needed for two-axis trackers with backtracking.}
 }
 
 \value{A \code{zoo} object with these components:
-  \item{Beta}{numeric, inclination angle of the surface (radians). When \code{modeTrk='fixed'} it is the value of the argument \code{beta} converted from degrees to radians.}
-  \item{Alfa}{numeric, azimuth angle of the surface (radians). When \code{modeTrk='fixed'} it is the value of the argument \code{alfa} converted from degrees to radians.}
+  \item{Beta}{numeric, inclination angle of the surface (radians). When \code{modeTrk = 'fixed'} it is the value of the argument \code{beta} converted from degrees to radians.}
+  \item{Alfa}{numeric, azimuth angle of the surface (radians). When \code{modeTrk = 'fixed'} it is the value of the argument \code{alfa} converted from degrees to radians.}
   \item{cosTheta}{numeric, cosine of the incidence angle of the solar irradiance on the surface}
 
 }

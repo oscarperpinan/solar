@@ -47,8 +47,8 @@ library(latticeExtra)
 
 data(pumpCoef)
 
-CoefSP8A44<-subset(pumpCoef, Qn==8&stages==44)
-CurvaSP8A44<-HQCurve(pump=CoefSP8A44)
+CoefSP8A44 <- subset(pumpCoef, Qn == 8&stages == 44)
+CurvaSP8A44 <- HQCurve(pump = CoefSP8A44)
 }
 \keyword{utilities}
 

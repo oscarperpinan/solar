@@ -9,7 +9,7 @@
 \description{
   From the daily global, diffuse and direct irradiation values supplied by \code{fCompD}, the profile of the global, diffuse and direct irradiance is calculated with the \code{rd} and \code{rg} components of \code{fSolI}.
 }
-\usage{fCompI(sol, compD, G0I, corr='none', f, filterG0 = TRUE)}
+\usage{fCompI(sol, compD, G0I, corr = 'none', f, filterG0 = TRUE)}
 
 \arguments{
   \item{sol}{A \code{Sol} object as provided by \code{\link{calcSol}} or
@@ -24,7 +24,7 @@
     object containing \emph{intradaily} global irradiation (Wh/m²) on a
     horizontal surface.
 
-    See below for \code{corr='none'}.}
+    See below for \code{corr = 'none'}.}
 
   \item{corr}{A character, the correlation between the the fraction of
     intradaily diffuse irradiation and the clearness index to be
@@ -33,19 +33,19 @@
     With this version several correlations are available, as described in
     \code{\link{corrFdKt}}. You should choose one of \emph{intradaily}
     proposals. For example, the \code{\link{FdKtCLIMEDh}} is
-    selected with \code{corr='CLIMEDh'}.
+    selected with \code{corr = 'CLIMEDh'}.
 
-    If \code{corr='user'} the use of a correlation defined by a function
+    If \code{corr = 'user'} the use of a correlation defined by a function
     \code{f} is possible.
 
-    If \code{corr='none'} the \code{G0I} object must include information
+    If \code{corr = 'none'} the \code{G0I} object must include information
     about global, diffuse and direct intradaily irradiation with columns
     named \code{G0}, \code{D0} and \code{B0}, respectively. }
 
 
   \item{f}{A function defininig a correlation between the fraction of
     diffuse irradiation and the clearness index. It is only neccessary
-    when \code{corr='user'}}
+    when \code{corr = 'user'}}
   
   \item{filterG0}{A logical. If \code{TRUE} (default) this function sets the
     global irradiation values to \code{NA} when they are higher than the
@@ -84,14 +84,14 @@
 
 lat <- 37.2
 
-BTd <- fBTd(mode='serie')
+BTd <- fBTd(mode = 'serie')
 solD <- fSolD(lat, BTd[100])
-solI <- fSolI(solD, sample='hour')
+solI <- fSolI(solD, sample = 'hour')
 G0d <- zoo(5000, index(solD))
 compD <- fCompD(solD, G0d, corr = "Page")
 fCompI(solI, compD)
 
-sol <- calcSol(lat, fBTd(mode='prom'), sample='hour', keep.night=FALSE)
+sol <- calcSol(lat, fBTd(mode = 'prom'), sample = 'hour', keep.night = FALSE)
 
 G0dm <- c(2.766, 3.491, 4.494, 5.912, 6.989, 7.742,
           7.919, 7.027, 5.369, 3.562, 2.814, 2.179)*1000
@@ -105,16 +105,16 @@ compI <- fCompI(sol, compD)
 head(compI)
 
 ## Use of 'corr'.  The help page of calcG0 includes additional examples
-## with intradaily data xyplot(fd ~ kt, data=compI)
+## with intradaily data xyplot(fd ~ kt, data = compI)
 
-climed <- fCompI(sol, G0I=compI, corr = 'CLIMEDh')
-xyplot(fd ~ kt, data=climed)
+climed <- fCompI(sol, G0I = compI, corr = 'CLIMEDh')
+xyplot(fd ~ kt, data = climed)
 
-ekdh <- fCompI(sol, G0I=compI, corr = 'EKDh')
-xyplot(fd ~ kt, data=ekdh)
+ekdh <- fCompI(sol, G0I = compI, corr = 'EKDh')
+xyplot(fd ~ kt, data = ekdh)
 
-brl <- fCompI(sol, G0I=compI, corr = 'BRL')
-xyplot(fd ~ kt, data=brl)
+brl <- fCompI(sol, G0I = compI, corr = 'BRL')
+xyplot(fd ~ kt, data = brl)
 }
 
 \keyword{utilities}

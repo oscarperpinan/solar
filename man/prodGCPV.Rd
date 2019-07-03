@@ -9,22 +9,22 @@
 
 \usage{
 prodGCPV(lat,
-         modeTrk='fixed',
-         modeRad='prom',
+         modeTrk = 'fixed',
+         modeRad = 'prom',
          dataRad,
-         sample='hour',
-         keep.night=TRUE,
-         sunGeometry='michalsky',
+         sample = 'hour',
+         keep.night = TRUE,
+         sunGeometry = 'michalsky',
          corr, f,
-         betaLim=90, beta=abs(lat)-10, alfa=0,
-         iS=2, alb=0.2, horizBright=TRUE, HCPV=FALSE,
-         module=list(),
-         generator=list(),
-         inverter=list(),
-         effSys=list(),
-         modeShd='',
-         struct=list(),
-         distances=data.frame(),
+         betaLim = 90, beta = abs(lat)-10, alfa = 0,
+         iS = 2, alb = 0.2, horizBright = TRUE, HCPV = FALSE,
+         module = list(),
+         generator = list(),
+         inverter = list(),
+         effSys = list(),
+         modeShd = '',
+         struct = list(),
+         distances = data.frame(),
          ...)
 }
 \arguments{
@@ -168,7 +168,7 @@ xyplot(two + horiz + fixed ~ AzS|mon, data = ComparePac,
                      points = FALSE),
        ylab = 'Pac')
 
-###Use of modeRad='aguiar' and modeRad='prev'
+###Use of modeRad = 'aguiar' and modeRad = 'prev'
 prodAguiarFixed <- prodGCPV(lat = lat,
                             modeRad = 'aguiar',
                             dataRad = G0dm,
@@ -201,16 +201,16 @@ compareLosses(prodAguiarFixed,
 compareYf <- mergesolaR(prodAguiarFixed,
                         prodAguiar2x,
                         prodAguiarHoriz)
-xyplot(compareYf, superpose=TRUE,
-       ylab='kWh/kWp',
-       main='Daily productivity',
-       auto.key=list(space='right'))
+xyplot(compareYf, superpose = TRUE,
+       ylab = 'kWh/kWp',
+       main = 'Daily productivity',
+       auto.key = list(space = 'right'))
 
 
 ###Shadows
 #Two-axis trackers
-struct2x <- list(W=23.11, L=9.8, Nrow=2, Ncol=8)
-dist2x <- data.frame(Lew=40, Lns=30, H=0)
+struct2x <- list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
+dist2x <- data.frame(Lew = 40, Lns = 30, H = 0)
 prod2xShd <- prodGCPV(lat = lat, dataRad = prom,
                       modeTrk = 'two',
                       modeShd = 'area',

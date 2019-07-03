@@ -16,14 +16,14 @@
   This function is used by the \code{\link{calcGef}} function.
 }
 \usage{
-fInclin(compI, angGen, iS = 2, alb = 0.2, horizBright=TRUE, HCPV=FALSE)
+fInclin(compI, angGen, iS = 2, alb = 0.2, horizBright = TRUE, HCPV = FALSE)
 }
 
 \arguments{
   \item{compI}{A \code{G0} object. It may be the result of \code{\link{calcG0}}.}
   \item{angGen}{A \code{zoo} object, including at least three variables
   named \code{Beta}, \code{Alfa} and \code{cosTheta}. It may be the result of \code{\link{fTheta}}.}
-  \item{iS}{integer, degree of dirtiness. Its value must be included in the set (1,2,3,4). \code{iS=1} corresponds to a clean surface while \code{iS=4} is the choice for a dirty surface. Its default value is 2}
+  \item{iS}{integer, degree of dirtiness. Its value must be included in the set (1,2,3,4). \code{iS = 1} corresponds to a clean surface while \code{iS = 4} is the choice for a dirty surface. Its default value is 2}
   \item{alb}{numeric, albedo reflection coefficient. Its default value
     is 0.2}
   \item{horizBright}{logical, if TRUE, the horizon brightness correction proposed by Reind et al. is used.}
@@ -58,11 +58,6 @@ fInclin(compI, angGen, iS = 2, alb = 0.2, horizBright=TRUE, HCPV=FALSE)
 \author{
   Oscar Perpiñán Lamigueiro.
 }
-
-% \note{The version 0.22 included a bug such that when horizBright=FALSE (default)
-%   the isotropic diffuse component was set to zero. With this version
-%   0.23 the bug has been corrected and the default value of horizBright
-%   is TRUE.}
 
 \seealso{
   \code{\link{fTheta}},

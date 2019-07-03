@@ -11,7 +11,7 @@
   functions \code{\link{fSolD}} and \code{\link{fSolI}}.
 }
 \usage{
-calcSol(lat, BTd, sample='hour', BTi, EoT=TRUE, keep.night=TRUE, method='michalsky')
+calcSol(lat, BTd, sample = 'hour', BTi, EoT = TRUE, keep.night = TRUE, method = 'michalsky')
 }
 
 \arguments{
@@ -64,22 +64,22 @@ calcSol(lat, BTd, sample='hour', BTi, EoT=TRUE, keep.night=TRUE, method='michals
 \author{Oscar Perpiñán Lamigueiro.}
 
 \examples{
-BTd=fBTd(mode='serie')
+BTd = fBTd(mode = 'serie')
 
-lat=37.2
-sol=calcSol(lat, BTd[100])
+lat = 37.2
+sol = calcSol(lat, BTd[100])
 print(as.zooD(sol))
 
 library(lattice)
 xyplot(as.zooI(sol))
 
-solStrous=calcSol(lat, BTd[100], method='strous')
+solStrous = calcSol(lat, BTd[100], method = 'strous')
 print(as.zooD(solStrous))
 
-solSpencer=calcSol(lat, BTd[100], method='spencer')
+solSpencer = calcSol(lat, BTd[100], method = 'spencer')
 print(as.zooD(solSpencer))
 
-solCooper=calcSol(lat, BTd[100], method='cooper')
+solCooper = calcSol(lat, BTd[100], method = 'cooper')
 print(as.zooD(solCooper))
 }
 

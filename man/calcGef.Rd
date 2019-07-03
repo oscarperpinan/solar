@@ -15,24 +15,24 @@
 }
 \usage{
 calcGef(lat,
-        modeTrk='fixed',
-        modeRad='prom',
+        modeTrk = 'fixed',
+        modeRad = 'prom',
         dataRad,
-        sample='hour',
-        keep.night=TRUE,
-        sunGeometry='michalsky',
+        sample = 'hour',
+        keep.night = TRUE,
+        sunGeometry = 'michalsky',
         corr, f,
-        betaLim=90, beta=abs(lat)-10, alfa=0,
-        iS=2, alb=0.2, horizBright=TRUE, HCPV=FALSE,
-        modeShd='',
-        struct=list(),
-        distances=data.frame(),
+        betaLim = 90, beta = abs(lat)-10, alfa = 0,
+        iS = 2, alb = 0.2, horizBright = TRUE, HCPV = FALSE,
+        modeShd = '',
+        struct = list(),
+        distances = data.frame(),
         ...)
 }
 \arguments{
   \item{lat}{numeric, latitude (degrees) of the point of the Earth where calculations are needed. It is positive for locations above the Equator.}
 
-  \item{modeTrk}{character, to be chosen from \code{'fixed'}, \code{'two'} or \code{'horiz'}. When \code{modeTrk='fixed'} the surface is fixed (inclination and azimuth angles are constant). The performance of a two-axis tracker is calculated with \code{modeTrk='two'}, and \code{modeTrk='horiz'} is the option for an horizontal N-S tracker. Its default value is \code{modeTrk='fixed'}}
+  \item{modeTrk}{character, to be chosen from \code{'fixed'}, \code{'two'} or \code{'horiz'}. When \code{modeTrk = 'fixed'} the surface is fixed (inclination and azimuth angles are constant). The performance of a two-axis tracker is calculated with \code{modeTrk = 'two'}, and \code{modeTrk = 'horiz'} is the option for an horizontal N-S tracker. Its default value is \code{modeTrk = 'fixed'}}
 
   \item{modeRad, dataRad}{Information about the source data of the
     global irradiation. See \code{\link{calcG0}} for details.}
@@ -45,7 +45,7 @@ calcGef(lat,
   \item{corr, f}{See \code{\link{calcG0}} for details.}
   
   \item{beta}{numeric, inclination angle of the surface
-    (degrees). It is only needed when \code{modeTrk='fixed'}.}
+    (degrees). It is only needed when \code{modeTrk = 'fixed'}.}
 
   \item{betaLim}{numeric, maximum value of the inclination angle
     for a tracking surface. Its default value is 90 (no
@@ -54,11 +54,11 @@ calcGef(lat,
   \item{alfa}{numeric, azimuth angle of the surface (degrees). It is
     measured from the south (\code{alfa = 0}), and it is negative to the
     east and positive to the west. It is only needed when
-    \code{modeTrk='fixed'}. Its default value is \code{alfa=0}}
+    \code{modeTrk = 'fixed'}. Its default value is \code{alfa = 0}}
 
   \item{iS}{integer, degree of dirtiness. Its value must be included in
-    the set (1,2,3,4). \code{iS=1} corresponds to a clean surface while
-    \code{iS=4} is the selection for a dirty surface. Its default value is
+    the set (1,2,3,4). \code{iS = 1} corresponds to a clean surface while
+    \code{iS = 4} is the selection for a dirty surface. Its default value is
     2.}
 
   \item{alb}{numeric, albedo reflection coefficient. Its default value is 0.2}
@@ -90,7 +90,7 @@ calcGef(lat,
   \url{http://www.jstatsoft.org/v50/i09/}
 }}
 
-% \note{The version 0.22 included a bug such that when horizBright=FALSE (default)
+% \note{The version 0.22 included a bug such that when horizBright = FALSE (default)
 %   the isotropic diffuse component was set to zero. From version
 %   0.23 the bug has been corrected and the default value of horizBright
 %   is TRUE.}
@@ -104,42 +104,46 @@ calcGef(lat,
   \code{\link{calcShd}}.
 }
 \examples{
+lat <- 37.2
+
 ###12 Average days.
 
-G0dm=c(2.766,3.491,4.494,5.912,6.989,7.742,7.919,7.027,5.369,3.562,2.814,2.179)*1000;
-Ta=c(10, 14.1, 15.6, 17.2, 19.3, 21.2, 28.4, 29.9, 24.3, 18.2, 17.2, 15.2)
+G0dm = c(2.766, 3.491, 4.494, 5.912, 6.989, 7.742, 7.919, 7.027, 5.369,
+         3.562, 2.814, 2.179)*1000;
+Ta = c(10, 14.1, 15.6, 17.2, 19.3, 21.2, 28.4, 29.9, 24.3, 18.2, 17.2,
+       15.2)
 
 ##Fixed surface, default values of inclination and azimuth.
 
-gef<-calcGef(lat=37.2, modeRad='prom', dataRad=list(G0dm=G0dm, Ta=Ta))
+gef <- calcGef(lat = lat, modeRad = 'prom', dataRad = list(G0dm = G0dm, Ta = Ta))
 print(gef)
 xyplot(gef)
 
 ##Two-axis surface, no limitation angle.
 
-gef2<-calcGef(lat=37.2, modeRad='prom', dataRad=list(G0dm=G0dm, Ta=Ta), modeTrk='two')
+gef2 <- calcGef(lat = lat, modeRad = 'prom', dataRad = list(G0dm = G0dm, Ta = Ta), modeTrk = 'two')
 print(gef2)
 xyplot(gef2)
 
 ##Fixed surface
-gefAguiar <- calcGef(lat=41, modeRad='aguiar', dataRad=G0dm)
+gefAguiar <- calcGef(lat = lat, modeRad = 'aguiar', dataRad = G0dm)
 
 ##Two-axis tracker, using the previous result.
 ##'gefAguiar' is internally coerced to a 'G0' object.
 
-gefAguiar2 <- calcGef(lat=41, modeRad='prev', dataRad=gefAguiar, modeTrk='two')
+gefAguiar2 <- calcGef(lat = lat, modeRad = 'prev', dataRad = gefAguiar, modeTrk = 'two')
 print(gefAguiar2)
 xyplot(gefAguiar2)
 
 ###Shadows between two-axis trackers, again using the gefAguiar result.
 
-struct=list(W=23.11, L=9.8, Nrow=2, Ncol=8)
-distances=data.frame(Lew=40, Lns=30, H=0)
+struct = list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
+distances = data.frame(Lew = 40, Lns = 30, H = 0)
 
-gefShd<-calcGef(lat=41, modeRad='prev',
-                dataRad=gefAguiar, modeTrk='two',
-                modeShd=c('area', 'prom'),
-                struct=struct, distances=distances)
+gefShd <- calcGef(lat = lat, modeRad = 'prev', 
+                dataRad = gefAguiar, modeTrk = 'two', 
+                modeShd = c('area', 'prom'), 
+                struct = struct, distances = distances)
 print(gefShd)
 ##The Gef0, Bef0 and Def0 values are the same as those contained in the
 ##                gefAguiar2 object

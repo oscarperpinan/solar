@@ -11,18 +11,18 @@
 
 \usage{
 prodPVPS(lat,
-         modeTrk='fixed',
-         modeRad='prom',
+         modeTrk = 'fixed',
+         modeRad = 'prom',
          dataRad,
-         sample='hour',
-         keep.night=TRUE,
-         sunGeometry='michalsky',
+         sample = 'hour',
+         keep.night = TRUE,
+         sunGeometry = 'michalsky',
          corr, f,
-         betaLim=90, beta=abs(lat)-10, alfa=0,
-         iS=2, alb=0.2, horizBright=TRUE, HCPV=FALSE,
+         betaLim = 90, beta = abs(lat)-10, alfa = 0,
+         iS = 2, alb = 0.2, horizBright = TRUE, HCPV = FALSE,
          pump , H,
          Pg, converter= list(),
-         effSys=list(),
+         effSys = list(),
          ...)
 }
 

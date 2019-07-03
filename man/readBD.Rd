@@ -14,27 +14,27 @@
   from a local file or a data.frame.}
 \usage{
 readBD(file,  lat,
-       format='\%d/\%m/\%Y',
-       header=TRUE, fill=TRUE, dec='.', sep=';',
-       dates.col='date',source=file)
+       format = '\%d/\%m/\%Y',
+       header = TRUE, fill = TRUE, dec = '.', sep = ';',
+       dates.col = 'date',source = file)
 
 readBDi(file,  lat,
-       format='\%d/\%m/\%Y \%H:\%M:\%S',
-       header=TRUE, fill=TRUE, dec='.', sep=';',
-       time.col='time',
-       source=file)
+       format = '\%d/\%m/\%Y \%H:\%M:\%S',
+       header = TRUE, fill = TRUE, dec = '.', sep = ';',
+       time.col = 'time',
+       source = file)
 
 df2Meteo(file,  lat,
-         format='\%d/\%m/\%Y',
-         dates.col='date',
-         source='')
+         format = '\%d/\%m/\%Y',
+         dates.col = 'date',
+         source = '')
 
 dfI2Meteo(file,  lat,
-         format='\%d/\%m/\%Y \%H:\%M:\%S',
-         time.col='time',
-         source='')
+         format = '\%d/\%m/\%Y \%H:\%M:\%S',
+         time.col = 'time',
+         source = '')
 
-zoo2Meteo(file, lat, source='')
+zoo2Meteo(file, lat, source = '')
 }
 \arguments{
 
@@ -51,7 +51,7 @@ zoo2Meteo(file, lat, source='')
 
     If the \code{Meteo} object is to be used with \code{\link{calcG0}}
     (or \code{fCompD}, \code{fCompI}) and the option
-    \code{corr='none'}, the file/data.frame \bold{must} include three
+    \code{corr = 'none'}, the file/data.frame \bold{must} include three
     columns named \code{G0}, \code{B0} and \code{D0} with values of
     global, direct and diffuse irradiation on the horizontal plane.
 
@@ -91,9 +91,9 @@ zoo2Meteo(file, lat, source='')
 }
 \examples{
 data(helios)
-names(helios)=c('date', 'G0', 'TempMax', 'TempMin')
+names(helios) = c('date', 'G0', 'TempMax', 'TempMin')
 
-bd=df2Meteo(helios, dates.col='date', lat=41, source='helios-IES', format='\%Y/\%m/\%d')
+bd = df2Meteo(helios, dates.col = 'date', lat = 41, source = 'helios-IES', format = '\%Y/\%m/\%d')
 
 summary(getData(bd))
 

@@ -8,18 +8,18 @@
 
 \usage{
 fBTd(mode = "prom",
-    year=as.POSIXlt(Sys.Date())$year+1900,
-    start=paste('01-01-',year,sep=''),
-    end=paste('31-12-',year,sep=''),
-                   format='\%d-\%m-\%Y')
+    year = as.POSIXlt(Sys.Date())$year+1900,
+    start = paste('01-01-',year,sep = ''),
+    end = paste('31-12-',year,sep = ''),
+                   format = '\%d-\%m-\%Y')
 }
 
 \arguments{
   \item{mode}{character, controls the type of time base to be
-    created. With  \code{mode='serie'} the result is a daily time series from \code{start} to \code{end}. With \code{mode='prom'} only twelve days, one for each month, are included. During these 'average days' the declination angle is equal to the monthly mean of this angle.}
-  \item{year}{which year is to be used for the time base when \code{mode='prom'}. Its default value is the current year.}
-  \item{start}{first day of the time base for \code{mode='serie'}. Its default value is the first of January of the current year. }
-  \item{end}{last day of the time base for \code{mode='serie'}. Its
+    created. With  \code{mode = 'serie'} the result is a daily time series from \code{start} to \code{end}. With \code{mode = 'prom'} only twelve days, one for each month, are included. During these 'average days' the declination angle is equal to the monthly mean of this angle.}
+  \item{year}{which year is to be used for the time base when \code{mode = 'prom'}. Its default value is the current year.}
+  \item{start}{first day of the time base for \code{mode = 'serie'}. Its default value is the first of January of the current year. }
+  \item{end}{last day of the time base for \code{mode = 'serie'}. Its
     default value is the last day of December of the current year.}
 
   \item{format}{format of \code{start} and \code{end}.}
@@ -47,10 +47,10 @@ fBTd(mode = "prom",
 
 \examples{
 #Average days
-fBTd(mode='prom')
+fBTd(mode = 'prom')
 
 #The day #100 of the year 2008
-BTd=fBTd(mode='serie', year=2008)
+BTd = fBTd(mode = 'serie', year = 2008)
 BTd[100]
 }
 

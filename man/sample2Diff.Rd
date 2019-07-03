@@ -9,7 +9,7 @@
 \title{Small utilities for difftime objects.}
 \description{
   \code{diff2Hours} converts a \code{difftime} object into its numeric
-  value with \code{units='hours'}.
+  value with \code{units = 'hours'}.
 
   \code{char2diff} converts a character description into a
   \code{difftime} object, following the code of
@@ -49,7 +49,7 @@ char2diff('2 s')
 sample2Hours('s')
 sample2Hours('30 m')
 
-by1<-char2diff('10 min')
+by1 <- char2diff('10 min')
 sample2Hours(by1)
 }
 \author{Oscar Perpiñán Lamigueiro}

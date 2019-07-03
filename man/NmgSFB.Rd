@@ -9,10 +9,10 @@
   This function simulate the performance of a water pump fed by a frequency converter with several PV generators of different size during a day. The result is plotted as a nomogram which relates the nominal power of the PV generator, the total water flow and the total manometric head.
 }
 \usage{
-NmgPVPS(pump, Pg, H, Gd, Ta=30,
-    lambda=0.0045, TONC=47, eta=0.95,
-    Gmax=1200, t0=6, Nm=6,
-    title='', theme=custom.theme.2())
+NmgPVPS(pump, Pg, H, Gd, Ta = 30,
+    lambda = 0.0045, TONC = 47, eta = 0.95,
+    Gmax = 1200, t0 = 6, Nm = 6,
+    title = '', theme = custom.theme.2())
 }
 
 \arguments{
@@ -55,15 +55,15 @@ NmgPVPS(pump, Pg, H, Gd, Ta=30,
 \seealso{\code{\link{fPump}}, \code{\link{prodPVPS}}, \code{\link{pumpCoef}}}
 
 \examples{
-Pg=seq(4000,8000,by=100);
-H=seq(120,150,by=5);
+Pg = seq(4000, 8000,by = 100);
+H = seq(120, 150,by = 5);
 
 data(pumpCoef)
 
-CoefSP8A44<-subset(pumpCoef, Qn==8&stages==44)
+CoefSP8A44 <- subset(pumpCoef, Qn == 8 & stages == 44)
 
-NmgSP8A44<-NmgPVPS(pump=CoefSP8A44,Pg=Pg,H=H,Gd=5000,
-     title='Choice of Pump', theme=custom.theme())
+NmgSP8A44 <- NmgPVPS(pump = CoefSP8A44,Pg = Pg,H = H,Gd = 5000,
+     title = 'Choice of Pump', theme = custom.theme())
 }
 
 \keyword{utilities}
