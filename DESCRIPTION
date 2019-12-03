@@ -1,8 +1,8 @@
-Package: solaR
+Package: solaR2
 Type: Package
 Title: Radiation and Photovoltaic Systems
-Version: 0.42
-Date: 2015-05-20
+Version: 0.10
+Date: 2019-12-03
 Encoding: UTF-8
 Author: Oscar Perpiñán Lamigueiro
 Maintainer: Oscar Perpiñán Lamigueiro <oscar.perpinan@gmail.com>
@@ -11,6 +11,5 @@ URL: http://oscarperpinan.github.io/solar/
 BugReports: https://github.com/oscarperpinan/solar/issues
 License: GPL-3
 LazyData: yes
-Depends: R (>= 2.10), methods, zoo, lattice, latticeExtra
-Imports: RColorBrewer, data.table
+Imports: RColorBrewer, data.table, methods, zoo, lattice, latticeExtra
 Suggests: sp, raster, rasterVis, tdr
