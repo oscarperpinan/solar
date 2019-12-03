@@ -11,7 +11,7 @@ fSolD <- function(d, lat, method='michalsky'){
   ##ro=1.496E8                        #distancia media Tierra-Sol (km)
   eo <- eccentricity(d, method = method)
   EoT <- eot(d)
-  ws <- dayLength(d, lat, method = method,
+  ws <- sunrise(d, lat, method = method,
                   decl = decl)
   Bo0d <- bo0d(d, lat, method = method,
                ws = ws, decl = decl, eo = eo)

@@ -65,7 +65,7 @@ eccentricity <- function(x, method = 'michalsky')
            )
 }
 
-dayLength <- function(x, lat, ...,
+sunrise <- function(x, lat, ...,
                       decl = declination(x, ...))
 {
     cosWs <- -tan(d2r(lat)) * tan(decl)
@@ -75,6 +75,12 @@ dayLength <- function(x, lat, ...,
     polar <- which(is.nan(ws))        
     ws[polar] <- -pi * (cosWs[polar] < -1) + 0 * (cosWs[polar] > 1)
     ws    
+}
+
+dayLength <- function(x, lat, ...)
+{
+    ws <- sunrise(x, lat, ...)
+    2 * abs(ws)
 }
 
 ##Equation of Time, minutes según Alan M.Whitman "A simple expression
@@ -95,7 +101,7 @@ eot <- function(x){
 
 ## Extraterrestrial Irradiance
 bo0d <- function(x, lat, ...,
-                 ws = dayLength(x, lat, ...),
+                 ws = sunrise(x, lat, ...),
                  decl = declination(x, ...),
                  eo = eccentricity(x, ...)
                  )
