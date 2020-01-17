@@ -74,11 +74,11 @@ calcGef<-function(lat,
     distances=distances
     )
 ###Cálculo de sombras
-  if (modeShd=='' ||        #Si modeShd=='' no hace calculo de sombras
+  if (isTRUE(modeShd == "") ||        #Si modeShd=='' no hace calculo de sombras
       ('bt' %in% modeShd)) {            #tampoco si hay backtracking
     return(result0)
   } else {
-    result <- calcShd (result0, modeTrk, modeShd, struct, distances)
+    result <- calcShd(result0, modeTrk, modeShd, struct, distances)
     return(result)
   }
 }
