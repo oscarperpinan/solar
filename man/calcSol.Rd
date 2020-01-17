@@ -11,7 +11,9 @@
   functions \code{\link{fSolD}} and \code{\link{fSolI}}.
 }
 \usage{
-calcSol(lat, BTd, sample = 'hour', BTi, EoT = TRUE, keep.night = TRUE, method = 'michalsky')
+calcSol(lat, BTd, sample = 'hour', BTi,
+        EoT = TRUE, keep.night = TRUE,
+        method = 'michalsky')
 }
 
 \arguments{
