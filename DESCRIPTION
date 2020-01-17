@@ -3,9 +3,7 @@ Type: Package
 Title: Radiation and Photovoltaic Systems
 Version: 0.45
 Encoding: UTF-8
-Author: Oscar Perpiñán Lamigueiro
-Maintainer: Oscar Perpiñán Lamigueiro <oscar.perpinan@gmail.com>
-Authors@R: person("Oscar", "Perpinan Lamigueiro", email="oscar.perpinan@gmail.com", role=c('cre', 'aut'), comment = c(ORCID = "0000-0002-4134-7196"))
+Authors@R: person("Oscar", "Perpiñán Lamigueiro", email="oscar.perpinan@upm.es", role=c('cre', 'aut'), comment = c(ORCID = "0000-0002-4134-7196"))
 Description: Calculation methods of solar radiation and performance of photovoltaic systems from daily and intradaily irradiation data sources.
 URL: http://oscarperpinan.github.io/solar/
 BugReports: https://github.com/oscarperpinan/solar/issues
