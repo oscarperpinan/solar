@@ -32,7 +32,7 @@ packages for space-time analysis.
 # Software #
 
 The stable version of solaR is hosted at
-[CRAN](http://cran.r-project.org/package%3DsolaR). The development
+[CRAN](https://cran.r-project.org/package=solaR). The development
 version is available at
 [GitHub](http://github.com/oscarperpinan/solar/).
 
