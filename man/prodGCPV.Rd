@@ -168,6 +168,7 @@ xyplot(two + horiz + fixed ~ AzS|mon, data = ComparePac,
                      points = FALSE),
        ylab = 'Pac')
 
+\dontrun{
 ###Use of modeRad = 'aguiar' and modeRad = 'prev'
 prodAguiarFixed <- prodGCPV(lat = lat,
                             modeRad = 'aguiar',
@@ -205,7 +206,7 @@ xyplot(compareYf, superpose = TRUE,
        ylab = 'kWh/kWp',
        main = 'Daily productivity',
        auto.key = list(space = 'right'))
-
+}
 
 ###Shadows
 #Two-axis trackers

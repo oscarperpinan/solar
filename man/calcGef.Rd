@@ -121,11 +121,24 @@ xyplot(gef)
 
 ##Two-axis surface, no limitation angle.
 
-gef2 <- calcGef(lat = lat, modeRad = 'prom', dataRad = list(G0dm = G0dm, Ta = Ta), modeTrk = 'two')
+gef2 <- calcGef(lat = lat, modeRad = 'prom',
+                dataRad = list(G0dm = G0dm, Ta = Ta),
+                modeTrk = 'two')
 print(gef2)
 xyplot(gef2)
 
-##Fixed surface
+struct = list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
+distances = data.frame(Lew = 40, Lns = 30, H = 0)
+
+gefShd <- calcGef(lat = lat, modeRad = 'prom',
+                  dataRad = list(G0dm = G0dm, Ta = Ta),
+                  modeTrk = 'two',
+                  modeShd = c('area', 'prom'), 
+                  struct = struct, distances = distances)
+print(gefShd)
+
+\dontrun{
+##Fixed surface using Aguiar method
 gefAguiar <- calcGef(lat = lat, modeRad = 'aguiar', dataRad = G0dm)
 
 ##Two-axis tracker, using the previous result.
@@ -140,13 +153,12 @@ xyplot(gefAguiar2)
 struct = list(W = 23.11, L = 9.8, Nrow = 2, Ncol = 8)
 distances = data.frame(Lew = 40, Lns = 30, H = 0)
 
-gefShd <- calcGef(lat = lat, modeRad = 'prev', 
-                dataRad = gefAguiar, modeTrk = 'two', 
-                modeShd = c('area', 'prom'), 
-                struct = struct, distances = distances)
-print(gefShd)
-##The Gef0, Bef0 and Def0 values are the same as those contained in the
-##                gefAguiar2 object
+gefShdAguiar <- calcGef(lat = lat, modeRad = 'prev', 
+                        dataRad = gefAguiar, modeTrk = 'two', 
+                        modeShd = c('area', 'prom'), 
+                        struct = struct, distances = distances)
+print(gefShdAguiar)
+}
 }
 
 \keyword{utilities}
