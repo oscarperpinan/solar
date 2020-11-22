@@ -1,9 +1,10 @@
 solaR
 =====
-[DOI](http://dx.doi.org/10.18637/jss.v050.i09)
 [![CRAN](http://www.r-pkg.org/badges/version/solaR)](http://www.r-pkg.org/pkg/solaR)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/solaR)](http://www.r-pkg.org/pkg/solaR)
 [![Build Status](https://github.com/oscarperpinan/solar/workflows/R-CMD-check/badge.svg)](https://github.com/oscarperpinan/solar/actions)
+
+[![DOI](https://upload.wikimedia.org/wikipedia/commons/1/11/DOI_logo.svg)](http://dx.doi.org/10.18637/jss.v050.i09)
 
 
 The `solaR` package allows for reproducible research both for
