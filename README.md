@@ -1,10 +1,9 @@
 solaR
 =====
 [DOI](http://dx.doi.org/10.18637/jss.v050.i09)
-[![Build Status](https://travis-ci.org/oscarperpinan/solar.svg?branch=master)](https://travis-ci.org/oscarperpinan/solar)
 [![CRAN](http://www.r-pkg.org/badges/version/solaR)](http://www.r-pkg.org/pkg/solaR)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/solaR)](http://www.r-pkg.org/pkg/solaR)
-[![Research software impact](http://depsy.org/api/package/cran/solaR/badge.svg)](http://depsy.org/package/r/solaR)
+[![Build Status](https://github.com/oscarperpinan/solar/workflows/R-CMD-check/badge.svg)](https://github.com/oscarperpinan/solar/actions)
 
 
 The `solaR` package allows for reproducible research both for
