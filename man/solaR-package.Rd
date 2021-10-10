@@ -33,7 +33,10 @@ spatial packages for space-time analysis.
 
 The best place to learn how to use the package is the companion paper
 published by the Journal of Statistical Software:
-http://www.jstatsoft.org/v50/i09/
+
+Perpiñán Lamigueiro, O. (2012). solaR: Solar Radiation and Photovoltaic
+Systems with R. Journal of Statistical Software, 50(9),
+1–32. https://doi.org/10.18637/jss.v050.i09
 
 \bold{Please note that this package needs to set the timezone to
   \code{UTC}. Every ‘zoo’ object created by the package will have an

@@ -1,19 +1,19 @@
 citHeader("To cite package 'solaR' in publications use:")
      
 citEntry(entry="Article",
-              title ="{solaR}: Solar Radiation and Photovoltaic Systems with {R}",
-              author =personList(as.person("Oscar Perpi{\\~n}{\\'a}n")),
-	      journal ="Journal of Statistical Software",
-              year ="2012",
-	      volume ="50",
-	      number ="9",
-	      pages ="1--32",
-	      url ="http://www.jstatsoft.org/v50/i09/",
-              textVersion =
-              paste("Oscar Perpiñán (2012).", 
-	      	    "solaR: Solar Radiation and Photovoltaic Systems with R,",   
-                    "Journal of Statistical Software, 50(9), 1-32.",
-		    "URL http://www.jstatsoft.org/v50/i09/.")
+         title ="{solaR}: Solar Radiation and Photovoltaic Systems with {R}",
+         author =personList(as.person("Oscar Perpi{\\~n}{\\'a}n")),
+         journal ="Journal of Statistical Software",
+         year ="2012",
+         volume ="50",
+         number ="9",
+         pages ="1--32",
+         doi = "10.18637/jss.v050.i09",
+         textVersion =
+             paste("Oscar Perpiñán (2012).", 
+                   "solaR: Solar Radiation and Photovoltaic Systems with R,",   
+                   "Journal of Statistical Software, 50(9), 1-32.",
+                   "DOI 10.18637/jss.v050.i09")
 )
 
 

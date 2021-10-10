@@ -52,23 +52,25 @@ or with [`devtools`](https://github.com/hadley/devtools):
 
 The best place to learn how to use the package is the companion paper
 published by the Journal of Statistical Software:
-http://www.jstatsoft.org/v50/i09/
 
-[This book](http://procomun.wordpress.com/documentos/libroesf/) (in
+Perpiñán Lamigueiro, O. (2012). solaR: Solar Radiation and
+Photovoltaic Systems with R. Journal of Statistical Software, 50(9),
+1–32. https://doi.org/10.18637/jss.v050.i09
+
+[This book](https://oscarperpinan.github.io/esf/) (in
 Spanish) contains detailed information about solar radiation and
 photovoltaic systems. In
 [my articles](http://oscarperpinan.github.io/) I frequently use
-`solaR`. Besides, I publish news and examples about `solaR` at
-[my blog](http://procomun.wordpress.com/).
+`solaR`. 
 
 # Citation #
 
 If you use `solaR`, please cite it in any publication reporting
 results obtained with this software:
 
-    Oscar Perpiñán (2012). solaR: Solar Radiation and Photovoltaic
-    Systems with R, Journal of Statistical Software, 50(9), 1-32. URL
-		http://www.jstatsoft.org/v50/i09/.
+Perpiñán Lamigueiro, O. (2012). solaR: Solar Radiation and
+Photovoltaic Systems with R. Journal of Statistical Software, 50(9),
+1–32. https://doi.org/10.18637/jss.v050.i09
 
 A BibTeX entry for LaTeX users is:
 
@@ -80,6 +82,6 @@ A BibTeX entry for LaTeX users is:
         volume = {50},
         number = {9},
         pages = {1--32},
-        url = {http://www.jstatsoft.org/v50/i09/},
+		doi = {10.18637/jss.v050.i09}
       }
 

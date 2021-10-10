@@ -37,7 +37,7 @@
 
     \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
   Systems with R", Journal of Statistical Software, 50(9), 1-32,
-  \url{http://www.jstatsoft.org/v50/i09/}
+  \doi{10.18637/jss.v050.i09}
   }
 }
 
