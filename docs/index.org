@@ -30,15 +30,15 @@ with spatial packages for space-time analysis.
 
 * Software
 
-The stable version of =solaR= is hosted at [[http://cran.r-project.org/package%3DsolaR][CRAN]]. 
-The development version is available at [[http://github.com/oscarperpinan/solar/][GitHub]].
+The stable version of =solaR= is hosted at [[https://cran.r-project.org/package=solaR][CRAN]]. 
+The development version is available at [[https://github.com/oscarperpinan/solar/][GitHub]].
 
 * Documentation
 
 The best place to learn how to use the package is the companion [[https://doi.org/10.18637/jss.v050.i09][paper]]
 published by the Journal of Statistical Software. [[https://oscarperpinan.github.io/esf/][This book]] (in
 Spanish) contains detailed information about solar radiation and
-photovoltaic systems. In [[http://oscarperpinan.github.io/][my articles]] I frequently use =solaR=.
+photovoltaic systems. In [[https://oscarperpinany.github.io/][my articles]] I frequently use =solaR=.
 
 * Citation 
 

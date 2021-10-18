@@ -1,10 +1,10 @@
 solaR
 =====
-[![CRAN](http://www.r-pkg.org/badges/version/solaR)](http://www.r-pkg.org/pkg/solaR)
-[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/solaR)](http://www.r-pkg.org/pkg/solaR)
+[![CRAN](https://www.r-pkg.org/badges/version/solaR)](https://www.r-pkg.org/pkg/solaR)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/solaR)](https://www.r-pkg.org/pkg/solaR)
 [![Build Status](https://github.com/oscarperpinan/solar/workflows/R-CMD-check/badge.svg)](https://github.com/oscarperpinan/solar/actions)
 
-[![DOI](https://upload.wikimedia.org/wikipedia/commons/1/11/DOI_logo.svg)](http://dx.doi.org/10.18637/jss.v050.i09)
+[![DOI](https://upload.wikimedia.org/wikipedia/commons/1/11/DOI_logo.svg)](https://doi.org/10.18637/jss.v050.i09)
 
 
 The `solaR` package allows for reproducible research both for
@@ -34,17 +34,17 @@ packages for space-time analysis.
 The stable version of solaR is hosted at
 [CRAN](https://cran.r-project.org/package=solaR). The development
 version is available at
-[GitHub](http://github.com/oscarperpinan/solar/).
+[GitHub](https://github.com/oscarperpinan/solar/).
 
 Install the stable version with:
 
     install.packages('solaR')
 
-You can install the development version with the [`remotes`](https://github.com/MangoTheCat/remotes#installation) package:
+You can install the development version with the [`remotes`](https://github.com/r-lib/remotes) package:
 
 	remotes::install_github('oscarperpinan/solar')
 
-or with [`devtools`](https://github.com/hadley/devtools):
+or with [`devtools`](https://github.com/r-lib/devtools):
 
     devtools::install_github('oscarperpinan/solar')
 
@@ -60,7 +60,7 @@ Photovoltaic Systems with R. Journal of Statistical Software, 50(9),
 [This book](https://oscarperpinan.github.io/esf/) (in
 Spanish) contains detailed information about solar radiation and
 photovoltaic systems. In
-[my articles](http://oscarperpinan.github.io/) I frequently use
+[my articles](https://oscarperpinan.github.io/) I frequently use
 `solaR`. 
 
 # Citation #

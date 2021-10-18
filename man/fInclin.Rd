@@ -50,7 +50,7 @@ fInclin(compI, angGen, iS = 2, alb = 0.2, horizBright = TRUE, HCPV = FALSE)
     \item D. T. Reindl and W. A. Beckman and J. A. Duffie: Evaluation of
       hourly tilted surface radiation models, Solar Energy, 45:9-17, 1990.
     \item Perpiñán, O, Energía Solar Fotovoltaica, 2015.
-    (\url{http://oscarperpinan.github.io/esf/})
+    (\url{https://oscarperpinan.github.io/esf/})
     \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
   Systems with R", Journal of Statistical Software, 50(9), 1-32,
   \doi{10.18637/jss.v050.i09}

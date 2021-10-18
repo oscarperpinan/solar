@@ -30,7 +30,7 @@ fSolD<-function(lat, BTd, method='michalsky'){
     },
     spencer={
       ##Spencer, Search 2 (5), 172
-      ##http://www.mail-archive.com/sundial@uni-koeln.de/msg01050.html
+      ##https://www.mail-archive.com/sundial@uni-koeln.de/msg01050.html
       decl = 0.006918 - 0.399912*cos(X) + 0.070257*sin(X) -
         0.006758*cos(2*X) + 0.000907*sin(2*X) -
           0.002697*cos(3*X) + 0.001480*sin(3*X) 

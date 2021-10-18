@@ -13,7 +13,7 @@
 \references{O. Perpiñán, Statistical analysis of the performance and
   simulation of a two-axis tracking PV system, Solar Energy,
   83:11(2074–2085),
-  2009.\url{http://oa.upm.es/1843/1/PERPINAN_ART2009_01.pdf}
+  2009.\url{https://oa.upm.es/1843/1/PERPINAN_ART2009_01.pdf}
 }
 
 \keyword{datasets}

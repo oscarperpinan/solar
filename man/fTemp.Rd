@@ -33,7 +33,7 @@
       Environmental Modelling & Software 21 (2006) 1650-1661.
 
       \item Perpiñán, O, Energía Solar Fotovoltaica, 2015.
-    (\url{http://oscarperpinan.github.io/esf/})
+    (\url{https://oscarperpinan.github.io/esf/})
 
     \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
   Systems with R", Journal of Statistical Software, 50(9), 1-32,

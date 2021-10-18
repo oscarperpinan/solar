@@ -52,13 +52,13 @@ calcSol(lat, BTd, sample = 'hour', BTi,
 \references{\itemize{ \item{Cooper, P.I., Solar Energy, 12, 3
     (1969). "The Absorption of Solar Radiation in Solar Stills"}
     \item{Spencer, Search 2 (5), 172,
-    \url{http://www.mail-archive.com/sundial@uni-koeln.de/msg01050.html}}
+    \url{https://www.mail-archive.com/sundial@uni-koeln.de/msg01050.html}}
     \item{Strous:
-    \url{http://aa.quae.nl/en/reken/zonpositie.html}}
+    \url{https://www.aa.quae.nl/en/reken/zonpositie.html}}
     \item{Michalsky, J., 1988: The Astronomical Almanac's algorithm for
     approximate solar position (1950-2050), Solar Energy 40, 227-235}
   \item Perpiñán, O, Energía Solar Fotovoltaica, 2015.
-    (\url{http://oscarperpinan.github.io/esf/})
+    (\url{https://oscarperpinan.github.io/esf/})
     \item Perpiñán, O. (2012), "solaR: Solar Radiation and Photovoltaic
     Systems with R", Journal of Statistical Software, 50(9), 1-32,
     \doi{10.18637/jss.v050.i09} } }
